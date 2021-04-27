@@ -5,6 +5,8 @@ import java.util.Arrays;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -13,6 +15,7 @@ import javafx.scene.text.Font;
 
 public class DieSupply extends Pane {
 
+	
 	
 ///////////////////////////////////////////////////////////////// Instance Variables
 	
@@ -27,8 +30,10 @@ public class DieSupply extends Pane {
 ///////////////////////////////////////////////////////////////// Constructor
 
 	public DieSupply(Color newColor) {
+    
 
-
+		
+		
 /// Initializing Variables
 		
 		dieNumberText = new Label("8");
@@ -41,7 +46,7 @@ public class DieSupply extends Pane {
 		die.setStroke(Color.BLACK);
 		
 		this.getChildren().addAll(die,dieNumberText);
-
+//		setBackground(new Background(new BackgroundFill(Color.RED, null, null)));
 	}
 
 	

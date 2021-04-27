@@ -14,8 +14,8 @@ public class MainScene extends Scene {
 		setRoot(gameView);
 		
 		
-		LobbyView lobbyView = new LobbyView(); 
-		setRoot(lobbyView);
+//		LobbyView lobbyView = new LobbyView(); 
+//		setRoot(lobbyView);
 		
 	}
 }
