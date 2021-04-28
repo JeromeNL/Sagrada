@@ -9,21 +9,26 @@ import javafx.scene.text.Font;
 
 public class ObjectiveInGameView extends StackPane {
 
-Rectangle panel = new Rectangle(400,100);
+private Rectangle panel;
 
-Rectangle square = new Rectangle(40,40);
-Label description = new Label("Som van de waardes op \n"
-		                       + "de blauwe dobbelstenen.");
-Label title = new Label("Shades Of Blue");
-Label points = new Label("75");
-
-
-
-
-
+private Rectangle square;
+private Label description;
+private Label title;
+private Label points;
 
 
 public ObjectiveInGameView() {
+	
+	panel = new Rectangle(400,100);
+	square = new Rectangle(40,40);
+	description = new Label("Som van de waardes op \n"
+            + "de blauwe dobbelstenen.");
+	title = new Label("Shades Of Blue");
+	points = new Label("75");
+	
+	
+	
+	
 	
 	panel.setFill(Color.WHITE);
 	panel.setTranslateX(-400);
