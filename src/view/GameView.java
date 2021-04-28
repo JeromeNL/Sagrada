@@ -3,54 +3,59 @@ package view;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 
-public class GameView extends StackPane {
+public class GameView extends BorderPane {
 
-///////////////////////////////////////////////////////////////// Instance Variables	
-	
 	private RoundtrackView roundtrackView;
 	private PatternCardView patternCardView;
 	private DieSupply dieSupply;
 	private GameButtonView gameButtonView;
 	private ObjectiveInGameView objectiveInGameView;
-	
-	
-///////////////////////////////////////////////////////////////// Constructor
-	
 
-	
-	
 	public GameView() {
 
-		
-			
-		
-/// Initializing Variables		
-		objectiveInGameView = new ObjectiveInGameView ();
+		objectiveInGameView = new ObjectiveInGameView();
 		patternCardView = new PatternCardView();
 		roundtrackView = new RoundtrackView();
 		dieSupply = new DieSupply(Color.LIGHTBLUE);
-		gameButtonView = new GameButtonView();
+		gameButtonView = new GameButtonView(this);
 		ChangeCurrentPlayerView changeCurrentPlayerView = new ChangeCurrentPlayerView();
-			
+
 		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
-		
+
 		setAlignment(roundtrackView, Pos.TOP_CENTER);
 		setAlignment(patternCardView, Pos.CENTER);
+
+		showGame();
 		
-		///// enables gameview buttons to work while in development 
+		///// enables gameview buttons to work while in development
 		
+		
+//		setLeft(objectiveInGameView);
+
 //		this.getChildren().addAll(roundtrackView,patternCardView,dieSupply,gameButtonView);
 
 		//// enables the die supply to be draggable while in development
-		
+
 //		this.getChildren().addAll(roundtrackView,patternCardView,gameButtonView,dieSupply);
 
-		
-		this.getChildren().addAll(roundtrackView,patternCardView,gameButtonView,dieSupply,changeCurrentPlayerView,objectiveInGameView);
-		
+//		this.getChildren().addAll(roundtrackView, patternCardView, gameButtonView, dieSupply, changeCurrentPlayerView,
+//				objectiveInGameView);
+
+	}
+	
+	public void showGame() {
+		getChildren().clear();
+		setTop(roundtrackView);
+		setCenter(patternCardView);
+		setBottom(gameButtonView);
+	}
+	
+	public void showToolCardView() {
+		getChildren().clear();
+		setCenter(new ToolCardInUseView(this));
 	}
 
 }
