@@ -56,6 +56,22 @@ public class DatabaseController {
 		}
 		return null;
 	}
+	
+	/*
+	 * Methode om INSERT/UPDATE/DELETE statements uit te voeren op de database.
+	 * Returns: aantal geüpdate rows OF 0 als het SQL query is dat niks teruggeeft.
+	 */
+	public int doUpdateQuery(String query) {
+		Statement statement;
+		try {
+			statement = m_Conn.createStatement();
+			return statement.executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println("Something went wrong while executing the following insert/update/delete query: " + query);
+			System.out.println(e.getMessage());
+		}
+		return 0;
+	}
 
 	public void doSomeQuering() {
 		System.out.println("Gaat nu een query doen, moment..");
