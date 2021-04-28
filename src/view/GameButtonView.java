@@ -20,6 +20,9 @@ public class GameButtonView extends Pane {
 	
 	GameButtonView() {
 		
+	
+		
+		
 /// Initializing Variables
 		
 		toolCardInUseView = new ToolCardInUseView();

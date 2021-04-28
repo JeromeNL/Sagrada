@@ -18,15 +18,21 @@ public class GameView extends StackPane {
 	
 ///////////////////////////////////////////////////////////////// Constructor
 	
+
+	
 	
 	public GameView() {
 
+		
+			
+		
 /// Initializing Variables		
 		
 		patternCardView = new PatternCardView();
 		roundtrackView = new RoundtrackView();
 		dieSupply = new DieSupply(Color.LIGHTBLUE);
 		gameButtonView = new GameButtonView();
+		ChangeCurrentPlayerView changeCurrentPlayerView = new ChangeCurrentPlayerView();
 			
 		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
 		
@@ -39,8 +45,10 @@ public class GameView extends StackPane {
 
 		//// enables the die supply to be draggable while in development
 		
-		this.getChildren().addAll(roundtrackView,patternCardView,gameButtonView,dieSupply);
+//		this.getChildren().addAll(roundtrackView,patternCardView,gameButtonView,dieSupply);
 
+		
+		this.getChildren().addAll(roundtrackView,patternCardView,gameButtonView,dieSupply,changeCurrentPlayerView);
 		
 	}
 
