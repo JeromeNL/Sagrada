@@ -49,6 +49,7 @@ public class GameView extends BorderPane {
 	public void showGame() {
 		getChildren().clear();
 		setTop(roundtrackView);
+		setLeft(objectiveInGameView);
 		setCenter(patternCardView);
 		setBottom(gameButtonView);
 	}
