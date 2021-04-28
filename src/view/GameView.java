@@ -14,6 +14,7 @@ public class GameView extends StackPane {
 	private PatternCardView patternCardView;
 	private DieSupply dieSupply;
 	private GameButtonView gameButtonView;
+	private ObjectiveInGameView objectiveInGameView;
 	
 	
 ///////////////////////////////////////////////////////////////// Constructor
@@ -27,7 +28,7 @@ public class GameView extends StackPane {
 			
 		
 /// Initializing Variables		
-		
+		objectiveInGameView = new ObjectiveInGameView ();
 		patternCardView = new PatternCardView();
 		roundtrackView = new RoundtrackView();
 		dieSupply = new DieSupply(Color.LIGHTBLUE);
@@ -48,7 +49,7 @@ public class GameView extends StackPane {
 //		this.getChildren().addAll(roundtrackView,patternCardView,gameButtonView,dieSupply);
 
 		
-		this.getChildren().addAll(roundtrackView,patternCardView,gameButtonView,dieSupply,changeCurrentPlayerView);
+		this.getChildren().addAll(roundtrackView,patternCardView,gameButtonView,dieSupply,changeCurrentPlayerView,objectiveInGameView);
 		
 	}
 
