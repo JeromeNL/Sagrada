@@ -9,9 +9,12 @@ public class MainScene extends Scene {
 
 	public MainScene() {
 		super(new Pane(), 1280, 720);
-
+		EndScoreView endScoreView= new EndScoreView();
 		GameView gameView = new GameView(); 
-		setRoot(gameView);
+	
+		setRoot(endScoreView);
+		
+//		setRoot(gameView);
 		
 		
 //		LobbyView lobbyView = new LobbyView(); 

@@ -15,6 +15,7 @@ public class GameView extends StackPane {
 	private DieSupply dieSupply;
 	private GameButtonView gameButtonView;
 	private ObjectiveInGameView objectiveInGameView;
+
 	
 	
 ///////////////////////////////////////////////////////////////// Constructor
