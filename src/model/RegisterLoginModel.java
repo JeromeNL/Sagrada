@@ -1,6 +1,76 @@
 package model;
 
+import controller.DatabaseController;
+
+// by Jerome :)
 public class RegisterLoginModel {
 
-	// Joram 
+	// instance variables
+	private String registerUsernameGiven;
+	private String registerPasswordGiven;
+
+	private String loginUsernameGiven;
+	private String loginPasswordGiven;
+	private boolean loginCorrect = false;
+
+	// classes
+
+	public void registerAccount() {
+		// ingevoerde login en username krijgen uit textfield
+
+		System.out.println("username input: " + registerUsernameGiven + " password given: " + registerPasswordGiven);
+
+		DatabaseController DBRegister = new DatabaseController();
+
+		DBRegister.doUpdateQuery(
+				"INSERT INTO account VALUES('" + registerUsernameGiven + "', '" + registerPasswordGiven + "')");
+		// ingevoerde gegevens in database zetten.
+
+		// gebruiker moet nu inloggen.
+
+	}
+
+	public void tryLogin() {
+		// ingevoerde login username krijgen uit textfield
+		// ingevoerde login password krijgen uit textfield
+
+		// opvragen uit database welk wachtwoord er bij de username hoort.
+
+		// Als password bij username past -> ww correct.
+		// Anders: inlog verkeerd.
+	}
+
+	// Getters N Setters
+	public String getRegisterUsernameGiven() {
+		return registerUsernameGiven;
+	}
+
+	public void setRegisterUsernameGiven(String registerUsernameGiven) {
+		this.registerUsernameGiven = registerUsernameGiven;
+	}
+
+	public String getRegisterPasswordGiven() {
+		return registerPasswordGiven;
+	}
+
+	public void setRegisterPasswordGiven(String registerPasswordGiven) {
+		this.registerPasswordGiven = registerPasswordGiven;
+	}
+
+	public String getLoginUsernameGiven() {
+		return loginUsernameGiven;
+	}
+
+	public void setLoginUsernameGiven(String loginUsernameGiven) {
+		this.loginUsernameGiven = loginUsernameGiven;
+	}
+
+	public String getLoginPasswordGiven() {
+		return loginPasswordGiven;
+	}
+
+	public void setLoginPasswordGiven(String loginPasswordGiven) {
+		this.loginPasswordGiven = loginPasswordGiven;
+	}
+
 }
