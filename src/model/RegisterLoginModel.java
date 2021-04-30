@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.ResultSet;
+
 import controller.DatabaseController;
 
 // by Jerome :)
@@ -33,8 +35,14 @@ public class RegisterLoginModel {
 	public void tryLogin() {
 		// ingevoerde login username krijgen uit textfield
 		// ingevoerde login password krijgen uit textfield
+		System.out.println("username input: " + loginUsernameGiven + " password given: " + loginPasswordGiven);
 
+		DatabaseController DBLogin = new DatabaseController();
 		// opvragen uit database welk wachtwoord er bij de username hoort.
+		ResultSet passwordDB = DBLogin
+				.doQuery("Select password FROM account WHERE username = '" + loginUsernameGiven + "'");
+
+		// resultset naar een string
 
 		// Als password bij username past -> ww correct.
 		// Anders: inlog verkeerd.
