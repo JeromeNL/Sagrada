@@ -1,10 +1,20 @@
 package model;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import controller.DatabaseController;
+import javafx.scene.paint.Color;
+import view.DieView;
 
 // by Jerome :)
+
+// To do:
+// DONE- Correct werkende "naam nog vrij" check
+// - wachtwoord check
+// - Meldingen in view: verkeerd wachtwoord, te korte username/password etc.. 
+// - alles netjes maken
+
 public class RegisterLoginModel {
 
 	// instance variables
@@ -13,39 +23,116 @@ public class RegisterLoginModel {
 
 	private String loginUsernameGiven;
 	private String loginPasswordGiven;
-	private boolean loginCorrect = false;
 
 	// classes
 
 	public void registerAccount() {
-		// ingevoerde login en username krijgen uit textfield
-
 		System.out.println("username input: " + registerUsernameGiven + " password given: " + registerPasswordGiven);
 
-		DatabaseController DBRegister = new DatabaseController();
+		if (nameAvailableCheck(registerUsernameGiven) == false) {
+			System.out.println("Name not available");
+		} else {
+			if (lengthCheck(registerUsernameGiven) == false || charCheck(registerUsernameGiven) == false) {
+				System.out.println("Username is too short or contains other characters than letters/numbers!");
+			} else {
 
-		DBRegister.doUpdateQuery(
-				"INSERT INTO account VALUES('" + registerUsernameGiven + "', '" + registerPasswordGiven + "')");
-		// ingevoerde gegevens in database zetten.
-
-		// gebruiker moet nu inloggen.
+				if (lengthCheck(registerPasswordGiven) == false || charCheck(registerPasswordGiven) == false) {
+					System.out.println("Password is too short or contains other characters than letters/numbers!");
+				} else {
+					DatabaseController DBRegister = new DatabaseController();
+					DBRegister.doUpdateQuery("INSERT INTO account VALUES('" + registerUsernameGiven + "', '"
+							+ registerPasswordGiven + "')");
+					System.out.println("Geregistreerd!");
+				}
+			}
+		}
 
 	}
 
 	public void tryLogin() {
-		// ingevoerde login username krijgen uit textfield
-		// ingevoerde login password krijgen uit textfield
+
 		System.out.println("username input: " + loginUsernameGiven + " password given: " + loginPasswordGiven);
 
-		DatabaseController DBLogin = new DatabaseController();
-		// opvragen uit database welk wachtwoord er bij de username hoort.
-		ResultSet passwordDB = DBLogin
-				.doQuery("Select password FROM account WHERE username = '" + loginUsernameGiven + "'");
+		if (lengthCheck(loginUsernameGiven) == false || charCheck(loginUsernameGiven) == false) {
+			System.out.println("Username is too short or contains other characters than letters/numbers!");
+		} else {
+			if (lengthCheck(loginPasswordGiven) == false || charCheck(loginPasswordGiven) == false) {
+				System.out.println("Password is too short or contains other characters than letters/numbers!");
+			} else {
+				// VOORBEELD
+				DatabaseController DBLogin = new DatabaseController();
 
-		// resultset naar een string
+				ResultSet passwordDB = DBLogin
+						.doQuery("Select password FROM account WHERE username = '" + loginUsernameGiven + "'");
 
-		// Als password bij username past -> ww correct.
-		// Anders: inlog verkeerd.
+				if (passwordCheck(loginUsernameGiven) == true) {
+					System.out.println("logged in!");
+				} else {
+					System.out.println("Error! Wrong password!");
+				}
+
+			}
+		}
+
+	}
+
+	// Check methods
+	public boolean lengthCheck(String input) { // checks for at least 3 characters
+		if (input.length() < 3) {
+			System.out.println("Doesnt contain at least 3 characters");
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean charCheck(String input) { // checks for letters and numbers only
+		boolean charChecker = true;
+		for (int i = 0; i < input.length(); i++) {
+			if (Character.isLetterOrDigit(input.charAt(i)) == false) {
+				System.out.println(Character.isLetterOrDigit(input.charAt(i)));
+				return false;
+			}
+		}
+		return charChecker;
+	}
+
+	public boolean nameAvailableCheck(String input) { // check availability of username
+
+		input.toLowerCase();
+		DatabaseController checkName = new DatabaseController();
+		ResultSet nameAvailable = checkName.doQuery("SELECT COUNT(*) as counter FROM account where username = '" + input + "'");
+		
+		try {
+			while(nameAvailable.next()) {
+			int oneOrZero =	Integer.parseInt(nameAvailable.getString("counter"));
+				System.out.println(oneOrZero);
+				
+				if(oneOrZero == 0) {
+					return true;
+				}
+				else if(oneOrZero == 1) {
+					return false;
+				}
+				else {
+					return false;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+
+//		als uitkomst 0 is -> bestaat niet
+//		anders -> bestaat wel
+//		
+
+	}
+
+	public boolean passwordCheck(String userName) {
+
+		return true;
 	}
 
 	// Getters N Setters
