@@ -107,8 +107,8 @@ public class loginview extends Application {
 			public void handle(ActionEvent e) {
 				System.out.println("Register knop test");
 				;
-				rlm.setRegisterUsernameGiven(tfName.getText());
-				rlm.setRegisterPasswordGiven(tfPassword.getText());
+				rlm.setRegisterUsernameGiven(tfName.getText().toString().toLowerCase());
+				rlm.setRegisterPasswordGiven(tfPassword.getText().toString().toLowerCase());
 				rlm.registerAccount();
 			}
 		});
@@ -123,7 +123,10 @@ public class loginview extends Application {
 			public void handle(ActionEvent e) {
 				System.out.println("Login knop test");
 				;
-
+				
+				rlm.setLoginUsernameGiven(tfName.getText().toString().toLowerCase());
+				rlm.setLoginPasswordGiven(tfPassword.getText().toString().toLowerCase());
+				rlm.tryLogin();
 			}
 		});
 
