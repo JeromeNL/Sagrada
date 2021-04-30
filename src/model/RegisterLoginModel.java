@@ -1,5 +1,8 @@
+// by JeromeNL :)
+
 package model;
 
+// imports
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -7,25 +10,15 @@ import controller.DatabaseController;
 import javafx.scene.paint.Color;
 import view.DieView;
 
-// by Jerome :)
-
-// To do:
-// DONE- Correct werkende "naam nog vrij" check
-// - wachtwoord check
-// - Meldingen in view: verkeerd wachtwoord, te korte username/password etc.. 
-// - alles netjes maken
-
 public class RegisterLoginModel {
 
 	// instance variables
 	private String registerUsernameGiven;
 	private String registerPasswordGiven;
-
 	private String loginUsernameGiven;
 	private String loginPasswordGiven;
 
 	// classes
-
 	public void registerAccount() {
 		System.out.println("username input: " + registerUsernameGiven + " password given: " + registerPasswordGiven);
 
@@ -35,22 +28,19 @@ public class RegisterLoginModel {
 			if (lengthCheck(registerUsernameGiven) == false || charCheck(registerUsernameGiven) == false) {
 				System.out.println("Username is too short or contains other characters than letters/numbers!");
 			} else {
-
 				if (lengthCheck(registerPasswordGiven) == false || charCheck(registerPasswordGiven) == false) {
 					System.out.println("Password is too short or contains other characters than letters/numbers!");
 				} else {
 					DatabaseController DBRegister = new DatabaseController();
 					DBRegister.doUpdateQuery("INSERT INTO account VALUES('" + registerUsernameGiven + "', '"
 							+ registerPasswordGiven + "')");
-					System.out.println("Geregistreerd!");
+					System.out.println("done!");
 				}
 			}
 		}
-
 	}
 
 	public void tryLogin() {
-
 		System.out.println("username input: " + loginUsernameGiven + " password given: " + loginPasswordGiven);
 
 		if (lengthCheck(loginUsernameGiven) == false || charCheck(loginUsernameGiven) == false) {
@@ -59,21 +49,21 @@ public class RegisterLoginModel {
 			if (lengthCheck(loginPasswordGiven) == false || charCheck(loginPasswordGiven) == false) {
 				System.out.println("Password is too short or contains other characters than letters/numbers!");
 			} else {
-				// VOORBEELD
-				DatabaseController DBLogin = new DatabaseController();
-
-				ResultSet passwordDB = DBLogin
-						.doQuery("Select password FROM account WHERE username = '" + loginUsernameGiven + "'");
-
-				if (passwordCheck(loginUsernameGiven) == true) {
-					System.out.println("logged in!");
+				if (nameAvailableCheck(loginUsernameGiven) == true) {
+					System.out.println("This user doesnt exist in database!");
 				} else {
-					System.out.println("Error! Wrong password!");
-				}
+					DatabaseController DBLogin = new DatabaseController();
+					ResultSet passwordDB = DBLogin
+							.doQuery("Select password FROM account WHERE username = '" + loginUsernameGiven + "'");
 
+					if (passwordCheck(loginUsernameGiven, loginPasswordGiven) == true) {
+						System.out.println("logged in!");
+					} else {
+						System.out.println("Error! Wrong password!");
+					}
+				}
 			}
 		}
-
 	}
 
 	// Check methods
@@ -101,20 +91,19 @@ public class RegisterLoginModel {
 
 		input.toLowerCase();
 		DatabaseController checkName = new DatabaseController();
-		ResultSet nameAvailable = checkName.doQuery("SELECT COUNT(*) as counter FROM account where username = '" + input + "'");
-		
+		ResultSet nameAvailable = checkName
+				.doQuery("SELECT COUNT(*) as counter FROM account where username = '" + input + "'");
+
 		try {
-			while(nameAvailable.next()) {
-			int oneOrZero =	Integer.parseInt(nameAvailable.getString("counter"));
+			while (nameAvailable.next()) {
+				int oneOrZero = Integer.parseInt(nameAvailable.getString("counter"));
 				System.out.println(oneOrZero);
-				
-				if(oneOrZero == 0) {
+
+				if (oneOrZero == 0) {
 					return true;
-				}
-				else if(oneOrZero == 1) {
+				} else if (oneOrZero == 1) {
 					return false;
-				}
-				else {
+				} else {
 					return false;
 				}
 			}
@@ -124,15 +113,34 @@ public class RegisterLoginModel {
 		}
 		return false;
 
-//		als uitkomst 0 is -> bestaat niet
-//		anders -> bestaat wel
-//		
-
 	}
 
-	public boolean passwordCheck(String userName) {
+	public boolean passwordCheck(String userName, String pw) {
+		userName.toLowerCase();
+		DatabaseController checkPassword = new DatabaseController();
+		ResultSet askedPassword = checkPassword.doQuery("SELECT COUNT(*) as counter FROM account WHERE username = '"
+				+ userName + "' && password = '" + pw + "'");
 
-		return true;
+		try {
+			while (askedPassword.next()) {
+				int oneOrZero = Integer.parseInt(askedPassword.getString("counter"));
+				System.out.println(oneOrZero);
+
+				if (oneOrZero == 0) {
+					return false;
+				} else if (oneOrZero == 1) {
+					return true;
+				} else {
+					return false;
+				}
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+
 	}
 
 	// Getters N Setters
