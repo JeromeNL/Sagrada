@@ -12,22 +12,9 @@ public class PatterncardField {
 	
 	private Die dieOnField;
 	
-	private int eyesCount; // 0 = no die on field
-	private Color dieColor; // null = no die on field
-	
 	public PatterncardField(int xPosition, int yPosition) {
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
-		
-		dieColor = null;
-		eyesCount = 0;
-		colorRequirement = null;
-		eyesCountRequirement = 0;
-	}
-	
-	public PatterncardField(int eyesCount, Color dieColor) {
-		this.dieColor = dieColor;
-		this.eyesCount = eyesCount;
 	}
 	
 	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, Color colorRequirement) {
@@ -36,18 +23,14 @@ public class PatterncardField {
 		
 		this.eyesCountRequirement = eyesCountRequirement;
 		this.colorRequirement = colorRequirement;
-		
-		dieColor = null;
-		eyesCount = 0;
 	}
 	
 	public void placeDie(Die die) {
-		dieOnField = die;
+		this.dieOnField = die;
 	}
 	
 	public void removeDie() {
-		eyesCount = 0;
-		dieColor = Color.WHITE;
+		dieOnField = null;
 	}
 	
 	public int getXPosition() {
@@ -58,12 +41,20 @@ public class PatterncardField {
 		return yPosition;
 	}
 	
-	public int getEyesCount() {
-		return eyesCount;
+	public Die getDie() {
+		return dieOnField;
 	}
 	
-	public Color getDieColor() {
-		return dieColor;
+	public boolean hasDie() {
+		return dieOnField != null;
+	}
+	
+	public boolean hasColorRequirement() {
+		return colorRequirement != null;
+	}
+	
+	public boolean hasEyesCountRequirement() {
+		return eyesCountRequirement != 0;
 	}
 	
 	public Color getColorRequirement() {

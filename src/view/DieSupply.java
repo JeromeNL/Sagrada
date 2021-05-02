@@ -1,10 +1,11 @@
 package view;
 
 import java.util.ArrayList;
+
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import model.PatterncardField;
+import model.Die;
 
 public class DieSupply extends HBox {
 
@@ -15,15 +16,15 @@ public class DieSupply extends HBox {
 		availableDies = new ArrayList<DieToDragView>(); 
 		
 		// Adding dies to show.
-		DieToDragView die1 = new DieToDragView(new PatterncardField(3, Color.MEDIUMPURPLE));
+		DieToDragView die1 = new DieToDragView(new Die(Color.MEDIUMPURPLE, 3));
 		availableDies.add(die1);
-		DieToDragView die2 = new DieToDragView(new PatterncardField(2, Color.LIGHTYELLOW));
+		DieToDragView die2 = new DieToDragView(new Die(Color.LIGHTYELLOW, 2));
 		availableDies.add(die2);
-		DieToDragView die3 = new DieToDragView(new PatterncardField(6, Color.LIGHTBLUE));
+		DieToDragView die3 = new DieToDragView(new Die(Color.LIGHTBLUE, 6));
 		availableDies.add(die3);
-		DieToDragView die4 = new DieToDragView(new PatterncardField(1, Color.INDIANRED));
+		DieToDragView die4 = new DieToDragView(new Die(Color.INDIANRED, 1));
 		availableDies.add(die4);
-		DieToDragView die5 = new DieToDragView(new PatterncardField(5, Color.LIGHTGREEN));
+		DieToDragView die5 = new DieToDragView(new Die(Color.LIGHTGREEN, 5));
 		availableDies.add(die5);
 		
 		setAlignment(Pos.CENTER);

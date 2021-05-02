@@ -67,7 +67,7 @@ public class PatternCardView extends GridPane {
 				String color = rs.getString("color");
 				Color colorRequirement = null;
 				if (color == null) {
-					colorRequirement = Color.WHITE;
+					colorRequirement = null;
 				} else {
 					if (color.equals("red")) {
 						colorRequirement = Color.INDIANRED;

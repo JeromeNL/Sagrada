@@ -19,5 +19,4 @@ public class Die {
 	public int getEyesCount() {
 		return eyesCount;
 	}
-	
 }

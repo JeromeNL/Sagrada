@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import model.Die;
 import model.PatterncardField;
 
 // View of one die in the patterncard (non-draggable die).
@@ -16,11 +17,11 @@ import model.PatterncardField;
 public class DieView extends StackPane {
 
 	private final int dieSize = 50;
-	private PatterncardField dieField;
+	private PatterncardField patternCardField;
 	private Rectangle dieFieldRectangle;
 
-	public DieView(PatterncardField dieField) {
-		this.dieField = dieField;
+	public DieView(PatterncardField patternCardField) {
+		this.patternCardField = patternCardField;
 		drawDieField();
 		setUpAcceptDrag();
 	}	
@@ -72,7 +73,7 @@ public class DieView extends StackPane {
 					
 					// Check if die can actually be placed.
 					if (isValidMove(eyesCount, dieColor)) {
-						dieField.placeDie(eyesCount, dieColor);
+						patternCardField.placeDie(new Die(dieColor, eyesCount));
 						drawDieField();
 						diePlaced = true;
 					}
@@ -96,14 +97,15 @@ public class DieView extends StackPane {
 		if (isCorrectNumber(eyesCount) && isCorrectColor(dieColor)) {
 			return true;
 		}
+		
 		return false;
 	}
 	
 	// Checks if color requirement of diefield allows the die to be placed.
 	public boolean isCorrectColor(Color dieColor) {
-		Color colorRequirement = dieField.getColorRequirement();
-		if (colorRequirement != Color.WHITE) {
-			if (dieColor.equals(colorRequirement)) {
+		if (patternCardField.hasColorRequirement()) {
+			Color colorRequirement = patternCardField.getColorRequirement();
+			if (colorRequirement.equals(dieColor)) {
 				return true;
 			} else {
 				return false;
@@ -114,9 +116,8 @@ public class DieView extends StackPane {
 	
 	// Checks if number of eyes requirement of diefield allows the die to be placed.
 	public boolean isCorrectNumber(int eyesCount) {
-		int numberRequirement = dieField.getEyesCountRequirement();
-		if (numberRequirement != 0) {
-			if (numberRequirement == eyesCount) {
+		if (patternCardField.hasEyesCountRequirement()) {
+			if (patternCardField.getEyesCountRequirement() == eyesCount) {
 				return true;
 			} else {
 				return false;
@@ -137,17 +138,16 @@ public class DieView extends StackPane {
 		drawDieEyesCount();		
 	}
 	
-	// Sets the background color of the die.
+	// Sets the background color of the diefield.
 	private void drawDieColor() {
-		// Check if field has a die on it.
-		if (dieField.getDieColor() != null) {
-			// Fill field with die color.
-			dieFieldRectangle.setFill(dieField.getDieColor());
+		// Check if the field contains a die.
+		if (patternCardField.hasDie()) {
+			Die dieOnField = patternCardField.getDie();
+			dieFieldRectangle.setFill(dieOnField.getColor());
 		} else {
-			// No die on field, so check if field has a color requirement.
-			Color colorRequirement = dieField.getColorRequirement();
-			if (colorRequirement != null) {
-				// Set the color requirement as the background color.
+			// No die on field, so check if field has color requirement.
+			if (patternCardField.hasColorRequirement()) {
+				Color colorRequirement = patternCardField.getColorRequirement();
 				dieFieldRectangle.setFill(colorRequirement);
 			} else {
 				// No color requirement, so field color is white.
@@ -159,27 +159,22 @@ public class DieView extends StackPane {
 	
 	// Draws the eyes count of the field. (from die or eyes count requirement).
 	private void drawDieEyesCount() {
-		// Retrieving dieEyesCount. If dieField has no die, the dieEyesCount is 0.
-		int dieEyesCount = dieField.getEyesCount();
+		Label eyesCountLabel = new Label();
+		eyesCountLabel.setFont(new Font("Arial", 20));		
 		
-		// Check if field has a die on it.
-		if (dieEyesCount >= 1 && dieEyesCount <= 6) {
-			// Drawing die number on the field.
-			Label numberLabel = new Label(Integer.toString(dieEyesCount));
-			numberLabel.setFont(new Font("Arial", 20));
-			numberLabel.setTextFill(Color.BLACK);
-			getChildren().add(numberLabel);
+		// Check if the field contains a die.
+		if (patternCardField.hasDie()) {
+			Die dieOnField = patternCardField.getDie();
+			eyesCountLabel.setText(Integer.toString(dieOnField.getEyesCount()));
+			eyesCountLabel.setTextFill(Color.BLACK);
 		} else {
-			// No die on the field, so check if the field has color requirement.
-			int eyesCountRequirement = dieField.getEyesCountRequirement();
-			// 0 means no eyesCountRequirement.
-			if (eyesCountRequirement != 0) {
-				// Draw eyes requirement label on the field.
-				Label numberLabel = new Label(Integer.toString(eyesCountRequirement));
-				numberLabel.setFont(new Font("Arial", 20));
-				numberLabel.setTextFill(Color.GRAY);
-				getChildren().add(numberLabel);
+			// No die on field, so check if field has a eyes count requirement
+			if (patternCardField.hasEyesCountRequirement()) {
+				int eyesCountRequirement = patternCardField.getEyesCountRequirement();
+				eyesCountLabel.setText(Integer.toString(eyesCountRequirement));
+				eyesCountLabel.setTextFill(Color.GRAY);
 			}
 		}
+		getChildren().add(eyesCountLabel);
 	}
 }

@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import model.PatterncardField;
+import model.Die;
 
 // View of one die in the supply (a draggable die)
 
@@ -19,18 +19,18 @@ public class DieToDragView extends StackPane {
 
 	private final int dieSize = 50;
 	private Rectangle dieRectangle;
-	private PatterncardField dieField;
+	private Die die;
 
-	public DieToDragView(PatterncardField dieField) {
-		this.dieField = dieField;
+	public DieToDragView(Die die) {
+		this.die = die;
 		
 		// Styling the die
 		dieRectangle = new Rectangle(dieSize, dieSize);
 		dieRectangle.setStroke(Color.BLACK);
 		dieRectangle.setStrokeWidth(2);
-		dieRectangle.setFill(dieField.getDieColor());
+		dieRectangle.setFill(die.getColor());
 
-		Label eyesCount = new Label(Integer.toString(dieField.getEyesCount()));
+		Label eyesCount = new Label(Integer.toString(die.getEyesCount()));
 		eyesCount.setFont(new Font("Arial", 20));
 		eyesCount.setTextFill(Color.BLACK);
 
@@ -52,7 +52,7 @@ public class DieToDragView extends StackPane {
 				
 				// Adding the die data to the dragboard.
 				ClipboardContent content = new ClipboardContent();
-				content.putString(dieField.getEyesCount() + "" + dieField.getDieColor().toString());
+				content.putString(die.getEyesCount() + "" + die.getColor().toString());
 				db.setContent(content);
 				
 				event.consume();
