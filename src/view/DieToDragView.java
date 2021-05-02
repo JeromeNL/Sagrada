@@ -47,6 +47,9 @@ public class DieToDragView extends StackPane {
 
 				Dragboard db = startDragAndDrop(TransferMode.ANY);
 				
+				// Shows the die that is being dragged mext to cursor.
+				db.setDragView(snapshot(null, null), 35, 35);
+				
 				// Adding the die data to the dragboard.
 				ClipboardContent content = new ClipboardContent();
 				content.putString(dieField.getEyesCount() + "" + dieField.getDieColor().toString());
