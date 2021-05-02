@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class GameView extends BorderPane {
@@ -15,7 +16,7 @@ public class GameView extends BorderPane {
 	private ObjectiveInGameView objectiveInGameView;
 
 	public GameView() {
-
+		
 		objectiveInGameView = new ObjectiveInGameView();
 		patternCardView = new PatternCardView();
 		roundtrackView = new RoundtrackView();
@@ -26,7 +27,6 @@ public class GameView extends BorderPane {
 		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
 
 		setAlignment(roundtrackView, Pos.TOP_CENTER);
-		setAlignment(patternCardView, Pos.CENTER);
 
 		showGame();
 		
@@ -51,7 +51,8 @@ public class GameView extends BorderPane {
 		setTop(roundtrackView);
 		setLeft(objectiveInGameView);
 		setCenter(patternCardView);
-		setBottom(gameButtonView);
+		VBox vBox = new VBox(dieSupply, gameButtonView);
+		setBottom(vBox);
 	}
 	
 	public void showToolCardView() {
