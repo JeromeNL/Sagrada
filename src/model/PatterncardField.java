@@ -2,7 +2,7 @@ package model;
 
 import javafx.scene.paint.Color;
 
-public class DieFieldModel {
+public class PatterncardField {
 
 	private int xPosition; // range: 1 to 5
 	private int yPosition; // range: 1 to 4
@@ -10,10 +10,12 @@ public class DieFieldModel {
 	private int eyesCountRequirement; // 0 = no requirement
 	private Color colorRequirement; // null is no requirement
 	
+	private Die dieOnField;
+	
 	private int eyesCount; // 0 = no die on field
 	private Color dieColor; // null = no die on field
 	
-	public DieFieldModel(int xPosition, int yPosition) {
+	public PatterncardField(int xPosition, int yPosition) {
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
 		
@@ -23,12 +25,12 @@ public class DieFieldModel {
 		eyesCountRequirement = 0;
 	}
 	
-	public DieFieldModel(int eyesCount, Color dieColor) {
+	public PatterncardField(int eyesCount, Color dieColor) {
 		this.dieColor = dieColor;
 		this.eyesCount = eyesCount;
 	}
 	
-	public DieFieldModel(int xPosition, int yPosition, int eyesCountRequirement, Color colorRequirement) {
+	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, Color colorRequirement) {
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
 		
@@ -39,9 +41,8 @@ public class DieFieldModel {
 		eyesCount = 0;
 	}
 	
-	public void placeDie(int eyesCount, Color dieColor) {
-		this.eyesCount = eyesCount;
-		this.dieColor = dieColor;
+	public void placeDie(Die die) {
+		dieOnField = die;
 	}
 	
 	public void removeDie() {

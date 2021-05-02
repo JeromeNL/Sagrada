@@ -9,17 +9,17 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import model.DieFieldModel;
+import model.PatterncardField;
 
 // View of one die in the patterncard (non-draggable die).
 
 public class DieView extends StackPane {
 
 	private final int dieSize = 50;
-	private DieFieldModel dieField;
+	private PatterncardField dieField;
 	private Rectangle dieFieldRectangle;
 
-	public DieView(DieFieldModel dieField) {
+	public DieView(PatterncardField dieField) {
 		this.dieField = dieField;
 		drawDieField();
 		setUpAcceptDrag();

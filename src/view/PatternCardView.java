@@ -11,7 +11,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import model.DieFieldModel;
+import model.PatterncardField;
 
 public class PatternCardView extends GridPane {
 
@@ -43,7 +43,7 @@ public class PatternCardView extends GridPane {
 	private void createEmptyCard() {
 		for (int x = 1; x <= 5; x++) {
 			for (int y = 1; y <= 4; y++) {
-				add(new DieView(new DieFieldModel(1, 1, 2, null)), x, y);
+				add(new DieView(new PatterncardField(1, 1, 2, null)), x, y);
 			}
 		}
 	}
@@ -88,7 +88,7 @@ public class PatternCardView extends GridPane {
 
 				int valueRequirement = rs.getInt("value");
 
-				add(new DieView(new DieFieldModel(xPosition, yPosition, valueRequirement, colorRequirement)), xPosition,
+				add(new DieView(new PatterncardField(xPosition, yPosition, valueRequirement, colorRequirement)), xPosition,
 						yPosition);
 			}
 		} catch (SQLException e) {
