@@ -20,9 +20,11 @@ public class DieToDragView extends StackPane {
 	private final int dieSize = 50;
 	private Rectangle dieRectangle;
 	private Die die;
+	private DieSupply dieSupply;
 
-	public DieToDragView(Die die) {
+	public DieToDragView(Die die, DieSupply dieSupply) {
 		this.die = die;
+		this.dieSupply = dieSupply;
 		
 		// Styling the die
 		dieRectangle = new Rectangle(dieSize, dieSize);
@@ -64,16 +66,10 @@ public class DieToDragView extends StackPane {
 			public void handle(DragEvent event) {
 				// Remove the die from supply if it was successfully placed on the patterncard.
 				if (event.getTransferMode() == TransferMode.MOVE) {
-					removeDieFromSupply();
+					dieSupply.removeDie(die);
 				}
 				event.consume();
 			}
 		});
 	}
-	
-	private void removeDieFromSupply() {
-		// to-do: code to remove die from the supply....
-		dieRectangle.setFill(Color.BLACK); // temporary visual feedback
-	}
-
 }

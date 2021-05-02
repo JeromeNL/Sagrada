@@ -6,30 +6,34 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import model.Die;
+import model.DiesInSupply;
 
 public class DieSupply extends HBox {
 
-	private ArrayList<DieToDragView> availableDies; // dies to place on patterncard
-
-	public DieSupply(Color newColor) {
+	private ArrayList<DieToDragView> draggableDies; // dies to place on patterncard
+	private DiesInSupply diesInSupply;
+	
+	public DieSupply(DiesInSupply diesInSupply) {
+		this.diesInSupply = diesInSupply;
 		
-		availableDies = new ArrayList<DieToDragView>(); 
-		
-		// Adding dies to show.
-		DieToDragView die1 = new DieToDragView(new Die(Color.MEDIUMPURPLE, 3));
-		availableDies.add(die1);
-		DieToDragView die2 = new DieToDragView(new Die(Color.LIGHTYELLOW, 2));
-		availableDies.add(die2);
-		DieToDragView die3 = new DieToDragView(new Die(Color.LIGHTBLUE, 6));
-		availableDies.add(die3);
-		DieToDragView die4 = new DieToDragView(new Die(Color.INDIANRED, 1));
-		availableDies.add(die4);
-		DieToDragView die5 = new DieToDragView(new Die(Color.LIGHTGREEN, 5));
-		availableDies.add(die5);
+		draggableDies = new ArrayList<DieToDragView>();
+		updateView();
 		
 		setAlignment(Pos.CENTER);
 		setSpacing(25);
-
-		getChildren().addAll(availableDies);
+	}
+	
+	public void updateView() {
+		getChildren().clear();
+		draggableDies.clear();
+		for (Die die : diesInSupply.getDies()) {
+			draggableDies.add(new DieToDragView(die, this));
+		}
+		getChildren().addAll(draggableDies);
+	}
+	
+	public void removeDie(Die die) {
+		diesInSupply.removeDie(die);
+		updateView();
 	}
 }

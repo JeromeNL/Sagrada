@@ -6,6 +6,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import model.DiesInSupply;
 
 public class GameView extends BorderPane {
 
@@ -14,13 +15,14 @@ public class GameView extends BorderPane {
 	private DieSupply dieSupply;
 	private GameButtonView gameButtonView;
 	private ObjectiveInGameView objectiveInGameView;
+	
 
-	public GameView() {
+	public GameView(DiesInSupply diesInSupply) {
 		
 		objectiveInGameView = new ObjectiveInGameView();
 		patternCardView = new PatternCardView();
 		roundtrackView = new RoundtrackView();
-		dieSupply = new DieSupply(Color.LIGHTBLUE);
+		dieSupply = new DieSupply(diesInSupply);
 		gameButtonView = new GameButtonView(this);
 		ChangeCurrentPlayerView changeCurrentPlayerView = new ChangeCurrentPlayerView();
 
