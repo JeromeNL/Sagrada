@@ -4,11 +4,11 @@ import javafx.scene.paint.Color;
 
 public class DieFieldModel {
 
-	private final int xPosition; // range: 1 to 5
-	private final int yPosition; // range: 1 to 4
+	private int xPosition; // range: 1 to 5
+	private int yPosition; // range: 1 to 4
 	
-	private final int eyesCountRequirement; // 0 = no requirement
-	private final Color colorRequirement; // null is no requirement
+	private int eyesCountRequirement; // 0 = no requirement
+	private Color colorRequirement; // null is no requirement
 	
 	private int eyesCount; // 0 = no die on field
 	private Color dieColor; // null = no die on field
@@ -21,6 +21,11 @@ public class DieFieldModel {
 		eyesCount = 0;
 		colorRequirement = null;
 		eyesCountRequirement = 0;
+	}
+	
+	public DieFieldModel(int eyesCount, Color dieColor) {
+		this.dieColor = dieColor;
+		this.eyesCount = eyesCount;
 	}
 	
 	public DieFieldModel(int xPosition, int yPosition, int eyesCountRequirement, Color colorRequirement) {
