@@ -13,6 +13,7 @@ public class MainScene extends Scene {
 	public MainScene() {
 		super(new Pane(), 1280, 720);
 		
+		// aanmaken onderstaande diesupply moet later in main controller gebeuren.
 		DiesInSupply diesInSupply = new DiesInSupply();
 		diesInSupply.addDie(new Die(Color.MEDIUMPURPLE, 3, 1));
 		diesInSupply.addDie(new Die(Color.LIGHTYELLOW, 2, 2));

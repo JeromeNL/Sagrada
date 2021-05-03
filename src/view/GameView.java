@@ -15,6 +15,7 @@ public class GameView extends BorderPane {
 	private DieSupply dieSupply;
 	private GameButtonView gameButtonView;
 	private ObjectiveInGameView objectiveInGameView;
+	private ChangeCurrentPlayerView changeCurrentPlayerView;
 	
 
 	public GameView(DiesInSupply diesInSupply) {
@@ -24,7 +25,7 @@ public class GameView extends BorderPane {
 		roundtrackView = new RoundtrackView();
 		dieSupply = new DieSupply(diesInSupply);
 		gameButtonView = new GameButtonView(this);
-		ChangeCurrentPlayerView changeCurrentPlayerView = new ChangeCurrentPlayerView();
+		changeCurrentPlayerView = new ChangeCurrentPlayerView();
 
 		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
 
@@ -32,20 +33,12 @@ public class GameView extends BorderPane {
 
 		showGame();
 		
-		///// enables gameview buttons to work while in development
-		
-		
-//		setLeft(objectiveInGameView);
-
-//		this.getChildren().addAll(roundtrackView,patternCardView,dieSupply,gameButtonView);
-
-		//// enables the die supply to be draggable while in development
-
-//		this.getChildren().addAll(roundtrackView,patternCardView,gameButtonView,dieSupply);
-
-//		this.getChildren().addAll(roundtrackView, patternCardView, gameButtonView, dieSupply, changeCurrentPlayerView,
-//				objectiveInGameView);
-
+//		showChangeCurrentPlayerView();
+	}
+	
+	public void showChangeCurrentPlayerView() {
+		getChildren().clear();
+		setCenter(changeCurrentPlayerView);
 	}
 	
 	public void showGame() {

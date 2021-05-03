@@ -30,7 +30,7 @@ public class DieToDragView extends StackPane {
 		dieRectangle = new Rectangle(dieSize, dieSize);
 		dieRectangle.setStroke(Color.BLACK);
 		dieRectangle.setStrokeWidth(2);
-		dieRectangle.setFill(die.getColor());
+		dieRectangle.setFill(die.getColor().brighter());
 
 		Label eyesCount = new Label(Integer.toString(die.getEyesCount()));
 		eyesCount.setFont(new Font("Arial", 20));
