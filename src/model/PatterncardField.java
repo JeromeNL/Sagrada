@@ -30,7 +30,6 @@ public class PatterncardField {
 		this.dieOnField = die;
 
 //		addDieToDatabase(playerID, gameID, die);
-		removeDieFromDatabase();
 	}
 
 	// Adds a row to the playerframefield table so the placement of a die is saved to the database.
@@ -43,16 +42,17 @@ public class PatterncardField {
 		dc.doUpdateQuery(query);
 	}
 	
+	// Removes the die from the database. 
 	private void removeDieFromDatabase() {
 		String query = "UPDATE playerframefield SET dienumber = NULL, diecolor = NULL WHERE position_x = " + xPosition + " AND position_y = " + yPosition + ";";
 
-		System.out.println(query);
-//		DatabaseController dc = new DatabaseController();
-//		dc.doUpdateQuery(query);
+		DatabaseController dc = new DatabaseController();
+		dc.doUpdateQuery(query);
 	}
 
 	public void removeDie() {
 		dieOnField = null;
+//		removeDieFromDatabase();
 	}
 
 	public int getXPosition() {
