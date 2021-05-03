@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-// Aanbod van dobbelstenen
+// Supply of dies during the game.
 
 public class DiesInSupply {
 	
