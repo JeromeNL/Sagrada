@@ -1,8 +1,10 @@
 package model;
 
+import controller.DatabaseController;
+
 public class FavorToken {
 
-	private final int idToken; // 1 - 24
+	private final int idToken; // number between 1 - 24
 	private final int idGame; // id of the game where the favortoken is being used
 	private int assignedToPlayerID; // favor token owned by player id
 	private int usedForToolcardID; // has gametoolcard id if favortoken has been used for gametoolcard
@@ -16,7 +18,7 @@ public class FavorToken {
 		addToDatabase();
 	}
 	
-	// Game favor tokens are assigned to player after choosing patterncard
+	// Game favor tokens are assigned to game playerid after choosing patterncard
 	public void assignToPlayer(int playerID) {
 		assignedToPlayerID = playerID;
 		updateDatabase();
@@ -33,6 +35,9 @@ public class FavorToken {
 	// Adds the favortoken to the gamefavortoken table.
 	private void addToDatabase() {
 		// to-do: insert row into gamefavortoken table with idfavortoken and idgame
+		DatabaseController dc = new DatabaseController();
+		String query = "INSERT INTO gamefavortoken VALUES ("+idToken+","+idGame+",NULL,NULL,NULL);";
+		dc.doUpdateQuery(query);
 	}
 	
 	// Updates the favortoken in the gamefavortoken table.
