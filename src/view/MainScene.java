@@ -27,5 +27,9 @@ public class MainScene extends Scene {
 //		LobbyView lobbyView = new LobbyView(); 
 //		setRoot(lobbyView);
 		
+		
+//		ToolcardView toolcardView = new ToolcardView();
+//		setRoot(toolcardView);
+		
 	}
 }
