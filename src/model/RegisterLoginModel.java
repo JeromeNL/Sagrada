@@ -25,10 +25,12 @@ public class RegisterLoginModel {
 		if (nameAvailableCheck(registerUsernameGiven) == false) {
 			System.out.println("Name not available");
 		} else {
-			if (lengthCheck(registerUsernameGiven) == false || charCheck(registerUsernameGiven) == false) {
+			if (containsMinThreeChars(registerUsernameGiven) == false
+					|| isOnlyCharAndNumbers(registerUsernameGiven) == false) {
 				System.out.println("Username is too short or contains other characters than letters/numbers!");
 			} else {
-				if (lengthCheck(registerPasswordGiven) == false || charCheck(registerPasswordGiven) == false) {
+				if (containsMinThreeChars(registerPasswordGiven) == false
+						|| isOnlyCharAndNumbers(registerPasswordGiven) == false) {
 					System.out.println("Password is too short or contains other characters than letters/numbers!");
 				} else {
 					DatabaseController DBRegister = new DatabaseController();
@@ -43,10 +45,11 @@ public class RegisterLoginModel {
 	public void tryLogin() {
 		System.out.println("username input: " + loginUsernameGiven + " password given: " + loginPasswordGiven);
 
-		if (lengthCheck(loginUsernameGiven) == false || charCheck(loginUsernameGiven) == false) {
+		if (containsMinThreeChars(loginUsernameGiven) == false || isOnlyCharAndNumbers(loginUsernameGiven) == false) {
 			System.out.println("Username is too short or contains other characters than letters/numbers!");
 		} else {
-			if (lengthCheck(loginPasswordGiven) == false || charCheck(loginPasswordGiven) == false) {
+			if (containsMinThreeChars(loginPasswordGiven) == false
+					|| isOnlyCharAndNumbers(loginPasswordGiven) == false) {
 				System.out.println("Password is too short or contains other characters than letters/numbers!");
 			} else {
 				if (nameAvailableCheck(loginUsernameGiven) == true) {
@@ -67,7 +70,7 @@ public class RegisterLoginModel {
 	}
 
 	// Check methods
-	public boolean lengthCheck(String input) { // checks for at least 3 characters
+	private boolean containsMinThreeChars(String input) { // checks for at least 3 characters
 		if (input.length() < 3) {
 			System.out.println("Doesnt contain at least 3 characters");
 			return false;
@@ -76,7 +79,7 @@ public class RegisterLoginModel {
 		}
 	}
 
-	public boolean charCheck(String input) { // checks for letters and numbers only
+	private boolean isOnlyCharAndNumbers(String input) { // checks for letters and numbers only
 		boolean charChecker = true;
 		for (int i = 0; i < input.length(); i++) {
 			if (Character.isLetterOrDigit(input.charAt(i)) == false) {
@@ -87,7 +90,7 @@ public class RegisterLoginModel {
 		return charChecker;
 	}
 
-	public boolean nameAvailableCheck(String input) { // check availability of username
+	private boolean nameAvailableCheck(String input) { // check availability of username
 
 		input.toLowerCase();
 		DatabaseController checkName = new DatabaseController();
@@ -115,7 +118,7 @@ public class RegisterLoginModel {
 
 	}
 
-	public boolean passwordCheck(String userName, String pw) {
+	private boolean passwordCheck(String userName, String pw) {
 		userName.toLowerCase();
 		DatabaseController checkPassword = new DatabaseController();
 		ResultSet askedPassword = checkPassword.doQuery("SELECT COUNT(*) as counter FROM account WHERE username = '"
