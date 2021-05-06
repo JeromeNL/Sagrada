@@ -10,8 +10,6 @@ import model.DiesInSupply;
 
 public class MainScene extends Scene {
 
-///////////////////////////////////////////////////////////////// Constructor
-
 	public MainScene() {
 		super(new Pane(), 1280, 720);
 		
@@ -23,16 +21,19 @@ public class MainScene extends Scene {
 		diesInSupply.addDie(new Die(Color.INDIANRED, 1, 4));
 		diesInSupply.addDie(new Die(Color.LIGHTGREEN, 5, 5));
 
-  GameView gameView = new GameView(diesInSupply); 
+    GameView gameView = new GameView(diesInSupply); 
 		setRoot(gameView);
 		
 //		LobbyView lobbyView = new LobbyView(); 
 //		setRoot(lobbyView);
-		
+    
 //		LoginView loginView = new LoginView();
 //		setRoot(loginView);
 		
 //		RegisterView registerView = new RegisterView();
 //		setRoot(registerView);
+    
+//		ToolcardView toolcardView = new ToolcardView();
+//		setRoot(toolcardView);
 	}
 }
