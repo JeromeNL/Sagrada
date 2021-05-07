@@ -17,6 +17,14 @@ public class RegisterLoginModel {
 	private String registerPasswordGiven;
 	private String loginUsernameGiven;
 	private String loginPasswordGiven;
+	private String warningText;
+	private String warningColor;
+
+	// constructor
+	public RegisterLoginModel() {
+		warningText = "Geen fouten opgetreden";
+		String warningColor = "black";
+	}
 
 	// classes
 	public void registerAccount() {
@@ -24,19 +32,27 @@ public class RegisterLoginModel {
 
 		if (nameAvailableCheck(registerUsernameGiven) == false) {
 			System.out.println("Name not available");
+			warningText = "Naam niet beschikbaar";
+			warningColor = "red";
 		} else {
 			if (containsMinThreeChars(registerUsernameGiven) == false
 					|| isOnlyCharAndNumbers(registerUsernameGiven) == false) {
 				System.out.println("Username is too short or contains other characters than letters/numbers!");
+				warningText = "Naam is te kort of bevat andere tekens dan cijfers/nummers";
+				warningColor = "red";
 			} else {
 				if (containsMinThreeChars(registerPasswordGiven) == false
 						|| isOnlyCharAndNumbers(registerPasswordGiven) == false) {
 					System.out.println("Password is too short or contains other characters than letters/numbers!");
+					warningColor = "red";
+					warningText = "Wachtwoord is te kort of bevat vreemde tekens";
 				} else {
 					DatabaseController DBRegister = new DatabaseController();
 					DBRegister.doUpdateQuery("INSERT INTO account VALUES('" + registerUsernameGiven + "', '"
 							+ registerPasswordGiven + "')");
 					System.out.println("done!");
+					warningText = "Registratie voltooid! Log nu in met jouw gegevens";
+					warningColor = "green";
 				}
 			}
 		}
@@ -47,22 +63,35 @@ public class RegisterLoginModel {
 
 		if (containsMinThreeChars(loginUsernameGiven) == false || isOnlyCharAndNumbers(loginUsernameGiven) == false) {
 			System.out.println("Username is too short or contains other characters than letters/numbers!");
+			warningText = "Naam is te kort of bevat vreemde tekens";
+			warningColor = "red";
 		} else {
 			if (containsMinThreeChars(loginPasswordGiven) == false
 					|| isOnlyCharAndNumbers(loginPasswordGiven) == false) {
 				System.out.println("Password is too short or contains other characters than letters/numbers!");
+				warningText = "wachtwoord is te kort of bevat vreemde tekens";
+				warningColor = "red";
 			} else {
 				if (nameAvailableCheck(loginUsernameGiven) == true) {
 					System.out.println("This user doesnt exist in database!");
+					warningText = "Deze gebruiker is niet bekend";
+					warningColor = "red";
 				} else {
 					DatabaseController DBLogin = new DatabaseController();
 					ResultSet passwordDB = DBLogin
 							.doQuery("Select password FROM account WHERE username = '" + loginUsernameGiven + "'");
 
-					if (passwordCheck(loginUsernameGiven, loginPasswordGiven) == true) {
+					if (isValidPassword(loginUsernameGiven, loginPasswordGiven) == true) {
 						System.out.println("logged in!");
+						warningText = "Ingelogd!";
+						warningColor = "green";
+
+						// set Scene to lobby !
+
 					} else {
 						System.out.println("Error! Wrong password!");
+						warningText = "wachtwoord is incorrect!";
+						warningColor = "red";
 					}
 				}
 			}
@@ -118,7 +147,7 @@ public class RegisterLoginModel {
 
 	}
 
-	private boolean passwordCheck(String userName, String pw) {
+	private boolean isValidPassword(String userName, String pw) {
 		userName.toLowerCase();
 		DatabaseController checkPassword = new DatabaseController();
 		ResultSet askedPassword = checkPassword.doQuery("SELECT COUNT(*) as counter FROM account WHERE username = '"
@@ -177,6 +206,22 @@ public class RegisterLoginModel {
 
 	public void setLoginPasswordGiven(String loginPasswordGiven) {
 		this.loginPasswordGiven = loginPasswordGiven;
+	}
+
+	public String getWarningText() {
+		return warningText;
+	}
+
+	public void setWarningText(String warningText) {
+		this.warningText = warningText;
+	}
+
+	public String getWarningColor() {
+		return warningColor;
+	}
+
+	public void setWarningColor(String warningColor) {
+		this.warningColor = warningColor;
 	}
 
 }
