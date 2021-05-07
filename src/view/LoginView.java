@@ -22,6 +22,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class LoginView extends VBox {
@@ -49,10 +51,12 @@ public class LoginView extends VBox {
 		HBox sagradaText = new HBox();
 		HBox layout = new HBox();
 		HBox buttons = new HBox(5);
+		HBox warnTextBox = new HBox(5);
 		VBox tekst = new VBox();
 		VBox textFields = new VBox(10);
 		StackPane colorBurn = new StackPane();
 
+		Text warnText = new Text(rlm.getWarningText());
 		TextField tfName = new TextField();
 		PasswordField tfPassword = new PasswordField();
 		Button login = new Button("  Login  ");
@@ -69,7 +73,8 @@ public class LoginView extends VBox {
 		colorBurn.getChildren().addAll(imageView, burnOverlay);
 		layout.getChildren().addAll(textFields, colorBurn);
 		sagradaText.getChildren().addAll(sagradaTxt);
-		textFields.getChildren().addAll(tekst, buttons);
+		warnTextBox.getChildren().add(warnText);
+		textFields.getChildren().addAll(tekst, buttons, warnTextBox);
 		tekst.getChildren().addAll(tfName, tfPassword);
 		buttons.getChildren().addAll(login, register);
 		this.getChildren().addAll(box);
@@ -85,9 +90,11 @@ public class LoginView extends VBox {
 		sagradaText.setAlignment(Pos.CENTER);
 		layout.setAlignment(Pos.CENTER);
 		textFields.setAlignment(Pos.CENTER);
+		warnTextBox.setAlignment(Pos.BOTTOM_CENTER);
 		sagradaText.setMinHeight(100);
 		textFields.setMinWidth(400);
 
+		warnText.setFont(Font.font("Arial", FontWeight.BOLD, 13));
 		sagradaTxt.setStyle("-fx-font: 80 Arial;" +
 
 				"-fx-fill: white;");
@@ -112,9 +119,19 @@ public class LoginView extends VBox {
 			public void handle(ActionEvent e) {
 				System.out.println("Register knop test");
 				;
+
 				rlm.setRegisterUsernameGiven(tfName.getText().toString().toLowerCase());
 				rlm.setRegisterPasswordGiven(tfPassword.getText().toString().toLowerCase());
 				rlm.registerAccount();
+				warnText.setText(rlm.getWarningText());
+				if (rlm.getWarningColor().equals("red")) {
+					warnText.setFill(Color.RED);
+				} else if (rlm.getWarningColor().equals("green")) {
+					warnText.setFill(Color.GREEN);
+				} else {
+					warnText.setFill(Color.BLACK);
+				}
+
 			}
 		});
 
@@ -132,6 +149,14 @@ public class LoginView extends VBox {
 				rlm.setLoginUsernameGiven(tfName.getText().toString().toLowerCase());
 				rlm.setLoginPasswordGiven(tfPassword.getText().toString().toLowerCase());
 				rlm.tryLogin();
+				warnText.setText(rlm.getWarningText());
+				if (rlm.getWarningColor().equals("red")) {
+					warnText.setFill(Color.RED);
+				} else if (rlm.getWarningColor().equals("green")) {
+					warnText.setFill(Color.GREEN);
+				} else {
+					warnText.setFill(Color.BLACK);
+				}
 			}
 		});
 
