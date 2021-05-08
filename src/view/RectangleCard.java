@@ -28,6 +28,7 @@ public class RectangleCard extends Rectangle {
 
 		setOnMouseClicked(e -> {
 			System.out.println("click " + cardNumber);
+			
 		});
 	}
 

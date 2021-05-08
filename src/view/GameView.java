@@ -21,15 +21,16 @@ public class GameView extends BorderPane {
 	private ChangeCurrentPlayerView changeCurrentPlayerView;
 	private Game game;
 	private Player player;
-	
+
 	public GameView(Game game, Player player) {
 		this.game = game;
 		this.player = player;
 		Patterncard playerPatterncard = player.getPatterncard();
-		
+
 		objectiveInGameView = new ObjectiveInGameView();
-		patternCardView = new PatternCardView(playerPatterncard);
-		
+
+		patternCardView = new PatternCardView(playerPatterncard); // dit is een random patterncard moet later aangepast worden
+
 		roundtrackView = new RoundtrackView();
 		dieSupply = new DieSupply(game.getDiesInSupply());
 		gameButtonView = new GameButtonView(this);
@@ -40,15 +41,14 @@ public class GameView extends BorderPane {
 		setAlignment(roundtrackView, Pos.TOP_CENTER);
 
 		showGame();
-		
-		
+
 	}
-	
+
 	public void showChangeCurrentPlayerView() {
 		getChildren().clear();
 		setCenter(changeCurrentPlayerView);
 	}
-	
+
 	public void showGame() {
 		getChildren().clear();
 		setTop(roundtrackView);
@@ -60,7 +60,7 @@ public class GameView extends BorderPane {
 		VBox vBox = new VBox(dieSupply, gameButtonView);
 		setBottom(vBox);
 	}
-	
+
 	public void showToolCardView() {
 		getChildren().clear();
 		setCenter(new ToolCardInUseView());
