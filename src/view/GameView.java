@@ -1,6 +1,5 @@
 package view;
 
-import controller.DatabaseController;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -10,6 +9,7 @@ import javafx.scene.paint.Color;
 import model.DiesInSupply;
 import model.Game;
 import model.Patterncard;
+import model.Player;
 
 public class GameView extends BorderPane {
 
@@ -20,12 +20,17 @@ public class GameView extends BorderPane {
 	private ObjectiveInGameView objectiveInGameView;
 	private ChangeCurrentPlayerView changeCurrentPlayerView;
 	private Game game;
+	private Player player;
 	
 
-	public GameView(DiesInSupply diesInSupply) {
+	public GameView(DiesInSupply diesInSupply, Game game, Player player) {
+		this.game = game;
+		this.player = player;
+		Patterncard playerPatterncard = player.getPatterncard();
 		
 		objectiveInGameView = new ObjectiveInGameView();
-		patternCardView = new PatternCardView(new Patterncard(1, new DatabaseController())); // TODO pass correct patterncard
+		patternCardView = new PatternCardView(playerPatterncard);
+		
 		roundtrackView = new RoundtrackView();
 		dieSupply = new DieSupply(diesInSupply);
 		gameButtonView = new GameButtonView(this);

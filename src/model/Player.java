@@ -116,7 +116,7 @@ public class Player {
 		return patterncard;
 	}
 
-	public void setPatternCardID(Patterncard patterncard) {
+	public void setPatternCard(Patterncard patterncard) {
 		this.patterncard = patterncard;
 
 		addPatterncardChoiceToDatabase();

@@ -138,4 +138,8 @@ public class Game {
 			e.printStackTrace();
 		}
 	}
+	
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
 }

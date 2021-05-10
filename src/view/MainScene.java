@@ -2,11 +2,11 @@ package view;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import model.Die;
 import model.DiesInSupply;
 import model.Game;
 import model.GameColor;
+import model.Player;
 
 public class MainScene extends Scene {
 
@@ -22,8 +22,10 @@ public class MainScene extends Scene {
 		diesInSupply.addDie(new Die(GameColor.BLUE, 6, 3));
 		diesInSupply.addDie(new Die(GameColor.RED, 1, 4));
 		diesInSupply.addDie(new Die(GameColor.GREEN, 5, 5));
+		
+		Player testPlayer = testGame.getPlayers().get(1);
 
-		GameView gameView = new GameView(diesInSupply); 
+		GameView gameView = new GameView(diesInSupply, testGame, testPlayer); 
 		setRoot(gameView);
 		
 //		LobbyView lobbyView = new LobbyView(); 
