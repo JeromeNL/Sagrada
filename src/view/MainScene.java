@@ -1,5 +1,6 @@
 package view;
 
+import controller.MainController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import model.Die;
@@ -11,29 +12,21 @@ import model.Player;
 public class MainScene extends Scene {
 
 ///////////////////////////////////////////////////////////////// Constructor
+	
+	private MainController mainController;
 
-	public MainScene(Game testGame) {
+	public MainScene(MainController mainController) {
 		super(new Pane(), 1280, 720);
+		this.mainController = mainController;
 		
-		// aanmaken onderstaande diesupply moet later in main controller gebeuren.
-		DiesInSupply diesInSupply = new DiesInSupply();
-		diesInSupply.addDie(new Die(GameColor.PURPLE, 3, 1));
-		diesInSupply.addDie(new Die(GameColor.YELLOW, 2, 2));
-		diesInSupply.addDie(new Die(GameColor.BLUE, 6, 3));
-		diesInSupply.addDie(new Die(GameColor.RED, 1, 4));
-		diesInSupply.addDie(new Die(GameColor.GREEN, 5, 5));
-		
-		Player testPlayer = testGame.getPlayers().get(1);
-
-		GameView gameView = new GameView(diesInSupply, testGame, testPlayer); 
+		LobbyView lobbyView = new LobbyView(); 
+		setRoot(lobbyView);
+	}
+	
+	// show gameview of player of game with nr 1,2,3 or 4.
+	public void showGame(Game game, int playerNR) {
+		Player playerShownOnScreen = game.getPlayers().get(playerNR); // creator of the game
+		GameView gameView = new GameView(game, playerShownOnScreen); 
 		setRoot(gameView);
-		
-//		LobbyView lobbyView = new LobbyView(); 
-//		setRoot(lobbyView);
-		
-		
-//		ToolcardView toolcardView = new ToolcardView();
-//		setRoot(toolcardView);
-		
 	}
 }

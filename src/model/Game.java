@@ -20,6 +20,7 @@ public class Game {
 	private Toolcard[] toolcards; // 3 toolcards per game.
 	private ObjectiveCard[] objectiveCards; // 3 public objective cards per game.
 	private ArrayList<Player> players; // 1 to 4 players per game
+	private DiesInSupply diesInSupply;
 
 	private String usernameCreator;
 
@@ -34,6 +35,7 @@ public class Game {
 		toolcards = new Toolcard[3];
 		objectiveCards = new ObjectiveCard[3];
 		players = new ArrayList<Player>();
+		diesInSupply = new DiesInSupply();
 
 		setupGame();
 	}
@@ -44,6 +46,15 @@ public class Game {
 		createRounds();
 		createDies();
 		createFavorTokens();
+		createDiesInSupply();
+	}
+
+	private void createDiesInSupply() {
+		diesInSupply.addDie(new Die(GameColor.PURPLE, 3, 1));
+		diesInSupply.addDie(new Die(GameColor.YELLOW, 2, 2));
+		diesInSupply.addDie(new Die(GameColor.BLUE, 6, 3));
+		diesInSupply.addDie(new Die(GameColor.RED, 1, 4));
+		diesInSupply.addDie(new Die(GameColor.GREEN, 5, 5));		
 	}
 
 	// Set up round objects with correct roundID, roundnr and clockwise boolean
@@ -141,5 +152,9 @@ public class Game {
 	
 	public ArrayList<Player> getPlayers() {
 		return players;
+	}
+
+	public DiesInSupply getDiesInSupply() {
+		return diesInSupply;
 	}
 }

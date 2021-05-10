@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import controller.DatabaseController;
+import sun.security.pkcs11.Secmod.DbMode;
 
 public class Player {
 
@@ -116,7 +117,8 @@ public class Player {
 		return patterncard;
 	}
 
-	public void setPatternCard(Patterncard patterncard) {
+	public void setPatternCard(int patternCardID) {
+		Patterncard patterncard = new Patterncard(patternCardID, new DatabaseController());
 		this.patterncard = patterncard;
 
 		addPatterncardChoiceToDatabase();

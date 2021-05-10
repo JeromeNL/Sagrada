@@ -1,7 +1,6 @@
 package model;
 
 import controller.DatabaseController;
-import javafx.scene.paint.Color;
 
 public class PatterncardField {
 

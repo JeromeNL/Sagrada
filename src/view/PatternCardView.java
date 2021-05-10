@@ -1,9 +1,5 @@
 package view;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import controller.DatabaseController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;

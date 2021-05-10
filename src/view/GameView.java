@@ -23,7 +23,7 @@ public class GameView extends BorderPane {
 	private Player player;
 	
 
-	public GameView(DiesInSupply diesInSupply, Game game, Player player) {
+	public GameView(Game game, Player player) {
 		this.game = game;
 		this.player = player;
 		Patterncard playerPatterncard = player.getPatterncard();
@@ -32,7 +32,7 @@ public class GameView extends BorderPane {
 		patternCardView = new PatternCardView(playerPatterncard);
 		
 		roundtrackView = new RoundtrackView();
-		dieSupply = new DieSupply(diesInSupply);
+		dieSupply = new DieSupply(game.getDiesInSupply());
 		gameButtonView = new GameButtonView(this);
 		changeCurrentPlayerView = new ChangeCurrentPlayerView();
 
