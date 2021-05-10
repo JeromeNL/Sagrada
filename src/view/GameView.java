@@ -52,7 +52,7 @@ public class GameView extends BorderPane {
 	
 	public void showToolCardView() {
 		getChildren().clear();
-		setCenter(new ToolCardInUseView(this));
+		setCenter(new ToolCardInUseView());
 	}
 
 }

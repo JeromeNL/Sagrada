@@ -15,17 +15,33 @@ public class testdblogic {
 	String dieColor="";
 	int dieEyes;
 	
-	int blueCounter=0;
-	int greenCounter=0;
-	int yellowCounter=0;
-	int redCounter=0;
-	int purpleCounter=0;
+	private int blueCounter;
+	private int greenCounter;
+	private int yellowCounter;
+	private int redCounter;
+	private int purpleCounter;
 	
-	int bagamount=0;
-	int bagcapacity=90;
+	private int bagamount;
+	private int bagcapacity;
+
 	
+public void testdblogc(){
+	blueCounter=0;
+	greenCounter=0;
+	yellowCounter=0;
+	redCounter=0;
+	purpleCounter=0;
+		
+	bagamount=0;
+	bagcapacity=90;
+}	
 	
 public void randomizeColor() {
+	
+
+	
+	
+	
 	
     Random rand = new Random(); //instance of random class
     int upperbound = 5;
@@ -137,24 +153,24 @@ private void addDieToDatabase(int idgame, int dienumber, String diecolor,int eye
 	
 	
 	
-public void oefenen() {
+//public void oefenen() {
+//	
+//	databaseController = new DatabaseController();
+//	ResultSet rs = databaseController.doQuery("SELECT * FROM public_objectivecard where points = 5");
+//	
+//	try {
+//		while (rs.next()) {
+//		
+//			int xPosition = rs.getInt("idpublic_objectivecard");
+//			System.out.println(xPosition);
+//		}
+//		
+//	} catch (SQLException e) {
+//		e.printStackTrace();
+//	
+//}
 	
-	databaseController = new DatabaseController();
-	ResultSet rs = databaseController.doQuery("SELECT * FROM public_objectivecard where points = 5");
 	
-	try {
-		while (rs.next()) {
-		
-			int xPosition = rs.getInt("idpublic_objectivecard");
-			System.out.println(xPosition);
-		}
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
+	
 	
 }
-	
-	
-	
-	
-}}

@@ -13,7 +13,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		testdblogic t = new testdblogic();
-		t.oefenen();
+//		t.oefenen();
 //		t.randomizeColor();
 //		t.randomizeNumber();
 		t.fillingTheBag();
