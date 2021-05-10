@@ -5,12 +5,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import model.Die;
 import model.DiesInSupply;
+import model.Game;
 
 public class MainScene extends Scene {
 
 ///////////////////////////////////////////////////////////////// Constructor
 
-	public MainScene() {
+	public MainScene(Game testGame) {
 		super(new Pane(), 1280, 720);
 		
 		// aanmaken onderstaande diesupply moet later in main controller gebeuren.

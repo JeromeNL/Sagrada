@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import controller.DatabaseController;
 
 public class Game {
+	
+	private DatabaseController dbController;
 
 	private int idGame;
 
@@ -21,15 +23,9 @@ public class Game {
 
 	private String usernameCreator;
 
-	public static void main(String[] args) {
-		Game firstGame = new Game("piet");
-		firstGame.invitePlayer("kees");
-		firstGame.invitePlayer("jerome");
-		firstGame.invitePlayer("joram");
-	}
-
-	public Game(String usernameCreator) {
+	public Game(String usernameCreator, DatabaseController dbController) {
 		this.usernameCreator = usernameCreator;
+		this.dbController = dbController;
 
 		rounds = new Round[20];
 		currentRoundID = 1;
