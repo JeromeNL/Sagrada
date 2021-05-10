@@ -30,7 +30,8 @@ public class DieToDragView extends StackPane {
 		dieRectangle = new Rectangle(dieSize, dieSize);
 		dieRectangle.setStroke(Color.BLACK);
 		dieRectangle.setStrokeWidth(2);
-		dieRectangle.setFill(die.getColor().brighter());
+		Color dieColor = ColorView.toFXColor(die.getColor());
+		dieRectangle.setFill(dieColor.brighter());
 
 		Label eyesCount = new Label(Integer.toString(die.getEyesCount()));
 		eyesCount.setFont(new Font("Arial", 20));
@@ -54,7 +55,7 @@ public class DieToDragView extends StackPane {
 				
 				// Adding the die data to the dragboard.
 				ClipboardContent content = new ClipboardContent();
-				content.putString(die.getEyesCount() + "" + die.getColor().toString());
+				content.putString(die.getEyesCount() + "" + die.getColor());
 				db.setContent(content);
 				
 				event.consume();

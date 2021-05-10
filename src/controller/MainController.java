@@ -13,12 +13,13 @@ public class MainController {
 		dbController = new DatabaseController();
 		
 		// create a testgame		
-		Game testGame = new Game("jerome", dbController);
-		testGame.invitePlayer("kees");
-		testGame.invitePlayer("jerome");
-		testGame.invitePlayer("joram");
+//		Game testGame = new Game("jerome", dbController);
+//		testGame.invitePlayer("kees");
+//		testGame.invitePlayer("jerome");
+//		testGame.invitePlayer("joram");
 		
-		MainScene mainScene = new MainScene(testGame);
+		
+		MainScene mainScene = new MainScene(null);
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);

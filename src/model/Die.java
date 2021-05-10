@@ -5,16 +5,16 @@ import javafx.scene.paint.Color;
 public class Die {
 
 	private final int dieID;
-	private final Color color;
+	private final GameColor color;
 	private final int eyesCount;
 
-	public Die(Color color, int eyesCount, int dieID) {
+	public Die(GameColor color, int eyesCount, int dieID) {
 		this.color = color;
 		this.eyesCount = eyesCount;
 		this.dieID = dieID;
 	}
 
-	public Color getColor() {
+	public GameColor getColor() {
 		return color;
 	}
 

@@ -9,7 +9,7 @@ public class PatterncardField {
 	private int yPosition; // range: 1 to 4
 
 	private int eyesCountRequirement; // 0 = no requirement
-	private Color colorRequirement; // null is no requirement
+	private GameColor colorRequirement; // null is no requirement
 
 	private Die dieOnField;
 
@@ -18,7 +18,7 @@ public class PatterncardField {
 		this.yPosition = yPosition;
 	}
 
-	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, Color colorRequirement) {
+	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement) {
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
 
@@ -79,7 +79,7 @@ public class PatterncardField {
 		return eyesCountRequirement != 0;
 	}
 
-	public Color getColorRequirement() {
+	public GameColor getColorRequirement() {
 		return colorRequirement;
 	}
 

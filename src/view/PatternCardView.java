@@ -11,6 +11,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import model.Patterncard;
 import model.PatterncardField;
 
 public class PatternCardView extends GridPane {
@@ -20,10 +21,13 @@ public class PatternCardView extends GridPane {
 	private final int height = 300;
 	private final int width = 350;
 	private final int gridGapSize = 5;
+	
+	private Patterncard patterncard;
 
 ///////////////////////////////////////////////////////////////// Constructor
 	
-	public PatternCardView() {
+	public PatternCardView(Patterncard patterncard) {
+		this.patterncard = patterncard;
 
 		setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(20), new Insets(0))));
 		setMaxSize(width, height);
@@ -31,8 +35,8 @@ public class PatternCardView extends GridPane {
 
 		setHgap(gridGapSize);
 		setVgap(gridGapSize);
-
-		loadPatternCard(2);
+		
+		loadPatterncard();
 	}
 
 ///////////////////////////////////////////////////////////////// createEmptyCard
@@ -55,44 +59,9 @@ public class PatternCardView extends GridPane {
  * and filling the board with the data*/
 	
 	
-	private void loadPatternCard(int idPatterncard) {
-		DatabaseController databaseController = new DatabaseController();
-		ResultSet rs = databaseController
-				.doQuery("SELECT * FROM patterncardfield WHERE idpatterncard = " + idPatterncard);
-		try {
-			while (rs.next()) {
-				int xPosition = rs.getInt("position_x");
-				int yPosition = rs.getInt("position_y");
-//				Color colorRequirement = Color.valueOf(rs.getString("color"));
-				String color = rs.getString("color");
-				Color colorRequirement = null;
-				if (color == null) {
-					colorRequirement = null;
-				} else {
-					if (color.equals("red")) {
-						colorRequirement = Color.INDIANRED;
-					}
-					if (color.equals("blue")) {
-						colorRequirement = Color.LIGHTBLUE;
-					}
-					if (color.equals("yellow")) {
-						colorRequirement = Color.LIGHTYELLOW;
-					}
-					if (color.equals("purple")) {
-						colorRequirement = Color.MEDIUMPURPLE;
-					}
-					if (color.equals("GREEN")) {
-						colorRequirement = Color.LIGHTGREEN;
-					}
-				}
-
-				int valueRequirement = rs.getInt("value");
-
-				add(new DieView(new PatterncardField(xPosition, yPosition, valueRequirement, colorRequirement)), xPosition,
-						yPosition);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	private void loadPatterncard() {
+		for (PatterncardField field : patterncard.getFields()) {
+			add(new DieView(field), field.getXPosition(), field.getYPosition());
+		}		
 	}
 }

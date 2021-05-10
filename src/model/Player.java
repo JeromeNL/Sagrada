@@ -13,7 +13,7 @@ public class Player {
 	private PlayerStatus status;
 	private int seqnr;
 	private GameColor privateObjectiveCardColor;
-	private int patternCardID;
+	private Patterncard patterncard;
 	private boolean isCreator;
 
 	// Constructor when the player is challenged
@@ -112,12 +112,12 @@ public class Player {
 		this.seqnr = seqnr;
 	}
 
-	public int getPatternCardID() {
-		return patternCardID;
+	public Patterncard getPatterncard() {
+		return patterncard;
 	}
 
-	public void setPatternCardID(int patternCardID) {
-		this.patternCardID = patternCardID;
+	public void setPatternCardID(Patterncard patterncard) {
+		this.patterncard = patterncard;
 
 		addPatterncardChoiceToDatabase();
 	}
