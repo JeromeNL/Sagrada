@@ -1,5 +1,6 @@
 package view;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import javafx.collections.FXCollections;
@@ -27,18 +28,18 @@ public class PlayerListView extends VBox {
 	private TableView<PlayerStats> table = new TableView<>();
 
 	public PlayerListView() {
-
+//creating the view
 		container = new VBox();
 		container.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(0), new Insets(0))));
 		container.setPrefHeight(600);
-		container.setMaxWidth(800);
+		container.setMaxWidth(1005);
 		container.setStyle("-fx-hgap: 4;");
 		Text tekst = new Text("fill");
 
 		playerTxt = new Text("Spelers");
 		playerTxt.setFont(new Font("Arial", 30));
 
-		// Table commands
+		// Creating the tables
 		TableColumn<PlayerStats,String> username = new TableColumn<>("Naam");
 		username.setCellValueFactory(new PropertyValueFactory<PlayerStats, String>("Username"));
 		username.prefWidthProperty().setValue(155);
@@ -46,10 +47,10 @@ public class PlayerListView extends VBox {
 		TableColumn<PlayerStats,Integer>  highScore = new TableColumn<>("Top score");
 		highScore.setCellValueFactory(new PropertyValueFactory<PlayerStats, Integer>("Highscore"));
 		
-		TableColumn<PlayerStats,Integer>  mostUsedDieValue = new TableColumn<>("Meest gebruikte dobbelsteen waarde");
+		TableColumn<PlayerStats,Integer>  mostUsedDieValue = new TableColumn<>("Meest gebruikte waarde");
 		mostUsedDieValue.setCellValueFactory(new PropertyValueFactory<PlayerStats, Integer>("mostUsedDieValue"));
 		
-		TableColumn<PlayerStats,String>  mostUsedDieColor = new TableColumn<>("Meest gebruikte dobbelsteen kleur");
+		TableColumn<PlayerStats,String>  mostUsedDieColor = new TableColumn<>("Meest gebruikte kleur");
 		mostUsedDieColor.setCellValueFactory(new PropertyValueFactory<PlayerStats, String>("mostUsedDieColor"));
 		
 		TableColumn<PlayerStats,Integer>  oponentCount = new TableColumn<>("Aantal verschillende tegenstanders");
@@ -62,9 +63,18 @@ public class PlayerListView extends VBox {
 		losses.setCellValueFactory(new PropertyValueFactory<PlayerStats, Integer>("losses"));
 
 		table.getColumns().addAll(Arrays.asList(username, highScore, mostUsedDieValue, mostUsedDieColor, oponentCount, wins, losses));
-		ObservableList<PlayerStats> playerStats = FXCollections.observableArrayList(PlayerController.AllPlayerStats());
-		table.setItems(playerStats);
-
+		ObservableList<PlayerStats> playerStats;
+		try {
+			playerStats = FXCollections.observableArrayList(PlayerController.AllPlayerStats());
+			table.setItems(playerStats);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		table.setMaxHeight(600);
+		table.setMinHeight(600);
+		
+		
+// Adding everything to the view
 		container.getChildren().addAll(table);
 		this.setBackground(new Background(new BackgroundFill(Color.PINK, new CornerRadii(0), new Insets(0))));
 		this.setAlignment(Pos.CENTER);
