@@ -15,8 +15,8 @@ import javafx.util.Duration;
 
 public class EndScoreView extends Pane {
 	
- Rectangle outline;	
- Label title;
+ private Rectangle outline;	
+ private Label title;
  private Label currentPlayerText,user1,user2,user3,user4,backButtonText,tag1;
  private Rectangle dropDownButton,backButton,line,line2,line3,line4,line5;	
 
