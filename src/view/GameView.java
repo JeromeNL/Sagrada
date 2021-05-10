@@ -34,7 +34,7 @@ public class GameView extends BorderPane {
 
 		showGame();
 		
-//		showChangeCurrentPlayerView();
+		
 	}
 	
 	public void showChangeCurrentPlayerView() {
@@ -45,7 +45,10 @@ public class GameView extends BorderPane {
 	public void showGame() {
 		getChildren().clear();
 		setTop(roundtrackView);
-		setLeft(objectiveInGameView);
+		VBox leftPane = new VBox();
+		leftPane.setSpacing(25);
+		leftPane.getChildren().addAll(changeCurrentPlayerView, objectiveInGameView);
+		setLeft(leftPane);
 		setCenter(patternCardView);
 		VBox vBox = new VBox(dieSupply, gameButtonView);
 		setBottom(vBox);
@@ -53,7 +56,7 @@ public class GameView extends BorderPane {
 	
 	public void showToolCardView() {
 		getChildren().clear();
-		setCenter(new ToolCardInUseView(this));
+		setCenter(new ToolCardInUseView());
 	}
 
 }

@@ -12,7 +12,10 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-
+		DieBagModel dieBagModel = new DieBagModel();
+//		t.randomizeColor();
+//		t.randomizeNumber();
+		dieBagModel.fillingTheBag();
 		MainScene mainScene = new MainScene();
 		
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
