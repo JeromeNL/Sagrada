@@ -15,7 +15,8 @@ public class GameView extends BorderPane {
 	private DieSupply dieSupply;
 	private GameButtonView gameButtonView;
 	private ObjectiveInGameView objectiveInGameView;
-	private ChangeCurrentPlayerView changeCurrentPlayerView;
+  private ChangeCurrentPlayerView changeCurrentPlayerView;
+
 	
 
 	public GameView(DiesInSupply diesInSupply) {
