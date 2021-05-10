@@ -52,6 +52,8 @@ public class Player {
 	private void setInitialStatus() {
 		if (isCreator) {
 			status = PlayerStatus.CHALLENGER;
+		} else {
+			status = PlayerStatus.CHALLENGEE;
 		}
 	}
 
