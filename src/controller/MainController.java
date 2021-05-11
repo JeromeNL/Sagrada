@@ -21,6 +21,11 @@ public class MainController {
 		currentGame.invitePlayer("jerome");
 		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
 		showGame();
+		
+		DieBagModel dieBagModel = new DieBagModel();
+//		t.randomizeColor();
+//		t.randomizeNumber();
+		dieBagModel.fillingTheBag();
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
