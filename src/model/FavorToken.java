@@ -10,10 +10,12 @@ public class FavorToken {
 	private int usedForToolcardID; // has gametoolcard id if favortoken has been used for gametoolcard
 	private int roundID; // has round id if favortoken has been used
 	private boolean isUsed;
+	private DatabaseController dbController;
 
-	public FavorToken(int idToken, int idGame) {
+	public FavorToken(int idToken, int idGame, DatabaseController dbController) {
 		this.idToken = idToken;
 		this.idGame = idGame;
+		this.dbController = dbController;
 		isUsed = false;
 		addToDatabase();
 	}
@@ -35,9 +37,8 @@ public class FavorToken {
 	// Adds the favortoken to the gamefavortoken table.
 	private void addToDatabase() {
 		// to-do: insert row into gamefavortoken table with idfavortoken and idgame
-		DatabaseController dc = new DatabaseController();
 		String query = "INSERT INTO gamefavortoken VALUES ("+idToken+","+idGame+",NULL,NULL,NULL);";
-		dc.doUpdateQuery(query);
+		dbController.doUpdateQuery(query);
 	}
 	
 	// Updates the favortoken in the gamefavortoken table.

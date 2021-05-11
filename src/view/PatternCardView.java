@@ -12,16 +12,12 @@ import model.PatterncardField;
 
 public class PatternCardView extends GridPane {
 
-///////////////////////////////////////////////////////////////// Instance Variables
-	
 	private final int height = 300;
 	private final int width = 350;
 	private final int gridGapSize = 5;
 	
 	private Patterncard patterncard;
 
-///////////////////////////////////////////////////////////////// Constructor
-	
 	public PatternCardView(Patterncard patterncard) {
 		this.patterncard = patterncard;
 
@@ -35,25 +31,10 @@ public class PatternCardView extends GridPane {
 		loadPatterncard();
 	}
 
-///////////////////////////////////////////////////////////////// createEmptyCard
-
-/* Method that is responsible that is responsible for the 
- * of an empty  pattern card*/
-	
-	private void createEmptyCard() {
-		for (int x = 1; x <= 5; x++) {
-			for (int y = 1; y <= 4; y++) {
-				add(new DieView(new PatterncardField(1, 1, 2, null)), x, y);
-			}
-		}
-	}
-
-///////////////////////////////////////////////////////////////// loadPatternCard
 
 /* Method that is responsible that is responsible for 
  * loading pattern card data from the database
  * and filling the board with the data*/
-	
 	
 	private void loadPatterncard() {
 		for (PatterncardField field : patterncard.getFields()) {

@@ -22,7 +22,6 @@ public class MainController {
 		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
 		showGame();
 
-
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
 		stage.setScene(mainScene);

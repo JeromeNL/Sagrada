@@ -41,7 +41,7 @@ public class Patterncard {
 
 				int valueRequirement = rs.getInt("value");
 				
-				fields.add(new PatterncardField(xPosition, yPosition, valueRequirement, colorRequirement));
+				fields.add(new PatterncardField(xPosition, yPosition, valueRequirement, colorRequirement, dbController));
 			}
 		} catch (SQLException e) {
 			System.out.println("Something went wrong while loading a patterncard from the database.");

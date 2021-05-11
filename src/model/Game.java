@@ -82,7 +82,7 @@ public class Game {
 	private void createFavorTokens() {
 		for (int i = 0; i < favorTokens.length; i++) {
 			int idToken = i + 1;
-			favorTokens[i] = new FavorToken(idToken, idGame);
+			favorTokens[i] = new FavorToken(idToken, idGame, dbController);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class Game {
 		
 		boolean isCreator = true;
 		GameColor privateObjectiveCardColor = getObjectiveCardColor();
-		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor);
+		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController);
 		players.add(creator);
 	}
 
@@ -103,7 +103,7 @@ public class Game {
 		// Check if there is room for more players.
 		if (players.size() < 4) {
 			GameColor privateObjectiveCardColor = getObjectiveCardColor();
-			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor);
+			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController);
 			players.add(newPlayer);
 		}
 	}
@@ -122,10 +122,8 @@ public class Game {
 	// Gets an available gameID and then adds a new row to the game table in the
 	// database.
 	private void addToDatabase() {
-		DatabaseController dc = new DatabaseController();
-
 		// Get an available gameID
-		ResultSet rs = dc.doQuery("SELECT idgame FROM game ORDER BY idgame DESC LIMIT 1;");
+		ResultSet rs = dbController.doQuery("SELECT idgame FROM game ORDER BY idgame DESC LIMIT 1;");
 		try {
 			while (rs.next()) {
 				int newGameID = rs.getInt(1) + 1;
@@ -134,7 +132,7 @@ public class Game {
 				while (increasingID) {
 					// Add a new row to the game table.
 					String query = "INSERT INTO game VALUES (" + newGameID + ",NULL,NULL,CURRENT_TIMESTAMP);";
-					int result = dc.doUpdateQuery(query);
+					int result = dbController.doUpdateQuery(query);
 					if (result == 1) {
 						increasingID = false;
 						idGame = newGameID;
