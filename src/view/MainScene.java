@@ -1,10 +1,10 @@
 package view;
 
-import java.io.FileNotFoundException;
-
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+//import model.Die;
+//import model.DiesInSupply;
 import model.Die;
 import model.DiesInSupply;
 
@@ -21,12 +21,16 @@ public class MainScene extends Scene {
 		diesInSupply.addDie(new Die(Color.INDIANRED, 1, 4));
 		diesInSupply.addDie(new Die(Color.LIGHTGREEN, 5, 5));
 
-    GameView gameView = new GameView(diesInSupply); 
-		setRoot(gameView);
+//    GameView gameView = new GameView(diesInSupply); 
+//		setRoot(gameView);
 		
 //		LobbyView lobbyView = new LobbyView(); 
 //		setRoot(lobbyView);
     
+//		MainMenu mainMenu = new MainMenu();
+//		setRoot(mainMenu);
+			
+		
 //		LoginView loginView = new LoginView();
 //		setRoot(loginView);
 		
@@ -35,5 +39,12 @@ public class MainScene extends Scene {
     
 //		ToolcardView toolcardView = new ToolcardView();
 //		setRoot(toolcardView);
+		
+//		ToolcardCardView toolcardview = new ToolcardCardView();
+//		setRoot(toolcardview);
+		
+		ObjectivecardCardView objectivecard = new ObjectivecardCardView();
+		setRoot(objectivecard);
+		
 	}
 }

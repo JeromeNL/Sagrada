@@ -62,11 +62,13 @@ public class LoginView extends VBox {
 		Button login = new Button("  Login  ");
 		Button register = new Button("Register");
 		Text sagradaTxt = new Text("SAGRADA");
+		sagradaTxt.setTranslateX(-300);
+		sagradaTxt.setTranslateY(200);
 
 		Rectangle burnOverlay = new Rectangle();
 		burnOverlay.setWidth(500);
 		burnOverlay.setHeight(700);
-		burnOverlay.setFill(Color.BLUE);
+		burnOverlay.setFill(Color.TRANSPARENT);
 		burnOverlay.setBlendMode(BlendMode.COLOR_BURN);
 
 		box.getChildren().addAll(sagradaText, layout);
