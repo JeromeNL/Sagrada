@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import controller.DatabaseController;
+import sun.security.pkcs11.Secmod.DbMode;
 
 public class Player {
 
@@ -13,20 +14,23 @@ public class Player {
 	private PlayerStatus status;
 	private int seqnr;
 	private GameColor privateObjectiveCardColor;
-	private int patternCardID;
+	private Patterncard patterncard;
 	private boolean isCreator;
+	private DatabaseController dbController;
 
 	// Constructor when the player is challenged
-	public Player() {
+	public Player(DatabaseController dbController) {
+		this.dbController = dbController;
 		// to do: get all the info about the player from the database based on username
 	}
 	
 	// Constructor when the player is the challengee.
-	public Player(String username, boolean isCreator, int idGame, GameColor privateObjectiveCardColor) {
+	public Player(String username, boolean isCreator, int idGame, GameColor privateObjectiveCardColor, DatabaseController dbController) {
 		this.username = username;
 		this.isCreator = isCreator;
 		this.idGame = idGame;
 		this.privateObjectiveCardColor = privateObjectiveCardColor;
+		this.dbController = dbController;
 
 		setUpPlayer();
 	}
@@ -38,13 +42,11 @@ public class Player {
 	}
 
 	// Create all the playerframefield rows in the database.
-	private void createPlayerFrameField() {
-		DatabaseController dc = new DatabaseController();
-		
+	private void createPlayerFrameField() {		
 		for (int position_y = 1; position_y <= 4; position_y++) {
 			for (int position_x = 1; position_x <= 5; position_x++) {
 				String query = "INSERT INTO playerframefield VALUES ("+idPlayer+","+position_x+","+position_y+","+idGame+",NULL,NULL);";
-				dc.doUpdateQuery(query);
+				dbController.doUpdateQuery(query);
 			}
 		}
 	}
@@ -59,10 +61,8 @@ public class Player {
 
 	// Adds a new user to the database.
 	private void addToDatabase() {
-		DatabaseController dc = new DatabaseController();
-
 		// Get an available gameID
-		ResultSet rs = dc.doQuery("SELECT idplayer FROM player ORDER BY idplayer DESC LIMIT 1;");
+		ResultSet rs = dbController.doQuery("SELECT idplayer FROM player ORDER BY idplayer DESC LIMIT 1;");
 		try {
 			int newPlayerID = 1;
 			if (rs.next()) {
@@ -75,7 +75,7 @@ public class Player {
 				String query = "INSERT INTO player VALUES (" + newPlayerID + ",\"" + username + "\"," + idGame + ",\""
 						+ status + "\", NULL, \"" + privateObjectiveCardColor + "\", NULL, NULL);";
 
-				int result = dc.doUpdateQuery(query);
+				int result = dbController.doUpdateQuery(query);
 				if (result == 1) {
 					increasingID = false;
 					idPlayer = newPlayerID;
@@ -112,12 +112,13 @@ public class Player {
 		this.seqnr = seqnr;
 	}
 
-	public int getPatternCardID() {
-		return patternCardID;
+	public Patterncard getPatterncard() {
+		return patterncard;
 	}
 
-	public void setPatternCardID(int patternCardID) {
-		this.patternCardID = patternCardID;
+	public void setPatternCard(int patternCardID) {
+		Patterncard patterncard = new Patterncard(patternCardID, new DatabaseController());
+		this.patterncard = patterncard;
 
 		addPatterncardChoiceToDatabase();
 	}

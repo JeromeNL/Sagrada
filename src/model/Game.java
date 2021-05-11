@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import controller.DatabaseController;
 
 public class Game {
+	
+	private DatabaseController dbController;
 
 	private int idGame;
 
@@ -18,18 +20,13 @@ public class Game {
 	private Toolcard[] toolcards; // 3 toolcards per game.
 	private ObjectiveCard[] objectiveCards; // 3 public objective cards per game.
 	private ArrayList<Player> players; // 1 to 4 players per game
+	private DiesInSupply diesInSupply;
 
 	private String usernameCreator;
 
-	public static void main(String[] args) {
-		Game firstGame = new Game("piet");
-		firstGame.invitePlayer("kees");
-		firstGame.invitePlayer("jerome");
-		firstGame.invitePlayer("joram");
-	}
-
-	public Game(String usernameCreator) {
+	public Game(String usernameCreator, DatabaseController dbController) {
 		this.usernameCreator = usernameCreator;
+		this.dbController = dbController;
 
 		rounds = new Round[20];
 		currentRoundID = 1;
@@ -38,6 +35,7 @@ public class Game {
 		toolcards = new Toolcard[3];
 		objectiveCards = new ObjectiveCard[3];
 		players = new ArrayList<Player>();
+		diesInSupply = new DiesInSupply();
 
 		setupGame();
 	}
@@ -48,6 +46,15 @@ public class Game {
 		createRounds();
 		createDies();
 		createFavorTokens();
+		createDiesInSupply();
+	}
+
+	private void createDiesInSupply() {
+		diesInSupply.addDie(new Die(GameColor.PURPLE, 3, 1));
+		diesInSupply.addDie(new Die(GameColor.YELLOW, 2, 2));
+		diesInSupply.addDie(new Die(GameColor.BLUE, 6, 3));
+		diesInSupply.addDie(new Die(GameColor.RED, 1, 4));
+		diesInSupply.addDie(new Die(GameColor.GREEN, 5, 5));		
 	}
 
 	// Set up round objects with correct roundID, roundnr and clockwise boolean
@@ -75,7 +82,7 @@ public class Game {
 	private void createFavorTokens() {
 		for (int i = 0; i < favorTokens.length; i++) {
 			int idToken = i + 1;
-			favorTokens[i] = new FavorToken(idToken, idGame);
+			favorTokens[i] = new FavorToken(idToken, idGame, dbController);
 		}
 	}
 
@@ -85,7 +92,7 @@ public class Game {
 		
 		boolean isCreator = true;
 		GameColor privateObjectiveCardColor = getObjectiveCardColor();
-		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor);
+		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController);
 		players.add(creator);
 	}
 
@@ -96,7 +103,7 @@ public class Game {
 		// Check if there is room for more players.
 		if (players.size() < 4) {
 			GameColor privateObjectiveCardColor = getObjectiveCardColor();
-			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor);
+			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController);
 			players.add(newPlayer);
 		}
 	}
@@ -115,10 +122,8 @@ public class Game {
 	// Gets an available gameID and then adds a new row to the game table in the
 	// database.
 	private void addToDatabase() {
-		DatabaseController dc = new DatabaseController();
-
 		// Get an available gameID
-		ResultSet rs = dc.doQuery("SELECT idgame FROM game ORDER BY idgame DESC LIMIT 1;");
+		ResultSet rs = dbController.doQuery("SELECT idgame FROM game ORDER BY idgame DESC LIMIT 1;");
 		try {
 			while (rs.next()) {
 				int newGameID = rs.getInt(1) + 1;
@@ -127,7 +132,7 @@ public class Game {
 				while (increasingID) {
 					// Add a new row to the game table.
 					String query = "INSERT INTO game VALUES (" + newGameID + ",NULL,NULL,CURRENT_TIMESTAMP);";
-					int result = dc.doUpdateQuery(query);
+					int result = dbController.doUpdateQuery(query);
 					if (result == 1) {
 						increasingID = false;
 						idGame = newGameID;
@@ -141,5 +146,13 @@ public class Game {
 			System.out.println("Something went wrong while adding a new game to the database.");
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+
+	public DiesInSupply getDiesInSupply() {
+		return diesInSupply;
 	}
 }
