@@ -36,7 +36,8 @@ public class MainScene extends Scene {
 	}
 	
 	public void showChoosePatternCard() {
-		PatternCardBorderPane choosePatterncardView = new PatternCardBorderPane();
+		ChoosePatternCardView choosePatterncardView = new ChoosePatternCardView();
 		setRoot(choosePatterncardView);
+
 	}
 }
