@@ -7,7 +7,7 @@ import javafx.scene.shape.Circle;
 
 public class GameButtonView extends HBox {
 
-	private Circle backButton, toolCardButton1, toolCardButton2, toolCardButton3, confirmButton;
+	private Circle backButton, toolCardButton1, toolCardButton2, toolCardButton3, confirmButton, menuButton,logoutButton,cheatButton;
 
 	GameButtonView(GameView gameView) {
 		
@@ -19,10 +19,13 @@ public class GameButtonView extends HBox {
 		toolCardButton2 = new GameButton();
 		toolCardButton3 = new GameButton();
 		confirmButton = new GameButton();
+		menuButton = new GameButton();
+		cheatButton = new GameButton();
+		logoutButton = new GameButton();
 
 		setAlignment(Pos.CENTER);
 		setSpacing(50);
 		setPadding(new Insets(25));
-		getChildren().addAll(backButton, toolCardButton1, toolCardButton2, toolCardButton3, confirmButton);
+		getChildren().addAll(backButton, toolCardButton1, toolCardButton2, toolCardButton3, confirmButton,menuButton,logoutButton,cheatButton);
 	}
 }
