@@ -8,7 +8,7 @@ import javafx.scene.shape.Circle;
 
 public class GameButtonView extends HBox {
 
-	private Circle backButton, toolCardButton1, toolCardButton2, toolCardButton3, confirmButton, menuButton,logoutButton,cheatButton;
+	private Circle backButton, toolCardButton1,beerButton, toolCardButton2, toolCardButton3, confirmButton, menuButton,logoutButton,cheatButton;
 	Label score, privateScore;
 	
 	GameButtonView(GameView gameView) {
@@ -29,10 +29,11 @@ public class GameButtonView extends HBox {
 		menuButton = new GameButton();
 		cheatButton = new GameButton();
 		logoutButton = new GameButton();
+		beerButton = new GameButton();
 
 		setAlignment(Pos.CENTER);
-		setSpacing(50);
-		setPadding(new Insets(25));
-		getChildren().addAll(privateScore,backButton, toolCardButton1, toolCardButton2, toolCardButton3, confirmButton,menuButton,logoutButton,cheatButton,score);
+		setSpacing(40);
+		setPadding(new Insets(40));
+		getChildren().addAll(privateScore,backButton, toolCardButton1, toolCardButton2, toolCardButton3,beerButton, confirmButton,menuButton,logoutButton,cheatButton,score);
 	}
 }
