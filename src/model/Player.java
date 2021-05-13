@@ -1,9 +1,7 @@
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import controller.DatabaseController;
+import controller.PlayerController;
 import sun.security.pkcs11.Secmod.DbMode;
 
 public class Player {
@@ -17,15 +15,17 @@ public class Player {
 	private Patterncard patterncard;
 	private boolean isCreator;
 	private DatabaseController dbController;
+	private PlayerController playerController;
 
 	// Constructor when the player is challenged
 	public Player(DatabaseController dbController) {
 		this.dbController = dbController;
 		// to do: get all the info about the player from the database based on username
 	}
-	
+
 	// Constructor when the player is the challengee.
-	public Player(String username, boolean isCreator, int idGame, GameColor privateObjectiveCardColor, DatabaseController dbController) {
+	public Player(String username, boolean isCreator, int idGame, GameColor privateObjectiveCardColor,
+			DatabaseController dbController) {
 		this.username = username;
 		this.isCreator = isCreator;
 		this.idGame = idGame;
@@ -37,18 +37,8 @@ public class Player {
 
 	private void setUpPlayer() {
 		setInitialStatus();
-		addToDatabase();
-		createPlayerFrameField();
-	}
-
-	// Create all the playerframefield rows in the database.
-	private void createPlayerFrameField() {		
-		for (int position_y = 1; position_y <= 4; position_y++) {
-			for (int position_x = 1; position_x <= 5; position_x++) {
-				String query = "INSERT INTO playerframefield VALUES ("+idPlayer+","+position_x+","+position_y+","+idGame+",NULL,NULL);";
-				dbController.doUpdateQuery(query);
-			}
-		}
+		playerController.addToDatabase();
+		playerController.createPlayerFrameField();
 	}
 
 	private void setInitialStatus() {
@@ -56,39 +46,6 @@ public class Player {
 			status = PlayerStatus.CHALLENGER;
 		} else {
 			status = PlayerStatus.CHALLENGEE;
-		}
-	}
-
-	// Adds a new user to the database.
-	private void addToDatabase() {
-		// Get an available gameID
-		ResultSet rs = dbController.doQuery("SELECT idplayer FROM player ORDER BY idplayer DESC LIMIT 1;");
-		try {
-			int newPlayerID = 1;
-			if (rs.next()) {
-				newPlayerID = rs.getInt(1) + 1;
-			}
-
-			boolean increasingID = true;
-			while (increasingID) {
-				// Add a new row to the game table.
-				String query = "INSERT INTO player VALUES (" + newPlayerID + ",\"" + username + "\"," + idGame + ",\""
-						+ status + "\", NULL, \"" + privateObjectiveCardColor + "\", NULL, NULL);";
-
-				int result = dbController.doUpdateQuery(query);
-				if (result == 1) {
-					increasingID = false;
-					idPlayer = newPlayerID;
-					System.out.println(getClass() + " - New player created with id " + idPlayer); // for testing
-																									// purposes
-				} else {
-					newPlayerID++;
-				}
-			}
-
-		} catch (SQLException e) {
-			System.out.println("Something went wrong while adding a new player of a game to the database.");
-			e.printStackTrace();
 		}
 	}
 
@@ -154,5 +111,9 @@ public class Player {
 
 	public boolean isCreator() {
 		return isCreator;
+	}
+
+	public int getIdGame() {
+		return idGame;
 	}
 }

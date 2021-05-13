@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.stage.Stage;
+import model.DieBagModel;
 import model.Game;
 import view.MainScene;
 
