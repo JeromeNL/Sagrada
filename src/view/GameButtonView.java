@@ -9,7 +9,7 @@ import javafx.scene.shape.Circle;
 public class GameButtonView extends HBox {
 
 	private Circle backButton, toolCardButton1,beerButton, toolCardButton2, toolCardButton3, confirmButton, menuButton,logoutButton,cheatButton;
-	Label score, privateScore;
+	private Label score, privateScore;
 	
 	GameButtonView(GameView gameView) {
 		
