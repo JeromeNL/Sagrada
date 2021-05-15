@@ -15,6 +15,7 @@ public class ToolCardInUseView extends StackPane{
 	
 	private Rectangle background,backButton,card;
 	private Label backButtonText;
+	private FavorTokensInUseView favortokens;
 	
 ///////////////////////////////////////////////////////////////// Getters And Setters	
 	
@@ -29,7 +30,7 @@ public class ToolCardInUseView extends StackPane{
 	public Rectangle getCard() {
 		return card;
 	}
-
+	
 	public Label getJoinButtonText() {
 		return backButtonText;
 	}
@@ -41,6 +42,8 @@ public class ToolCardInUseView extends StackPane{
 	
 /// Initializing Variables
 	 
+	favortokens = new FavorTokensInUseView("Janique",15);	
+		
 	 backButton = new Rectangle(400,400,155,50);
 	 backButton.setArcHeight(50);
 	 backButton.setArcWidth(50);
@@ -73,7 +76,7 @@ public class ToolCardInUseView extends StackPane{
 	 this.getChildren().clear();
 	 });
 	
-	this.getChildren().addAll(background,card,backButton,backButtonText);
+	this.getChildren().addAll(background,card,backButton,backButtonText,favortokens);
 	
 	
 	}
