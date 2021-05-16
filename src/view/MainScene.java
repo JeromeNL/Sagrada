@@ -3,7 +3,10 @@ package view;
 import controller.MainController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import model.Die;
+import model.DiesInSupply;
 import model.Game;
+import model.GameColor;
 import model.Player;
 
 public class MainScene extends Scene {
@@ -16,7 +19,7 @@ public class MainScene extends Scene {
 		super(new Pane(), 1280, 720);
 		this.mainController = mainController;
 		
-		LobbyView lobbyView = new LobbyView(); 
+		LobbyUserView lobbyView = new LobbyUserView(); 
 		setRoot(lobbyView);
 	}
 	
@@ -26,7 +29,7 @@ public class MainScene extends Scene {
 		GameView gameView = new GameView(game, playerShownOnScreen); 
 		setRoot(gameView);
 		
-		ToolCardInUseView t = new ToolCardInUseView();
-		setRoot(t);
+		LobbyUserView lobbyView = new LobbyUserView(); 
+		setRoot(lobbyView);
 	}
 }

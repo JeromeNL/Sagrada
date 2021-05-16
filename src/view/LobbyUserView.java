@@ -24,7 +24,7 @@ private LobbyLineView lobbyLineView;
 private LobbyWaitLineView lobbyWaitLineView;
 private LobbyViewInGame lobbyViewInGame;
 private DropShadow dropShadow;
-TextField tfName;
+private TextField tfName;
 ///////////////////////////////////////////////////////////////// Constructor	
 	
 	public LobbyUserView() {
@@ -52,13 +52,7 @@ TextField tfName;
 		addedUser3.setTranslateX(-135);
 		addedUser3.setTranslateY(140);
 		addedUser3.setTextFill(Color.LIGHTBLUE);
-		
-		
-		
 	
-		
-		
-		
 		
 		lobbyLineView = new LobbyLineView();
 		lobbyWaitLineView = new LobbyWaitLineView();
