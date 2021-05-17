@@ -23,6 +23,7 @@ public class DieView extends StackPane {
 
 	public DieView(PatterncardField patternCardField) {
 		this.patternCardField = patternCardField;
+
 		drawDieField();
 		setUpAcceptDrag();
 	}
@@ -92,6 +93,7 @@ public class DieView extends StackPane {
 		});
 	}
 
+
 	// Checks if die can be placed. Returns boolean representing the validity.
 	private boolean isValidMove(int eyesCount, GameColor dieColor) {
 		if (fieldHasDie()) {
@@ -137,6 +139,7 @@ public class DieView extends StackPane {
 		}
 		return true;
 	}
+
 
 	// Draws a die on the patterncard.
 	private void drawDieField() {
