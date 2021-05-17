@@ -15,9 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -57,22 +55,22 @@ public class MainMenu extends Pane {
 		burnOverlay.setFill(Color.TRANSPARENT);
 		burnOverlay.setBlendMode(BlendMode.COLOR_BURN);
 
-		box.getChildren().addAll(sagradaText, layout,imageView);
-		sagradaText.getChildren().addAll(sagradaTxt);
-		
-		
-		
-		buttons.getChildren().addAll(login, register);
-		this.getChildren().addAll(box);
-
-		box.setBackground(
-				new Background(new BackgroundFill(Color.rgb(247, 150, 150), CornerRadii.EMPTY, Insets.EMPTY)));
-		
-		sagradaText.setAlignment(Pos.CENTER);
-		layout.setAlignment(Pos.CENTER);
-		
-		warnTextBox.setAlignment(Pos.BOTTOM_CENTER);
-		sagradaText.setMinHeight(100);
+//		box.getChildren().addAll(sagradaText, layout,imageView);
+//		sagradaText.getChildren().addAll(sagradaTxt);
+//		
+//		
+//		
+//		buttons.getChildren().addAll(login, register);
+//		this.getChildren().addAll(box);
+//
+//		box.setBackground(
+//				new Background(new BackgroundFill(Color.rgb(247, 150, 150), CornerRadii.EMPTY, Insets.EMPTY)));
+//		
+//		sagradaText.setAlignment(Pos.CENTER);
+//		layout.setAlignment(Pos.CENTER);
+//		
+//		warnTextBox.setAlignment(Pos.BOTTOM_CENTER);
+//		sagradaText.setMinHeight(100);
 		
 		sagradaTxt.setStyle("-fx-font: 80 Arial;" +
 
