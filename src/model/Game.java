@@ -23,7 +23,25 @@ public class Game {
 	private DiesInSupply diesInSupply;
 
 	private String usernameCreator;
+	
+	// Constructor to load an existing game.
+	public Game(int idGame, DatabaseController dbController) {
+		this.idGame = idGame;
+		this.dbController = dbController;
 
+		rounds = new Round[20];
+		currentRoundID = 1; // TODO: get the current round id from the database.
+		dies = new Die[90];
+		favorTokens = new FavorToken[24];
+		toolcards = new Toolcard[3];
+		objectiveCards = new ObjectiveCard[3];
+		players = new ArrayList<Player>();
+		diesInSupply = new DiesInSupply();
+		
+		loadGame();
+	}
+
+	// Constructor to create a new game.
 	public Game(String usernameCreator, DatabaseController dbController) {
 		this.usernameCreator = usernameCreator;
 		this.dbController = dbController;
@@ -40,21 +58,35 @@ public class Game {
 		setupGame();
 	}
 
+	// Set up a new game.
 	private void setupGame() {
 		addToDatabase();
 		addCreatorPlayer(usernameCreator);
 		createRounds();
 		createDies();
 		createFavorTokens();
+	}
+	
+	public void startGame() {
 		createDiesInSupply();
+		loadDiesInSupply();
+	}
+	
+	// Load an existing game.
+	private void loadGame() {
+		loadPlayers();
+		loadDies();
+		loadDiesInSupply();
+		createRounds();
+	}
+
+	private void loadDiesInSupply() {
+		diesInSupply = dbController.getDiesInSupply(idGame, currentRoundID);
 	}
 
 	private void createDiesInSupply() {
-		diesInSupply.addDie(new Die(GameColor.PURPLE, 3, 1));
-		diesInSupply.addDie(new Die(GameColor.YELLOW, 2, 2));
-		diesInSupply.addDie(new Die(GameColor.BLUE, 6, 3));
-		diesInSupply.addDie(new Die(GameColor.RED, 1, 4));
-		diesInSupply.addDie(new Die(GameColor.GREEN, 5, 5));		
+		int amount = players.size() * 2 + 1;
+		dbController.createDiesInSupply(idGame, currentRoundID, amount);
 	}
 
 	// Set up round objects with correct roundID, roundnr and clockwise boolean
@@ -74,8 +106,11 @@ public class Game {
 
 	// Set up 90 dies to be created in the game.
 	private void createDies() {
-		// to-do: logic to create 90 dies that can be used in the game.
-		// Die die = new Die(color, eyesCount, dieID);
+		dbController.createGameDies(idGame);
+	}
+	
+	private void loadDies() {
+		dies = dbController.getDies(idGame);
 	}
 
 	// Create 24 favortokens to be used in the game.
@@ -94,6 +129,10 @@ public class Game {
 		GameColor privateObjectiveCardColor = getObjectiveCardColor();
 		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController);
 		players.add(creator);
+	}
+	
+	private void loadPlayers() {
+		players = dbController.getPlayers(idGame);
 	}
 
 	// Add / invite a new player to the game.

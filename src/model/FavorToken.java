@@ -12,6 +12,7 @@ public class FavorToken {
 	private boolean isUsed;
 	private DatabaseController dbController;
 
+	// Constructor create a new favortoken
 	public FavorToken(int idToken, int idGame, DatabaseController dbController) {
 		this.idToken = idToken;
 		this.idGame = idGame;

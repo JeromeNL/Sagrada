@@ -5,6 +5,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Random;
+
+import model.Die;
+import model.DiesInSupply;
+import model.GameColor;
+import model.Player;
 
 public class DatabaseController {
 
@@ -82,5 +89,88 @@ public class DatabaseController {
 			System.out.println(e.getMessage());
 		}
 		return 0;
+	}
+
+	public ArrayList<Player> getPlayers(int idGame) {
+		ArrayList<Player> players = new ArrayList<Player>();
+
+		ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + idGame);
+		try {
+			while (rs.next()) {
+				Player player = new Player(this, rs.getInt(1));
+				players.add(player);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return players;
+	}
+
+	public Die[] getDies(int idGame) {
+		Die[] dies = new Die[90];
+		int counter = 0;
+
+		ResultSet rs = doQuery("SELECT * FROM gamedie WHERE idgame = " + idGame);
+
+		try {
+			while (rs.next()) {
+				String stringColor = rs.getString("diecolor");
+				GameColor gameColor = GameColor.valueOf(stringColor.toUpperCase());
+				Die die = new Die(gameColor, rs.getInt("eyes"), rs.getInt("dienumber"));
+				dies[counter] = die;
+				counter++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dies;
+	}
+
+	public DiesInSupply getDiesInSupply(int idGame, int roundID) {
+		DiesInSupply diesInSupply = new DiesInSupply();
+		ResultSet rs = doQuery("SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundID = " + roundID
+				+ " AND roundtrack IS NULL");
+		try {
+			while (rs.next()) {
+				String stringColor = rs.getString("diecolor");
+				GameColor gameColor = GameColor.valueOf(stringColor.toUpperCase());
+				Die die = new Die(gameColor, rs.getInt("eyes"), rs.getInt("dienumber"));
+				diesInSupply.addDie(die);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return diesInSupply;
+	}
+
+	public void createGameDies(int idGame) {
+		ResultSet rs = doQuery("SELECT * FROM die");
+		Random random = new Random();
+
+		try {
+			while (rs.next()) {
+				doUpdateQuery("INSERT INTO gamedie VALUES (" + idGame + ", " + rs.getInt("number") + ", \""
+						+ rs.getString("color") + "\", " + (random.nextInt(6) + 1) + ", NULL, NULL);");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void createDiesInSupply(int idGame, int roundID, int amount) {
+		ResultSet rs = doQuery("SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundtrack IS NULL AND roundID IS NULL ORDER BY RAND() LIMIT " + amount);
+		
+		try {
+			while (rs.next()) {
+				doUpdateQuery("UPDATE gamedie SET roundID = " + roundID + " WHERE idgame = " + idGame + " AND dienumber = " + rs.getInt("dienumber") + " AND diecolor = \"" + rs.getString("diecolor") + "\"");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

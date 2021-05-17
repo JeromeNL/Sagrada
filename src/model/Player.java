@@ -19,8 +19,9 @@ public class Player {
 	private DatabaseController dbController;
 
 	// Constructor when the player is challenged
-	public Player(DatabaseController dbController) {
+	public Player(DatabaseController dbController, int idPlayer) {
 		this.dbController = dbController;
+		this.idPlayer = idPlayer;
 		// to do: get all the info about the player from the database based on username
 	}
 	
