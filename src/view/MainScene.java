@@ -28,5 +28,8 @@ public class MainScene extends Scene {
 		Player playerShownOnScreen = game.getPlayers().get(playerNR); // creator of the game
 		GameView gameView = new GameView(game, playerShownOnScreen); 
 		setRoot(gameView);
+		
+		ToolCardInUseView t = new ToolCardInUseView();
+		setRoot(t);
 	}
 }
