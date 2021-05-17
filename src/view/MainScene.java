@@ -9,6 +9,7 @@ import model.Game;
 import model.GameColor;
 import model.Player;
 
+
 public class MainScene extends Scene {
 
 ///////////////////////////////////////////////////////////////// Constructor
@@ -19,14 +20,17 @@ public class MainScene extends Scene {
 		super(new Pane(), 1280, 720);
 		this.mainController = mainController;
 		
-		LobbyView lobbyView = new LobbyView(); 
-		setRoot(lobbyView);
+//		LobbyView lobbyView = new LobbyView(); 
+//		setRoot(lobbyView);
+		
+		PlayedGamesView playedGames = new PlayedGamesView();
+		setRoot(playedGames);
 	}
 	
 	// show gameview of player of game with nr 1,2,3 or 4.
-	public void showGame(Game game, int playerNR) {
-		Player playerShownOnScreen = game.getPlayers().get(playerNR); // creator of the game
-		GameView gameView = new GameView(game, playerShownOnScreen); 
-		setRoot(gameView);
+public void showGame(Game game, int playerNR) {
+	Player playerShownOnScreen = game.getPlayers().get(playerNR); // creator of the game
+//		GameView gameView = new GameView(game, playerShownOnScreen); 
+//		setRoot(gameView);
 	}
 }
