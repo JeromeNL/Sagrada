@@ -24,12 +24,7 @@ public class MainController {
 		currentGame.invitePlayer("mandy");
 		currentGame.invitePlayer("imke");
 		currentGame.startGame();
-		showGame();
-		
-//		DieBagModel dieBagModel = new DieBagModel();
-//		t.randomizeColor();
-//		t.randomizeNumber();
-//		dieBagModel.fillingTheBag();
+		showGame(0); // show game of first player
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
@@ -53,8 +48,8 @@ public class MainController {
 		currentGame = new Game(loggedInUsername, dbController);
 	}
 
-	// Show the game of logged in user
-	public void showGame() {
-		mainScene.showGame(currentGame, 0);
+	// Show the game of a player in the game (0 is first player) e.g. 0, 1, 2, 3
+	public void showGame(int playernr) {
+		mainScene.showGame(currentGame, playernr);
 	}
 }

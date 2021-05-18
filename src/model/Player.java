@@ -118,7 +118,7 @@ public class Player {
 	}
 
 	public void setPatternCard(int patternCardID) {
-		Patterncard patterncard = new Patterncard(patternCardID, new DatabaseController());
+		Patterncard patterncard = new Patterncard(patternCardID, new DatabaseController(),this);
 		this.patterncard = patterncard;
 
 		addPatterncardChoiceToDatabase();
@@ -155,5 +155,9 @@ public class Player {
 
 	public boolean isCreator() {
 		return isCreator;
+	}
+	
+	public int getGameID() {
+		return idGame;
 	}
 }

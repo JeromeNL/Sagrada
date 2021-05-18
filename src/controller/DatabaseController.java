@@ -173,4 +173,10 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 	}
+	
+	public void placeDie(int idPlayer, int idGame, Die die, int xPosition, int yPosition) {
+		String query = "UPDATE playerframefield SET dienumber = " + die.getEyesCount() + ", diecolor = \"" + die.getColor().toString().toLowerCase() + "\" WHERE idplayer = " + idPlayer + " AND idgame = " + idGame + " AND position_x = " + xPosition + " AND position_y = " + yPosition;
+
+		doUpdateQuery(query);
+	}
 }
