@@ -1,6 +1,7 @@
 package view;
 
 import controller.MainController;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
@@ -40,6 +41,14 @@ public class GameView extends BorderPane {
 		dieSupply = new DieSupply(game.getDiesInSupply());
 		gameButtonView = new GameButtonView(this);
 		changeCurrentPlayerView = new ChangeCurrentPlayerView(game, mainController);
+		
+		if (!mainController.getLoggedInUsername().equals(player.getUsername())) {
+			dieSupply.setDisable(true);
+			dieSupply.setOpacity(0.5);
+			gameButtonView.setDisable(true);
+			gameButtonView.setOpacity(0.5);
+			objectiveInGameView.hide();
+		}
 
 		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
 
@@ -75,7 +84,8 @@ public class GameView extends BorderPane {
 
 		public ChangePlayerButton() {
 			setSpacing(10);
-			setAlignment(Pos.CENTER);
+			setPadding(new Insets(10));
+			setAlignment(Pos.BASELINE_LEFT);
 			
 			setOnMouseClicked(e -> showChangeCurrentPlayerView());
 			
@@ -85,7 +95,18 @@ public class GameView extends BorderPane {
 			currentPlayerText.setStyle("-fx-font-weight: bold");
 			currentPlayerText.setFont(new Font("Arial", 40));
 			
-			getChildren().addAll(dropDownButton, currentPlayerText);
+			Label who;
+			if (mainController.getLoggedInUsername().equals(player.getUsername())) {
+				who = new Label("(You)");
+			} else {
+				who = new Label("(Other player)");
+			}
+			
+			who.setStyle("-fx-font-weight: bold");
+			who.setFont(new Font("Arial", 20));
+						
+			
+			getChildren().addAll(dropDownButton, currentPlayerText, who);
 			
 			setOnMouseEntered(e -> currentPlayerText.setUnderline(true));
 			setOnMouseExited(e -> currentPlayerText.setUnderline(false));

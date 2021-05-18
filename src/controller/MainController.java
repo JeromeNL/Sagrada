@@ -21,10 +21,10 @@ public class MainController {
 		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
 		currentGame.invitePlayer("jasper");
 		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
-		currentGame.invitePlayer("mandy");
-		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
-		currentGame.invitePlayer("imke");
-		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
+//		currentGame.invitePlayer("mandy");
+//		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
+//		currentGame.invitePlayer("imke");
+//		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
 		currentGame.startGame();
 		showGame(0); // show game of first player
 
@@ -53,5 +53,9 @@ public class MainController {
 	// Show the game of a player in the game (0 is first player) e.g. 0, 1, 2, 3
 	public void showGame(int playernr) {
 		mainScene.showGame(currentGame, playernr);
+	}
+	
+	public String getLoggedInUsername() {
+		return loggedInUsername;
 	}
 }
