@@ -1,4 +1,4 @@
-package view;
+package imageChooser;
 
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -10,22 +10,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
-public class ToolcardCardImage extends Pane {
+public class CompactPrivateObjectiveCardImage extends Pane {
 
-	String URL_TO_IMAGE;
 
-	private int widthCard = 419;
-	private int heightCard = 606;
+
 	private String imageURL;
 	private String combinedURL;
-	private int imageNumber;
+	private String imageColor;
 
-	public ToolcardCardImage(int newImageNumber) {
+	public CompactPrivateObjectiveCardImage(String newImageColor) {
 		super();
 		
-		imageNumber = newImageNumber;
-		
-		combinedURL = "/Images/Tool Cards/" + imageNumber + ".png";
+		imageColor = newImageColor;
+		combinedURL = "/Images/Compact Private Objectives/" + imageColor + ".png";
 		imageURL = combinedURL.toString();
 		addCards();
 
@@ -36,9 +33,6 @@ public class ToolcardCardImage extends Pane {
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 
 		ImageView imageView = new ImageView(toolCardImage);
-		imageView.setFitHeight(heightCard);
-		imageView.setFitWidth(widthCard);
-
 		getChildren().addAll(imageView);
 
 	}
