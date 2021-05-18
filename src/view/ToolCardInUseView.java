@@ -1,6 +1,8 @@
 package view;
 
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
@@ -41,6 +43,7 @@ public class ToolCardInUseView extends StackPane{
 	public ToolCardInUseView(){
 	
 /// Initializing Variables
+		
 	 
 	favortokens = new FavorTokensInUseView("Janique",15);	
 		

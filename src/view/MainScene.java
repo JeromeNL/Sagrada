@@ -16,8 +16,7 @@ public class MainScene extends Scene {
 		super(new Pane(), 1280, 720);
 		this.mainController = mainController;
 		
-		LobbyView lobbyView = new LobbyView(); 
-		setRoot(lobbyView);
+		
 	}
 	
 	// show gameview of player of game with nr 1,2,3 or 4.
@@ -26,7 +25,7 @@ public class MainScene extends Scene {
 		GameView gameView = new GameView(game, playerShownOnScreen); 
 		setRoot(gameView);
 		
-		ToolCardInUseView t = new ToolCardInUseView();
-		setRoot(t);
+		ToolcardCardImage lobbyView = new ToolcardCardImage(3); 
+		setRoot(lobbyView);
 	}
 }
