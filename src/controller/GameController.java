@@ -4,7 +4,6 @@ import model.GameStats;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import controller.DatabaseController;
 public class GameController {
 	public static ArrayList<GameStats> AllGameStats() throws SQLException {
 		ArrayList<GameStats> gameStats = new ArrayList<>();
