@@ -86,6 +86,9 @@ public class GameView extends BorderPane {
 			currentPlayerText.setFont(new Font("Arial", 40));
 			
 			getChildren().addAll(dropDownButton, currentPlayerText);
+			
+			setOnMouseEntered(e -> currentPlayerText.setUnderline(true));
+			setOnMouseExited(e -> currentPlayerText.setUnderline(false));
 		}
 	}
 

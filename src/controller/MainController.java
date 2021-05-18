@@ -22,9 +22,9 @@ public class MainController {
 		currentGame.invitePlayer("jasper");
 		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
 		currentGame.invitePlayer("mandy");
-		currentGame.getPlayers().get(1).setPatternCard(3); // set patterncard for invited player
+		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
 		currentGame.invitePlayer("imke");
-		currentGame.getPlayers().get(1).setPatternCard(8); // set patterncard for invited player
+		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
 		currentGame.startGame();
 		showGame(0); // show game of first player
 
