@@ -31,8 +31,8 @@ public class MainScene extends Scene {
 		setRoot(gameView);
 		
 		
-		
 	//////////// IMAGE CHOOSER EXAMPLE
+	// constuctor can be change to load a certain image.
 		
 		
 		ToolcardCardImage toolcardCardImage = new ToolcardCardImage(3); 
@@ -49,6 +49,8 @@ public class MainScene extends Scene {
 		
 		CompactPrivateObjectiveCardImage compactPrivateObjectiveCardImage = new CompactPrivateObjectiveCardImage("pink"); 
 		setRoot(compactPrivateObjectiveCardImage); 
+		
+	
 		
 		
 		
