@@ -20,6 +20,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import controller.PlayerController;
+import javafx.scene.control.Button;
 import model.PlayerStats;
 
 public class PlayerListView extends VBox {
@@ -35,9 +36,19 @@ public class PlayerListView extends VBox {
 		container.setMaxWidth(1005);
 		container.setStyle("-fx-hgap: 4;");
 		Text tekst = new Text("fill");
+		Button backButton = new Button("Back");
 
 		playerTxt = new Text("Spelers");
 		playerTxt.setFont(new Font("Arial", 30));
+		//Styling button
+		String IDLE_BUTTON_STYLE = "-fx-border-width: 2;" + "-fx-border-color: white;"
+				+ "-fx-background-color: transparent;" + "-fx-font-size: 20;" + "-fx-text-fill: white;";
+		String HOVERED_BUTTON_STYLE = "-fx-border-width: 2;" + "-fx-border-color: white;"
+				+ "-fx-background-color:white;" + "-fx-font-size: 20;" + "-fx-text-fill:blue;";
+
+		backButton.setStyle(IDLE_BUTTON_STYLE);
+		backButton.setOnMouseEntered(e -> backButton.setStyle(HOVERED_BUTTON_STYLE));
+		backButton.setOnMouseExited(e -> backButton.setStyle(IDLE_BUTTON_STYLE));
 
 		// Creating the tables
 		TableColumn<PlayerStats,String> username = new TableColumn<>("Naam");
@@ -78,7 +89,7 @@ public class PlayerListView extends VBox {
 		container.getChildren().addAll(table);
 		this.setBackground(new Background(new BackgroundFill(Color.PINK, new CornerRadii(0), new Insets(0))));
 		this.setAlignment(Pos.CENTER);
-		this.getChildren().addAll(playerTxt, container);
+		this.getChildren().addAll(playerTxt, container, backButton);
 
 	}
 }
