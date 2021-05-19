@@ -184,4 +184,32 @@ public class DatabaseController {
 		String query = "UPDATE player SET idpatterncard = " + idPatterncard + " WHERE idplayer = " + idPlayer; 
 		doUpdateQuery(query);
 	}
+	
+	public int getPatterncardID(int idPlayer) {
+		ResultSet rs = doQuery("SELECT * FROM player WHERE idplayer = " + idPlayer);
+		int idPatterncard = 0;
+		try {
+			while (rs.next()) {
+				idPatterncard = rs.getInt("idpatterncard");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return idPatterncard;
+	}
+	
+	public String getUsername(int idPlayer) {
+		ResultSet rs = doQuery("SELECT * FROM player WHERE idplayer = " + idPlayer);
+		String username = "";
+		try {
+			while (rs.next()) {
+				username = rs.getString("username");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return username;
+	}
 }

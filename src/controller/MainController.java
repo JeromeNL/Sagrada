@@ -1,7 +1,10 @@
 package controller;
 
+import java.util.ArrayList;
+
 import javafx.stage.Stage;
 import model.Game;
+import model.Player;
 import view.MainScene;
 
 public class MainController {
@@ -15,18 +18,19 @@ public class MainController {
 		dbController = new DatabaseController();
 		mainScene = new MainScene(this);		
 		
-		login("janique");
-//		loadGame(450);
-		createGame();
-		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
-		currentGame.invitePlayer("jasper");
-		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
+		login("mandy");
+		loadGame(721);
+//		createGame();
+//		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
+//		currentGame.invitePlayer("jasper");
+//		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
 //		currentGame.invitePlayer("mandy");
 //		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
 //		currentGame.invitePlayer("imke");
 //		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
-		currentGame.startGame();
-		showGame(0); // show game of first player
+//		currentGame.startGame();
+		
+		showGameLoggedInPlayer();
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
@@ -49,7 +53,18 @@ public class MainController {
 	public void createGame() {
 		currentGame = new Game(loggedInUsername, dbController);
 	}
-
+	
+	// Shows game of logged in player
+	public void showGameLoggedInPlayer() {
+		ArrayList<Player> players = currentGame.getPlayers();
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).getUsername().equals(loggedInUsername)) {
+				mainScene.showGame(currentGame, i);
+				return;
+			}
+		}
+	}
+	
 	// Show the game of a player in the game (0 is first player) e.g. 0, 1, 2, 3
 	public void showGame(int playernr) {
 		mainScene.showGame(currentGame, playernr);

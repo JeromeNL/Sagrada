@@ -22,7 +22,10 @@ public class Player {
 	public Player(DatabaseController dbController, int idPlayer) {
 		this.dbController = dbController;
 		this.idPlayer = idPlayer;
-		// to do: get all the info about the player from the database based on username
+		
+		loadPatterncard();
+		username = dbController.getUsername(idPlayer);
+		// TODO get all the info about the player from the database based on username
 	}
 	
 	// Constructor when the player is the challengee.
@@ -34,6 +37,12 @@ public class Player {
 		this.dbController = dbController;
 
 		setUpPlayer();
+	}
+	
+	private void loadPatterncard() {
+		int idPatterncard = dbController.getPatterncardID(idPlayer);
+		Patterncard patterncard = new Patterncard(idPatterncard, dbController, this);
+		this.patterncard = patterncard;
 	}
 
 	private void setUpPlayer() {
