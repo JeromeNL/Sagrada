@@ -12,9 +12,6 @@ public class Game {
 
 	private int idGame;
 
-	private Round[] rounds; // 20 round IDs in database (so 20 Round objects)
-
-	private Die[] dies; // 90 dies
 	private FavorToken[] favorTokens; // 24 favor tokens per game.
 	private Toolcard[] toolcards; // 3 toolcards per game.
 	private ObjectiveCard[] objectiveCards; // 3 public objective cards per game.
@@ -28,8 +25,6 @@ public class Game {
 		this.idGame = idGame;
 		this.dbController = dbController;
 
-		rounds = new Round[20];
-		dies = new Die[90];
 		favorTokens = new FavorToken[24];
 		toolcards = new Toolcard[3];
 		objectiveCards = new ObjectiveCard[3];
@@ -44,8 +39,6 @@ public class Game {
 		this.usernameCreator = usernameCreator;
 		this.dbController = dbController;
 
-		rounds = new Round[20];
-		dies = new Die[90];
 		favorTokens = new FavorToken[24];
 		toolcards = new Toolcard[3];
 		objectiveCards = new ObjectiveCard[3];
@@ -59,7 +52,6 @@ public class Game {
 	private void setupGame() {
 		addToDatabase();
 		addCreatorPlayer(usernameCreator);
-		createRounds();
 		createDies();
 		createFavorTokens();
 		dbController.setRoundID(idGame, 1);
@@ -73,9 +65,7 @@ public class Game {
 	// Load an existing game.
 	private void loadGame() {
 		loadPlayers();
-		loadDies();
 		loadDiesInSupply();
-		createRounds();
 	}
 
 	private void loadDiesInSupply() {
@@ -87,28 +77,13 @@ public class Game {
 		dbController.createDiesInSupply(idGame, dbController.getRoundID(idGame), amount);
 	}
 
-	// Set up round objects with correct roundID, roundnr and clockwise boolean
-	// according to the database table round.
-	private void createRounds() {
-		for (int i = 1; i <= rounds.length; i++) {
-			int roundID = i;
-			int roundnr = Math.round(((float) roundID / 2));
-			boolean clockwise = false;
-			if (roundID % 2 != 0) {
-				clockwise = true;
-			}
-
-			rounds[i - 1] = new Round(roundID, roundnr, clockwise);
-		}
-	}
-
 	// Set up 90 dies to be created in the game.
 	private void createDies() {
 		dbController.createGameDies(idGame);
 	}
 	
-	private void loadDies() {
-		dies = dbController.getDies(idGame);
+	private Die[] getDies() {
+		return dbController.getDies(idGame);
 	}
 
 	// Create 24 favortokens to be used in the game.
@@ -201,5 +176,9 @@ public class Game {
 	
 	public int getGameID() {
 		return idGame;
+	}
+	
+	public void setNextTurn() {
+		
 	}
 }
