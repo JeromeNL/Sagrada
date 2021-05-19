@@ -12,7 +12,6 @@ public class Player {
 	private String username;
 	private int idGame;
 	private PlayerStatus status;
-	private int seqnr;
 	private GameColor privateObjectiveCardColor;
 	private Patterncard patterncard;
 	private boolean isCreator;
@@ -54,6 +53,11 @@ public class Player {
 		setInitialStatus();
 		addToDatabase();
 		createPlayerFrameField();
+		setSeqNr();
+	}
+	
+	private void setSeqNr() {
+		dbController.setNewSeqNr(idGame, idPlayer);
 	}
 
 	// Create all the playerframefield rows in the database.
@@ -88,7 +92,7 @@ public class Player {
 			while (increasingID) {
 				// Add a new row to the game table.
 				String query = "INSERT INTO player VALUES (" + newPlayerID + ",\"" + username + "\"," + idGame + ",\""
-						+ status + "\", NULL, \"" + privateObjectiveCardColor + "\", NULL, NULL);";
+						+ status + "\", NULL , \"" + privateObjectiveCardColor + "\", NULL, NULL);";
 
 				int result = dbController.doUpdateQuery(query);
 				if (result == 1) {
@@ -118,13 +122,7 @@ public class Player {
 	}
 
 	public int getSeqnr() {
-		// to-do: get seqnr from database
-		return seqnr;
-	}
-
-	public void setSeqnr(int seqnr) {
-		// to-do: set seqnr in database
-		this.seqnr = seqnr;
+		return dbController.getSeqNr(idPlayer);
 	}
 
 	public Patterncard getPatterncard() {

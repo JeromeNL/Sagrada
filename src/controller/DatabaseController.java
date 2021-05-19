@@ -240,4 +240,39 @@ public class DatabaseController {
 		}
 		return username;
 	}
+
+	public void setNewSeqNr(int idGame, int idPlayer) {
+		boolean done = false;
+		while (!done) {
+			int newSeqNr = 1;
+			ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + idGame + " ORDER BY seqnr DESC LIMIT 1");
+			try {
+				while (rs.next()) {
+					newSeqNr = rs.getInt("seqnr") + 1;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			int result = doUpdateQuery("UPDATE player SET seqnr = " + newSeqNr + " WHERE idplayer = " + idPlayer);
+			if (result == 1)
+				done = true;
+		}
+	}
+	
+	public int getSeqNr(int idPlayer) {
+		int seqnr = 0;
+		ResultSet rs = doQuery("SELECT seqnr FROM player WHERE idplayer = " + idPlayer);
+		try {
+			while (rs.next()) {
+				seqnr = rs.getInt(1);
+				return seqnr;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return seqnr;
+	}
 }
