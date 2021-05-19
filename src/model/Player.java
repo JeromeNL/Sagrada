@@ -19,9 +19,10 @@ public class Player {
 	private DatabaseController dbController;
 
 	// Constructor when the player is challenged
-	public Player(DatabaseController dbController, int idPlayer) {
+	public Player(DatabaseController dbController, int idPlayer, int idGame) {
 		this.dbController = dbController;
 		this.idPlayer = idPlayer;
+		this.idGame = idGame;
 		
 		loadPatterncard();
 		username = dbController.getUsername(idPlayer);
@@ -41,6 +42,10 @@ public class Player {
 	
 	private void loadPatterncard() {
 		int idPatterncard = dbController.getPatterncardID(idPlayer);
+		if (idPatterncard == 0) {
+			// Player has not chosen patterncard yet
+			return;
+		}
 		Patterncard patterncard = new Patterncard(idPatterncard, dbController, this);
 		this.patterncard = patterncard;
 	}

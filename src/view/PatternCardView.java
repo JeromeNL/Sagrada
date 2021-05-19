@@ -29,6 +29,7 @@ public class PatternCardView extends GridPane {
 		setHgap(gridGapSize);
 		setVgap(gridGapSize);
 		
+		
 		if (patterncard != null) {
 			loadPatterncard();			
 		} else {

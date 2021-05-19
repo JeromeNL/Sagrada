@@ -97,7 +97,7 @@ public class DatabaseController {
 		ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + idGame);
 		try {
 			while (rs.next()) {
-				Player player = new Player(this, rs.getInt(1));
+				Player player = new Player(this, rs.getInt(1), idGame);
 				players.add(player);
 			}
 		} catch (SQLException e) {
@@ -160,31 +160,59 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void createDiesInSupply(int idGame, int roundID, int amount) {
-		ResultSet rs = doQuery("SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundtrack IS NULL AND roundID IS NULL ORDER BY RAND() LIMIT " + amount);
-		
+		ResultSet rs = doQuery("SELECT * FROM gamedie WHERE idgame = " + idGame
+				+ " AND roundtrack IS NULL AND roundID IS NULL ORDER BY RAND() LIMIT " + amount);
+
 		try {
 			while (rs.next()) {
-				doUpdateQuery("UPDATE gamedie SET roundID = " + roundID + " WHERE idgame = " + idGame + " AND dienumber = " + rs.getInt("dienumber") + " AND diecolor = \"" + rs.getString("diecolor") + "\"");
+				doUpdateQuery(
+						"UPDATE gamedie SET roundID = " + roundID + " WHERE idgame = " + idGame + " AND dienumber = "
+								+ rs.getInt("dienumber") + " AND diecolor = \"" + rs.getString("diecolor") + "\"");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public void placeDie(int idPlayer, int idGame, Die die, int xPosition, int yPosition) {
-		String query = "UPDATE playerframefield SET dienumber = " + die.getEyesCount() + ", diecolor = \"" + die.getColor().toString().toLowerCase() + "\" WHERE idplayer = " + idPlayer + " AND idgame = " + idGame + " AND position_x = " + xPosition + " AND position_y = " + yPosition;
 
-		doUpdateQuery(query);
+	public void placeDie(int idPlayer, int idGame, Die die, int xPosition, int yPosition) {
+		String query = "UPDATE playerframefield SET dienumber = " + die.getEyesCount() + ", diecolor = \""
+				+ die.getColor().toString().toLowerCase() + "\" WHERE idplayer = " + idPlayer + " AND idgame = "
+				+ idGame + " AND position_x = " + xPosition + " AND position_y = " + yPosition;
+
+		if (doUpdateQuery(query) == 1) {
+			System.out.println("Placed DIE in database");
+		} else {
+			System.out.println("Error placing die");
+		}
 	}
-	
+
+	public Die getDie(int idPlayer, int xPosition, int yPosition) {
+		String query = "SELECT * FROM playerframefield WHERE idplayer = " + idPlayer + " AND position_x = " + xPosition
+				+ " AND position_y = " + yPosition + " AND dienumber IS NOT NULL AND diecolor IS NOT NULL;";
+		ResultSet rs = doQuery(query);
+		try {
+			while (rs.next()) {
+				String colorString = rs.getString("diecolor").toUpperCase();
+				GameColor color = GameColor.valueOf(colorString);
+				int eyesCount = rs.getInt("dienumber");
+
+				return new Die(color, eyesCount, 0);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public void setPatterncard(int idPlayer, int idPatterncard) {
-		String query = "UPDATE player SET idpatterncard = " + idPatterncard + " WHERE idplayer = " + idPlayer; 
+		String query = "UPDATE player SET idpatterncard = " + idPatterncard + " WHERE idplayer = " + idPlayer;
 		doUpdateQuery(query);
 	}
-	
+
 	public int getPatterncardID(int idPlayer) {
 		ResultSet rs = doQuery("SELECT * FROM player WHERE idplayer = " + idPlayer);
 		int idPatterncard = 0;
@@ -198,7 +226,7 @@ public class DatabaseController {
 		}
 		return idPatterncard;
 	}
-	
+
 	public String getUsername(int idPlayer) {
 		ResultSet rs = doQuery("SELECT * FROM player WHERE idplayer = " + idPlayer);
 		String username = "";

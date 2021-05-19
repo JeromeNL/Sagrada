@@ -15,12 +15,13 @@ public class PatterncardField {
 	
 	private Player owner;
 
-	public PatterncardField(int xPosition, int yPosition, DatabaseController dbController, Player owner) {
-		this.xPosition = xPosition;
-		this.yPosition = yPosition;
-		this.dbController = dbController;
-		this.owner = owner;
-	}
+//	public PatterncardField(int xPosition, int yPosition, DatabaseController dbController, Player owner) {
+//		this.xPosition = xPosition;
+//		this.yPosition = yPosition;
+//		this.dbController = dbController;
+//		this.owner = owner;
+//		
+//	}
 
 	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement, DatabaseController dbController, Player owner) {
 		this.xPosition = xPosition;
@@ -30,6 +31,8 @@ public class PatterncardField {
 		this.colorRequirement = colorRequirement;
 		this.dbController = dbController;
 		this.owner = owner;
+		
+		dieOnField = dbController.getDie(owner.getIdPlayer(), xPosition, yPosition);
 	}
 
 	public void placeDie(Die die) {
