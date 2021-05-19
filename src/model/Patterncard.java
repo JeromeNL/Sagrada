@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.DatabaseController;
+import javafx.scene.paint.Color;
 
 public class Patterncard {
 	
@@ -38,7 +39,8 @@ public class Patterncard {
 				if (color == null) {
 					colorRequirement = null;
 				} else {
-					colorRequirement = stringToGameColor(color);
+					Color colorFX = Color.valueOf(color);
+					colorRequirement = GameColor.toGameColor(colorFX);
 				}
 
 				int valueRequirement = rs.getInt("value");
@@ -49,23 +51,6 @@ public class Patterncard {
 			System.out.println("Something went wrong while loading a patterncard from the database.");
 			e.printStackTrace();
 		}
-	}
-	
-	// Convert string color from database to gameColor.
-	private GameColor stringToGameColor(String colorString) {
-		GameColor gameColor = null;		
-		if (colorString.equals("red")) {
-			gameColor = GameColor.RED;
-		} else if (colorString.equals("blue")) {
-			gameColor = GameColor.BLUE;
-		} else if (colorString.equals("yellow")) {
-			gameColor = GameColor.YELLOW;
-		} else if (colorString.equals("purple")) {
-			gameColor = GameColor.PURPLE;
-		} else if (colorString.equals("green")) {
-			gameColor = GameColor.GREEN;
-		}
-		return gameColor;
 	}
 	
 	public ArrayList<PatterncardField> getFields() {

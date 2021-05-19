@@ -22,7 +22,7 @@ public enum GameColor {
 	}
 
 	// Convert a JavaFX to a GameColor.
-	public GameColor toGameColor(Color color) {
+	public static GameColor toGameColor(Color color) {
 		if (color == Color.INDIANRED) {
 			return GameColor.RED;
 
