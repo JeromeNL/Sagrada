@@ -21,6 +21,7 @@ public class Game {
 	private ObjectiveCard[] objectiveCards; // 3 public objective cards per game.
 	private ArrayList<Player> players; // 1 to 4 players per game
 	private DiesInSupply diesInSupply;
+	
 
 	private String usernameCreator;
 
