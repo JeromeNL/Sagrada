@@ -13,7 +13,6 @@ public class Game {
 	private int idGame;
 
 	private Round[] rounds; // 20 round IDs in database (so 20 Round objects)
-	private int currentRoundID;
 
 	private Die[] dies; // 90 dies
 	private FavorToken[] favorTokens; // 24 favor tokens per game.
@@ -30,7 +29,6 @@ public class Game {
 		this.dbController = dbController;
 
 		rounds = new Round[20];
-		currentRoundID = 1; // TODO: get the current round id from the database.
 		dies = new Die[90];
 		favorTokens = new FavorToken[24];
 		toolcards = new Toolcard[3];
@@ -47,7 +45,6 @@ public class Game {
 		this.dbController = dbController;
 
 		rounds = new Round[20];
-		currentRoundID = 1;
 		dies = new Die[90];
 		favorTokens = new FavorToken[24];
 		toolcards = new Toolcard[3];
@@ -65,6 +62,7 @@ public class Game {
 		createRounds();
 		createDies();
 		createFavorTokens();
+		dbController.setRoundID(idGame, 1);
 	}
 	
 	public void startGame() {
@@ -81,12 +79,12 @@ public class Game {
 	}
 
 	private void loadDiesInSupply() {
-		diesInSupply = dbController.getDiesInSupply(idGame, currentRoundID);
+		diesInSupply = dbController.getDiesInSupply(idGame, dbController.getRoundID(idGame));
 	}
 
 	private void createDiesInSupply() {
 		int amount = players.size() * 2 + 1;
-		dbController.createDiesInSupply(idGame, currentRoundID, amount);
+		dbController.createDiesInSupply(idGame, dbController.getRoundID(idGame), amount);
 	}
 
 	// Set up round objects with correct roundID, roundnr and clockwise boolean
@@ -155,7 +153,9 @@ public class Game {
 	}
 
 	public void setNextRound() {
-		currentRoundID++;
+		int currentRound = dbController.getRoundID(idGame);
+		int nextRound = currentRound + 1;
+		dbController.setRoundID(idGame, nextRound);
 	}
 	
 	public ArrayList<String> getPlayerOrder() {

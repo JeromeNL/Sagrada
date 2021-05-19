@@ -294,4 +294,25 @@ public class DatabaseController {
 
 		return playerOrder;
 	}
+	
+	public void setRoundID(int idGame, int idRound) {
+		int result = doUpdateQuery("UPDATE game SET current_roundID = " + idRound + " WHERE idgame = " + idGame);
+		if (result != 1) {
+			System.out.println(getClass() + " - Something went wrong while setting roundID");
+		}
+	}
+	
+	public int getRoundID(int idGame) {
+		int roundID = 0;
+		ResultSet rs = doQuery("SELECT * FROM game WHERE idgame = " + idGame);
+		try {
+			while (rs.next()) {
+				return rs.getInt("current_roundID");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return roundID;
+	}
 }
