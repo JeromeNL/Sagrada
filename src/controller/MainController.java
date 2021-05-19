@@ -19,16 +19,16 @@ public class MainController {
 		mainScene = new MainScene(this);		
 		
 		login("mandy");
-		loadGame(721);
-//		createGame();
-//		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
-//		currentGame.invitePlayer("jasper");
-//		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
-//		currentGame.invitePlayer("mandy");
+//		loadGame(721);
+		createGame();
+		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
+		currentGame.invitePlayer("jasper");
+		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
+		currentGame.invitePlayer("jerome");
 //		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
 //		currentGame.invitePlayer("imke");
 //		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
-//		currentGame.startGame();
+		currentGame.startGame();
 		
 		showGameLoggedInPlayer();
 
