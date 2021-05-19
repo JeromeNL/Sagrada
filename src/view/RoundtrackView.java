@@ -30,7 +30,7 @@ public class RoundtrackView extends HBox {
 		setMaxSize(1000, 100);
 		
 /// Initializing The Variables
-		
+		setAlignment(Pos.CENTER);
 		setSpacing(10);
 		
 		ArrayList<String> playerOrder = game.getPlayerOrder();

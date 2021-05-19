@@ -55,6 +55,8 @@ public class Game {
 		createDies();
 		createFavorTokens();
 		dbController.setRoundID(idGame, 1);
+		
+		dbController.setTurnIdPlayer(idGame, dbController.getPlayerID(1, idGame));
 	}
 	
 	public void startGame() {
@@ -131,6 +133,7 @@ public class Game {
 		int currentRound = dbController.getRoundID(idGame);
 		int nextRound = currentRound + 1;
 		dbController.setRoundID(idGame, nextRound);
+		System.out.println(getClass() + " - Next round");
 	}
 	
 	public ArrayList<String> getPlayerOrder() {
@@ -179,6 +182,42 @@ public class Game {
 	}
 	
 	public void setNextTurn() {
+		int currentPlayerID = dbController.getCurrentPlayerID(idGame);
 		
+		for (int i = 0; i < players.size(); i++) {
+			Player player = players.get(i);
+			if (player.getIdPlayer() == currentPlayerID) {
+				
+				// get seq nr of current player
+				int currentSeqNr = player.getSeqnr();
+				int newSeqNr;
+				int newPlayerID;
+				
+				// check if seq nr needs to be increased or decreased
+				if (dbController.isClockwise(dbController.getRoundID(idGame))) {
+					// check if new round needs to be started because seqnr is at the end
+					if (currentSeqNr == players.size()) {
+						setNextRound();
+						newSeqNr = players.size();
+					} else {
+						newSeqNr = currentSeqNr + 1;
+						
+						// TODO set turn playerid in database
+					}
+				} else {
+					if (currentSeqNr == 1) {
+						setNextRound();
+						newSeqNr = 1;
+					} else {
+						newSeqNr = currentSeqNr - 1;
+					}
+				}
+				newPlayerID = dbController.getPlayerID(newSeqNr, idGame);
+				dbController.setTurnIdPlayer(idGame, newPlayerID);
+				
+				System.out.println(getClass() + " - Next turn");
+				return;
+			}
+		}
 	}
 }

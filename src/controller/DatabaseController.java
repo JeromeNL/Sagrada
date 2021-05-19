@@ -315,4 +315,54 @@ public class DatabaseController {
 		}
 		return roundID;
 	}
+	
+	public boolean isClockwise(int roundID) {
+		boolean isClockwise = false;
+		ResultSet rs = doQuery("SELECT * FROM round WHERE roundID = " + roundID);
+		try {
+			while(rs.next()) {
+				isClockwise = rs.getBoolean("clockwise");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return isClockwise;
+	}
+	
+	public void setTurnIdPlayer(int idGame, int idPlayer) {
+		int result = doUpdateQuery("UPDATE game SET turn_idplayer = " + idPlayer + " WHERE idgame = " + idGame);
+		if (result != 1) {
+			System.out.println(getClass() + " - Something went wrong while setting turn idplayer");
+		}
+	}
+
+	public int getCurrentPlayerID(int idGame) {
+		int idPlayer = 0;
+		ResultSet rs = doQuery("SELECT * FROM game WHERE idgame = " + idGame);
+		
+		try {
+			while (rs.next()) {
+				idPlayer = rs.getInt("turn_idplayer");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return idPlayer;
+	}
+	
+	public int getPlayerID(int seqnr, int idGame) {
+		int idPlayer = 0;
+		ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + idGame + " AND seqnr = " + seqnr);
+		try {
+			while (rs.next()) {
+				idPlayer = rs.getInt("idplayer");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return idPlayer;
+	}
 }

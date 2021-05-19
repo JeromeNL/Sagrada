@@ -1,5 +1,6 @@
 package view;
 
+import controller.DatabaseController;
 import controller.MainController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -39,7 +40,7 @@ public class GameView extends BorderPane {
 
 		roundtrackView = new RoundtrackView(game);
 		dieSupply = new DieSupply(game.getDiesInSupply());
-		gameButtonView = new GameButtonView(this);
+		gameButtonView = new GameButtonView(this, game);
 		changeCurrentPlayerView = new ChangeCurrentPlayerView(game, mainController);
 		
 		if (!mainController.getLoggedInUsername().equals(player.getUsername())) {
@@ -65,8 +66,12 @@ public class GameView extends BorderPane {
 
 	public void showGame() {
 		getChildren().clear();
-		setTop(roundtrackView);
+		VBox topPane = new VBox();
+		
+		topPane.getChildren().addAll(roundtrackView, new InfoPane(game, new DatabaseController()));
+		setTop(topPane);
 		VBox leftPane = new VBox();
+		leftPane.setAlignment(Pos.CENTER);
 		leftPane.setSpacing(25);
 		leftPane.getChildren().addAll(new ChangePlayerButton(), objectiveInGameView);
 		setLeft(leftPane);
@@ -111,6 +116,28 @@ public class GameView extends BorderPane {
 			setOnMouseEntered(e -> currentPlayerText.setUnderline(true));
 			setOnMouseExited(e -> currentPlayerText.setUnderline(false));
 		}
+	}
+	
+	// Temporary class to show game details while developing
+	private class InfoPane extends HBox {
+		
+		public InfoPane(Game game, DatabaseController dbController) {
+			
+			setSpacing(30);
+			
+			Label gameStatus = new Label("Gameid: " + game.getGameID());
+			
+			int playerID = dbController.getCurrentPlayerID(game.getGameID());
+			String username = dbController.getUsername(playerID);
+			Label currentPlayer = new Label("Current player: " + username + " (ID: " + playerID + ")");
+			
+			int roundID = dbController.getRoundID(game.getGameID());
+			boolean isClockwise = dbController.isClockwise(roundID);
+			Label round = new Label("roundID: " + roundID + " (clockwise: " + isClockwise + ")");
+		
+			getChildren().addAll(gameStatus, currentPlayer, round);
+		}
+		
 	}
 
 }

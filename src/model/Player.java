@@ -59,6 +59,10 @@ public class Player {
 	private void setSeqNr() {
 		dbController.setNewSeqNr(idGame, idPlayer);
 	}
+	
+	public int getSeqNr() {
+		return dbController.getSeqNr(idPlayer);
+	}
 
 	// Create all the playerframefield rows in the database.
 	private void createPlayerFrameField() {		
