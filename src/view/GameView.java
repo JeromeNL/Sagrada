@@ -133,7 +133,7 @@ public class GameView extends BorderPane {
 			
 			int roundID = dbController.getRoundID(game.getGameID());
 			boolean isClockwise = dbController.isClockwise(roundID);
-			Label round = new Label("roundID: " + roundID + " (clockwise: " + isClockwise + ")");
+			Label round = new Label("roundID: " + roundID + " (clockwise: " + isClockwise + ")" + " RoundNR: " + dbController.getRoundNr(roundID));
 		
 			getChildren().addAll(gameStatus, currentPlayer, round);
 		}

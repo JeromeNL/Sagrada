@@ -3,6 +3,7 @@ package view;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import model.Game;
 
@@ -20,6 +21,9 @@ public class GameButtonView extends HBox {
 		toolCardButton2 = new GameButton();
 		toolCardButton3 = new GameButton();
 		confirmButton = new GameButton();
+		confirmButton.setFill(Color.GREENYELLOW);
+		confirmButton.setOnMouseEntered(e -> confirmButton.setFill(Color.GREEN));
+		confirmButton.setOnMouseExited(e -> confirmButton.setFill(Color.GREENYELLOW));
 		confirmButton.setOnMouseClicked(e-> {game.setNextTurn();
 		gameView.showGame();
 		});

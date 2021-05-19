@@ -19,16 +19,16 @@ public class MainController {
 		mainScene = new MainScene(this);		
 		
 		login("mandy");
-		loadGame(759);
-//		createGame();
-//		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
-//		currentGame.invitePlayer("jasper");
-//		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
-//		currentGame.invitePlayer("jerome");
-//		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
-//		currentGame.invitePlayer("imke");
-//		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
-//		currentGame.startGame();
+//		loadGame(759);
+		createGame();
+		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
+		currentGame.invitePlayer("jasper");
+		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
+		currentGame.invitePlayer("jerome");
+		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
+		currentGame.invitePlayer("imke");
+		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
+		currentGame.startGame();
 		
 		showGameLoggedInPlayer();
 
@@ -46,13 +46,13 @@ public class MainController {
 	}
 	
 	public void loadGame(int idGame) {
-		currentGame = new Game(idGame, dbController);
+		currentGame = new Game(idGame, dbController, this);
 	}
 	
 	// Creates a new game with the loggedInUsername as the owner of the game.
 	// TODO: should be called by lobby create game view.
 	public void createGame() {
-		currentGame = new Game(loggedInUsername, dbController);
+		currentGame = new Game(loggedInUsername, dbController, this);
 	}
 	
 	// Shows game of logged in player

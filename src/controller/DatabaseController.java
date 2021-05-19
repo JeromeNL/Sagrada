@@ -316,6 +316,20 @@ public class DatabaseController {
 		return roundID;
 	}
 	
+	public int getRoundNr(int roundID) {
+		int roundNr = 0;
+		ResultSet rs = doQuery("SELECT * FROM round WHERE roundID = " + roundID);
+		try {
+			while (rs.next()) {
+				roundNr = rs.getInt("roundnr");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return roundNr;
+	}
+	
 	public boolean isClockwise(int roundID) {
 		boolean isClockwise = false;
 		ResultSet rs = doQuery("SELECT * FROM round WHERE roundID = " + roundID);

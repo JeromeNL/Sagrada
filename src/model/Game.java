@@ -5,10 +5,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.DatabaseController;
+import controller.MainController;
 
 public class Game {
 	
 	private DatabaseController dbController;
+	private MainController mainController;
 
 	private int idGame;
 
@@ -21,9 +23,10 @@ public class Game {
 	private String usernameCreator;
 	
 	// Constructor to load an existing game.
-	public Game(int idGame, DatabaseController dbController) {
+	public Game(int idGame, DatabaseController dbController, MainController mainController) {
 		this.idGame = idGame;
 		this.dbController = dbController;
+		this.mainController = mainController;
 
 		favorTokens = new FavorToken[24];
 		toolcards = new Toolcard[3];
@@ -35,9 +38,10 @@ public class Game {
 	}
 
 	// Constructor to create a new game.
-	public Game(String usernameCreator, DatabaseController dbController) {
+	public Game(String usernameCreator, DatabaseController dbController, MainController mainController) {
 		this.usernameCreator = usernameCreator;
 		this.dbController = dbController;
+		this.mainController = mainController;
 
 		favorTokens = new FavorToken[24];
 		toolcards = new Toolcard[3];
@@ -130,12 +134,28 @@ public class Game {
 	}
 
 	public void setNextRound() {
-		int currentRound = dbController.getRoundID(idGame);
-		int nextRound = currentRound + 1;
-		dbController.setRoundID(idGame, nextRound);
-		System.out.println(getClass() + " - Next round");
+		int currentRoundID = dbController.getRoundID(idGame);
+		
+		if (currentRoundID == 20) {
+			endGame();
+			return;
+		}
+		int nextRoundID = currentRoundID + 1;
+		dbController.setRoundID(idGame, nextRoundID);
+		
+		if (nextRoundID % 2 != 0) {
+			System.out.println(getClass() + " - new die supply created");
+			createDiesInSupply();
+			loadDiesInSupply();
+			mainController.showGame(0);
+		}
+		System.out.println(getClass() + " - Next roundID");
 	}
 	
+	private void endGame() {
+		System.out.println(getClass() + " - Game ended.");
+	}
+
 	public ArrayList<String> getPlayerOrder() {
 		return dbController.getPlayerOrder(idGame);
 	}
