@@ -37,7 +37,7 @@ public class GameView extends BorderPane {
 		objectiveInGameView = new ObjectiveInGameView();
 		patternCardView = new PatternCardView(playerPatterncard);
 
-		roundtrackView = new RoundtrackView();
+		roundtrackView = new RoundtrackView(game);
 		dieSupply = new DieSupply(game.getDiesInSupply());
 		gameButtonView = new GameButtonView(this);
 		changeCurrentPlayerView = new ChangeCurrentPlayerView(game, mainController);

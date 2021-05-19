@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
@@ -10,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import model.Game;
 
 public class RoundtrackView extends HBox {
 
@@ -22,28 +25,22 @@ public class RoundtrackView extends HBox {
 	
 ///////////////////////////////////////////////////////////////// Constructor
 	
-	public RoundtrackView() {
+	public RoundtrackView(Game game) {
 		setMinSize(1000, 100);
 		setMaxSize(1000, 100);
 		
 /// Initializing The Variables
 		
-		turnNames = new Label("Freek > Freek > Jasper > Janique > Imke");
-		turnNames.setStyle("-fx-font-weight: bold");
-			
-		textFlowPane = new TextFlow();
+		setSpacing(10);
 		
-		currentTurn = new Text("Freek ");
-		currentTurn.setFill(Color.PINK);
-		currentTurn.setFont(new Font("Arial", 20));
-		currentTurn.setStyle("-fx-font-weight: bold");
-		
-		nextTurns = new Text("> Freek > Jasper > Janique > Imke");
-		nextTurns.setFill(Color.BLACK);
-		nextTurns.setFont(new Font("Arial", 20));
-		nextTurns.setStyle("-fx-font-weight: bold");
-		
-		this.getChildren().addAll(currentTurn, nextTurns);
+		ArrayList<String> playerOrder = game.getPlayerOrder();
+		for (String username : playerOrder) {
+			Label player = new Label(username);
+			Label splitter = new Label(">");
+			player.setStyle("-fx-font-weight: bold");
+			player.setFont(new Font("Arial", 20));
+			getChildren().addAll(player, splitter);
+		}
 	
 		setAlignment(Pos.CENTER);
 		setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(0, 0, 20, 20, false), null)));

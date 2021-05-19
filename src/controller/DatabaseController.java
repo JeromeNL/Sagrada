@@ -275,4 +275,23 @@ public class DatabaseController {
 		}
 		return seqnr;
 	}
+	
+	public ArrayList<String> getPlayerOrder(int gameID) {
+		ArrayList<String> playerOrder = new ArrayList<String>();
+		ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + gameID + " ORDER BY seqnr ASC");
+		ResultSet rs2 = doQuery("SELECT * FROM player WHERE idgame = " + gameID + " ORDER BY seqnr DESC");
+		try {
+			while (rs.next()) {
+				playerOrder.add(rs.getString("username"));
+			}
+			while (rs2.next()) {
+				playerOrder.add(rs2.getString("username"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return playerOrder;
+	}
 }

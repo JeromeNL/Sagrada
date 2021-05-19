@@ -157,6 +157,10 @@ public class Game {
 	public void setNextRound() {
 		currentRoundID++;
 	}
+	
+	public ArrayList<String> getPlayerOrder() {
+		return dbController.getPlayerOrder(idGame);
+	}
 
 	// Gets an available gameID and then adds a new row to the game table in the
 	// database.
@@ -193,5 +197,9 @@ public class Game {
 
 	public DiesInSupply getDiesInSupply() {
 		return diesInSupply;
+	}
+	
+	public int getGameID() {
+		return idGame;
 	}
 }
