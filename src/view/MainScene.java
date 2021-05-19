@@ -35,21 +35,32 @@ public class MainScene extends Scene {
 	// constuctor can be change to load a certain image.
 		
 		
-		ToolcardCardImage toolcardCardImage = new ToolcardCardImage(3); 
-		setRoot(toolcardCardImage);
+	// LATEN STAAN ALSJEBLIEFT
 		
-		PublicObjectiveCardImage publicObjectiveCardImage = new PublicObjectiveCardImage(3); 
-		setRoot(publicObjectiveCardImage);
 		
-		CompactPublicObjectiveCardImage compactPublicObjectiveCardImage = new CompactPublicObjectiveCardImage(3); 
-		setRoot(compactPublicObjectiveCardImage);
+//		ToolcardCardImage toolcardCardImage = new ToolcardCardImage(3); 
+//		setRoot(toolcardCardImage);
+//		
+//		PublicObjectiveCardImage publicObjectiveCardImage = new PublicObjectiveCardImage(3); 
+//		setRoot(publicObjectiveCardImage);
+//		
+//		CompactPublicObjectiveCardImage compactPublicObjectiveCardImage = new CompactPublicObjectiveCardImage(3); 
+//		setRoot(compactPublicObjectiveCardImage);
+//		
+//		PrivateObjectiveCardImage privateObjectiveCardImage = new PrivateObjectiveCardImage("green"); 
+//		setRoot(privateObjectiveCardImage); 
+//		
+//		CompactPrivateObjectiveCardImage compactPrivateObjectiveCardImage = new CompactPrivateObjectiveCardImage("pink"); 
+//		setRoot(compactPrivateObjectiveCardImage); 
 		
-		PrivateObjectiveCardImage privateObjectiveCardImage = new PrivateObjectiveCardImage("green"); 
-		setRoot(privateObjectiveCardImage); 
+	
+		ToolCardInUseView toolCardInUseView = new ToolCardInUseView(); 
+		setRoot(toolCardInUseView); 
 		
-		CompactPrivateObjectiveCardImage compactPrivateObjectiveCardImage = new CompactPrivateObjectiveCardImage("pink"); 
-		setRoot(compactPrivateObjectiveCardImage); 
 		
+		
+		
+	// LATEN STAAN ALSJEBLIEFT
 	
 		
 		

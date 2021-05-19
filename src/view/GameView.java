@@ -44,6 +44,10 @@ public class GameView extends BorderPane {
 		
 	}
 	
+	public GameView() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void showChangeCurrentPlayerView() {
 		getChildren().clear();
 		setCenter(changeCurrentPlayerView);
