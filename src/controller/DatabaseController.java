@@ -179,4 +179,9 @@ public class DatabaseController {
 
 		doUpdateQuery(query);
 	}
+	
+	public void setPatterncard(int idPlayer, int idPatterncard) {
+		String query = "UPDATE player SET idpatterncard = " + idPatterncard + " WHERE idplayer = " + idPlayer; 
+		doUpdateQuery(query);
+	}
 }

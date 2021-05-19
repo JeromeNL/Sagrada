@@ -121,12 +121,7 @@ public class Player {
 		Patterncard patterncard = new Patterncard(patternCardID, new DatabaseController(),this);
 		this.patterncard = patterncard;
 
-		addPatterncardChoiceToDatabase();
-	}
-
-	private void addPatterncardChoiceToDatabase() {
-		// to-do: add row to patterncardoption table in database with idplayer and
-		// idpatterncard
+		dbController.setPatterncard(idPlayer, patterncard.getID());
 	}
 
 	public int getScore() {

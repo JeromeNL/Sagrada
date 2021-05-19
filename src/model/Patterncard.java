@@ -39,8 +39,7 @@ public class Patterncard {
 				if (color == null) {
 					colorRequirement = null;
 				} else {
-					Color colorFX = Color.valueOf(color);
-					colorRequirement = GameColor.toGameColor(colorFX);
+					colorRequirement = GameColor.valueOf(color.toUpperCase());
 				}
 
 				int valueRequirement = rs.getInt("value");
@@ -55,5 +54,9 @@ public class Patterncard {
 	
 	public ArrayList<PatterncardField> getFields() {
 		return fields;
+	}
+	
+	public int getID() {
+		return idPatterncard;
 	}
 }
