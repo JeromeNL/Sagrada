@@ -3,10 +3,7 @@ package view;
 import controller.MainController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import model.Die;
-import model.DiesInSupply;
 import model.Game;
-import model.GameColor;
 import model.Patterncard;
 import model.Player;
 
@@ -33,11 +30,15 @@ public class MainScene extends Scene {
 		GameView gameView = new GameView(game, playerShownOnScreen);
 		setRoot(gameView);
 
+
 	}
 	
 	public void showChoosePatternCard() {
 		ChoosePatternCardView choosePatterncardView = new ChoosePatternCardView();
 		setRoot(choosePatterncardView);
 
+		
+//		ToolCardInUseView t = new ToolCardInUseView();
+//		setRoot(t);
 	}
 }
