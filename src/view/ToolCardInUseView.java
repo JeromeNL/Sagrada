@@ -1,5 +1,6 @@
 package view;
 
+import controller.MainController;
 import imageChooser.ToolcardCardImage;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -43,7 +44,7 @@ public class ToolCardInUseView extends Pane{
 ///////////////////////////////////////////////////////////////// Constructor
 	
 	
-	public ToolCardInUseView(){
+	public ToolCardInUseView(MainController mainController){
 	
 /// Initializing Variables
 		
@@ -93,7 +94,7 @@ public class ToolCardInUseView extends Pane{
 	 confirmButtonText.setTranslateY(615);
 	 confirmButtonText.setTranslateX(1105);
 	 
-	 ToolcardCardImage toolcardCardImage = new ToolcardCardImage(3); 
+	 ToolcardCardImage toolcardCardImage = new ToolcardCardImage(9); 
 	 toolcardCardImage.setLayoutX(50);
 	 toolcardCardImage.setLayoutY(60);
 
@@ -105,12 +106,13 @@ public class ToolCardInUseView extends Pane{
 	 
 	 registerHandler2();
 	 backButton.setOnMouseClicked(e -> {System.out.println("button is pressed");
-	 this.getChildren().clear();
+	 mainController.showGame();
 	 });
 	 
 	 registerHandler();
-	 backButton.setOnMouseClicked(e -> {System.out.println("button is pressed");
+	 confirmButton.setOnMouseClicked(e -> {System.out.println("button is pressed");
 	 this.getChildren().clear();
+	 
 	 });
 	
 	this.getChildren().addAll(background,toolcardCardImage,confirmButton,confirmButtonText,favortokensPlayer1,favortokensPlayer2,favortokensPlayer3,favortokensPlayer4,backButton,backButtonText);

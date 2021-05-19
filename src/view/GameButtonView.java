@@ -26,14 +26,19 @@ public class GameButtonView extends HBox {
 		toolCardButton2 = new GameButton();
 		toolCardButton3 = new GameButton();
 		confirmButton = new GameButton();
-		menuButton = new GameButton();
-		cheatButton = new GameButton();
-		logoutButton = new GameButton();
-		beerButton = new GameButton();
+//		menuButton = new GameButton();
+//		cheatButton = new GameButton();
+//		logoutButton = new GameButton();
+//		beerButton = new GameButton();
 
 		setAlignment(Pos.CENTER);
 		setSpacing(40);
 		setPadding(new Insets(40));
-		getChildren().addAll(privateScore,backButton, toolCardButton1, toolCardButton2, toolCardButton3,beerButton, confirmButton,menuButton,logoutButton,cheatButton,score);
+		getChildren().addAll(privateScore,backButton, toolCardButton1, toolCardButton2, toolCardButton3,
+				
+				
+				
+				
+				confirmButton,score);
 	}
 }

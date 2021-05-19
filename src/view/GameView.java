@@ -1,5 +1,6 @@
 package view;
 
+import controller.MainController;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -21,10 +22,12 @@ public class GameView extends BorderPane {
 	private ChangeCurrentPlayerView changeCurrentPlayerView;
 	private Game game;
 	private Player player;
+	private MainController mainController;
 	
-	public GameView(Game game, Player player) {
+	public GameView(Game game, Player player, MainController mainController) {
 		this.game = game;
 		this.player = player;
+		this.mainController = mainController;
 		Patterncard playerPatterncard = player.getPatterncard();
 		
 		objectiveInGameView = new ObjectiveInGameView();
@@ -67,7 +70,7 @@ public class GameView extends BorderPane {
 	
 	public void showToolCardView() {
 		getChildren().clear();
-		setCenter(new ToolCardInUseView());
+		setCenter(new ToolCardInUseView(mainController));
 	}
 
 }
