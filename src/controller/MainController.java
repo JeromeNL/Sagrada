@@ -13,10 +13,12 @@ public class MainController {
 	private Game currentGame;
 	private String loggedInUsername = "";
 	private MainScene mainScene;
+	private ChoosePatternCardController choosePatternCardController;
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController();
 		mainScene = new MainScene(this);		
+
 		
 		login("mandy");
 //		loadGame(759);
@@ -31,6 +33,10 @@ public class MainController {
 		currentGame.startGame();
 
 		showGameLoggedInPlayer();
+
+
+		createCardsToChoose(); // Creates 4 random cards to
+		showChoosePatternCard();
 
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
@@ -76,7 +82,12 @@ public class MainController {
 	}
 	
 	public void showChoosePatternCard() {
-		mainScene.showChoosePatternCard();
+		mainScene.showChoosePatternCard(choosePatternCardController);
 	}
 	
+	public void createCardsToChoose() {
+		choosePatternCardController = new ChoosePatternCardController();
+	}
+	
+
 }

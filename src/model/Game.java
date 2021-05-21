@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import controller.ChoosePatternCardController;
 import controller.DatabaseController;
 import controller.MainController;
 
@@ -272,6 +273,7 @@ public class Game {
 		return diesInSupply;
 	}
 	
+
 	public int getGameID() {
 		return idGame;
 	}
@@ -315,4 +317,5 @@ public class Game {
 			}
 		}
 	}
+
 }
