@@ -13,7 +13,7 @@ import model.Player;
 
 public class GameView extends BorderPane {
 
-	private RoundtrackView roundtrackView;
+	private TopPart topPart;
 	private PatternCardView patternCardView;
 	private DieSupply dieSupply;
 	private GameButtonView gameButtonView;
@@ -29,16 +29,18 @@ public class GameView extends BorderPane {
 
 		objectiveInGameView = new ObjectiveInGameView();
 
-		patternCardView = new PatternCardView(playerPatterncard); // dit is een random patterncard moet later aangepast worden
+		patternCardView = new PatternCardView(playerPatterncard); // dit is een random patterncard moet later aangepast
+																	// worden
 
-		roundtrackView = new RoundtrackView();
+		topPart = new TopPart();
+
 		dieSupply = new DieSupply(game.getDiesInSupply());
 		gameButtonView = new GameButtonView(this);
 		changeCurrentPlayerView = new ChangeCurrentPlayerView();
 
 		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
 
-		setAlignment(roundtrackView, Pos.TOP_CENTER);
+		setAlignment(topPart, Pos.TOP_CENTER);
 
 		showGame();
 
@@ -51,7 +53,7 @@ public class GameView extends BorderPane {
 
 	public void showGame() {
 		getChildren().clear();
-		setTop(roundtrackView);
+		setTop(topPart);
 		VBox leftPane = new VBox();
 		leftPane.setSpacing(25);
 		leftPane.getChildren().addAll(changeCurrentPlayerView, objectiveInGameView);

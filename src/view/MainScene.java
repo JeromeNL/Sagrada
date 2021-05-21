@@ -21,7 +21,7 @@ public class MainScene extends Scene {
 //		LobbyView lobbyView = new LobbyView();
 //		setRoot(lobbyView);
 		
-		showChoosePatternCard();
+
 	}
 
 	// show gameview of player of game with nr 1,2,3 or 4.

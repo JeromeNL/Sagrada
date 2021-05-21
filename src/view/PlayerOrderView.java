@@ -2,16 +2,13 @@ package view;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class RoundtrackView extends HBox {
+public class PlayerOrderView extends HBox {
 
 ///////////////////////////////////////////////////////////////// Instance Variables
 	
@@ -22,10 +19,8 @@ public class RoundtrackView extends HBox {
 	
 ///////////////////////////////////////////////////////////////// Constructor
 	
-	public RoundtrackView() {
-		setMinSize(1000, 100);
-		setMaxSize(1000, 100);
-		
+	public PlayerOrderView() {
+
 /// Initializing The Variables
 		
 		turnNames = new Label("Freek > Freek > Jasper > Janique > Imke");
@@ -46,6 +41,5 @@ public class RoundtrackView extends HBox {
 		this.getChildren().addAll(currentTurn, nextTurns);
 	
 		setAlignment(Pos.CENTER);
-		setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(0, 0, 20, 20, false), null)));
 	}
 }

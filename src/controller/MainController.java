@@ -21,7 +21,7 @@ public class MainController {
 		currentGame.invitePlayer("jerome");
 		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
 		showGame();
-		showChoosePatternCard();
+//		showChoosePatternCard();
 		
 		DieBagModel dieBagModel = new DieBagModel();
 //		t.randomizeColor();
