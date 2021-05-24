@@ -5,17 +5,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.DatabaseController;
+import javafx.scene.paint.Color;
 
 public class Patterncard {
 	
 	private int idPatterncard;
 	private ArrayList<PatterncardField> fields;
+	private Player owner;
 
 	private DatabaseController dbController;
 	
-	public Patterncard(int idPatterncard, DatabaseController dbController) {
+	public Patterncard(int idPatterncard, DatabaseController dbController, Player owner) {
 		this.dbController = dbController;
 		this.idPatterncard = idPatterncard;
+		this.owner = owner;
 		fields = new ArrayList<PatterncardField>();
 		
 		loadFields();
@@ -36,12 +39,12 @@ public class Patterncard {
 				if (color == null) {
 					colorRequirement = null;
 				} else {
-					colorRequirement = stringToGameColor(color);
+					colorRequirement = GameColor.valueOf(color.toUpperCase());
 				}
 
 				int valueRequirement = rs.getInt("value");
 				
-				fields.add(new PatterncardField(xPosition, yPosition, valueRequirement, colorRequirement, dbController));
+				fields.add(new PatterncardField(xPosition, yPosition, valueRequirement, colorRequirement, dbController, owner));
 			}
 		} catch (SQLException e) {
 			System.out.println("Something went wrong while loading a patterncard from the database.");
@@ -49,24 +52,11 @@ public class Patterncard {
 		}
 	}
 	
-	// Convert string color from database to gameColor.
-	private GameColor stringToGameColor(String colorString) {
-		GameColor gameColor = null;		
-		if (colorString.equals("red")) {
-			gameColor = GameColor.RED;
-		} else if (colorString.equals("blue")) {
-			gameColor = GameColor.BLUE;
-		} else if (colorString.equals("yellow")) {
-			gameColor = GameColor.YELLOW;
-		} else if (colorString.equals("purple")) {
-			gameColor = GameColor.PURPLE;
-		} else if (colorString.equals("green")) {
-			gameColor = GameColor.GREEN;
-		}
-		return gameColor;
-	}
-	
 	public ArrayList<PatterncardField> getFields() {
 		return fields;
+	}
+	
+	public int getID() {
+		return idPatterncard;
 	}
 }

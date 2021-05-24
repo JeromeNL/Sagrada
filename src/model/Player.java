@@ -12,16 +12,20 @@ public class Player {
 	private String username;
 	private int idGame;
 	private PlayerStatus status;
-	private int seqnr;
 	private GameColor privateObjectiveCardColor;
 	private Patterncard patterncard;
 	private boolean isCreator;
 	private DatabaseController dbController;
 
 	// Constructor when the player is challenged
-	public Player(DatabaseController dbController) {
+	public Player(DatabaseController dbController, int idPlayer, int idGame) {
 		this.dbController = dbController;
-		// to do: get all the info about the player from the database based on username
+		this.idPlayer = idPlayer;
+		this.idGame = idGame;
+		
+		loadPatterncard();
+		username = dbController.getUsername(idPlayer);
+		// TODO get all the info about the player from the database based on username
 	}
 	
 	// Constructor when the player is the challengee.
@@ -34,11 +38,30 @@ public class Player {
 
 		setUpPlayer();
 	}
+	
+	private void loadPatterncard() {
+		int idPatterncard = dbController.getPatterncardID(idPlayer);
+		if (idPatterncard == 0) {
+			// Player has not chosen patterncard yet
+			return;
+		}
+		Patterncard patterncard = new Patterncard(idPatterncard, dbController, this);
+		this.patterncard = patterncard;
+	}
 
 	private void setUpPlayer() {
 		setInitialStatus();
 		addToDatabase();
 		createPlayerFrameField();
+		setSeqNr();
+	}
+	
+	private void setSeqNr() {
+		dbController.setNewSeqNr(idGame, idPlayer);
+	}
+	
+	public int getSeqNr() {
+		return dbController.getSeqNr(idPlayer);
 	}
 
 	// Create all the playerframefield rows in the database.
@@ -73,7 +96,7 @@ public class Player {
 			while (increasingID) {
 				// Add a new row to the game table.
 				String query = "INSERT INTO player VALUES (" + newPlayerID + ",\"" + username + "\"," + idGame + ",\""
-						+ status + "\", NULL, \"" + privateObjectiveCardColor + "\", NULL, NULL);";
+						+ status + "\", NULL , \"" + privateObjectiveCardColor + "\", NULL, NULL);";
 
 				int result = dbController.doUpdateQuery(query);
 				if (result == 1) {
@@ -103,13 +126,7 @@ public class Player {
 	}
 
 	public int getSeqnr() {
-		// to-do: get seqnr from database
-		return seqnr;
-	}
-
-	public void setSeqnr(int seqnr) {
-		// to-do: set seqnr in database
-		this.seqnr = seqnr;
+		return dbController.getSeqNr(idPlayer);
 	}
 
 	public Patterncard getPatterncard() {
@@ -117,15 +134,10 @@ public class Player {
 	}
 
 	public void setPatternCard(int patternCardID) {
-		Patterncard patterncard = new Patterncard(patternCardID, new DatabaseController());
+		Patterncard patterncard = new Patterncard(patternCardID, new DatabaseController(),this);
 		this.patterncard = patterncard;
 
-		addPatterncardChoiceToDatabase();
-	}
-
-	private void addPatterncardChoiceToDatabase() {
-		// to-do: add row to patterncardoption table in database with idplayer and
-		// idpatterncard
+		dbController.setPatterncard(idPlayer, patterncard.getID());
 	}
 
 	public int getScore() {
@@ -154,5 +166,9 @@ public class Player {
 
 	public boolean isCreator() {
 		return isCreator;
+	}
+	
+	public int getGameID() {
+		return idGame;
 	}
 }

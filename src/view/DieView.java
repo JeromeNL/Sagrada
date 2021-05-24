@@ -155,7 +155,7 @@ public class DieView extends StackPane {
 		// Check if the field contains a die.
 		if (patternCardField.hasDie()) {
 			Die dieOnField = patternCardField.getDie();
-			dieFieldRectangle.setFill(ColorView.toFXColor(dieOnField.getColor()).brighter());
+			dieFieldRectangle.setFill(dieOnField.getColor().toFXColor().brighter());
 		} else {
 			// No die on field, so check if field has color requirement.
 			if (patternCardField.hasColorRequirement()) {
@@ -163,7 +163,7 @@ public class DieView extends StackPane {
 				
 				// TODO: draw correct color depending on colorRequirement
 				
-				dieFieldRectangle.setFill(ColorView.toFXColor(colorRequirement));
+				dieFieldRectangle.setFill(colorRequirement.toFXColor());
 				dieFieldRectangle.setOpacity(0.7);
 			} else {
 				// No color requirement, so field color is white.
