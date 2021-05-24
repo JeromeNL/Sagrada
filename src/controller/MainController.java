@@ -29,7 +29,7 @@ public class MainController {
 		currentGame.invitePlayer("imke");
 		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
 		currentGame.startGame();
-		
+
 		showGameLoggedInPlayer();
 
 
@@ -74,4 +74,9 @@ public class MainController {
 	public String getLoggedInUsername() {
 		return loggedInUsername;
 	}
+	
+	public void showChoosePatternCard() {
+		mainScene.showChoosePatternCard();
+	}
+	
 }

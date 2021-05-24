@@ -16,8 +16,10 @@ public class PatternCardView extends GridPane {
 	private final int height = 300;
 	private final int width = 350;
 	private final int gridGapSize = 5;
-	
+
 	private Patterncard patterncard;
+
+///////////////////////////////////////////////////////////////// Constructor
 
 	public PatternCardView(Patterncard patterncard) {
 		this.patterncard = patterncard;
@@ -29,22 +31,24 @@ public class PatternCardView extends GridPane {
 		setHgap(gridGapSize);
 		setVgap(gridGapSize);
 		
-		
 		if (patterncard != null) {
 			loadPatterncard();			
 		} else {
 			add(new Label("This player has not yet chosen a patterncard."), 1, 1);
 		}
+
 	}
 
+///////////////////////////////////////////////////////////////// createEmptyCard
 
-/* Method that is responsible that is responsible for 
- * loading pattern card data from the database
- * and filling the board with the data*/
-	
+	/*
+	 * Method that is responsible that is responsible for loading pattern card data
+	 * from the database and filling the board with the data
+	 */
+
 	private void loadPatterncard() {
 		for (PatterncardField field : patterncard.getFields()) {
 			add(new DieView(field), field.getXPosition(), field.getYPosition());
-		}		
+		}
 	}
 }

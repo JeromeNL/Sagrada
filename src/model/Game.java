@@ -3,11 +3,18 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import controller.DatabaseController;
 import controller.MainController;
 
 public class Game {
+	private int blueCounter;
+	private int greenCounter;
+	private int yellowCounter;
+	private int redCounter;
+	private int purpleCounter;
+	
 	
 	private DatabaseController dbController;
 	private MainController mainController;
@@ -39,6 +46,12 @@ public class Game {
 
 	// Constructor to create a new game.
 	public Game(String usernameCreator, DatabaseController dbController, MainController mainController) {
+		blueCounter = 0;
+		greenCounter = 0;
+		yellowCounter = 0;
+		redCounter = 0;
+		purpleCounter = 0;
+		
 		this.usernameCreator = usernameCreator;
 		this.dbController = dbController;
 		this.mainController = mainController;
@@ -130,7 +143,69 @@ public class Game {
 	private GameColor getObjectiveCardColor() {
 		// to-do: remember which gameColors have been used so nobody has the same
 		// private objecticard color;
-		return GameColor.BLUE; // this needs to be changed later!
+		
+		Random rand = new Random(); // instance of random class
+		int int_random = rand.nextInt(5);
+		String s = "";
+		
+		switch (int_random) {
+		case 0:
+			if (blueCounter < 1) {
+				s = "BLUE";
+				System.out.println("blue");
+				blueCounter++;
+			} else {
+				int_random = rand.nextInt(5);
+			}
+			break;
+
+		case 1:
+			if (redCounter < 1) {
+				s = "RED";
+				System.out.println("red");
+				redCounter++;
+			} else {
+				int_random = rand.nextInt(5);
+			}
+			break;
+
+		case 2:
+			if (greenCounter < 1) {
+				s = "GREEN";
+				System.out.println("green");
+				greenCounter++;
+			} else {
+				int_random = rand.nextInt(5);
+			}
+			break;
+
+		case 3:
+			if (yellowCounter < 1) {
+				s = "YELLOW";
+				System.out.println("yellow");
+				yellowCounter++;
+			} else {
+				int_random = rand.nextInt(5);
+			}
+			break;
+
+		case 4:
+			if (purpleCounter < 1) {
+				s = "PURPLE";
+				System.out.println("purple");
+				purpleCounter++;
+			} else {
+				int_random = rand.nextInt(5);
+			}
+			break;
+
+		default:
+			break;
+
+		}
+	
+		
+		return GameColor.valueOf(s.toUpperCase()); // this needs to be changed later!
 	}
 
 	public void setNextRound() {

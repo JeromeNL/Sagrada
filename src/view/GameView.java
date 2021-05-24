@@ -30,13 +30,14 @@ public class GameView extends BorderPane {
 	private MainController mainController;
 
 	public GameView(Game game, Player player, MainController mainController) {
+
 		this.game = game;
 		this.player = player;
 		this.mainController = mainController;
 		Patterncard playerPatterncard = player.getPatterncard();
 
 		objectiveInGameView = new ObjectiveInGameView();
-		patternCardView = new PatternCardView(playerPatterncard);
+		patternCardView = new PatternCardView(playerPatterncard);  // dit is een random patterncard moet later aangepast worden
 
 		roundtrackView = new RoundtrackView(game);
 		dieSupply = new DieSupply(game.getDiesInSupply());
