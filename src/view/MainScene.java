@@ -3,8 +3,14 @@ package view;
 import controller.MainController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import model.Die;
+import model.DiesInSupply;
 import model.Game;
+
+import model.GameColor;
+
 import model.Patterncard;
+
 import model.Player;
 
 public class MainScene extends Scene {
@@ -27,7 +33,7 @@ public class MainScene extends Scene {
 	// show gameview of player of game with nr 1,2,3 or 4.
 	public void showGame(Game game, int playerNR) {
 		Player playerShownOnScreen = game.getPlayers().get(playerNR); // creator of the game
-		GameView gameView = new GameView(game, playerShownOnScreen);
+		GameView gameView = new GameView(game, playerShownOnScreen, mainController); 
 		setRoot(gameView);
 
 
@@ -38,7 +44,10 @@ public class MainScene extends Scene {
 		setRoot(choosePatterncardView);
 
 		
-//		ToolCardInUseView t = new ToolCardInUseView();
-//		setRoot(t);
+
+	}
+	
+	public void changeCurrentPlayerView(Game game) {
+		setRoot(new ChangeCurrentPlayerView(game, mainController));
 	}
 }

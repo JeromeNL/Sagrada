@@ -2,6 +2,7 @@ package view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -29,8 +30,12 @@ public class PatternCardView extends GridPane {
 
 		setHgap(gridGapSize);
 		setVgap(gridGapSize);
-
-		loadPatterncard();
+		
+		if (patterncard != null) {
+			loadPatterncard();			
+		} else {
+			add(new Label("This player has not yet chosen a patterncard."), 1, 1);
+		}
 
 	}
 

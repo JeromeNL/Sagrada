@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -7,39 +9,33 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import model.Game;
 
 public class PlayerOrderView extends HBox {
 
 ///////////////////////////////////////////////////////////////// Instance Variables
-	
-	Label turnNames;		
+
+	Label turnNames;
 	TextFlow textFlowPane;
 	Text currentTurn, nextTurns;
-	
-	
+
 ///////////////////////////////////////////////////////////////// Constructor
-	
-	public PlayerOrderView() {
+
+	public PlayerOrderView(Game game) {
 
 /// Initializing The Variables
-		
-		turnNames = new Label("Freek > Freek > Jasper > Janique > Imke");
-		turnNames.setStyle("-fx-font-weight: bold");
-			
-		textFlowPane = new TextFlow();
-		
-		currentTurn = new Text("Freek ");
-		currentTurn.setFill(Color.PINK);
-		currentTurn.setFont(new Font("Arial", 20));
-		currentTurn.setStyle("-fx-font-weight: bold");
-		
-		nextTurns = new Text("> Freek > Jasper > Janique > Imke");
-		nextTurns.setFill(Color.BLACK);
-		nextTurns.setFont(new Font("Arial", 20));
-		nextTurns.setStyle("-fx-font-weight: bold");
-		
-		this.getChildren().addAll(currentTurn, nextTurns);
-	
+		setAlignment(Pos.CENTER);
+		setSpacing(10);
+
+		ArrayList<String> playerOrder = game.getPlayerOrder();
+		for (String username : playerOrder) {
+			Label player = new Label(username);
+			Label splitter = new Label(">");
+			player.setStyle("-fx-font-weight: bold");
+			player.setFont(new Font("Arial", 20));
+			getChildren().addAll(player, splitter);
+		}
+
 		setAlignment(Pos.CENTER);
 	}
 }
