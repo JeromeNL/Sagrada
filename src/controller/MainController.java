@@ -17,15 +17,18 @@ public class MainController {
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController();
+
 		mainScene = new MainScene(this);		
 
 		
 		login("mandy");
 //		loadGame(759);
+
 		createGame();
 		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
 		currentGame.invitePlayer("jasper");
 		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
+
 		currentGame.invitePlayer("jerome");
 		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
 		currentGame.invitePlayer("imke");
@@ -37,6 +40,7 @@ public class MainController {
 
 		createCardsToChoose(); // Creates 4 random cards to
 		showChoosePatternCard();
+		//mainScene.getChoosePatternCardView().getCard(); //will give you an int after you clicked on kiezen
 
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
@@ -81,10 +85,13 @@ public class MainController {
 		return loggedInUsername;
 	}
 	
+	// click on patterncard and kiezen will give you a cardId
+	// If you only click on kiezen nothing happens
 	public void showChoosePatternCard() {
 		mainScene.showChoosePatternCard(choosePatternCardController);
 	}
 	
+	// Creates 4 random cards to choose from
 	public void createCardsToChoose() {
 		choosePatternCardController = new ChoosePatternCardController();
 	}
