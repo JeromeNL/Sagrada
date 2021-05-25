@@ -1,5 +1,6 @@
 package view;
 
+import controller.MainController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -13,7 +14,7 @@ public class GameButtonView extends HBox {
 	private Circle backButton, toolCardButton1,beerButton, toolCardButton2, toolCardButton3, confirmButton, menuButton,logoutButton,cheatButton;
 	private Label score, privateScore;
 	
-	GameButtonView(GameView gameView, Game game) {
+	GameButtonView(GameView gameView, Game game, MainController mainController) {
 		
 		score = new Label(" Public Score  = 1234\n Private Score = 1234");
 		privateScore = new Label("Favor Tokens = 1234");

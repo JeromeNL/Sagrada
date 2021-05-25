@@ -32,7 +32,6 @@ public class FavorTokensInUseView extends Pane{
 			
 			width = width +20;
 			
-			System.out.println("test");
 			this.getChildren().add(new FavortokenView (width, 260));
 			
 			counter++;

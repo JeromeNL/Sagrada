@@ -130,8 +130,9 @@ public class DatabaseController {
 
 	public DiesInSupply getDiesInSupply(int idGame, int roundID) {
 		DiesInSupply diesInSupply = new DiesInSupply();
-		ResultSet allDies = doQuery("SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundID = " + roundID
-				+ " AND roundtrack IS NULL");
+		String allDiesQuery = "SELECT * FROM gamedie WHERE idgame = " + idGame + " AND (roundID = " + roundID
+				+ " OR roundID = " + (roundID - 1) + ")" + " AND roundtrack IS NULL";
+		ResultSet allDies = doQuery(allDiesQuery);
 		try {
 			while (allDies.next()) {
 
@@ -140,14 +141,14 @@ public class DatabaseController {
 
 				String query = "SELECT * FROM playerframefield WHERE idGame = " + idGame + " AND dienumber = "
 						+ dieNumber + " AND diecolor = \"" + stringColor + "\"";
-				
+
 				ResultSet diePlaced = doQuery(query);
 				if (diePlaced.next()) {
 					continue;
 				} else {
 					GameColor gameColor = GameColor.valueOf(stringColor.toUpperCase());
 					Die die = new Die(gameColor, allDies.getInt("eyes"), allDies.getInt("dienumber"));
-					diesInSupply.addDie(die);					
+					diesInSupply.addDie(die);
 				}
 
 			}
@@ -194,9 +195,7 @@ public class DatabaseController {
 				+ die.getColor().toString().toLowerCase() + "\" WHERE idplayer = " + idPlayer + " AND idgame = "
 				+ idGame + " AND position_x = " + xPosition + " AND position_y = " + yPosition;
 
-		if (doUpdateQuery(query) == 1) {
-			System.out.println("Placed DIE in database");
-		} else {
+		if (doUpdateQuery(query) != 1) {
 			System.out.println("Error placing die");
 		}
 	}
@@ -399,5 +398,19 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 		return idPlayer;
+	}
+
+	public String getUsernameCreator(int idGame) {
+		String query = "SELECT * FROM player WHERE idgame = " + idGame + " AND playstatus = \"challenger\"";
+		ResultSet rs = doQuery(query);
+		try {
+			while (rs.next()) {
+				return rs.getString("username");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
 	}
 }

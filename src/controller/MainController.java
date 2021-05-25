@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.stage.Stage;
 import model.Game;
 import model.Player;
+import model.Refresh;
 import view.MainScene;
 
 public class MainController {
@@ -16,22 +17,24 @@ public class MainController {
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController();
-		mainScene = new MainScene(this);		
+		mainScene = new MainScene(this, dbController);		
 		
-		login("mandy");
-//		loadGame(759);
-		createGame();
-		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
-		currentGame.invitePlayer("jasper");
-		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
-		currentGame.invitePlayer("jerome");
-		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
-		currentGame.invitePlayer("imke");
-		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
-		currentGame.startGame();
+		login("joram");
+		loadGame(1002);
+//		createGame();
+//		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
+//		currentGame.invitePlayer("jasper");
+//		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
+//		currentGame.invitePlayer("jerome");
+//		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
+//		currentGame.invitePlayer("imke");
+//		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
+//		currentGame.startGame();
 
 		showGameLoggedInPlayer();
-
+		
+		Refresh refreshThread = new Refresh(currentGame, this, dbController);
+		refreshThread.start();
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);

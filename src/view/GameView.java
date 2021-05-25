@@ -28,12 +28,15 @@ public class GameView extends BorderPane {
 	private Game game;
 	private Player player;
 	private MainController mainController;
+	private DatabaseController dbController;
 
-	public GameView(Game game, Player player, MainController mainController) {
+	public GameView(Game game, Player player, MainController mainController, DatabaseController dbController) {
 
 		this.game = game;
 		this.player = player;
 		this.mainController = mainController;
+		this.dbController = dbController;
+		
 		Patterncard playerPatterncard = player.getPatterncard();
 
 		objectiveInGameView = new ObjectiveInGameView();
@@ -41,17 +44,11 @@ public class GameView extends BorderPane {
 
 		roundtrackView = new RoundtrackView(game);
 		dieSupply = new DieSupply(game.getDiesInSupply());
-		gameButtonView = new GameButtonView(this, game);
+		gameButtonView = new GameButtonView(this, game, mainController);
 		changeCurrentPlayerView = new ChangeCurrentPlayerView(game, mainController);
 		
-		if (!mainController.getLoggedInUsername().equals(player.getUsername())) {
-			dieSupply.setDisable(true);
-			dieSupply.setOpacity(0.5);
-			gameButtonView.setDisable(true);
-			gameButtonView.setOpacity(0.5);
-			objectiveInGameView.hide();
-		}
-
+	
+		
 		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
 
 		setAlignment(roundtrackView, Pos.TOP_CENTER);
@@ -60,16 +57,34 @@ public class GameView extends BorderPane {
 
 	}
 
+	private void disableElements() {
+		dieSupply.setDisable(true);
+		dieSupply.setOpacity(0.5);
+		gameButtonView.setDisable(true);
+		gameButtonView.setOpacity(0.5);
+	}
+
 	public void showChangeCurrentPlayerView() {
 		getChildren().clear();
 		setCenter(changeCurrentPlayerView);
 	}
 
 	public void showGame() {
+		// Disable elements when it's not the gameview of the logged in player
+		if (!mainController.getLoggedInUsername().equals(player.getUsername())) {
+			disableElements();
+			objectiveInGameView.hide();
+		}
+		
+		// Disable elements when it's not the player's turn		
+		if (!player.getUsername().equals(game.getCurrentPlayer())) {
+			disableElements();
+		}
+		
 		getChildren().clear();
 		VBox topPane = new VBox();
 		
-		topPane.getChildren().addAll(roundtrackView, new InfoPane(game, new DatabaseController()));
+		topPane.getChildren().addAll(roundtrackView, new InfoPane(game, dbController));
 		setTop(topPane);
 		VBox leftPane = new VBox();
 		leftPane.setAlignment(Pos.CENTER);
