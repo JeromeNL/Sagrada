@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import model.Game;
 import model.Player;
 import model.Refresh;
+import model.RegisterLoginModel;
 import view.MainScene;
 
 public class MainController {
@@ -17,9 +18,11 @@ public class MainController {
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController();
-		mainScene = new MainScene(this, dbController);		
+		RegisterLoginModel rlm = new RegisterLoginModel(this);
+		mainScene = new MainScene(this, dbController, rlm);		
 		
-		login("joram");
+		showLoginScreen();
+
 		loadGame(1002);
 //		createGame();
 //		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
@@ -31,7 +34,6 @@ public class MainController {
 //		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
 //		currentGame.startGame();
 
-		showGameLoggedInPlayer();
 		
 		Refresh refreshThread = new Refresh(currentGame, this, dbController);
 		refreshThread.start();
@@ -80,6 +82,10 @@ public class MainController {
 	
 	public void showChoosePatternCard() {
 		mainScene.showChoosePatternCard();
+	}
+	
+	public void showLoginScreen() {
+		mainScene.showLoginScreen();
 	}
 	
 }

@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import model.Game;
 import model.Patterncard;
 import model.Player;
+import model.RegisterLoginModel;
 
 public class MainScene extends Scene {
 
@@ -15,11 +16,13 @@ public class MainScene extends Scene {
 	private MainController mainController;
 	private DatabaseController dbController;
 	private Patterncard patterncard;
+	private RegisterLoginModel rlm;
 
-	public MainScene(MainController mainController, DatabaseController dbController) {
+	public MainScene(MainController mainController, DatabaseController dbController, RegisterLoginModel rlm) {
 		super(new Pane(), 1280, 720);
 		this.mainController = mainController;
 		this.dbController = dbController;
+		this.rlm = rlm;
 
 //		LobbyView lobbyView = new LobbyView();
 //		setRoot(lobbyView);
@@ -46,5 +49,9 @@ public class MainScene extends Scene {
 	
 	public void changeCurrentPlayerView(Game game) {
 		setRoot(new ChangeCurrentPlayerView(game, mainController));
+	}
+	
+	public void showLoginScreen() {
+		setRoot(new LoginView(rlm));
 	}
 }

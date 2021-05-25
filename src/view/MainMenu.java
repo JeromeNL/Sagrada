@@ -19,13 +19,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import model.RegisterLoginModel;
 
 public class MainMenu extends Pane {
 	private ImageView imageView;
 
-	public MainMenu() {
-
-		model.RegisterLoginModel rlm = new model.RegisterLoginModel();
+	public MainMenu(RegisterLoginModel registerLoginModel) {
 
 		InputStream stream;
 		try {

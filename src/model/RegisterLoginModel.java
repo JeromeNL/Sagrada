@@ -6,7 +6,10 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.sun.webkit.ContextMenu.ShowContext;
+
 import controller.DatabaseController;
+import controller.MainController;
 import javafx.scene.paint.Color;
 import view.DieView;
 
@@ -19,11 +22,14 @@ public class RegisterLoginModel {
 	private String loginPasswordGiven;
 	private String warningText;
 	private String warningColor;
+	private MainController mainController;
 
 	// constructor
-	public RegisterLoginModel() {
+	public RegisterLoginModel(MainController mainController) {
 		warningText = "Geen fouten opgetreden";
 		String warningColor = "black";
+		
+		this.mainController = mainController;
 	}
 
 	// classes
@@ -87,7 +93,8 @@ public class RegisterLoginModel {
 						warningColor = "green";
 
 						// set Scene to lobby !
-
+						mainController.login(loginUsernameGiven);
+						mainController.showGameLoggedInPlayer();
 					} else {
 						System.out.println("Error! Wrong password!");
 						warningText = "wachtwoord is incorrect!";

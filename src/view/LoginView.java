@@ -25,17 +25,16 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import model.RegisterLoginModel;
 
 public class LoginView extends VBox {
 	private ImageView imageView;
 
-	public LoginView() {
-
-		model.RegisterLoginModel rlm = new model.RegisterLoginModel();
+	public LoginView(RegisterLoginModel rlm) {
 
 		InputStream stream;
 		try {
-			stream = new FileInputStream("LoginImg.png");
+			stream = new FileInputStream("src/LoginImg.png");
 			Image image = new Image(stream);
 			imageView = new ImageView();
 			imageView.setImage(image);
