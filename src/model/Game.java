@@ -155,8 +155,6 @@ public class Game {
 					s = "BLUE";
 					done = true;
 					blueCounter++;
-				} else {
-					int_random = rand.nextInt(5);
 				}
 				break;
 
@@ -165,8 +163,6 @@ public class Game {
 					s = "RED";
 					done = true;
 					redCounter++;
-				} else {
-					int_random = rand.nextInt(5);
 				}
 				break;
 
@@ -175,8 +171,6 @@ public class Game {
 					s = "GREEN";
 					done = true;
 					greenCounter++;
-				} else {
-					int_random = rand.nextInt(5);
 				}
 				break;
 
@@ -185,8 +179,6 @@ public class Game {
 					s = "YELLOW";
 					done = true;
 					yellowCounter++;
-				} else {
-					int_random = rand.nextInt(5);
 				}
 				break;
 
@@ -195,8 +187,6 @@ public class Game {
 					s = "PURPLE";
 					done = true;
 					purpleCounter++;
-				} else {
-					int_random = rand.nextInt(5);
 				}
 				break;
 
