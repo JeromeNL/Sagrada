@@ -197,9 +197,18 @@ public class DatabaseController {
 			while (rs.next()) {
 				String colorString = rs.getString("diecolor").toUpperCase();
 				GameColor color = GameColor.valueOf(colorString);
-				int eyesCount = rs.getInt("dienumber");
+				int dieNumber = rs.getInt("dienumber");
+				int idGame = rs.getInt("idgame");
+				
+				String query2 = "SELECT * FROM gamedie WHERE idgame = " + idGame + " AND dienumber = " + dieNumber + " AND diecolor = " + colorString;
+				ResultSet rs2 = doQuery(query2);
+				while (rs.next()) {
+					int eyesCount = rs2.getInt("eyes");
+					
+					return new Die(color, eyesCount, dieNumber);
+				}
+				
 
-				return new Die(color, eyesCount, 0);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
