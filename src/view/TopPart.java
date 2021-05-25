@@ -18,8 +18,8 @@ public class TopPart extends VBox {
 
 		this.setPadding(new Insets(8, 5, 15, 5));
 
-		setMinSize(700, 120);
-		setMaxSize(700, 120);
+		setMinSize(900, 120);
+		setMaxSize(900, 120);
 
 		playerOrderView = new PlayerOrderView(game);
 		roundTrackView = new RoundTrackView();

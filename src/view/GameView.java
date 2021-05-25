@@ -74,6 +74,7 @@ public class GameView extends BorderPane {
 
 		topPane.getChildren().addAll(topPart, new InfoPane(game, new DatabaseController()));
 		setTop(topPane);
+		topPane.setAlignment(Pos.CENTER);
 
 		VBox leftPane = new VBox();
 		leftPane.setAlignment(Pos.CENTER);
