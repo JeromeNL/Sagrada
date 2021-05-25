@@ -130,14 +130,26 @@ public class DatabaseController {
 
 	public DiesInSupply getDiesInSupply(int idGame, int roundID) {
 		DiesInSupply diesInSupply = new DiesInSupply();
-		ResultSet rs = doQuery("SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundID = " + roundID
+		ResultSet allDies = doQuery("SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundID = " + roundID
 				+ " AND roundtrack IS NULL");
 		try {
-			while (rs.next()) {
-				String stringColor = rs.getString("diecolor");
-				GameColor gameColor = GameColor.valueOf(stringColor.toUpperCase());
-				Die die = new Die(gameColor, rs.getInt("eyes"), rs.getInt("dienumber"));
-				diesInSupply.addDie(die);
+			while (allDies.next()) {
+
+				int dieNumber = allDies.getInt("dienumber");
+				String stringColor = allDies.getString("diecolor");
+
+				String query = "SELECT * FROM playerframefield WHERE idGame = " + idGame + " AND dienumber = "
+						+ dieNumber + " AND diecolor = \"" + stringColor + "\"";
+				
+				ResultSet diePlaced = doQuery(query);
+				if (diePlaced.next()) {
+					continue;
+				} else {
+					GameColor gameColor = GameColor.valueOf(stringColor.toUpperCase());
+					Die die = new Die(gameColor, allDies.getInt("eyes"), allDies.getInt("dienumber"));
+					diesInSupply.addDie(die);					
+				}
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -199,16 +211,15 @@ public class DatabaseController {
 				GameColor color = GameColor.valueOf(colorString);
 				int dieNumber = rs.getInt("dienumber");
 				int idGame = rs.getInt("idgame");
-				
-				String query2 = "SELECT * FROM gamedie WHERE idgame = " + idGame + " AND dienumber = " + dieNumber + 
-						" AND diecolor = \"" + colorString + "\"";
+
+				String query2 = "SELECT * FROM gamedie WHERE idgame = " + idGame + " AND dienumber = " + dieNumber
+						+ " AND diecolor = \"" + colorString + "\"";
 				ResultSet rs2 = doQuery(query2);
 				while (rs2.next()) {
 					int eyesCount = rs2.getInt("eyes");
-					
+
 					return new Die(color, eyesCount, dieNumber);
 				}
-				
 
 			}
 		} catch (SQLException e) {
