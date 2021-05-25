@@ -2,58 +2,55 @@ package controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import model.Player;
+import model.GameColor;
+import model.PlayerStatus;
 
 public class PlayerController {
 
 	private DatabaseController dbController;
-	private Player player;
 
-	// Create all the playerframefield rows in the database.
-	public void createPlayerFrameField() {
-		for (int position_y = 1; position_y <= 4; position_y++) {
-			for (int position_x = 1; position_x <= 5; position_x++) {
-				String query = "INSERT INTO playerframefield VALUES (" + player.getIdPlayer() + "," + position_x + ","
-						+ position_y + "," + player.getIdGame() + ",NULL,NULL);";
-				dbController.doUpdateQuery(query);
-			}
-		}
+	public PlayerController(DatabaseController dbController) {
+		this.dbController = dbController;
 	}
 
-	// Adds a new user to the database.
-	public void addToDatabase() {
-		// Get an available gameID
+	// Add a playerframefield row in the database.
+	public void createPlayerFrameField(int idPlayer, int idGame, int position_x, int position_y) {
+
+		String query = "INSERT INTO playerframefield VALUES (" + idPlayer + "," + position_x + "," + position_y + ","
+				+ idGame + ",NULL,NULL);";
+
+		dbController.doUpdateQuery(query);
+	}
+
+	public int getAvailablePlayerId() {
+
 		ResultSet rs = dbController.doQuery("SELECT idplayer FROM player ORDER BY idplayer DESC LIMIT 1;");
+
+		int newIdPlayer = 0;
+
 		try {
-			int newPlayerID = 1;
-			if (rs.next()) {
-				newPlayerID = rs.getInt(1) + 1;
-			}
-
-			boolean increasingID = true;
-			while (increasingID) {
-				// Add a new row to the game table.
-				String query = "INSERT INTO player VALUES (" + newPlayerID + ",\"" + player.getUsername() + "\","
-						+ player.getIdGame() + ",\"" + player.getStatus() + "\", NULL, \""
-						+ player.getPrivateObjectiveCardColor() + "\", NULL, NULL);";
-
-				int result = dbController.doUpdateQuery(query);
-				if (result == 1) {
-					increasingID = false;
-					newPlayerID = player.getIdPlayer();
-					System.out.println(getClass() + " - New player created with id " + player.getIdPlayer()); // for
-																												// testing
-					// purposes
-				} else {
-					newPlayerID++;
-				}
+			while (rs.next()) {
+				newIdPlayer = rs.getInt(1) + 1;
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Something went wrong while adding a new player of a game to the database.");
+			System.out.println("Something went wrong while getting a playerID.");
 			e.printStackTrace();
 		}
+		return newIdPlayer;
+
+	}
+
+	public int addRowToPlayerTable(int newIdPlayer, String username, int idGame, PlayerStatus status,
+			GameColor privateObjectiveCardColor) {
+
+		// Add a new row to the player table.
+		String query = "INSERT INTO player VALUES (" + newIdPlayer + ",\"" + username + "\"," + idGame + ",\"" + status
+				+ "\", NULL, \"" + privateObjectiveCardColor + "\", NULL, NULL);";
+
+		int result = dbController.doUpdateQuery(query);
+
+		return result;
 	}
 
 }

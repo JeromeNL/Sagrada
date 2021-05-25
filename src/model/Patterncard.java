@@ -9,7 +9,6 @@ public class Patterncard {
 
 	private int idPatterncard;
 	private ArrayList<PatterncardField> fields;
-	private PatterncardController patterncardController;
 	private DatabaseController dbController;
 
 	public Patterncard(int idPatterncard, DatabaseController dbController) {
@@ -17,7 +16,15 @@ public class Patterncard {
 		this.idPatterncard = idPatterncard;
 		fields = new ArrayList<PatterncardField>();
 
-		patterncardController.loadFields();
+		loadFields();
+	}
+
+	private void loadFields() {
+
+		PatterncardController patterncardController = new PatterncardController(dbController);
+
+		fields = patterncardController.loadFields(idPatterncard);
+
 	}
 
 	// Convert string color from database to gameColor.

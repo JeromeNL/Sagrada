@@ -3,42 +3,41 @@ package controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.Game;
-
 public class GameController {
 
 	private DatabaseController dbController;
-	private Game game;
 
-	// Gets an available gameID and then adds a new row to the game table in the
-	// database.
-	public void addToDatabase() {
-		// Get an available gameID
+	public GameController(DatabaseController dbController) {
+		this.dbController = dbController;
+	}
+
+	public int getAvailableGameID() {
+
 		ResultSet rs = dbController.doQuery("SELECT idgame FROM game ORDER BY idgame DESC LIMIT 1;");
+
+		int availableGameID = 0;
+
 		try {
 			while (rs.next()) {
-				int newGameID = rs.getInt(1) + 1;
+				availableGameID = rs.getInt(1) + 1;
 
-				boolean increasingID = true;
-				while (increasingID) {
-					// Add a new row to the game table.
-					String query = "INSERT INTO game VALUES (" + newGameID + ",NULL,NULL,CURRENT_TIMESTAMP);";
-					int result = dbController.doUpdateQuery(query);
-					if (result == 1) {
-						increasingID = false;
-						newGameID = game.getidGame();
-						System.out.println(getClass() + " - New game created with id " + game.getidGame()); // for
-																											// testing
-																											// purposes
-					} else {
-						newGameID++;
-					}
-				}
 			}
+
 		} catch (SQLException e) {
-			System.out.println("Something went wrong while adding a new game to the database.");
+			System.out.println("Something went wrong while getting a available gameID.");
 			e.printStackTrace();
 		}
+		return availableGameID;
+
+	}
+
+	public int addRowToGameTable(int newIdGame) {
+
+		// Add a new row to the game table.
+		String query = "INSERT INTO game VALUES (" + newIdGame + ",NULL,NULL,CURRENT_TIMESTAMP);";
+		int result = dbController.doUpdateQuery(query);
+
+		return result;
 	}
 
 }

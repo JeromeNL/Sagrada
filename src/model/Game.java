@@ -9,6 +9,7 @@ public class Game {
 	private DatabaseController dbController;
 
 	private int idGame;
+	private int newIdGame;
 
 	private Round[] rounds; // 20 round IDs in database (so 20 Round objects)
 	private int currentRoundID;
@@ -40,7 +41,7 @@ public class Game {
 	}
 
 	private void setupGame() {
-		gameController.addToDatabase();
+		addToDatabase();
 		addCreatorPlayer(usernameCreator);
 		createRounds();
 		createDies();
@@ -107,6 +108,30 @@ public class Game {
 		}
 	}
 
+	// Gets an available gameID and then adds a new row to the game table in the
+	// database.
+	public void addToDatabase() {
+
+		gameController = new GameController(dbController);
+
+		// Get an available gameID
+		newIdGame = gameController.getAvailableGameID();
+
+		boolean increasingID = true;
+		while (increasingID) {
+			int result = gameController.addRowToGameTable(newIdGame);
+			if (result == 1) {
+				increasingID = false;
+				idGame = newIdGame;
+				System.out.println(getClass() + " - New game created with id " + newIdGame); // for
+																								// testing
+																								// purposes
+			} else {
+				newIdGame++;
+			}
+		}
+	}
+
 	// Gives an available GameColor to be used as the private objectivecard color.
 	private GameColor getObjectiveCardColor() {
 		// to-do: remember which gameColors have been used so nobody has the same
@@ -129,4 +154,5 @@ public class Game {
 	public int getidGame() {
 		return idGame;
 	}
+
 }

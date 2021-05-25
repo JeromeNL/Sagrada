@@ -1,12 +1,16 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import controller.DatabaseController;
+import controller.GameController;
 import controller.PlayerController;
-import sun.security.pkcs11.Secmod.DbMode;
 
 public class Player {
 
 	private int idPlayer;
+	private int newIdPlayer;
 	private String username;
 	private int idGame;
 	private PlayerStatus status;
@@ -37,8 +41,20 @@ public class Player {
 
 	private void setUpPlayer() {
 		setInitialStatus();
-		playerController.addToDatabase();
-		playerController.createPlayerFrameField();
+		addToDatabase();
+		createPlayerFrameField();
+	}
+
+	// Create all the playerframefield rows in the database.
+	private void createPlayerFrameField() {
+
+		playerController = new PlayerController(dbController);
+
+		for (int position_y = 1; position_y <= 4; position_y++) {
+			for (int position_x = 1; position_x <= 5; position_x++) {
+				playerController.createPlayerFrameField(idPlayer, idGame, position_x, position_y);
+			}
+		}
 	}
 
 	private void setInitialStatus() {
@@ -46,6 +62,29 @@ public class Player {
 			status = PlayerStatus.CHALLENGER;
 		} else {
 			status = PlayerStatus.CHALLENGEE;
+		}
+	}
+
+	// Adds a new user to the database.
+	public void addToDatabase() {
+
+		playerController = new PlayerController(dbController);
+
+		// Get an available playerID
+		newIdPlayer = playerController.getAvailablePlayerId();
+
+		boolean increasingID = true;
+		while (increasingID) {
+			int result = playerController.addRowToPlayerTable(newIdPlayer, username, idGame, status,
+					privateObjectiveCardColor);
+			if (result == 1) {
+				increasingID = false;
+				idPlayer = newIdPlayer;
+				System.out.println(getClass() + " - New player created with id " + idPlayer); // for testing
+																								// purposes
+			} else {
+				newIdPlayer++;
+			}
 		}
 	}
 

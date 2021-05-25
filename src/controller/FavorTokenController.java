@@ -1,17 +1,17 @@
 package controller;
 
-import model.FavorToken;
-
 public class FavorTokenController {
 
 	private DatabaseController dbController;
-	private FavorToken favortoken;
+
+	public FavorTokenController() {
+		this.dbController = new DatabaseController();
+	}
 
 	// Adds the favortoken to the gamefavortoken table.
-	public void addToDatabase() {
+	public void addToDatabase(int idToken, int idGame) {
 		// to-do: insert row into gamefavortoken table with idfavortoken and idgame
-		String query = "INSERT INTO gamefavortoken VALUES (" + favortoken.getIdToken() + "," + favortoken.getIdGame()
-				+ ",NULL,NULL,NULL);";
+		String query = "INSERT INTO gamefavortoken VALUES (" + idToken + "," + idGame + ",NULL,NULL,NULL);";
 		dbController.doUpdateQuery(query);
 	}
 
