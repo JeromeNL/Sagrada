@@ -54,7 +54,7 @@ private DropShadow dropShadow;
 		createGameButton.setStrokeWidth(5);
 		createGameButton.setStroke(Color.PINK);
 		 
-		createGameButtonText = new Label("CreÃ«er Spel");
+		createGameButtonText = new Label("Creëer Spel");
 		createGameButtonText.setTextFill(Color.PINK);
 		createGameButtonText.setFont(new Font("Arial", 18));
 		createGameButtonText.setStyle("-fx-font-weight: bold");

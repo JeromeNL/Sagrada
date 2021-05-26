@@ -1,7 +1,6 @@
 package model;
 
 import controller.DatabaseController;
-import javafx.scene.paint.Color;
 
 public class PatterncardField {
 
@@ -9,45 +8,43 @@ public class PatterncardField {
 	private int yPosition; // range: 1 to 4
 
 	private int eyesCountRequirement; // 0 = no requirement
-	private Color colorRequirement; // null is no requirement
+	private GameColor colorRequirement; // null is no requirement
 
 	private Die dieOnField;
+	private DatabaseController dbController;
+	
+	private Player owner;
 
-	public PatterncardField(int xPosition, int yPosition) {
-		this.xPosition = xPosition;
-		this.yPosition = yPosition;
-	}
+//	public PatterncardField(int xPosition, int yPosition, DatabaseController dbController, Player owner) {
+//		this.xPosition = xPosition;
+//		this.yPosition = yPosition;
+//		this.dbController = dbController;
+//		this.owner = owner;
+//		
+//	}
 
-	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, Color colorRequirement) {
+	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement, DatabaseController dbController, Player owner) {
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
 
 		this.eyesCountRequirement = eyesCountRequirement;
 		this.colorRequirement = colorRequirement;
+		this.dbController = dbController;
+		this.owner = owner;
+		
+		dieOnField = dbController.getDie(owner.getIdPlayer(), xPosition, yPosition);
 	}
 
 	public void placeDie(Die die) {
 		this.dieOnField = die;
-
-//		addDieToDatabase(playerID, gameID, die);
-	}
-
-	// Adds a row to the playerframefield table so the placement of a die is saved to the database.
-	private void addDieToDatabase(int playerID, int gameID, Die die) {
-		// playerframfield has columns : idplayer, position_x, position_y, idgame, dienumber, diecolor
-		String query = "INSERT INTO playerframefield VALUES (" + playerID + ", " + xPosition + ", " + yPosition + ", "
-				+ gameID + ", " + die.getEyesCount() + ", \"" + die.getStringColor() + "\");";
-
-		DatabaseController dc = new DatabaseController();
-		dc.doUpdateQuery(query);
+		dbController.placeDie(owner.getIdPlayer(), owner.getGameID(), die, xPosition, yPosition);
 	}
 	
 	// Removes the die from the database. 
 	private void removeDieFromDatabase() {
 		String query = "UPDATE playerframefield SET dienumber = NULL, diecolor = NULL WHERE position_x = " + xPosition + " AND position_y = " + yPosition + ";";
 
-		DatabaseController dc = new DatabaseController();
-		dc.doUpdateQuery(query);
+		dbController.doUpdateQuery(query);
 	}
 
 	public void removeDie() {
@@ -79,7 +76,7 @@ public class PatterncardField {
 		return eyesCountRequirement != 0;
 	}
 
-	public Color getColorRequirement() {
+	public GameColor getColorRequirement() {
 		return colorRequirement;
 	}
 

@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import model.Die;
+import model.GameColor;
 import model.PatterncardField;
 
 // View of one die in the patterncard (non-draggable die).
@@ -70,14 +71,17 @@ public class DieView extends StackPane {
 				if (db.hasString()) {
 
 					String dieData = db.getString();
-
+					System.out.println(dieData);
+					String[] data = dieData.split("\\s+");
+					
 					// Extracting die data from the string.
-					int eyesCount = Integer.valueOf(dieData.substring(0, 1));
-					Color dieColor = Color.valueOf(dieData.substring(1));
+					int dieNumber = Integer.valueOf(data[0]);
+					GameColor dieColor = GameColor.valueOf(data[1]);
+					int eyesCount = Integer.valueOf(data[2]);
 
 					// Check if die can actually be placed.
 					if (isValidMove(eyesCount, dieColor)) {
-						patternCardField.placeDie(new Die(dieColor, eyesCount, 1));
+						patternCardField.placeDie(new Die(dieColor, eyesCount, dieNumber));
 						drawDieField();
 						diePlaced = true;
 					}
@@ -92,7 +96,7 @@ public class DieView extends StackPane {
 	}
 
 	// Checks if die can be placed. Returns boolean representing the validity.
-	private boolean isValidMove(int eyesCount, Color dieColor) {
+	private boolean isValidMove(int eyesCount, GameColor dieColor) {
 		if (fieldHasDie()) {
 			return false;
 		}
@@ -113,10 +117,10 @@ public class DieView extends StackPane {
 	}
 
 	// Checks if color requirement of diefield allows the die to be placed.
-	private boolean isCorrectColor(Color dieColor) {
+	private boolean isCorrectColor(GameColor dieColor) {
 		if (patternCardField.hasColorRequirement()) {
-			Color colorRequirement = patternCardField.getColorRequirement();
-			if (colorRequirement.equals(dieColor)) {
+			GameColor colorRequirement = patternCardField.getColorRequirement();
+			if (colorRequirement == dieColor) {
 				return true;
 			} else {
 				return false;
@@ -154,12 +158,15 @@ public class DieView extends StackPane {
 		// Check if the field contains a die.
 		if (patternCardField.hasDie()) {
 			Die dieOnField = patternCardField.getDie();
-			dieFieldRectangle.setFill(dieOnField.getColor().brighter());
+			dieFieldRectangle.setFill(dieOnField.getColor().toFXColor().brighter());
 		} else {
 			// No die on field, so check if field has color requirement.
 			if (patternCardField.hasColorRequirement()) {
-				Color colorRequirement = patternCardField.getColorRequirement();
-				dieFieldRectangle.setFill(colorRequirement);
+				GameColor colorRequirement = patternCardField.getColorRequirement();
+				
+				// TODO: draw correct color depending on colorRequirement
+				
+				dieFieldRectangle.setFill(colorRequirement.toFXColor());
 				dieFieldRectangle.setOpacity(0.7);
 			} else {
 				// No color requirement, so field color is white.

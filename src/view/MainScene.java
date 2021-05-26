@@ -1,33 +1,55 @@
 package view;
 
+import controller.MainController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import model.Die;
 import model.DiesInSupply;
+import model.Game;
+
+import model.GameColor;
+
+import model.Patterncard;
+
+import model.Player;
 
 public class MainScene extends Scene {
 
 ///////////////////////////////////////////////////////////////// Constructor
 
-	public MainScene() {
+	private MainController mainController;
+	private Patterncard patterncard;
+
+	public MainScene(MainController mainController) {
 		super(new Pane(), 1280, 720);
-		
-		// aanmaken onderstaande diesupply moet later in main controller gebeuren.
-//		DiesInSupply diesInSupply = new DiesInSupply();
-//		diesInSupply.addDie(new Die(Color.MEDIUMPURPLE, 3, 1));
-//		diesInSupply.addDie(new Die(Color.LIGHTYELLOW, 2, 2));
-//		diesInSupply.addDie(new Die(Color.LIGHTBLUE, 6, 3));
-//		diesInSupply.addDie(new Die(Color.INDIANRED, 1, 4));
-//		diesInSupply.addDie(new Die(Color.LIGHTGREEN, 5, 5));
-//
-//		GameView gameView = new GameView(diesInSupply); 
-//		setRoot(gameView);
-//		
-//		LobbyView lobbyView = new LobbyView(); 
+		this.mainController = mainController;
+
+//		LobbyView lobbyView = new LobbyView();
 //		setRoot(lobbyView);
 		
-		PlayerListView spelersView = new PlayerListView();
-		setRoot(spelersView);
+
+
+	}
+
+	// show gameview of player of game with nr 1,2,3 or 4.
+	public void showGame(Game game, int playerNR) {
+		Player playerShownOnScreen = game.getPlayers().get(playerNR); // creator of the game
+		GameView gameView = new GameView(game, playerShownOnScreen, mainController); 
+		setRoot(gameView);
+
+
+	}
+	
+	public void showChoosePatternCard() {
+		ChoosePatternCardView choosePatterncardView = new ChoosePatternCardView();
+		setRoot(choosePatterncardView);
+
+		
+
+	}
+	
+	public void changeCurrentPlayerView(Game game) {
+		setRoot(new ChangeCurrentPlayerView(game, mainController));
+
 	}
 }
