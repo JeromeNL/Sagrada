@@ -28,6 +28,7 @@ public class MainScene extends Scene {
 //		setRoot(lobbyView);
 		
 
+
 	}
 
 	// show gameview of player of game with nr 1,2,3 or 4.
@@ -49,5 +50,6 @@ public class MainScene extends Scene {
 	
 	public void changeCurrentPlayerView(Game game) {
 		setRoot(new ChangeCurrentPlayerView(game, mainController));
+
 	}
 }
