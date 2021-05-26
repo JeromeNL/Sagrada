@@ -49,15 +49,10 @@ public class ToolcardCardView extends HBox {
 		StackPane card2 = new StackPane();
 		StackPane card3 = new StackPane();
 
-
-
-
-
-
 		RectangleCard rectangleCard1 = new RectangleCard(widthCard, heightCard, "card1");
 		RectangleCard rectangleCard2 = new RectangleCard(widthCard, heightCard, "card2");
 		RectangleCard rectangleCard3 = new RectangleCard(widthCard, heightCard, "card3");
-		
+
 		card1.getChildren().addAll(rectangleCard1, imageView);
 		card2.getChildren().addAll(rectangleCard2, imageView2);
 		card3.getChildren().addAll(rectangleCard3, imageView3);
