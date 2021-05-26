@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import controller.DatabaseController;
 import javafx.scene.paint.Color;
 
@@ -7,6 +10,13 @@ public class PatterncardField {
 
 	private int xPosition; // range: 1 to 5
 	private int yPosition; // range: 1 to 4
+	private int gameID = 487;
+	private int playerID = 962; // 961
+	
+	private int leftX;
+	private int rightX;
+	private int topY;
+	private int bottomY;
 
 	private int eyesCountRequirement; // 0 = no requirement
 	private GameColor colorRequirement; // null is no requirement
@@ -14,20 +24,25 @@ public class PatterncardField {
 	private Die dieOnField;
 	private DatabaseController dbController;
 
-	public PatterncardField(int xPosition, int yPosition, DatabaseController dbController) {
+	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement,
+			DatabaseController dbController) {
+
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
 
+		this.eyesCountRequirement = eyesCountRequirement;
+		this.colorRequirement = colorRequirement;
 		this.dbController = dbController;
+		
+		leftX = xPosition -1 ;
+		rightX = xPosition + 1;
+		topY = yPosition - 1;
+		bottomY = yPosition + 1;
+
 	}
 
-	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement, DatabaseController dbController) {
-
-
-	}
-	
-	// The great 'isValidMove'-check. 
-	public boolean isValidMove(int eyesCount, Color dieColor) {
+	// The great 'isValidMove'-check.
+	public boolean isValidMove(int eyesCount, GameColor dieColor) throws SQLException {
 		// 1st check: Is the field empty?
 		if (fieldHasDie()) {
 			System.out.println(" 1 false");
@@ -41,8 +56,9 @@ public class PatterncardField {
 		}
 
 		// 3rd check: The field is NOT adjacent to a stone of the same color or value
-		if (!hasOtherValueOrColorSurrounding()) {
+		if (!hasOtherValueAndColorSurrounding()) {
 			System.out.println(" 3 false");
+
 			return false;
 		}
 		// 3.5rd check: IS THIS THE FIRST TURN?
@@ -67,19 +83,31 @@ public class PatterncardField {
 		System.out.println("This move is valid! | all statements == true");
 		return true;
 	}
-	
 
-	// All 
-	private boolean isFirstTurn() {
+	// All
+	private boolean isFirstTurn() throws SQLException {
 		// Check of de steen die gelegd gaat worden de eerste steen op het bord is.
-		return false;
+		DatabaseController db = new DatabaseController();
+		ResultSet amountOfDies = db.doQuery("SELECT count(diecolor) FROM playerframefield WHERE idgame ='" + gameID
+				+ "' AND idplayer ='" + playerID);
+		int value = 0;
+		while (amountOfDies.next()) {
+			value = ((Number) amountOfDies.getObject(1)).intValue();
+		}
+
+		if (value == 0) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 	private boolean isCorrectColor(Color dieColor) {
 		// Check of de steen aan de kleurvoorwaarde voldoet.
 
 		if (hasColorRequirement()) {
-			GameColor colorRequirement =  getColorRequirement();
+			GameColor colorRequirement = getColorRequirement();
 			if (colorRequirement.equals(dieColor)) {
 				return true;
 			} else {
@@ -109,18 +137,70 @@ public class PatterncardField {
 		return false;
 	}
 
-	private boolean hasOtherValueOrColorSurrounding() {
+	private boolean hasOtherValueAndColorSurrounding() {
 		// Check of de omliggende stenen een andere kleur/waarde hebben.
+		
+
+		if (isAdjacentFieldSameColor(yPosition, leftX) && isAdjacentFieldSameColor(yPosition, rightX)
+				&& isAdjacentFieldSameColor(topY, xPosition) && isAdjacentFieldSameColor(bottomY, yPosition) == false) {
+			System.out.println("is adjacent to field with same color");
+			if (isAdjacentFieldSameValue(yPosition, leftX) && isAdjacentFieldSameValue(yPosition, rightX)
+					&& isAdjacentFieldSameValue(topY, xPosition) && isAdjacentFieldSameValue(bottomY, yPosition) == false) {
+				return true;
+			}
+
+		}
+
+		return false;
+	}
+
+	private boolean isAdjacentFieldSameColor(int x, int y) {
+		
 		return true;
 	}
 
-	private boolean isAdjacentToDie() {
-		// Check of het veld aan een al bestaande steen ligt.
+	private boolean isAdjacentFieldSameValue(int x, int y) {
+
 		return true;
+	}
+
+	private boolean isAdjacentToDie() throws SQLException {
+		
+
+		if (isFieldEmpty(yPosition, leftX) || isFieldEmpty(yPosition, rightX) || isFieldEmpty(topY, xPosition)
+				|| isFieldEmpty(bottomY, xPosition) == false) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isFieldEmpty(int x, int y) throws SQLException {
+
+		if (xPosition < 1 || xPosition > 5 || yPosition < 1 || yPosition > 4) {
+			return true;
+		} else {
+
+			DatabaseController db = new DatabaseController();
+			ResultSet zeroOrOneDie = db.doQuery(
+					"select COUNT(dienumber) from playerframefield where  idgame = '" + gameID + "' AND idplayer = '"
+							+ playerID + "' AND position_y = '" + y + "' AND position_x = '" + y + "'");
+
+			int value = 0;
+			while (zeroOrOneDie.next()) {
+				value = ((Number) zeroOrOneDie.getObject(1)).intValue();
+			}
+
+			if (value == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
 	// Check of de eerste steen in de hoek/rand is gelegd.
-	private boolean firstDieIsOnEdge() {
+	private boolean firstDieIsOnEdge() throws SQLException {
 		if (isFirstTurn()) {
 			if (getYPosition() == 1 || getYPosition() == 4 || getXPosition() == 1 || getXPosition() == 5) {
 				return true;
@@ -134,16 +214,6 @@ public class PatterncardField {
 	}
 
 	// end of checks //////////////////////////////////////////////////////////
-
-	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, Color colorRequirement) {
-
-		this.xPosition = xPosition;
-		this.yPosition = yPosition;
-
-		this.eyesCountRequirement = eyesCountRequirement;
-		this.colorRequirement = colorRequirement;
-		this.dbController = dbController;
-	}
 
 	public void placeDie(Die die) {
 		this.dieOnField = die;

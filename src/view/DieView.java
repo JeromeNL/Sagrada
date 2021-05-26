@@ -78,7 +78,7 @@ public class DieView extends StackPane {
 					GameColor dieColor = GameColor.valueOf(dieData.substring(1));
 
 					// Check if die can actually be placed.
-					if (isValidMove(eyesCount, dieColor)) {
+					if (patternCardField.isValidMove(eyesCount, dieColor)) {
 						patternCardField.placeDie(new Die(dieColor, eyesCount, 1));
 						drawDieField();
 						diePlaced = true;

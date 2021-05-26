@@ -18,10 +18,12 @@ public class MainScene extends Scene {
 		super(new Pane(), 1280, 720);
 		this.mainController = mainController;
 
-//		LobbyView lobbyView = new LobbyView();
+		
+		
+//  	LobbyView lobbyView = new LobbyView();
 //		setRoot(lobbyView);
 		
-		showChoosePatternCard();
+		// showChoosePatternCard();
 	}
 
 	// show gameview of player of game with nr 1,2,3 or 4.
@@ -33,12 +35,12 @@ public class MainScene extends Scene {
 
 	}
 	
-	public void showChoosePatternCard() {
-		ChoosePatternCardView choosePatterncardView = new ChoosePatternCardView();
-		setRoot(choosePatterncardView);
+//	public void showChoosePatternCard() {
+//		ChoosePatternCardView choosePatterncardView = new ChoosePatternCardView();
+//		setRoot(choosePatterncardView);
 
 		
 //		ToolCardInUseView t = new ToolCardInUseView();
 //		setRoot(t);
 	}
-}
+//}

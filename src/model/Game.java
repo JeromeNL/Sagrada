@@ -155,4 +155,14 @@ public class Game {
 	public DiesInSupply getDiesInSupply() {
 		return diesInSupply;
 	}
+
+	public int getIdGame() {
+		return idGame;
+	}
+	
+	
+
+	
+
+	
 }
