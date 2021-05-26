@@ -13,6 +13,7 @@ import model.Patterncard;
 
 import model.Player;
 
+
 public class MainScene extends Scene {
 
 ///////////////////////////////////////////////////////////////// Constructor
@@ -28,10 +29,10 @@ public class MainScene extends Scene {
 //		setRoot(lobbyView);
 		
 
-
 	}
 
 	// show gameview of player of game with nr 1,2,3 or 4.
+
 	public void showGame(Game game, int playerNR) {
 		Player playerShownOnScreen = game.getPlayers().get(playerNR); // creator of the game
 		GameView gameView = new GameView(game, playerShownOnScreen, mainController); 
@@ -50,6 +51,7 @@ public class MainScene extends Scene {
 	
 	public void changeCurrentPlayerView(Game game) {
 		setRoot(new ChangeCurrentPlayerView(game, mainController));
+
 
 	}
 }
