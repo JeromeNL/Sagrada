@@ -3,32 +3,35 @@ package view;
 import java.sql.SQLException;
 import java.util.Arrays;
 
+import controller.DatabaseController;
+import controller.PlayerController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import controller.PlayerController;
-import javafx.scene.control.Button;
 import model.PlayerStats;
 
 public class PlayerListView extends VBox {
 	private VBox container;
 	private Text playerTxt;
 	private TableView<PlayerStats> table = new TableView<>();
+	
+	private DatabaseController dbController;
 
-	public PlayerListView() {
+	public PlayerListView(DatabaseController dbController) {
+		this.dbController = dbController;
+		
 //creating the view
 		container = new VBox();
 		container.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(0), new Insets(0))));

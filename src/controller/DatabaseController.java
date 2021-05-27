@@ -16,6 +16,7 @@ import model.Player;
 public class DatabaseController {
 
 	private Connection m_Conn;
+	private Statement statement;
 
 	public DatabaseController() {
 		// Setting up database connection
@@ -60,17 +61,15 @@ public class DatabaseController {
 	 * object that contains the data produced by the given query; never null
 	 */
 	public ResultSet doQuery(String query) {
-		Statement statement;
 		try {
 			statement = m_Conn.createStatement();
-			ResultSet resultSet = statement.executeQuery(query);
-
-			return resultSet;
+			return statement.executeQuery(query);
 		} catch (SQLException e) {
 			System.out.println("Something went wrong while executing the following query: " + query);
 			System.out.println(e.getMessage());
 		}
 		return null;
+		
 	}
 
 	/*
@@ -79,7 +78,6 @@ public class DatabaseController {
 	 * SQL statements that return nothing
 	 */
 	public int doUpdateQuery(String query) {
-		Statement statement;
 		try {
 			statement = m_Conn.createStatement();
 			return statement.executeUpdate(query);
@@ -399,5 +397,15 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 		return idPlayer;
+	}
+
+	public void closeConnection() {
+		try {
+			statement.close();
+			m_Conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

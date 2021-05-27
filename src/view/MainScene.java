@@ -1,16 +1,10 @@
 package view;
 
+import controller.DatabaseController;
 import controller.MainController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import model.Die;
-import model.DiesInSupply;
 import model.Game;
-
-import model.GameColor;
-
-import model.Patterncard;
-
 import model.Player;
 
 
@@ -19,11 +13,12 @@ public class MainScene extends Scene {
 ///////////////////////////////////////////////////////////////// Constructor
 
 	private MainController mainController;
-	private Patterncard patterncard;
+	private DatabaseController dbController;
 
-	public MainScene(MainController mainController) {
+	public MainScene(MainController mainController, DatabaseController dbController) {
 		super(new Pane(), 1280, 720);
 		this.mainController = mainController;
+		this.dbController = dbController;
 
 //		LobbyView lobbyView = new LobbyView();
 //		setRoot(lobbyView);
@@ -42,7 +37,7 @@ public class MainScene extends Scene {
 	}
 	
 	public void showChoosePatternCard() {
-		ChoosePatternCardView choosePatterncardView = new ChoosePatternCardView();
+		ChoosePatternCardView choosePatterncardView = new ChoosePatternCardView(dbController);
 		setRoot(choosePatterncardView);
 
 		
