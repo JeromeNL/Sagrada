@@ -5,9 +5,9 @@ import controller.MainController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import model.Game;
-import model.Patterncard;
 import model.Player;
 import model.RegisterLoginModel;
+
 
 public class MainScene extends Scene {
 
@@ -15,7 +15,6 @@ public class MainScene extends Scene {
 
 	private MainController mainController;
 	private DatabaseController dbController;
-	private Patterncard patterncard;
 	private RegisterLoginModel rlm;
 
 	public MainScene(MainController mainController, DatabaseController dbController, RegisterLoginModel rlm) {
@@ -31,6 +30,7 @@ public class MainScene extends Scene {
 	}
 
 	// show gameview of player of game with nr 1,2,3 or 4.
+
 	public void showGame(Game game, int playerNR) {
 		Player playerShownOnScreen = game.getPlayers().get(playerNR); // creator of the game
 		GameView gameView = new GameView(game, playerShownOnScreen, mainController, dbController); 
@@ -40,7 +40,7 @@ public class MainScene extends Scene {
 	}
 	
 	public void showChoosePatternCard() {
-		ChoosePatternCardView choosePatterncardView = new ChoosePatternCardView();
+		ChoosePatternCardView choosePatterncardView = new ChoosePatternCardView(dbController);
 		setRoot(choosePatterncardView);
 
 		
@@ -49,6 +49,8 @@ public class MainScene extends Scene {
 	
 	public void changeCurrentPlayerView(Game game) {
 		setRoot(new ChangeCurrentPlayerView(game, mainController));
+
+
 	}
 	
 	public void showLoginScreen() {

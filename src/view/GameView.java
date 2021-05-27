@@ -19,7 +19,7 @@ import model.Player;
 
 public class GameView extends BorderPane {
 
-	private RoundtrackView roundtrackView;
+	private TopPart topPart;
 	private PatternCardView patternCardView;
 	private DieSupply dieSupply;
 	private GameButtonView gameButtonView;
@@ -40,18 +40,26 @@ public class GameView extends BorderPane {
 		Patterncard playerPatterncard = player.getPatterncard();
 
 		objectiveInGameView = new ObjectiveInGameView();
-		patternCardView = new PatternCardView(playerPatterncard);  // dit is een random patterncard moet later aangepast worden
+		patternCardView = new PatternCardView(playerPatterncard); // dit is een random patterncard moet later aangepast
+																	// worden
 
-		roundtrackView = new RoundtrackView(game);
+		topPart = new TopPart(game);
+
 		dieSupply = new DieSupply(game.getDiesInSupply());
 		gameButtonView = new GameButtonView(this, game, mainController);
 		changeCurrentPlayerView = new ChangeCurrentPlayerView(game, mainController);
-		
-	
-		
+
+		if (!mainController.getLoggedInUsername().equals(player.getUsername())) {
+			dieSupply.setDisable(true);
+			dieSupply.setOpacity(0.5);
+			gameButtonView.setDisable(true);
+			gameButtonView.setOpacity(0.5);
+			objectiveInGameView.hide();
+		}
+
 		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
 
-		setAlignment(roundtrackView, Pos.TOP_CENTER);
+		setAlignment(topPart, Pos.TOP_CENTER);
 
 		showGame();
 
@@ -82,10 +90,15 @@ public class GameView extends BorderPane {
 		}
 		
 		getChildren().clear();
+
 		VBox topPane = new VBox();
-		
-		topPane.getChildren().addAll(roundtrackView, new InfoPane(game, dbController));
+
+
+		topPane.getChildren().addAll(topPart, new InfoPane(game, dbController));
+
 		setTop(topPane);
+		topPane.setAlignment(Pos.CENTER);
+
 		VBox leftPane = new VBox();
 		leftPane.setAlignment(Pos.CENTER);
 		leftPane.setSpacing(25);
@@ -107,53 +120,53 @@ public class GameView extends BorderPane {
 			setSpacing(10);
 			setPadding(new Insets(10));
 			setAlignment(Pos.BASELINE_LEFT);
-			
+
 			setOnMouseClicked(e -> showChangeCurrentPlayerView());
-			
+
 			Rectangle dropDownButton = new Rectangle(30, 30);
-			
+
 			Label currentPlayerText = new Label(player.getUsername());
 			currentPlayerText.setStyle("-fx-font-weight: bold");
 			currentPlayerText.setFont(new Font("Arial", 40));
-			
+
 			Label who;
 			if (mainController.getLoggedInUsername().equals(player.getUsername())) {
 				who = new Label("(You)");
 			} else {
 				who = new Label("(Other player)");
 			}
-			
+
 			who.setStyle("-fx-font-weight: bold");
 			who.setFont(new Font("Arial", 20));
-						
-			
+
 			getChildren().addAll(dropDownButton, currentPlayerText, who);
-			
+
 			setOnMouseEntered(e -> currentPlayerText.setUnderline(true));
 			setOnMouseExited(e -> currentPlayerText.setUnderline(false));
 		}
 	}
-	
+
 	// Temporary class to show game details while developing
 	private class InfoPane extends HBox {
-		
+
 		public InfoPane(Game game, DatabaseController dbController) {
-			
+
 			setSpacing(30);
-			
+
 			Label gameStatus = new Label("Gameid: " + game.getGameID());
-			
+
 			int playerID = dbController.getCurrentPlayerID(game.getGameID());
 			String username = dbController.getUsername(playerID);
 			Label currentPlayer = new Label("Current player: " + username + " (ID: " + playerID + ")");
-			
+
 			int roundID = dbController.getRoundID(game.getGameID());
 			boolean isClockwise = dbController.isClockwise(roundID);
-			Label round = new Label("roundID: " + roundID + " (clockwise: " + isClockwise + ")" + " RoundNR: " + dbController.getRoundNr(roundID));
-		
+			Label round = new Label("roundID: " + roundID + " (clockwise: " + isClockwise + ")" + " RoundNR: "
+					+ dbController.getRoundNr(roundID));
+
 			getChildren().addAll(gameStatus, currentPlayer, round);
 		}
-		
+
 	}
 
 }
