@@ -24,20 +24,6 @@ public class MainController {
 		
 		showLoginScreen();
 
-//		loadGame(1002);
-//		createGame();
-//		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
-//		currentGame.invitePlayer("jasper");
-//		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
-//		currentGame.invitePlayer("jerome");
-//		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
-//		currentGame.invitePlayer("imke");
-//		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
-//		currentGame.startGame();
-
-		
-		
-
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
 		stage.setScene(mainScene);

@@ -43,8 +43,10 @@ public class DatabaseController {
 	 */
 	public boolean makeConnection() {
 		try {
+//			m_Conn = DriverManager.getConnection(
+//					"jdbc:mysql://databases.aii.avans.nl/jwkwette_db2?" + "user=jwkwette&password=Ab12345");
 			m_Conn = DriverManager.getConnection(
-					"jdbc:mysql://databases.aii.avans.nl/jwkwette_db2?" + "user=jwkwette&password=Ab12345");
+			"jdbc:mysql://localhost:3306/sagrada?" + "user=root&password=1234");
 		} catch (SQLException ex) {
 			System.out.println("Kan geen verbinding maken met de database. Lees hieronder waarom:");
 			System.out.println("SQLException: " + ex.getMessage());
