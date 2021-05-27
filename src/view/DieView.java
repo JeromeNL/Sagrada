@@ -103,50 +103,50 @@ public class DieView extends StackPane {
 	}
 
 	// Checks if die can be placed. Returns boolean representing the validity.
-	private boolean isValidMove(int eyesCount, GameColor dieColor) {
-		if (fieldHasDie()) {
-			return false;
-		}
-		
-		// to-do: more checks...
-
-		if (isCorrectNumber(eyesCount) && isCorrectColor(dieColor)) {
-			return true;
-		}
-		return false;
-	}
-
-	private boolean fieldHasDie() {
-		if (patternCardField.hasDie()) {
-			return true;
-		}
-		return false;
-	}
-
-	// Checks if color requirement of diefield allows the die to be placed.
-	private boolean isCorrectColor(GameColor dieColor) {
-		if (patternCardField.hasColorRequirement()) {
-			GameColor colorRequirement = patternCardField.getColorRequirement();
-			if (colorRequirement == dieColor) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	// Checks if number of eyes requirement of diefield allows the die to be placed.
-	private boolean isCorrectNumber(int eyesCount) {
-		if (patternCardField.hasEyesCountRequirement()) {
-			if (patternCardField.getEyesCountRequirement() == eyesCount) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return true;
-	}
+//	private boolean isValidMove(int eyesCount, GameColor dieColor) {
+//		if (fieldHasDie()) {
+//			return false;
+//		}
+//		
+//		// to-do: more checks...
+//
+//		if (isCorrectNumber(eyesCount) && isCorrectColor(dieColor)) {
+//			return true;
+//		}
+//		return false;
+//	}
+//
+//	private boolean fieldHasDie() {
+//		if (patternCardField.hasDie()) {
+//			return true;
+//		}
+//		return false;
+//	}
+//
+//	// Checks if color requirement of diefield allows the die to be placed.
+//	private boolean isCorrectColor(GameColor dieColor) {
+//		if (patternCardField.hasColorRequirement()) {
+//			GameColor colorRequirement = patternCardField.getColorRequirement();
+//			if (colorRequirement == dieColor) {
+//				return true;
+//			} else {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
+//
+//	// Checks if number of eyes requirement of diefield allows the die to be placed.
+//	private boolean isCorrectNumber(int eyesCount) {
+//		if (patternCardField.hasEyesCountRequirement()) {
+//			if (patternCardField.getEyesCountRequirement() == eyesCount) {
+//				return true;
+//			} else {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 
 	// Draws a die on the patterncard.
 	private void drawDieField() {

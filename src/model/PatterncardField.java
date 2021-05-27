@@ -12,7 +12,7 @@ public class PatterncardField {
 	private int yPosition; // range: 1 to 4
 //	private int gameID = 487;
 //	private int playerID = 962; // 961
-	
+
 	private int leftX;
 	private int rightX;
 	private int topY;
@@ -23,12 +23,11 @@ public class PatterncardField {
 
 	private Die dieOnField;
 	private DatabaseController dbController;
-	
+
 	private Player owner;
 
-
-
-	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement, DatabaseController dbController, Player owner) {
+	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement,
+			DatabaseController dbController, Player owner) {
 
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
@@ -37,8 +36,8 @@ public class PatterncardField {
 		this.colorRequirement = colorRequirement;
 		this.dbController = dbController;
 		this.owner = owner;
-		
-		leftX = xPosition -1 ;
+
+		leftX = xPosition - 1;
 		rightX = xPosition + 1;
 		topY = yPosition - 1;
 		bottomY = yPosition + 1;
@@ -59,13 +58,8 @@ public class PatterncardField {
 			return false;
 		}
 
-		// 3rd check: The field is NOT adjacent to a stone of the same color or value
-		if (!hasOtherValueAndColorSurrounding()) {
-			System.out.println(" 3 false");
-
-			return false;
-		}
 		// 3.5rd check: IS THIS THE FIRST TURN?
+		// DOESNT WORK ATM: CANT READ DIES FROM THE DB, CUS IS ALL EMPTY
 		if (isFirstTurn()) {
 			// FOR THE FIRST DIE ONLY!
 			// 5th check: The first die is on the edge or in the corner
@@ -76,8 +70,17 @@ public class PatterncardField {
 		}
 
 		else {
+
+			// 3rd check: The field is NOT adjacent to a stone of the same color or value
+			if (!hasOtherValueAndColorSurrounding()) {
+				System.out.println(" 3 false");
+
+				return false;
+			}
 			// FOR ALL DIES AFTER THE 1ST ONE ONLY!
 			// 4th check: The field is adjacent to a field that already has a die on it
+			System.out.println("--------");
+			System.out.println("CHECK 4");
 			if (!isAdjacentToDie()) {
 				System.out.println(" 4 false");
 				return false;
@@ -85,6 +88,7 @@ public class PatterncardField {
 
 		}
 		System.out.println("This move is valid! | all statements == true");
+		// addDieToDatabase(owner.getIdPlayer(), owner.getGameID(), dieOnField);
 		return true;
 	}
 
@@ -92,13 +96,14 @@ public class PatterncardField {
 	private boolean isFirstTurn() throws SQLException {
 		// Check of de steen die gelegd gaat worden de eerste steen op het bord is.
 		DatabaseController db = new DatabaseController();
-		ResultSet amountOfDies = db.doQuery("SELECT count(diecolor) FROM playerframefield WHERE idgame ='" + owner.getGameID()
-				+ "' AND idplayer ='" + owner.getIdPlayer());
+		ResultSet amountOfDies = db.doQuery("SELECT count(diecolor) FROM playerframefield WHERE idgame ='"
+				+ owner.getGameID() + "' AND idplayer ='" + owner.getIdPlayer() + "'");
 		int value = 0;
 		while (amountOfDies.next()) {
 			value = ((Number) amountOfDies.getObject(1)).intValue();
 		}
 
+		value = 1;
 		if (value == 0) {
 			return true;
 		} else {
@@ -143,13 +148,13 @@ public class PatterncardField {
 
 	private boolean hasOtherValueAndColorSurrounding() {
 		// Check of de omliggende stenen een andere kleur/waarde hebben.
-		
 
 		if (isAdjacentFieldSameColor(yPosition, leftX) && isAdjacentFieldSameColor(yPosition, rightX)
 				&& isAdjacentFieldSameColor(topY, xPosition) && isAdjacentFieldSameColor(bottomY, yPosition) == false) {
 			System.out.println("is adjacent to field with same color");
 			if (isAdjacentFieldSameValue(yPosition, leftX) && isAdjacentFieldSameValue(yPosition, rightX)
-					&& isAdjacentFieldSameValue(topY, xPosition) && isAdjacentFieldSameValue(bottomY, yPosition) == false) {
+					&& isAdjacentFieldSameValue(topY, xPosition)
+					&& isAdjacentFieldSameValue(bottomY, yPosition) == false) {
 				return true;
 			}
 
@@ -159,46 +164,81 @@ public class PatterncardField {
 	}
 
 	private boolean isAdjacentFieldSameColor(int x, int y) {
-		
+		// check: same color surrounding
 		return true;
 	}
 
 	private boolean isAdjacentFieldSameValue(int x, int y) {
-
+		// check: same value surrounding
 		return true;
 	}
 
 	private boolean isAdjacentToDie() throws SQLException {
-		
-
-		if (isFieldEmpty(yPosition, leftX) || isFieldEmpty(yPosition, rightX) || isFieldEmpty(topY, xPosition)
-				|| isFieldEmpty(bottomY, xPosition) == false) {
+		boolean isAdjacent;
+		if(isFieldEmpty(yPosition, leftX) == false){
 			return true;
 		}
+		else if(isFieldEmpty(yPosition, rightX) == false){
+			return true;
+		}
+		else if(isFieldEmpty(topY, xPosition) == false) {
+			return true;
+		}
+		else if(isFieldEmpty(bottomY, xPosition) == false) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+//		if (isFieldEmpty(yPosition, leftX) || isFieldEmpty(yPosition, rightX) || isFieldEmpty(topY, xPosition)
+//				|| isFieldEmpty(bottomY, xPosition) == false) {
+//			System.out.println("surrounding");
+//			System.out.println(yPosition + " " + leftX);
+//			System.out.println(yPosition + " " + rightX);
+//			System.out.println(topY + " " + xPosition);
+//			System.out.println(bottomY + " " + xPosition);
+//			isAdjacent = true;
+//			System.out.println(isAdjacent);
+//			return isAdjacent;
+//		} else {
+//			isAdjacent = false;
+//			System.out.println(isAdjacent);
+//			return isAdjacent;
+//		}
 
-		return false;
 	}
 
-	public boolean isFieldEmpty(int x, int y) throws SQLException {
+	public boolean isFieldEmpty(int y, int x) throws SQLException {
 
-		if (xPosition < 1 || xPosition > 5 || yPosition < 1 || yPosition > 4) {
+		boolean isEmpty = false;
+		System.out.println("start isFieldEmpty Method");
+		if (leftX < 1 || rightX > 5 || topY < 1 || bottomY > 4) {
+			System.out.println(x +" "+ y);
 			return true;
 		} else {
 
 			DatabaseController db = new DatabaseController();
 			ResultSet zeroOrOneDie = db.doQuery(
 					"select COUNT(dienumber) from playerframefield where  idgame = '" + owner.getGameID() + "' AND idplayer = '"
-							+ owner.getIdPlayer() + "' AND position_y = '" + y + "' AND position_x = '" + y + "'");
+							+ owner.getIdPlayer() + "' AND position_y = '" + y + "' AND position_x = '" + x + "'");
 
 			int value = 0;
+			
 			while (zeroOrOneDie.next()) {
 				value = ((Number) zeroOrOneDie.getObject(1)).intValue();
+				System.out.println("value of fieldempty :" + value);
+				System.out.println(x +" "+ y);
 			}
-
+			System.out.println(value);
 			if (value == 0) {
-				return true;
+				isEmpty = true;
+				System.out.println(isEmpty);
+				return isEmpty;
 			} else {
-				return false;
+				isEmpty = false;
+				System.out.println(isEmpty);
+				return isEmpty;
 			}
 		}
 	}
@@ -221,7 +261,6 @@ public class PatterncardField {
 
 	public void placeDie(Die die) {
 		this.dieOnField = die;
-
 
 //		addDieToDatabase(playerID, gameID, die);
 	}
