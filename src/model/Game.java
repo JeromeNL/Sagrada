@@ -3,19 +3,23 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import controller.DatabaseController;
+import controller.MainController;
 
 public class Game {
-	
+	private int blueCounter;
+	private int greenCounter;
+	private int yellowCounter;
+	private int redCounter;
+	private int purpleCounter;
+
 	private DatabaseController dbController;
+	private MainController mainController;
 
 	private int idGame;
 
-	private Round[] rounds; // 20 round IDs in database (so 20 Round objects)
-	private int currentRoundID;
-
-	private Die[] dies; // 90 dies
 	private FavorToken[] favorTokens; // 24 favor tokens per game.
 	private Toolcard[] toolcards; // 3 toolcards per game.
 	private ObjectiveCard[] objectiveCards; // 3 public objective cards per game.
@@ -24,13 +28,33 @@ public class Game {
 
 	private String usernameCreator;
 
-	public Game(String usernameCreator, DatabaseController dbController) {
+	// Constructor to load an existing game.
+	public Game(int idGame, DatabaseController dbController, MainController mainController) {
+		this.idGame = idGame;
+		this.dbController = dbController;
+		this.mainController = mainController;
+
+		favorTokens = new FavorToken[24];
+		toolcards = new Toolcard[3];
+		objectiveCards = new ObjectiveCard[3];
+		players = new ArrayList<Player>();
+		diesInSupply = new DiesInSupply();
+
+		loadGame();
+	}
+
+	// Constructor to create a new game.
+	public Game(String usernameCreator, DatabaseController dbController, MainController mainController) {
+		blueCounter = 0;
+		greenCounter = 0;
+		yellowCounter = 0;
+		redCounter = 0;
+		purpleCounter = 0;
+
 		this.usernameCreator = usernameCreator;
 		this.dbController = dbController;
+		this.mainController = mainController;
 
-		rounds = new Round[20];
-		currentRoundID = 1;
-		dies = new Die[90];
 		favorTokens = new FavorToken[24];
 		toolcards = new Toolcard[3];
 		objectiveCards = new ObjectiveCard[3];
@@ -40,42 +64,44 @@ public class Game {
 		setupGame();
 	}
 
+	// Set up a new game.
 	private void setupGame() {
 		addToDatabase();
 		addCreatorPlayer(usernameCreator);
-		createRounds();
 		createDies();
 		createFavorTokens();
+		dbController.setRoundID(idGame, 1);
+
+		dbController.setTurnIdPlayer(idGame, dbController.getPlayerID(1, idGame));
+	}
+
+	public void startGame() {
 		createDiesInSupply();
+		loadDiesInSupply();
+	}
+
+	// Load an existing game.
+	private void loadGame() {
+		loadPlayers();
+		loadDiesInSupply();
+	}
+
+	private void loadDiesInSupply() {
+		diesInSupply = dbController.getDiesInSupply(idGame, dbController.getRoundID(idGame));
 	}
 
 	private void createDiesInSupply() {
-		diesInSupply.addDie(new Die(GameColor.PURPLE, 3, 1));
-		diesInSupply.addDie(new Die(GameColor.YELLOW, 2, 2));
-		diesInSupply.addDie(new Die(GameColor.BLUE, 6, 3));
-		diesInSupply.addDie(new Die(GameColor.RED, 1, 4));
-		diesInSupply.addDie(new Die(GameColor.GREEN, 5, 5));		
-	}
-
-	// Set up round objects with correct roundID, roundnr and clockwise boolean
-	// according to the database table round.
-	private void createRounds() {
-		for (int i = 1; i <= rounds.length; i++) {
-			int roundID = i;
-			int roundnr = Math.round(((float) roundID / 2));
-			boolean clockwise = false;
-			if (roundID % 2 != 0) {
-				clockwise = true;
-			}
-
-			rounds[i - 1] = new Round(roundID, roundnr, clockwise);
-		}
+		int amount = players.size() * 2 + 1;
+		dbController.createDiesInSupply(idGame, dbController.getRoundID(idGame), amount);
 	}
 
 	// Set up 90 dies to be created in the game.
 	private void createDies() {
-		// to-do: logic to create 90 dies that can be used in the game.
-		// Die die = new Die(color, eyesCount, dieID);
+		dbController.createGameDies(idGame);
+	}
+
+	private Die[] getDies() {
+		return dbController.getDies(idGame);
 	}
 
 	// Create 24 favortokens to be used in the game.
@@ -89,17 +115,21 @@ public class Game {
 	// Add the creator of the game to the players of the game.
 	private void addCreatorPlayer(String usernameCreator) {
 		// to-do: add check if username exists.
-		
+
 		boolean isCreator = true;
 		GameColor privateObjectiveCardColor = getObjectiveCardColor();
 		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController);
 		players.add(creator);
 	}
 
+	private void loadPlayers() {
+		players = dbController.getPlayers(idGame);
+	}
+
 	// Add / invite a new player to the game.
 	public void invitePlayer(String username) {
 		// to-do: add check if username exists.
-		
+
 		// Check if there is room for more players.
 		if (players.size() < 4) {
 			GameColor privateObjectiveCardColor = getObjectiveCardColor();
@@ -112,11 +142,87 @@ public class Game {
 	private GameColor getObjectiveCardColor() {
 		// to-do: remember which gameColors have been used so nobody has the same
 		// private objecticard color;
-		return GameColor.BLUE; // this needs to be changed later!
+
+		Random rand = new Random(); // instance of random class
+		String s = "";
+
+		boolean done = false;
+		while (!done) {
+			int int_random = rand.nextInt(5);
+			switch (int_random) {
+			case 0:
+				if (blueCounter < 1) {
+					s = "BLUE";
+					done = true;
+					blueCounter++;
+				}
+				break;
+
+			case 1:
+				if (redCounter < 1) {
+					s = "RED";
+					done = true;
+					redCounter++;
+				}
+				break;
+
+			case 2:
+				if (greenCounter < 1) {
+					s = "GREEN";
+					done = true;
+					greenCounter++;
+				}
+				break;
+
+			case 3:
+				if (yellowCounter < 1) {
+					s = "YELLOW";
+					done = true;
+					yellowCounter++;
+				}
+				break;
+
+			case 4:
+				if (purpleCounter < 1) {
+					s = "PURPLE";
+					done = true;
+					purpleCounter++;
+				}
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		return GameColor.valueOf(s.toUpperCase()); // this needs to be changed later!
 	}
 
 	public void setNextRound() {
-		currentRoundID++;
+		int currentRoundID = dbController.getRoundID(idGame);
+
+		if (currentRoundID == 20) {
+			endGame();
+			return;
+		}
+		int nextRoundID = currentRoundID + 1;
+		dbController.setRoundID(idGame, nextRoundID);
+
+		if (nextRoundID % 2 != 0) {
+			System.out.println(getClass() + " - new die supply created");
+			createDiesInSupply();
+			loadDiesInSupply();
+			mainController.showGame(0);
+		}
+		System.out.println(getClass() + " - Next roundID");
+	}
+
+	private void endGame() {
+		System.out.println(getClass() + " - Game ended.");
+	}
+
+	public ArrayList<String> getPlayerOrder() {
+		return dbController.getPlayerOrder(idGame);
 	}
 
 	// Gets an available gameID and then adds a new row to the game table in the
@@ -127,7 +233,7 @@ public class Game {
 		try {
 			while (rs.next()) {
 				int newGameID = rs.getInt(1) + 1;
-				
+
 				boolean increasingID = true;
 				while (increasingID) {
 					// Add a new row to the game table.
@@ -136,7 +242,8 @@ public class Game {
 					if (result == 1) {
 						increasingID = false;
 						idGame = newGameID;
-						System.out.println(getClass() + " - New game created with id " + idGame); // for testing purposes
+						System.out.println(getClass() + " - New game created with id " + idGame); // for testing
+																									// purposes
 					} else {
 						newGameID++;
 					}
@@ -147,7 +254,7 @@ public class Game {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
@@ -156,13 +263,50 @@ public class Game {
 		return diesInSupply;
 	}
 
+
 	public int getIdGame() {
 		return idGame;
 	}
 	
-	
 
-	
+	public void setNextTurn() {
+		int currentPlayerID = dbController.getCurrentPlayerID(idGame);
 
-	
+		for (int i = 0; i < players.size(); i++) {
+			Player player = players.get(i);
+			if (player.getIdPlayer() == currentPlayerID) {
+
+				// get seq nr of current player
+				int currentSeqNr = player.getSeqnr();
+				int newSeqNr;
+				int newPlayerID;
+
+				// check if seq nr needs to be increased or decreased
+				if (dbController.isClockwise(dbController.getRoundID(idGame))) {
+					// check if new round needs to be started because seqnr is at the end
+					if (currentSeqNr == players.size()) {
+						setNextRound();
+						newSeqNr = players.size();
+					} else {
+						newSeqNr = currentSeqNr + 1;
+
+						// TODO set turn playerid in database
+					}
+				} else {
+					if (currentSeqNr == 1) {
+						setNextRound();
+						newSeqNr = 1;
+					} else {
+						newSeqNr = currentSeqNr - 1;
+					}
+				}
+				newPlayerID = dbController.getPlayerID(newSeqNr, idGame);
+				dbController.setTurnIdPlayer(idGame, newPlayerID);
+
+				System.out.println(getClass() + " - Next turn");
+				return;
+			}
+		}
+	}
+
 }

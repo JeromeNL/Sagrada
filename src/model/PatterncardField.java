@@ -10,8 +10,8 @@ public class PatterncardField {
 
 	private int xPosition; // range: 1 to 5
 	private int yPosition; // range: 1 to 4
-	private int gameID = 487;
-	private int playerID = 962; // 961
+//	private int gameID = 487;
+//	private int playerID = 962; // 961
 	
 	private int leftX;
 	private int rightX;
@@ -23,9 +23,12 @@ public class PatterncardField {
 
 	private Die dieOnField;
 	private DatabaseController dbController;
+	
+	private Player owner;
 
-	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement,
-			DatabaseController dbController) {
+
+
+	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement, DatabaseController dbController, Player owner) {
 
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
@@ -33,6 +36,7 @@ public class PatterncardField {
 		this.eyesCountRequirement = eyesCountRequirement;
 		this.colorRequirement = colorRequirement;
 		this.dbController = dbController;
+		this.owner = owner;
 		
 		leftX = xPosition -1 ;
 		rightX = xPosition + 1;
@@ -88,8 +92,8 @@ public class PatterncardField {
 	private boolean isFirstTurn() throws SQLException {
 		// Check of de steen die gelegd gaat worden de eerste steen op het bord is.
 		DatabaseController db = new DatabaseController();
-		ResultSet amountOfDies = db.doQuery("SELECT count(diecolor) FROM playerframefield WHERE idgame ='" + gameID
-				+ "' AND idplayer ='" + playerID);
+		ResultSet amountOfDies = db.doQuery("SELECT count(diecolor) FROM playerframefield WHERE idgame ='" + owner.getGameID()
+				+ "' AND idplayer ='" + owner.getIdPlayer());
 		int value = 0;
 		while (amountOfDies.next()) {
 			value = ((Number) amountOfDies.getObject(1)).intValue();
@@ -103,7 +107,7 @@ public class PatterncardField {
 
 	}
 
-	private boolean isCorrectColor(Color dieColor) {
+	private boolean isCorrectColor(GameColor dieColor) {
 		// Check of de steen aan de kleurvoorwaarde voldoet.
 
 		if (hasColorRequirement()) {
@@ -183,8 +187,8 @@ public class PatterncardField {
 
 			DatabaseController db = new DatabaseController();
 			ResultSet zeroOrOneDie = db.doQuery(
-					"select COUNT(dienumber) from playerframefield where  idgame = '" + gameID + "' AND idplayer = '"
-							+ playerID + "' AND position_y = '" + y + "' AND position_x = '" + y + "'");
+					"select COUNT(dienumber) from playerframefield where  idgame = '" + owner.getGameID() + "' AND idplayer = '"
+							+ owner.getIdPlayer() + "' AND position_y = '" + y + "' AND position_x = '" + y + "'");
 
 			int value = 0;
 			while (zeroOrOneDie.next()) {
@@ -218,6 +222,7 @@ public class PatterncardField {
 	public void placeDie(Die die) {
 		this.dieOnField = die;
 
+
 //		addDieToDatabase(playerID, gameID, die);
 	}
 
@@ -227,9 +232,12 @@ public class PatterncardField {
 		// playerframfield has columns : idplayer, position_x, position_y, idgame,
 		// dienumber, diecolor
 		String query = "INSERT INTO playerframefield VALUES (" + playerID + ", " + xPosition + ", " + yPosition + ", "
-				+ gameID + ", " + die.getEyesCount() + ", \"" + die.getStringColor() + "\");";
+				+ gameID + ", " + die.getEyesCount() + ", \"" + die.getColor() + "\");";
 
 		dbController.doUpdateQuery(query);
+
+		dbController.placeDie(owner.getIdPlayer(), owner.getGameID(), die, xPosition, yPosition);
+
 	}
 
 	// Removes the die from the database.

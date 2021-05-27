@@ -1,5 +1,7 @@
 package view;
 
+import java.sql.SQLException;
+
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.DragEvent;
@@ -23,7 +25,6 @@ public class DieView extends StackPane {
 
 	public DieView(PatterncardField patternCardField) {
 		this.patternCardField = patternCardField;
-
 		drawDieField();
 		setUpAcceptDrag();
 	}
@@ -73,15 +74,23 @@ public class DieView extends StackPane {
 
 					String dieData = db.getString();
 					System.out.println(dieData);
+					String[] data = dieData.split("\\s+");
+					
 					// Extracting die data from the string.
-					int eyesCount = Integer.valueOf(dieData.substring(0, 1));
-					GameColor dieColor = GameColor.valueOf(dieData.substring(1));
+					int dieNumber = Integer.valueOf(data[0]);
+					GameColor dieColor = GameColor.valueOf(data[1]);
+					int eyesCount = Integer.valueOf(data[2]);
 
 					// Check if die can actually be placed.
-					if (patternCardField.isValidMove(eyesCount, dieColor)) {
-						patternCardField.placeDie(new Die(dieColor, eyesCount, 1));
-						drawDieField();
-						diePlaced = true;
+					try {
+						if (patternCardField.isValidMove(eyesCount, dieColor)) {
+							patternCardField.placeDie(new Die(dieColor, eyesCount, dieNumber));
+							drawDieField();
+							diePlaced = true;
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 
 				}
@@ -92,7 +101,6 @@ public class DieView extends StackPane {
 			}
 		});
 	}
-
 
 	// Checks if die can be placed. Returns boolean representing the validity.
 	private boolean isValidMove(int eyesCount, GameColor dieColor) {
@@ -140,7 +148,6 @@ public class DieView extends StackPane {
 		return true;
 	}
 
-
 	// Draws a die on the patterncard.
 	private void drawDieField() {
 		// Creating the frame of the die.
@@ -158,7 +165,7 @@ public class DieView extends StackPane {
 		// Check if the field contains a die.
 		if (patternCardField.hasDie()) {
 			Die dieOnField = patternCardField.getDie();
-			dieFieldRectangle.setFill(ColorView.toFXColor(dieOnField.getColor()).brighter());
+			dieFieldRectangle.setFill(dieOnField.getColor().toFXColor().brighter());
 		} else {
 			// No die on field, so check if field has color requirement.
 			if (patternCardField.hasColorRequirement()) {
@@ -166,7 +173,7 @@ public class DieView extends StackPane {
 				
 				// TODO: draw correct color depending on colorRequirement
 				
-				dieFieldRectangle.setFill(ColorView.toFXColor(colorRequirement));
+				dieFieldRectangle.setFill(colorRequirement.toFXColor());
 				dieFieldRectangle.setOpacity(0.7);
 			} else {
 				// No color requirement, so field color is white.
@@ -197,3 +204,4 @@ public class DieView extends StackPane {
 		getChildren().add(eyesCountLabel);
 	}
 }
+
