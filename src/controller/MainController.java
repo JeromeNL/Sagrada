@@ -16,7 +16,7 @@ public class MainController {
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController();
-		mainScene = new MainScene(this);
+		mainScene = new MainScene(this, dbController);
 
 		login("mandy");
 //		loadGame(759);
@@ -38,6 +38,7 @@ public class MainController {
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
 		stage.setScene(mainScene);
+		stage.setOnCloseRequest(e->dbController.closeConnection());
 		stage.show();
 	}
 
