@@ -199,7 +199,7 @@ public class Game {
 					int_random = rand.nextInt(5);
 				}
 				break;
-
+          
 			default:
 				break;
 			}
