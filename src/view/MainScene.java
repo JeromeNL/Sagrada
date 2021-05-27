@@ -2,6 +2,7 @@ package view;
 
 import controller.DatabaseController;
 import controller.MainController;
+import controller.RegisterLoginController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import model.Game;
@@ -37,6 +38,12 @@ public class MainScene extends Scene {
 		ChoosePatternCardView choosePatterncardView = new ChoosePatternCardView(dbController);
 		setRoot(choosePatterncardView);
 
+	}
+
+	public void showLoginView() {
+		RegisterLoginController registerLoginController = new RegisterLoginController(dbController);
+		LoginView loginView = new LoginView(dbController, registerLoginController);
+		setRoot(loginView);
 	}
 
 	public void changeCurrentPlayerView(Game game) {

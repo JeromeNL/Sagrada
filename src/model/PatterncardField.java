@@ -1,7 +1,6 @@
 package model;
 
 import controller.DatabaseController;
-import controller.PatterncardFieldsController;
 
 public class PatterncardField {
 
@@ -43,15 +42,6 @@ public class PatterncardField {
 //		patterncardFieldsController.addDieToDatabase(playerID, gameID, die);
 
 		dbController.placeDie(owner.getIdPlayer(), owner.getGameID(), die, xPosition, yPosition);
-	}
-
-	// Removes the die from the database.
-	private void removeDieFromDatabase() {
-		String query = "UPDATE playerframefield SET dienumber = NULL, diecolor = NULL WHERE position_x = " + xPosition
-				+ " AND position_y = " + yPosition + ";";
-
-		dbController.doUpdateQuery(query);
-
 	}
 
 	public void removeDie() {

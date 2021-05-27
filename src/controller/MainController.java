@@ -35,6 +35,7 @@ public class MainController {
 		currentGame.startGame();
 
 		showGameLoggedInPlayer();
+//		showLoginView();
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
@@ -81,6 +82,10 @@ public class MainController {
 
 	public void showChoosePatternCard() {
 		mainScene.showChoosePatternCard();
+	}
+	
+	public void showLoginView() {
+		mainScene.showLoginView();
 	}
 
 }
