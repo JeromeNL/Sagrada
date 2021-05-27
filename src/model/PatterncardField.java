@@ -14,28 +14,44 @@ public class PatterncardField {
 	private Die dieOnField;
 	private DatabaseController dbController;
 
-	PatterncardFieldsController patterncardFieldsController;
+	private Player owner;
 
-	public PatterncardField(int xPosition, int yPosition, DatabaseController dbController) {
-		this.xPosition = xPosition;
-		this.yPosition = yPosition;
-		this.dbController = dbController;
-	}
+//	public PatterncardField(int xPosition, int yPosition, DatabaseController dbController, Player owner) {
+//		this.xPosition = xPosition;
+//		this.yPosition = yPosition;
+//		this.dbController = dbController;
+//		this.owner = owner;
+//		
+//	}
 
 	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement,
-			DatabaseController dbController) {
+			DatabaseController dbController, Player owner) {
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
 
 		this.eyesCountRequirement = eyesCountRequirement;
 		this.colorRequirement = colorRequirement;
 		this.dbController = dbController;
+		this.owner = owner;
+
+		dieOnField = dbController.getDie(owner.getIdPlayer(), xPosition, yPosition);
 	}
 
 	public void placeDie(Die die) {
 		this.dieOnField = die;
 
 //		patterncardFieldsController.addDieToDatabase(playerID, gameID, die);
+
+		dbController.placeDie(owner.getIdPlayer(), owner.getGameID(), die, xPosition, yPosition);
+	}
+
+	// Removes the die from the database.
+	private void removeDieFromDatabase() {
+		String query = "UPDATE playerframefield SET dienumber = NULL, diecolor = NULL WHERE position_x = " + xPosition
+				+ " AND position_y = " + yPosition + ";";
+
+		dbController.doUpdateQuery(query);
+
 	}
 
 	public void removeDie() {

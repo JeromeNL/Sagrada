@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import model.GameColor;
 import model.PatterncardField;
+import model.Player;
 
 public class PatterncardController {
 
@@ -15,7 +16,7 @@ public class PatterncardController {
 		this.dbController = dbController;
 	}
 
-	public ArrayList<PatterncardField> loadFields(int idPatterncard) {
+	public ArrayList<PatterncardField> loadFields(int idPatterncard, Player owner) {
 
 		ArrayList<PatterncardField> fields = new ArrayList<PatterncardField>();
 
@@ -38,7 +39,7 @@ public class PatterncardController {
 				int valueRequirement = rs.getInt("value");
 
 				fields.add(
-						new PatterncardField(xPosition, yPosition, valueRequirement, colorRequirement, dbController));
+						new PatterncardField(xPosition, yPosition, valueRequirement, colorRequirement, dbController, owner));
 			}
 		} catch (SQLException e) {
 			System.out.println("Something went wrong while loading a patterncard from the database.");

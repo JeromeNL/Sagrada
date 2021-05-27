@@ -1,7 +1,6 @@
 package controller;
 
 import model.Die;
-import model.PatterncardField;
 
 public class PatterncardFieldsController {
 
@@ -13,7 +12,7 @@ public class PatterncardFieldsController {
 		// playerframfield has columns : idplayer, position_x, position_y, idgame,
 		// dienumber, diecolor
 		String query = "INSERT INTO playerframefield VALUES (" + playerID + ", " + xPosition + ", " + yPosition + ", "
-				+ gameID + ", " + die.getEyesCount() + ", \"" + die.getStringColor() + "\");";
+				+ gameID + ", " + die.getEyesCount() + ", \"" + die.getColor() + "\");";
 
 		dbController.doUpdateQuery(query);
 	}

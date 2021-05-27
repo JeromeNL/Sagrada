@@ -10,45 +10,30 @@ public class Patterncard {
 	private int idPatterncard;
 	private ArrayList<PatterncardField> fields;
 	private DatabaseController dbController;
+	private Player owner;
 
-	public Patterncard(int idPatterncard, DatabaseController dbController) {
+	public Patterncard(int idPatterncard, DatabaseController dbController, Player owner) {
+
 		this.dbController = dbController;
 		this.idPatterncard = idPatterncard;
+		this.owner = owner;
 		fields = new ArrayList<PatterncardField>();
 
-		loadFields();
+		loadFields(idPatterncard);
 	}
 
-	private void loadFields() {
+	private void loadFields(int idPatterncard) {
 
 		PatterncardController patterncardController = new PatterncardController(dbController);
 
-		fields = patterncardController.loadFields(idPatterncard);
-
-	}
-
-	// Convert string color from database to gameColor.
-	public GameColor stringToGameColor(String colorString) {
-		GameColor gameColor = null;
-		if (colorString.equals("red")) {
-			gameColor = GameColor.RED;
-		} else if (colorString.equals("blue")) {
-			gameColor = GameColor.BLUE;
-		} else if (colorString.equals("yellow")) {
-			gameColor = GameColor.YELLOW;
-		} else if (colorString.equals("purple")) {
-			gameColor = GameColor.PURPLE;
-		} else if (colorString.equals("green")) {
-			gameColor = GameColor.GREEN;
-		}
-		return gameColor;
-	}
-
-	public int getIdPatterncard() {
-		return idPatterncard;
+		fields = patterncardController.loadFields(idPatterncard, owner);
 	}
 
 	public ArrayList<PatterncardField> getFields() {
 		return fields;
+	}
+
+	public int getID() {
+		return idPatterncard;
 	}
 }

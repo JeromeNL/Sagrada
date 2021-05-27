@@ -14,6 +14,7 @@ public class FavorToken {
 	private DatabaseController dbController;
 	private FavorTokenController favorTokenController;
 
+	// Constructor create a new favortoken
 	public FavorToken(int idToken, int idGame, DatabaseController dbController) {
 		this.idToken = idToken;
 		this.idGame = idGame;
