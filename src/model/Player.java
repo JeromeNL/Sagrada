@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import controller.DatabaseController;
-import sun.security.pkcs11.Secmod.DbMode;
+import controller.MainController;
 
 public class Player {
 
@@ -15,13 +15,17 @@ public class Player {
 	private GameColor privateObjectiveCardColor;
 	private Patterncard patterncard;
 	private boolean isCreator;
+	private boolean diePlacedInRound;
+	
 	private DatabaseController dbController;
+	private MainController mainController;
 
 	// Constructor when the player is challenged
-	public Player(DatabaseController dbController, int idPlayer, int idGame) {
+	public Player(DatabaseController dbController, int idPlayer, int idGame, MainController mainController) {
 		this.dbController = dbController;
 		this.idPlayer = idPlayer;
 		this.idGame = idGame;
+		this.mainController = mainController;
 		
 		loadPatterncard();
 		username = dbController.getUsername(idPlayer);
@@ -29,12 +33,13 @@ public class Player {
 	}
 	
 	// Constructor when the player is the challengee.
-	public Player(String username, boolean isCreator, int idGame, GameColor privateObjectiveCardColor, DatabaseController dbController) {
+	public Player(String username, boolean isCreator, int idGame, GameColor privateObjectiveCardColor, DatabaseController dbController, MainController mainController) {
 		this.username = username;
 		this.isCreator = isCreator;
 		this.idGame = idGame;
 		this.privateObjectiveCardColor = privateObjectiveCardColor;
 		this.dbController = dbController;
+		this.mainController = mainController;
 
 		setUpPlayer();
 	}
@@ -134,7 +139,7 @@ public class Player {
 	}
 
 	public void setPatternCard(int patternCardID) {
-		Patterncard patterncard = new Patterncard(patternCardID, new DatabaseController(),this);
+		Patterncard patterncard = new Patterncard(patternCardID, dbController ,this);
 		this.patterncard = patterncard;
 
 		dbController.setPatterncard(idPlayer, patterncard.getID());
@@ -170,5 +175,13 @@ public class Player {
 	
 	public int getGameID() {
 		return idGame;
+	}
+
+	public void setDiePlacedInRound(boolean b) {
+		diePlacedInRound = b;
+	}
+	
+	public boolean getDiePlacedInRound() {
+		return diePlacedInRound;
 	}
 }

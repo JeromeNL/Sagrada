@@ -9,6 +9,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -45,7 +46,7 @@ public class GameView extends BorderPane {
 
 		topPart = new TopPart(game);
 
-		dieSupply = new DieSupply(game.getDiesInSupply());
+		dieSupply = new DieSupply(game.getDiesInSupply(), player);
 		gameButtonView = new GameButtonView(this, game, mainController);
 		changeCurrentPlayerView = new ChangeCurrentPlayerView(game, mainController);
 
@@ -92,21 +93,26 @@ public class GameView extends BorderPane {
 		getChildren().clear();
 
 		VBox topPane = new VBox();
-
-
+		topPane.setAlignment(Pos.CENTER);
 		topPane.getChildren().addAll(topPart, new InfoPane(game, dbController));
 
 		setTop(topPane);
-		topPane.setAlignment(Pos.CENTER);
 
 		VBox leftPane = new VBox();
 		leftPane.setAlignment(Pos.CENTER);
 		leftPane.setSpacing(25);
 		leftPane.getChildren().addAll(new ChangePlayerButton(), objectiveInGameView);
+		leftPane.setPadding(new Insets(20));
 		setLeft(leftPane);
+
 		setCenter(patternCardView);
-		VBox vBox = new VBox(dieSupply, gameButtonView);
-		setBottom(vBox);
+		
+		Pane rightPane = new Pane();
+		rightPane.setMinWidth(400);
+		setRight(rightPane);
+		
+		VBox bottomPane = new VBox(dieSupply, gameButtonView);
+		setBottom(bottomPane);
 	}
 
 	public void showToolCardView() {
@@ -152,6 +158,7 @@ public class GameView extends BorderPane {
 		public InfoPane(Game game, DatabaseController dbController) {
 
 			setSpacing(30);
+			setAlignment(Pos.CENTER);
 
 			Label gameStatus = new Label("Gameid: " + game.getGameID());
 

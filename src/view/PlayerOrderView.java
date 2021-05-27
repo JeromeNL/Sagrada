@@ -47,7 +47,11 @@ public class PlayerOrderView extends HBox {
 				}
 			}
 			
-			getChildren().addAll(player, splitter);
+			if (i < playerOrder.size()-1) {
+				getChildren().addAll(player, splitter);				
+			} else {
+				getChildren().addAll(player);		
+			}
 		}
 
 		setAlignment(Pos.CENTER);

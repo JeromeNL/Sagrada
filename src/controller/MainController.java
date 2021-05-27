@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javafx.stage.Stage;
 import model.Game;
 import model.Player;
-import model.Refresh;
 import model.RegisterLoginModel;
 import view.MainScene;
 
@@ -18,7 +17,7 @@ public class MainController {
 	private MainScene mainScene;
 
 	public MainController(Stage stage) {
-		dbController = new DatabaseController();
+		dbController = new DatabaseController(this);
 		RegisterLoginModel rlm = new RegisterLoginModel(this, dbController);
 		mainScene = new MainScene(this, dbController, rlm);		
 		

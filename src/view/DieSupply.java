@@ -2,19 +2,21 @@ package view;
 
 import java.util.ArrayList;
 
-import controller.MainController;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import model.Die;
 import model.DiesInSupply;
+import model.Player;
 
 public class DieSupply extends HBox {
 
 	private ArrayList<DieToDragView> draggableDies; // dies to place on patterncard
 	private DiesInSupply diesInSupply;
+	private Player player;
 	
-	public DieSupply(DiesInSupply diesInSupply) {
+	public DieSupply(DiesInSupply diesInSupply, Player player) {
 		this.diesInSupply = diesInSupply;
+		this.player = player;
 		
 		draggableDies = new ArrayList<DieToDragView>();
 		updateView();
@@ -28,7 +30,13 @@ public class DieSupply extends HBox {
 		getChildren().clear();
 		draggableDies.clear();
 		for (Die die : diesInSupply.getDies()) {
-			draggableDies.add(new DieToDragView(die, this));
+			DieToDragView dieToDragView = new DieToDragView(die, this);
+			if (player.getDiePlacedInRound()) {
+				dieToDragView.setOpacity(0.5);
+				dieToDragView.setDisable(true);
+			}
+			draggableDies.add(dieToDragView);
+
 		}
 		getChildren().addAll(draggableDies);
 	}

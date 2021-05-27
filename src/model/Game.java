@@ -130,7 +130,7 @@ public class Game {
 
 		boolean isCreator = true;
 		GameColor privateObjectiveCardColor = getObjectiveCardColor();
-		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController);
+		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController, mainController);
 		players.add(creator);
 	}
 
@@ -145,7 +145,7 @@ public class Game {
 		// Check if there is room for more players.
 		if (players.size() < 4) {
 			GameColor privateObjectiveCardColor = getObjectiveCardColor();
-			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController);
+			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController, mainController);
 			players.add(newPlayer);
 		}
 	}
@@ -335,5 +335,9 @@ public class Game {
 	
 	public int getRoundID() {
 		return dbController.getRoundID(idGame);
+	}
+	
+	public void refresh() {
+		
 	}
 }

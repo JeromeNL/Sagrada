@@ -12,7 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import model.Die;
-import model.GameColor;
 
 // View of one die in the supply (a draggable die)
 
@@ -63,7 +62,6 @@ public class DieToDragView extends StackPane {
 			}
 		});
 
-		// Change color of die on supply if placed on the board.
 		setOnDragDone(new EventHandler<DragEvent>() {
 			public void handle(DragEvent event) {
 				// Remove the die from supply if it was successfully placed on the patterncard.

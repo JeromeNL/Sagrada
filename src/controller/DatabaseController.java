@@ -17,8 +17,10 @@ public class DatabaseController {
 
 	private Connection m_Conn;
 	private Statement statement;
+	private MainController mainController;
 
-	public DatabaseController() {
+	public DatabaseController(MainController mainController) {
+		this.mainController = mainController;
 		// Setting up database connection
 		if (loadDataBaseDriver("com.mysql.jdbc.Driver")) {
 			makeConnection();
@@ -44,10 +46,10 @@ public class DatabaseController {
 	 */
 	public boolean makeConnection() {
 		try {
-//			m_Conn = DriverManager.getConnection(
-//					"jdbc:mysql://databases.aii.avans.nl/jwkwette_db2?" + "user=jwkwette&password=Ab12345");
 			m_Conn = DriverManager.getConnection(
-			"jdbc:mysql://localhost:3306/sagrada?" + "user=root&password=1234");
+					"jdbc:mysql://databases.aii.avans.nl/jwkwette_db2?" + "user=jwkwette&password=Ab12345");
+//			m_Conn = DriverManager.getConnection(
+//			"jdbc:mysql://localhost:3306/sagrada?" + "user=root&password=1234");
 		} catch (SQLException ex) {
 			System.out.println("Kan geen verbinding maken met de database. Lees hieronder waarom:");
 			System.out.println("SQLException: " + ex.getMessage());
@@ -97,7 +99,7 @@ public class DatabaseController {
 		ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + idGame);
 		try {
 			while (rs.next()) {
-				Player player = new Player(this, rs.getInt(1), idGame);
+				Player player = new Player(this, rs.getInt(1), idGame, mainController);
 				players.add(player);
 			}
 		} catch (SQLException e) {

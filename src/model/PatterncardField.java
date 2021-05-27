@@ -38,6 +38,7 @@ public class PatterncardField {
 	public void placeDie(Die die) {
 		this.dieOnField = die;
 		dbController.placeDie(owner.getIdPlayer(), owner.getGameID(), die, xPosition, yPosition);
+		owner.setDiePlacedInRound(true);
 	}
 	
 	// Removes the die from the database. 

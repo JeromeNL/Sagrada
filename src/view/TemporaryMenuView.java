@@ -3,21 +3,27 @@ package view;
 import controller.MainController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
-public class TemporaryMenuView extends VBox {
+public class TemporaryMenuView extends BorderPane {
 	
 	private MainController mainController;
 	
 	public TemporaryMenuView(MainController mainController) {
 		this.mainController = mainController;
-		setSpacing(10);
 		
-		Label newGameLabel = new Label("Create a new game: ");
+		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
+		
+		Label createGameLabel = new Label("Create a new game: ");
 		Button createGameButton = new Button("Create game");
 		createGameButton.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -28,24 +34,31 @@ public class TemporaryMenuView extends VBox {
 			}
 		});
 		
-		HBox newGameBox = new HBox();
-		newGameBox.getChildren().addAll(newGameLabel, createGameButton);
+		HBox createGameBox = new HBox();
+		createGameBox.getChildren().addAll(createGameLabel, createGameButton);
+		createGameBox.setAlignment(Pos.BASELINE_CENTER);
 		
-		Label loadGame = new Label("Load game with ID:");
-		TextField gameID = new TextField();
+		Label loadGameLabel = new Label("Load game with ID:");
+		TextField loadGameTextField = new TextField();
 		Button loadGameButton = new Button("Load game");
 		loadGameButton.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
-				mainController.loadGame(Integer.valueOf(gameID.getText()));
+				mainController.loadGame(Integer.valueOf(loadGameTextField.getText()));
 				mainController.showGameLoggedInPlayer();
 			}
 		});
-		HBox loadGameBox = new HBox();
-		loadGameBox.getChildren().addAll(loadGame, gameID, loadGameButton);
 		
-		getChildren().addAll(newGameBox, loadGameBox);
+		HBox loadGameBox = new HBox();
+		loadGameBox.getChildren().addAll(loadGameLabel, loadGameTextField, loadGameButton);
+		loadGameBox.setAlignment(Pos.CENTER);
+		
+		VBox createAndLoadBox = new VBox();
+		createAndLoadBox.setSpacing(10);
+		createAndLoadBox.setAlignment(Pos.CENTER);
+		createAndLoadBox.getChildren().addAll(createGameBox, loadGameBox);
+		
+		setCenter(createAndLoadBox);
 	}
 
 	private void showInviteView() {
@@ -54,17 +67,10 @@ public class TemporaryMenuView extends VBox {
 		Label inviteLabel = new Label("Invite username: ");
 		TextField username = new TextField();
 		Button inviteButton = new Button("Invite user");
-		inviteButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				getChildren().add(new Label(username.getText() + " is invited."));
-				mainController.getCurrentGame().invitePlayer(username.getText());
-				mainController.getCurrentGame().getPlayers().get(0).setPatternCard(1);
-				username.clear();
-			}
-		});
+		
 		
 		HBox inviteBox = new HBox();
+		inviteBox.setAlignment(Pos.CENTER);
 		inviteBox.getChildren().addAll(inviteLabel, username, inviteButton);
 		
 		Button startGame = new Button("Start game");
@@ -77,7 +83,24 @@ public class TemporaryMenuView extends VBox {
 			}
 		});
 		
-		getChildren().addAll(inviteBox, startGame);
+		VBox box = new VBox();
+		box.setAlignment(Pos.CENTER);
+		box.getChildren().addAll(inviteBox, startGame);
+		
+		inviteButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				box.getChildren().add(new Label(username.getText() + " is invited."));
+				mainController.getCurrentGame().invitePlayer(username.getText());
+				username.clear();
+				
+				// TODO: remove what's under here when patterncard chooser works
+				mainController.getCurrentGame().getPlayers().get(0).setPatternCard(1);
+				mainController.getCurrentGame().getPlayers().get(1).setPatternCard(2);
+			}
+		});
+		
+		setCenter(box);
 	}
 
 }
