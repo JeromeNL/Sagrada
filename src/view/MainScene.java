@@ -54,4 +54,8 @@ public class MainScene extends Scene {
 	public void showLoginScreen() {
 		setRoot(new LoginView(rlm));
 	}
+
+	public void showMainMenu() {
+		setRoot(new TemporaryMenuView(mainController));
+	}
 }

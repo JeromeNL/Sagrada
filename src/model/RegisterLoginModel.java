@@ -94,7 +94,7 @@ public class RegisterLoginModel {
 
 						// set Scene to lobby !
 						mainController.login(loginUsernameGiven);
-						mainController.showGameLoggedInPlayer();
+						mainController.showMainMenu();
 					} else {
 						System.out.println("Error! Wrong password!");
 						warningText = "wachtwoord is incorrect!";

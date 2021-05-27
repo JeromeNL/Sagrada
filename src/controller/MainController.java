@@ -13,6 +13,7 @@ public class MainController {
 	
 	private DatabaseController dbController;
 	private Game currentGame;
+
 	private String loggedInUsername = "";
 	private MainScene mainScene;
 
@@ -23,7 +24,7 @@ public class MainController {
 		
 		showLoginScreen();
 
-		loadGame(1002);
+//		loadGame(1002);
 //		createGame();
 //		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
 //		currentGame.invitePlayer("jasper");
@@ -35,8 +36,7 @@ public class MainController {
 //		currentGame.startGame();
 
 		
-		Refresh refreshThread = new Refresh(currentGame, this, dbController);
-		refreshThread.start();
+		
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
@@ -86,6 +86,14 @@ public class MainController {
 	
 	public void showLoginScreen() {
 		mainScene.showLoginScreen();
+	}
+	
+	public Game getCurrentGame() {
+		return currentGame;
+	}
+	
+	public void showMainMenu() {
+		mainScene.showMainMenu();
 	}
 	
 }
