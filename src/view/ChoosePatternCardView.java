@@ -1,5 +1,6 @@
 package view;
 
+import controller.DatabaseController;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -11,8 +12,8 @@ public class ChoosePatternCardView extends BorderPane {
 	private ChoosePatternCardCards choosePatternCardCards;
 	private ChooseButton button;
 
-	public ChoosePatternCardView() {
-		choosePatternCardCards = new ChoosePatternCardCards();
+	public ChoosePatternCardView(DatabaseController dbController) {
+		choosePatternCardCards = new ChoosePatternCardCards(dbController);
 		button = new ChooseButton();
 
 		this.setBackground(new Background(new BackgroundFill(SAGRADAPINK, null, null)));

@@ -26,26 +26,27 @@ public class ChoosePatternCardCards extends FlowPane {
 	private Patterncard patterncard3;
 	private Patterncard patterncard4;
 	
-	private DatabaseController dbcontroller;
+	private DatabaseController dbController;
 	
 
 	private int widthCard = 315;
 	private int heightCard = 315;
 
-	public ChoosePatternCardCards() {
+	public ChoosePatternCardCards(DatabaseController dbController) {
 		super(Orientation.HORIZONTAL, 25, 25);
+		this.dbController = dbController;
 		
-		DatabaseController dbcontroller = new DatabaseController();
-
 		this.setMinWidth(750);
 		this.setMaxWidth(750);
 
 		this.setPadding(new Insets(5, 5, 0, 5));
 		
-//		patterncard1 = new Patterncard(2, dbcontroller);
-//		patterncard2 = new Patterncard(5, dbcontroller);
-//		patterncard3 = new Patterncard(4, dbcontroller);
-//		patterncard4 = new Patterncard(2, dbcontroller);
+
+		patterncard1 = new Patterncard(2, dbController);
+		patterncard2 = new Patterncard(5, dbController);
+		patterncard3 = new Patterncard(4, dbController);
+		patterncard4 = new Patterncard(2, dbController);
+
 		
 
 		patternCardView1 = new PatternCardView(patterncard1);

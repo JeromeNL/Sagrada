@@ -155,6 +155,8 @@ public class Game {
 					s = "BLUE";
 					done = true;
 					blueCounter++;
+				} else {
+					int_random = rand.nextInt(5);
 				}
 				break;
 
@@ -163,6 +165,8 @@ public class Game {
 					s = "RED";
 					done = true;
 					redCounter++;
+				} else {
+					int_random = rand.nextInt(5);
 				}
 				break;
 
@@ -171,6 +175,8 @@ public class Game {
 					s = "GREEN";
 					done = true;
 					greenCounter++;
+				} else {
+					int_random = rand.nextInt(5);
 				}
 				break;
 
@@ -179,6 +185,8 @@ public class Game {
 					s = "YELLOW";
 					done = true;
 					yellowCounter++;
+				} else {
+					int_random = rand.nextInt(5);
 				}
 				break;
 
@@ -187,9 +195,11 @@ public class Game {
 					s = "PURPLE";
 					done = true;
 					purpleCounter++;
+				} else {
+					int_random = rand.nextInt(5);
 				}
 				break;
-
+          
 			default:
 				break;
 			}
@@ -230,28 +240,29 @@ public class Game {
 	private void addToDatabase() {
 		// Get an available gameID
 		ResultSet rs = dbController.doQuery("SELECT idgame FROM game ORDER BY idgame DESC LIMIT 1;");
+		int newGameID = 1; // default value
 		try {
 			while (rs.next()) {
-				int newGameID = rs.getInt(1) + 1;
-
-				boolean increasingID = true;
-				while (increasingID) {
-					// Add a new row to the game table.
-					String query = "INSERT INTO game VALUES (" + newGameID + ",NULL,NULL,CURRENT_TIMESTAMP);";
-					int result = dbController.doUpdateQuery(query);
-					if (result == 1) {
-						increasingID = false;
-						idGame = newGameID;
-						System.out.println(getClass() + " - New game created with id " + idGame); // for testing
-																									// purposes
-					} else {
-						newGameID++;
-					}
-				}
+				newGameID = rs.getInt(1) + 1;
 			}
 		} catch (SQLException e) {
 			System.out.println("Something went wrong while adding a new game to the database.");
 			e.printStackTrace();
+		}
+		
+		boolean increasingID = true;
+		while (increasingID) {
+			// Add a new row to the game table.
+			String query = "INSERT INTO game VALUES (" + newGameID + ",NULL,NULL,CURRENT_TIMESTAMP);";
+			int result = dbController.doUpdateQuery(query);
+			if (result == 1) {
+				increasingID = false;
+				idGame = newGameID;
+				System.out.println(getClass() + " - New game created with id " + idGame); // for testing
+																							// purposes
+			} else {
+				newGameID++;
+			}
 		}
 	}
 
