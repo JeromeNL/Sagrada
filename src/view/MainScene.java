@@ -94,7 +94,7 @@ public class MainScene extends Scene {
 	}
 
 	public void showChoosePatternCard(ChoosePatternCardController choosePatternCardController) {
-		choosePatterncardView = new ChoosePatternCardView(choosePatternCardController);
+		choosePatterncardView = new ChoosePatternCardView(choosePatternCardController, mainController);
 		setRoot(choosePatterncardView);
 
 	}

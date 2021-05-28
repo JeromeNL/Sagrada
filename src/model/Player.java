@@ -77,7 +77,7 @@ public class Player {
 	// Create all the playerframefield rows in the database.
 	private void createPlayerFrameField() {
 
-		playerController = new PlayerController(dbController);
+		playerController = new PlayerController(dbController, mainController);
 
 		for (int position_y = 1; position_y <= 4; position_y++) {
 			for (int position_x = 1; position_x <= 5; position_x++) {
@@ -97,7 +97,7 @@ public class Player {
 	// Adds a new user to the database.
 	public void addToDatabase() {
 
-		playerController = new PlayerController(dbController);
+		playerController = new PlayerController(dbController, mainController);
 
 		// Get an available playerID
 		newIdPlayer = playerController.getAvailablePlayerId();

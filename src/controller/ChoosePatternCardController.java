@@ -11,15 +11,16 @@ public class ChoosePatternCardController {
 	
 	private int counterRand;
 	private ArrayList<ChoosePatternCardModel> patternCards;
+	private DatabaseController dbController;
 	
 
-	public ChoosePatternCardController() {
+	public ChoosePatternCardController(DatabaseController dbController) {
+		this.dbController = dbController;
 		// query kiest 1 random van de 24 van idpatterncard ALS de volgende kaart
 		// NIET dezelfde difficulty heeft -> kies
 		patternCards = new ArrayList<ChoosePatternCardModel>();
 
-		DatabaseController databaseController = new DatabaseController();
-		ResultSet rs = databaseController
+		ResultSet rs = dbController
 				.doQuery("SELECT * " + "FROM patterncard " + "GROUP BY difficulty " + "ORDER BY RAND()");
 
 		try {

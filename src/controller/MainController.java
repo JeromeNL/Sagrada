@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 
 import javafx.stage.Stage;
-import model.DieBagModel;
 import model.Game;
 import model.Player;
 import model.RegisterLoginModel;
@@ -28,19 +27,17 @@ public class MainController {
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController(this);
-		RegisterLoginModel rlm = new RegisterLoginModel(this, dbController);
-		mainScene = new MainScene(this, dbController, rlm);		
+		RegisterLoginController rlc = new RegisterLoginController(dbController);
+		RegisterLoginModel rlm = new RegisterLoginModel(this, dbController, rlc);
+		mainScene = new MainScene(this, dbController, rlm, rlc);		
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		combinedURL = "/Images/Compact Private Objectives/green.png";
 		imageURL = combinedURL.toString();
 		
-		dbController = new DatabaseController(this);
-		mainScene = new MainScene(this, dbController, rlm);
-
 		showLoginScreen();
 
 		createCardsToChoose(); // Creates 4 random cards to
-		showChoosePatternCard();
+//		showChoosePatternCard();
 		// mainScene.getChoosePatternCardView().getCard(); //will give you an int after
 		// you clicked on kiezen
 
@@ -98,7 +95,7 @@ public class MainController {
 
 	// Creates 4 random cards to choose from
 	public void createCardsToChoose() {
-		choosePatternCardController = new ChoosePatternCardController();
+		choosePatternCardController = new ChoosePatternCardController(dbController);
 	}
 	
 	public void showLoginView() {
