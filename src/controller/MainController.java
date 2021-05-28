@@ -30,9 +30,9 @@ public class MainController {
 		RegisterLoginController rlc = new RegisterLoginController(dbController);
 		RegisterLoginModel rlm = new RegisterLoginModel(this, dbController, rlc);
 		mainScene = new MainScene(this, dbController, rlm, rlc);		
-		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		combinedURL = "/Images/Compact Private Objectives/green.png";
 		imageURL = combinedURL.toString();
+		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		
 		showLoginScreen();
 
