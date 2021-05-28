@@ -19,11 +19,15 @@ public class RegisterLoginModel {
 	private String loginPasswordGiven;
 	private String warningText;
 	private String warningColor;
+	
+	private DatabaseController dbController;
 
 	// constructor
-	public RegisterLoginModel() {
+	public RegisterLoginModel(DatabaseController dbController) {
 		warningText = "Geen fouten opgetreden";
 		String warningColor = "black";
+		
+		this.dbController = dbController;
 	}
 
 	// classes
@@ -47,8 +51,7 @@ public class RegisterLoginModel {
 					warningColor = "red";
 					warningText = "Wachtwoord is te kort of bevat vreemde tekens";
 				} else {
-					DatabaseController DBRegister = new DatabaseController();
-					DBRegister.doUpdateQuery("INSERT INTO account VALUES('" + registerUsernameGiven + "', '"
+					dbController.doUpdateQuery("INSERT INTO account VALUES('" + registerUsernameGiven + "', '"
 							+ registerPasswordGiven + "')");
 					System.out.println("done!");
 					warningText = "Registratie voltooid! Log nu in met jouw gegevens";
@@ -77,8 +80,7 @@ public class RegisterLoginModel {
 					warningText = "Deze gebruiker is niet bekend";
 					warningColor = "red";
 				} else {
-					DatabaseController DBLogin = new DatabaseController();
-					ResultSet passwordDB = DBLogin
+					ResultSet passwordDB = dbController
 							.doQuery("Select password FROM account WHERE username = '" + loginUsernameGiven + "'");
 
 					if (isValidPassword(loginUsernameGiven, loginPasswordGiven) == true) {
@@ -122,8 +124,7 @@ public class RegisterLoginModel {
 	private boolean nameAvailableCheck(String input) { // check availability of username
 
 		input.toLowerCase();
-		DatabaseController checkName = new DatabaseController();
-		ResultSet nameAvailable = checkName
+		ResultSet nameAvailable = dbController
 				.doQuery("SELECT COUNT(*) as counter FROM account where username = '" + input + "'");
 
 		try {
@@ -149,8 +150,7 @@ public class RegisterLoginModel {
 
 	private boolean isValidPassword(String userName, String pw) {
 		userName.toLowerCase();
-		DatabaseController checkPassword = new DatabaseController();
-		ResultSet askedPassword = checkPassword.doQuery("SELECT COUNT(*) as counter FROM account WHERE username = '"
+		ResultSet askedPassword = dbController.doQuery("SELECT COUNT(*) as counter FROM account WHERE username = '"
 				+ userName + "' && password = '" + pw + "'");
 
 		try {

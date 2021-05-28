@@ -1,9 +1,7 @@
-package main;
+package controller;
 
-import controller.MainController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.MainScene;
 
 public class Main extends Application {
 
@@ -13,6 +11,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+
 		new MainController(stage);
+
 	}
 }

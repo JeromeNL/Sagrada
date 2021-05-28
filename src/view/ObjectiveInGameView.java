@@ -53,4 +53,10 @@ public class ObjectiveInGameView extends HBox {
 
 		getChildren().addAll(square, vBox, points);
 	}
+	
+	public void hide() {
+		getChildren().clear();
+		Label label = new Label("You cannot see other player's private objectives");
+		getChildren().add(label);
+	}
 }

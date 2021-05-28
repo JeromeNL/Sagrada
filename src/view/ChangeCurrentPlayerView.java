@@ -1,104 +1,72 @@
 package view;
 
+import java.util.ArrayList;
 
+import controller.MainController;
 import javafx.animation.RotateTransition;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import model.Game;
+import model.Player;
 
 public class ChangeCurrentPlayerView extends StackPane {
 
-private Label currentPlayerText,user1,user2,user3,user4;
-private Rectangle dropDownButton;	
+	private MainController mainController;
+	private VBox playersVBox;
 
+	public ChangeCurrentPlayerView(Game game, MainController mainController) {
+		this.mainController = mainController;
 
-
-public ChangeCurrentPlayerView() {
-		
-	
-		Rectangle background = new Rectangle(1280,720);
+		Rectangle background = new Rectangle(1280, 720);
 		background.setFill(Color.LIGHTBLUE);
-	 
-		Rectangle animation = new Rectangle(700,700);
+
+		Rectangle animation = new Rectangle(700, 700);
 		animation.setFill(Color.TRANSPARENT);
 		animation.setStrokeWidth(20);
 		animation.setStroke(Color.BLACK);
 		animation.setRotate(30);
-		
+
 		RotateTransition rt = new RotateTransition(Duration.millis(3000), animation);
 		rt.setByAngle(180);
-	    rt.setCycleCount(500);
-	    rt.setAutoReverse(true);
-	    rt.play();
-		
-		
-		dropDownButton = new Rectangle(30,30);
-		dropDownButton.setTranslateX(-260);
-		dropDownButton.setTranslateY(-200);
-		dropDownButton.setOnMouseClicked(e -> 
-			
-		{
-		this.getChildren().clear();
-		this.getChildren().addAll(background, animation,user1,user2,user3,user4);
-		
-		System.out.println("button is pressed");});
-		
-		currentPlayerText = new Label("Jasper");
-		currentPlayerText.setStyle("-fx-font-weight: bold");
-		currentPlayerText.setFont(new Font("Arial", 40));
-		currentPlayerText.setTranslateX(-350);
-		currentPlayerText.setTranslateY(-200);
-		
-		user1 = new Label("Jasper");
-		user1.setStyle("-fx-font-weight: bold");
-		user1.setFont(new Font("Arial", 40));
-		user1.setTranslateX(0);
-		user1.setTranslateY(-50);
-		
-		user1.setOnMouseEntered(e -> user1.setUnderline(true));
-		user1.setOnMouseExited(e -> user1.setUnderline(false));
-		
-		
-		
-		user2 = new Label("Janique");
-		user2.setStyle("-fx-font-weight: bold");
-		user2.setFont(new Font("Arial", 40));
-		user2.setTranslateX(0);
-		user2.setTranslateY(0);
-		
-		user2.setOnMouseEntered(e -> user2.setUnderline(true));
-		user2.setOnMouseExited(e -> user2.setUnderline(false));
-		
-		
-		user3 = new Label("Imke");
-		user3.setStyle("-fx-font-weight: bold");
-		user3.setFont(new Font("Arial", 40));
-		user3.setTranslateX(0);
-		user3.setTranslateY(50);
-		
-		user3.setOnMouseEntered(e -> user3.setUnderline(true));
-		user3.setOnMouseExited(e -> user3.setUnderline(false));
-		
-		user4 = new Label("Mandy");
-		user4.setStyle("-fx-font-weight: bold");
-		user4.setFont(new Font("Arial", 40));
-		user4.setTranslateX(0);
-		user4.setTranslateY(100);
-		
-		user4.setOnMouseEntered(e -> user4.setUnderline(true));
-		user4.setOnMouseExited(e -> user4.setUnderline(false));
-		
-		
-//		s.setOnMouseExited(e -> s.setFill(defaultColor));
-		
-		
-		
-		this.getChildren().addAll(dropDownButton, currentPlayerText);
-	
+		rt.setCycleCount(500);
+		rt.setAutoReverse(true);
+		rt.play();
+
+		playersVBox = new VBox();
+		playersVBox.setSpacing(20);
+		playersVBox.setCenterShape(true);
+		playersVBox.setAlignment(Pos.CENTER);
+
+		ArrayList<Player> players = game.getPlayers();
+		for (Player player : players) {
+			UserLabel userLabel = new UserLabel(player.getUsername());
+			if (mainController.getLoggedInUsername().equals(player.getUsername())) {
+				userLabel = new UserLabel(player.getUsername() + " (You)");
+			}
+			playersVBox.getChildren().add(userLabel);
+		}
+
+		getChildren().addAll(background, animation, playersVBox);
 	}
-	
-	
+
+	private class UserLabel extends Label {
+
+		public UserLabel(String playerName) {
+			super(playerName);
+			setStyle("-fx-font-weight: bold");
+			setFont(new Font("Arial", 40));
+
+			setOnMouseEntered(e -> setUnderline(true));
+			setOnMouseExited(e -> setUnderline(false));
+			
+			setOnMouseClicked(e->mainController.showGame(playersVBox.getChildren().indexOf(this)));
+		}
+	}
+
 }

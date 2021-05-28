@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import controller.DatabaseController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -25,13 +26,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import model.RegisterLoginModel;
 
 public class LoginView extends VBox {
 	private ImageView imageView;
 
-	public LoginView() {
+	public LoginView(DatabaseController dbController) {
 
-		model.RegisterLoginModel rlm = new model.RegisterLoginModel();
+		RegisterLoginModel rlm = new RegisterLoginModel(dbController);
 
 		InputStream stream;
 		try {
