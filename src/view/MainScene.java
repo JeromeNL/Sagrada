@@ -3,6 +3,7 @@ package view;
 import controller.ChoosePatternCardController;
 import controller.DatabaseController;
 import controller.MainController;
+import controller.RegisterLoginController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import model.Game;
@@ -19,6 +20,7 @@ public class MainScene extends Scene {
 	private ChoosePatternCardView choosePatterncardView;
 	private boolean noCard;
 	private DatabaseController dbController;
+	private RegisterLoginController registerLoginController;
 
 	public MainScene(MainController mainController, DatabaseController dbController) {
 		super(new Pane(), 1280, 720);
@@ -40,9 +42,16 @@ public class MainScene extends Scene {
 
 	}
 
+	public void showLoginView() {
+		RegisterLoginController registerLoginController = new RegisterLoginController(dbController);
+		LoginView loginView = new LoginView(dbController, registerLoginController);
+		setRoot(loginView);
+	}
+
 	public void showChoosePatternCard(ChoosePatternCardController choosePatternCardController) {
 		choosePatterncardView = new ChoosePatternCardView(choosePatternCardController);
 		setRoot(choosePatterncardView);
+
 	}
 
 	public void changeCurrentPlayerView(Game game) {
@@ -51,5 +60,6 @@ public class MainScene extends Scene {
 
 	public ChoosePatternCardView getChoosePatternCardView() {
 		return choosePatterncardView;
+
 	}
 }

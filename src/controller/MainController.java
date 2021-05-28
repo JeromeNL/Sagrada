@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 import javafx.stage.Stage;
+import model.DieBagModel;
 import model.Game;
 import model.Player;
 import view.MainScene;
@@ -34,6 +35,7 @@ public class MainController {
 		currentGame.startGame();
 
 		showGameLoggedInPlayer();
+//		showLoginView();
 
 		createCardsToChoose(); // Creates 4 random cards to
 		showChoosePatternCard();
@@ -92,6 +94,10 @@ public class MainController {
 	// Creates 4 random cards to choose from
 	public void createCardsToChoose() {
 		choosePatternCardController = new ChoosePatternCardController();
+	}
+	
+	public void showLoginView() {
+		mainScene.showLoginView();
 	}
 
 }

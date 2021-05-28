@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import controller.DatabaseController;
+import controller.GameController;
 import controller.MainController;
 
 public class Game {
@@ -19,12 +20,14 @@ public class Game {
 	private MainController mainController;
 
 	private int idGame;
+	private int newIdGame;
 
 	private FavorToken[] favorTokens; // 24 favor tokens per game.
 	private Toolcard[] toolcards; // 3 toolcards per game.
 	private ObjectiveCard[] objectiveCards; // 3 public objective cards per game.
 	private ArrayList<Player> players; // 1 to 4 players per game
 	private DiesInSupply diesInSupply;
+	private GameController gameController;
 
 	private String usernameCreator;
 
@@ -138,6 +141,61 @@ public class Game {
 		}
 	}
 
+	// Gets an available gameID and then adds a new row to the game table in the
+	// database.
+	public void addToDatabase() {
+
+		gameController = new GameController(dbController);
+
+		// Get an available gameID
+		newIdGame = gameController.getAvailableGameID();
+
+		boolean increasingID = true;
+		while (increasingID) {
+			int result = gameController.addRowToGameTable(newIdGame);
+			if (result == 1) {
+				increasingID = false;
+				idGame = newIdGame;
+				System.out.println(getClass() + " - New game created with id " + newIdGame); // for
+																								// testing
+																								// purposes
+			} else {
+				newIdGame++;
+			}
+		}
+	}
+
+	// Gets an available gameID and then adds a new row to the game table in the
+	// database.
+	private void addToDatabaseNew() {
+		// Get an available gameID
+		ResultSet rs = dbController.doQuery("SELECT idgame FROM game ORDER BY idgame DESC LIMIT 1;");
+		int newGameID = 1; // default value
+		try {
+			while (rs.next()) {
+				newGameID = rs.getInt(1) + 1;
+			}
+		} catch (SQLException e) {
+			System.out.println("Something went wrong while adding a new game to the database.");
+			e.printStackTrace();
+		}
+
+		boolean increasingID = true;
+		while (increasingID) {
+			// Add a new row to the game table.
+			String query = "INSERT INTO game VALUES (" + newGameID + ",NULL,NULL,CURRENT_TIMESTAMP);";
+			int result = dbController.doUpdateQuery(query);
+			if (result == 1) {
+				increasingID = false;
+				idGame = newGameID;
+				System.out.println(getClass() + " - New game created with id " + idGame); // for testing
+																							// purposes
+			} else {
+				newGameID++;
+			}
+		}
+	}
+
 	// Gives an available GameColor to be used as the private objectivecard color.
 	private GameColor getObjectiveCardColor() {
 		// to-do: remember which gameColors have been used so nobody has the same
@@ -233,37 +291,6 @@ public class Game {
 
 	public ArrayList<String> getPlayerOrder() {
 		return dbController.getPlayerOrder(idGame);
-	}
-
-	// Gets an available gameID and then adds a new row to the game table in the
-	// database.
-	private void addToDatabase() {
-		// Get an available gameID
-		ResultSet rs = dbController.doQuery("SELECT idgame FROM game ORDER BY idgame DESC LIMIT 1;");
-		int newGameID = 1; // default value
-		try {
-			while (rs.next()) {
-				newGameID = rs.getInt(1) + 1;
-			}
-		} catch (SQLException e) {
-			System.out.println("Something went wrong while adding a new game to the database.");
-			e.printStackTrace();
-		}
-
-		boolean increasingID = true;
-		while (increasingID) {
-			// Add a new row to the game table.
-			String query = "INSERT INTO game VALUES (" + newGameID + ",NULL,NULL,CURRENT_TIMESTAMP);";
-			int result = dbController.doUpdateQuery(query);
-			if (result == 1) {
-				increasingID = false;
-				idGame = newGameID;
-				System.out.println(getClass() + " - New game created with id " + idGame); // for testing
-																							// purposes
-			} else {
-				newGameID++;
-			}
-		}
 	}
 
 	public ArrayList<Player> getPlayers() {
