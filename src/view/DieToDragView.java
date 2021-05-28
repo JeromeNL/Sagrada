@@ -58,7 +58,6 @@ public class DieToDragView extends StackPane {
 				ClipboardContent content = new ClipboardContent();
 				content.putString(die.getDieID() + " " + die.getColor() + " " + die.getEyesCount());
 				db.setContent(content);
-				
 				event.consume();
 			}
 		});

@@ -1,8 +1,10 @@
 package view;
 
+
 import controller.DatabaseController;
 import controller.MainController;
 import javafx.geometry.Insets;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
@@ -29,6 +31,7 @@ public class GameView extends BorderPane {
 	private Player player;
 	private MainController mainController;
 
+	
 	public GameView(Game game, Player player, MainController mainController) {
 
 		this.game = game;
@@ -62,6 +65,12 @@ public class GameView extends BorderPane {
 
 	}
 
+	
+	public GameView() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public void showChangeCurrentPlayerView() {
 		getChildren().clear();
 		setCenter(changeCurrentPlayerView);
@@ -88,7 +97,7 @@ public class GameView extends BorderPane {
 
 	public void showToolCardView() {
 		getChildren().clear();
-		setCenter(new ToolCardInUseView());
+		setCenter(new ToolCardInUseView(mainController));
 	}
 
 	private class ChangePlayerButton extends HBox {

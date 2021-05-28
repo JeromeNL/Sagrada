@@ -1,6 +1,10 @@
 package controller;
 
+
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
+
 
 import javafx.stage.Stage;
 import model.DieBagModel;
@@ -14,6 +18,19 @@ public class MainController {
 	private Game currentGame;
 	private String loggedInUsername = "";
 	private MainScene mainScene;
+
+	private String imageURL;
+	private String combinedURL;
+
+	public MainController(Stage stage) {
+		dbController = new DatabaseController();
+		mainScene = new MainScene(this);
+		combinedURL = "/Images/Compact Private Objectives/green.png";
+		imageURL = combinedURL.toString();
+		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
+		
+		login("piet");
+
 	private ChoosePatternCardController choosePatternCardController;
 
 	public MainController(Stage stage) {
@@ -22,6 +39,7 @@ public class MainController {
 
 		login("mandy");
 //		loadGame(759);
+
 
 		createGame();
 		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
@@ -44,8 +62,13 @@ public class MainController {
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
+		stage.getIcons().add(new Image("/Images/Compact Public Objectives/4.png"));
 		stage.setScene(mainScene);
+
+		stage.getIcons().add(toolCardImage);
+
 		stage.setOnCloseRequest(e -> dbController.closeConnection());
+
 		stage.show();
 	}
 

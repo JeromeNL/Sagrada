@@ -75,7 +75,7 @@ public class LoginView extends VBox {
 		burnOverlay.setBlendMode(BlendMode.COLOR_BURN);
 
 		box.getChildren().addAll(sagradaText, layout);
-		colorBurn.getChildren().addAll(imageView, burnOverlay);
+		colorBurn.getChildren().addAll( burnOverlay);
 		layout.getChildren().addAll(textFields, colorBurn);
 		sagradaText.getChildren().addAll(sagradaTxt);
 		warnTextBox.getChildren().add(warnText);
