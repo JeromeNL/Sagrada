@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import controller.DatabaseController;
+import controller.RegisterLoginController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -30,8 +31,10 @@ import model.RegisterLoginModel;
 
 public class LoginView extends VBox {
 	private ImageView imageView;
+	private RegisterLoginModel rlm;
 
-	public LoginView(RegisterLoginModel rlm) {
+	public LoginView(DatabaseController dbController, RegisterLoginController registerLoginController, RegisterLoginModel rlm) {
+		this.rlm = rlm;
 
 		InputStream stream;
 		try {
@@ -72,7 +75,7 @@ public class LoginView extends VBox {
 		burnOverlay.setBlendMode(BlendMode.COLOR_BURN);
 
 		box.getChildren().addAll(sagradaText, layout);
-		colorBurn.getChildren().addAll(imageView, burnOverlay);
+		colorBurn.getChildren().addAll( burnOverlay);
 		layout.getChildren().addAll(textFields, colorBurn);
 		sagradaText.getChildren().addAll(sagradaTxt);
 		warnTextBox.getChildren().add(warnText);

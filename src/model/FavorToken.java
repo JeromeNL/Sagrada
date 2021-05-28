@@ -1,6 +1,7 @@
 package model;
 
 import controller.DatabaseController;
+import controller.FavorTokenController;
 
 public class FavorToken {
 
@@ -11,6 +12,7 @@ public class FavorToken {
 	private int roundID; // has round id if favortoken has been used
 	private boolean isUsed;
 	private DatabaseController dbController;
+	private FavorTokenController favorTokenController;
 
 	// Constructor create a new favortoken
 	public FavorToken(int idToken, int idGame, DatabaseController dbController) {
@@ -18,13 +20,15 @@ public class FavorToken {
 		this.idGame = idGame;
 		this.dbController = dbController;
 		isUsed = false;
-		addToDatabase();
+		favorTokenController = new FavorTokenController(dbController);
+		favorTokenController.addToDatabase(idToken, idGame);
 	}
-	
+
 	// Game favor tokens are assigned to game playerid after choosing patterncard
 	public void assignToPlayer(int playerID) {
 		assignedToPlayerID = playerID;
-		updateDatabase();
+		favorTokenController = new FavorTokenController(dbController);
+		favorTokenController.updateDatabase();
 	}
 
 	// Method that is called when a favortoken is used.
@@ -32,27 +36,20 @@ public class FavorToken {
 		this.usedForToolcardID = toolcardID;
 		this.roundID = roundID;
 		isUsed = true;
-		updateDatabase();
-	}
-	
-	// Adds the favortoken to the gamefavortoken table.
-	private void addToDatabase() {
-		// to-do: insert row into gamefavortoken table with idfavortoken and idgame
-		String query = "INSERT INTO gamefavortoken VALUES ("+idToken+","+idGame+",NULL,NULL,NULL);";
-		dbController.doUpdateQuery(query);
-	}
-	
-	// Updates the favortoken in the gamefavortoken table.
-	private void updateDatabase() {
-		// to-do: update row from gamefavortoken table so it contains the latest data
+		favorTokenController = new FavorTokenController(dbController);
+		favorTokenController.updateDatabase();
 	}
 
 	public boolean isUsed() {
 		return isUsed;
 	}
-	
+
 	public int getIdToken() {
 		return idToken;
+	}
+
+	public int getIdGame() {
+		return idGame;
 	}
 
 	public int getAssignedToPlayerID() {

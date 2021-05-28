@@ -5,10 +5,13 @@ import java.sql.SQLException;
 
 import controller.DatabaseController;
 import controller.MainController;
+import controller.GameController;
+import controller.PlayerController;
 
 public class Player {
 
 	private int idPlayer;
+	private int newIdPlayer;
 	private String username;
 	private int idGame;
 	private PlayerStatus status;
@@ -19,6 +22,7 @@ public class Player {
 	
 	private DatabaseController dbController;
 	private MainController mainController;
+	private PlayerController playerController;
 
 	// Constructor when the player is challenged
 	public Player(DatabaseController dbController, int idPlayer, int idGame, MainController mainController) {
@@ -31,9 +35,10 @@ public class Player {
 		username = dbController.getUsername(idPlayer);
 		// TODO get all the info about the player from the database based on username
 	}
-	
+
 	// Constructor when the player is the challengee.
 	public Player(String username, boolean isCreator, int idGame, GameColor privateObjectiveCardColor, DatabaseController dbController, MainController mainController) {
+
 		this.username = username;
 		this.isCreator = isCreator;
 		this.idGame = idGame;
@@ -43,7 +48,7 @@ public class Player {
 
 		setUpPlayer();
 	}
-	
+
 	private void loadPatterncard() {
 		int idPatterncard = dbController.getPatterncardID(idPlayer);
 		if (idPatterncard == 0) {
@@ -60,21 +65,23 @@ public class Player {
 		createPlayerFrameField();
 		setSeqNr();
 	}
-	
+
 	private void setSeqNr() {
 		dbController.setNewSeqNr(idGame, idPlayer);
 	}
-	
+
 	public int getSeqNr() {
 		return dbController.getSeqNr(idPlayer);
 	}
 
 	// Create all the playerframefield rows in the database.
-	private void createPlayerFrameField() {		
+	private void createPlayerFrameField() {
+
+		playerController = new PlayerController(dbController);
+
 		for (int position_y = 1; position_y <= 4; position_y++) {
 			for (int position_x = 1; position_x <= 5; position_x++) {
-				String query = "INSERT INTO playerframefield VALUES ("+idPlayer+","+position_x+","+position_y+","+idGame+",NULL,NULL);";
-				dbController.doUpdateQuery(query);
+				playerController.createPlayerFrameField(idPlayer, idGame, position_x, position_y);
 			}
 		}
 	}
@@ -88,35 +95,25 @@ public class Player {
 	}
 
 	// Adds a new user to the database.
-	private void addToDatabase() {
-		// Get an available gameID
-		ResultSet rs = dbController.doQuery("SELECT idplayer FROM player ORDER BY idplayer DESC LIMIT 1;");
-		try {
-			int newPlayerID = 1;
-			if (rs.next()) {
-				newPlayerID = rs.getInt(1) + 1;
+	public void addToDatabase() {
+
+		playerController = new PlayerController(dbController);
+
+		// Get an available playerID
+		newIdPlayer = playerController.getAvailablePlayerId();
+
+		boolean increasingID = true;
+		while (increasingID) {
+			int result = playerController.addRowToPlayerTable(newIdPlayer, username, idGame, status,
+					privateObjectiveCardColor);
+			if (result == 1) {
+				increasingID = false;
+				idPlayer = newIdPlayer;
+				System.out.println(getClass() + " - New player created with id " + idPlayer); // for testing
+																								// purposes
+			} else {
+				newIdPlayer++;
 			}
-
-			boolean increasingID = true;
-			while (increasingID) {
-				// Add a new row to the game table.
-				String query = "INSERT INTO player VALUES (" + newPlayerID + ",\"" + username + "\"," + idGame + ",\""
-						+ status + "\", NULL , \"" + privateObjectiveCardColor + "\", NULL, NULL);";
-
-				int result = dbController.doUpdateQuery(query);
-				if (result == 1) {
-					increasingID = false;
-					idPlayer = newPlayerID;
-					System.out.println(getClass() + " - New player created with id " + idPlayer); // for testing
-																									// purposes
-				} else {
-					newPlayerID++;
-				}
-			}
-
-		} catch (SQLException e) {
-			System.out.println("Something went wrong while adding a new player of a game to the database.");
-			e.printStackTrace();
 		}
 	}
 
@@ -172,7 +169,7 @@ public class Player {
 	public boolean isCreator() {
 		return isCreator;
 	}
-	
+
 	public int getGameID() {
 		return idGame;
 	}

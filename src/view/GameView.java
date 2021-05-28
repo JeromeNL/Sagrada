@@ -1,8 +1,10 @@
 package view;
 
+
 import controller.DatabaseController;
 import controller.MainController;
 import javafx.geometry.Insets;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
@@ -73,6 +75,7 @@ public class GameView extends BorderPane {
 		gameButtonView.setOpacity(0.5);
 	}
 
+
 	public void showChangeCurrentPlayerView() {
 		getChildren().clear();
 		setCenter(changeCurrentPlayerView);
@@ -117,7 +120,7 @@ public class GameView extends BorderPane {
 
 	public void showToolCardView() {
 		getChildren().clear();
-		setCenter(new ToolCardInUseView());
+		setCenter(new ToolCardInUseView(mainController));
 	}
 
 	private class ChangePlayerButton extends HBox {

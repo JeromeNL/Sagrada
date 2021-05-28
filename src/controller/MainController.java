@@ -1,8 +1,13 @@
 package controller;
 
+
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
+
 import javafx.stage.Stage;
+import model.DieBagModel;
 import model.Game;
 import model.Player;
 import model.RegisterLoginModel;
@@ -16,17 +21,36 @@ public class MainController {
 	private String loggedInUsername = "";
 	private MainScene mainScene;
 
+	private String imageURL;
+	private String combinedURL;
+
+	private ChoosePatternCardController choosePatternCardController;
+
 	public MainController(Stage stage) {
 		dbController = new DatabaseController(this);
 		RegisterLoginModel rlm = new RegisterLoginModel(this, dbController);
 		mainScene = new MainScene(this, dbController, rlm);		
+		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
+		combinedURL = "/Images/Compact Private Objectives/green.png";
+		imageURL = combinedURL.toString();
 		
+		dbController = new DatabaseController(this);
+		mainScene = new MainScene(this, dbController, rlm);
+
 		showLoginScreen();
+
+		createCardsToChoose(); // Creates 4 random cards to
+		showChoosePatternCard();
+		// mainScene.getChoosePatternCardView().getCard(); //will give you an int after
+		// you clicked on kiezen
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
+		stage.getIcons().add(new Image("/Images/Compact Public Objectives/4.png"));
 		stage.setScene(mainScene);
-		stage.setOnCloseRequest(e->dbController.closeConnection());
+		stage.getIcons().add(toolCardImage);
+		stage.setOnCloseRequest(e -> dbController.closeConnection());
+
 		stage.show();
 	}
 
@@ -66,8 +90,19 @@ public class MainController {
 		return loggedInUsername;
 	}
 
+	// click on patterncard and kiezen will give you a cardId
+	// If you only click on kiezen nothing happens
 	public void showChoosePatternCard() {
-		mainScene.showChoosePatternCard();
+		mainScene.showChoosePatternCard(choosePatternCardController);
+	}
+
+	// Creates 4 random cards to choose from
+	public void createCardsToChoose() {
+		choosePatternCardController = new ChoosePatternCardController();
+	}
+	
+	public void showLoginView() {
+		mainScene.showLoginView();
 	}
 	
 	public void showLoginScreen() {

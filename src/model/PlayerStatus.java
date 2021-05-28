@@ -1,6 +1,6 @@
 package model;
 
-enum PlayerStatus {
+public enum PlayerStatus {
 	ACCEPTED,
 	CHALLENGEE,
 	CHALLENGER,

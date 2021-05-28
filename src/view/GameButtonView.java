@@ -30,6 +30,8 @@ public class GameButtonView extends HBox {
 		toolCardButton3 = new GameButton();
 		confirmButton = new GameButton();
 
+
+
 		confirmButton.setFill(Color.GREENYELLOW);
 		confirmButton.setOnMouseEntered(e -> confirmButton.setFill(Color.GREEN));
 		confirmButton.setOnMouseExited(e -> confirmButton.setFill(Color.GREENYELLOW));
@@ -42,9 +44,15 @@ public class GameButtonView extends HBox {
 		logoutButton = new GameButton();
 		beerButton = new GameButton();
 
+
 		setAlignment(Pos.CENTER);
 		setSpacing(40);
 		setPadding(new Insets(40));
-		getChildren().addAll(privateScore,backButton, toolCardButton1, toolCardButton2, toolCardButton3,beerButton, confirmButton,menuButton,logoutButton,cheatButton,score);
+		getChildren().addAll(privateScore,backButton, toolCardButton1, toolCardButton2, toolCardButton3,
+				
+				
+				
+				
+				confirmButton,score);
 	}
 }
