@@ -14,6 +14,7 @@ public class MainController {
 	private Game currentGame;
 	private String loggedInUsername = "";
 	private MainScene mainScene;
+	private ChoosePatternCardController choosePatternCardController;
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController();
@@ -21,12 +22,11 @@ public class MainController {
 
 		login("mandy");
 //		loadGame(759);
+
 		createGame();
 		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
 		currentGame.invitePlayer("jasper");
 		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
-
-//		showChoosePatternCard();
 
 		currentGame.invitePlayer("jerome");
 		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
@@ -37,10 +37,15 @@ public class MainController {
 		showGameLoggedInPlayer();
 //		showLoginView();
 
+		createCardsToChoose(); // Creates 4 random cards to
+		showChoosePatternCard();
+		// mainScene.getChoosePatternCardView().getCard(); //will give you an int after
+		// you clicked on kiezen
+
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
 		stage.setScene(mainScene);
-		stage.setOnCloseRequest(e->dbController.closeConnection());
+		stage.setOnCloseRequest(e -> dbController.closeConnection());
 		stage.show();
 	}
 
@@ -80,8 +85,15 @@ public class MainController {
 		return loggedInUsername;
 	}
 
+	// click on patterncard and kiezen will give you a cardId
+	// If you only click on kiezen nothing happens
 	public void showChoosePatternCard() {
-		mainScene.showChoosePatternCard();
+		mainScene.showChoosePatternCard(choosePatternCardController);
+	}
+
+	// Creates 4 random cards to choose from
+	public void createCardsToChoose() {
+		choosePatternCardController = new ChoosePatternCardController();
 	}
 	
 	public void showLoginView() {
