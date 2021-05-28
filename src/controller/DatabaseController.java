@@ -419,11 +419,11 @@ public class DatabaseController {
 
 	public void closeConnection() {
 		try {
-			statement.close();
-			m_Conn.close();
+			if (!m_Conn.isClosed()) {
+				m_Conn.close();				
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }
