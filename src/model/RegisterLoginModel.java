@@ -2,13 +2,8 @@
 
 package model;
 
-// imports
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import controller.DatabaseController;
-import javafx.scene.paint.Color;
-import view.DieView;
+import controller.RegisterLoginController;
 
 public class RegisterLoginModel {
 
@@ -19,15 +14,17 @@ public class RegisterLoginModel {
 	private String loginPasswordGiven;
 	private String warningText;
 	private String warningColor;
-	
+
 	private DatabaseController dbController;
+	private RegisterLoginController registerLoginController;
 
 	// constructor
-	public RegisterLoginModel(DatabaseController dbController) {
+	public RegisterLoginModel(DatabaseController dbController, RegisterLoginController registerLoginController) {
 		warningText = "Geen fouten opgetreden";
 		String warningColor = "black";
-		
+
 		this.dbController = dbController;
+		this.registerLoginController = registerLoginController;
 	}
 
 	// classes
@@ -51,8 +48,7 @@ public class RegisterLoginModel {
 					warningColor = "red";
 					warningText = "Wachtwoord is te kort of bevat vreemde tekens";
 				} else {
-					dbController.doUpdateQuery("INSERT INTO account VALUES('" + registerUsernameGiven + "', '"
-							+ registerPasswordGiven + "')");
+					registerLoginController.addAccountToDatabase(registerUsernameGiven, registerPasswordGiven);
 					System.out.println("done!");
 					warningText = "Registratie voltooid! Log nu in met jouw gegevens";
 					warningColor = "green";
@@ -80,15 +76,12 @@ public class RegisterLoginModel {
 					warningText = "Deze gebruiker is niet bekend";
 					warningColor = "red";
 				} else {
-					ResultSet passwordDB = dbController
-							.doQuery("Select password FROM account WHERE username = '" + loginUsernameGiven + "'");
-
 					if (isValidPassword(loginUsernameGiven, loginPasswordGiven) == true) {
 						System.out.println("logged in!");
 						warningText = "Ingelogd!";
 						warningColor = "green";
 
-						// set Scene to lobby !
+						// TODO set Scene to lobby !
 
 					} else {
 						System.out.println("Error! Wrong password!");
@@ -123,55 +116,29 @@ public class RegisterLoginModel {
 
 	private boolean nameAvailableCheck(String input) { // check availability of username
 
-		input.toLowerCase();
-		ResultSet nameAvailable = dbController
-				.doQuery("SELECT COUNT(*) as counter FROM account where username = '" + input + "'");
+		int oneOrZeroOrElse = registerLoginController.nameAvailableCheck(input);
 
-		try {
-			while (nameAvailable.next()) {
-				int oneOrZero = Integer.parseInt(nameAvailable.getString("counter"));
-				System.out.println(oneOrZero);
-
-				if (oneOrZero == 0) {
-					return true;
-				} else if (oneOrZero == 1) {
-					return false;
-				} else {
-					return false;
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if (oneOrZeroOrElse == 0) {
+			return true;
+		} else if (oneOrZeroOrElse == 1) {
+			return false;
+		} else {
 			return false;
 		}
-		return false;
 
 	}
 
 	private boolean isValidPassword(String userName, String pw) {
-		userName.toLowerCase();
-		ResultSet askedPassword = dbController.doQuery("SELECT COUNT(*) as counter FROM account WHERE username = '"
-				+ userName + "' && password = '" + pw + "'");
 
-		try {
-			while (askedPassword.next()) {
-				int oneOrZero = Integer.parseInt(askedPassword.getString("counter"));
-				System.out.println(oneOrZero);
+		int oneOrZeroOrElse = registerLoginController.isValidPassword(userName, pw);
 
-				if (oneOrZero == 0) {
-					return false;
-				} else if (oneOrZero == 1) {
-					return true;
-				} else {
-					return false;
-				}
-
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if (oneOrZeroOrElse == 0) {
+			return false;
+		} else if (oneOrZeroOrElse == 1) {
+			return true;
+		} else {
 			return false;
 		}
-		return false;
 
 	}
 

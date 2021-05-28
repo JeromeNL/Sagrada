@@ -1,61 +1,38 @@
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.DatabaseController;
-import javafx.scene.paint.Color;
+import controller.PatterncardController;
 
 public class Patterncard {
-	
+
 	private int idPatterncard;
 	private ArrayList<PatterncardField> fields;
+	private DatabaseController dbController;
 	private Player owner;
 
-	private DatabaseController dbController;
-	
 	public Patterncard(int idPatterncard, DatabaseController dbController, Player owner) {
+
 		this.dbController = dbController;
 		this.idPatterncard = idPatterncard;
 		this.owner = owner;
 		fields = new ArrayList<PatterncardField>();
-		
-		loadFields();
+
+		loadFields(idPatterncard);
 	}
-	
-	private void loadFields() {
-		ResultSet rs = dbController
-				.doQuery("SELECT * FROM patterncardfield WHERE idpatterncard = " + idPatterncard);
-		
-		try {
-			while (rs.next()) {
-				int xPosition = rs.getInt("position_x");
-				int yPosition = rs.getInt("position_y");
 
-				String color = rs.getString("color");
+	private void loadFields(int idPatterncard) {
 
-				GameColor colorRequirement = null;
-				if (color == null) {
-					colorRequirement = null;
-				} else {
-					colorRequirement = GameColor.valueOf(color.toUpperCase());
-				}
+		PatterncardController patterncardController = new PatterncardController(dbController);
 
-				int valueRequirement = rs.getInt("value");
-				
-				fields.add(new PatterncardField(xPosition, yPosition, valueRequirement, colorRequirement, dbController, owner));
-			}
-		} catch (SQLException e) {
-			System.out.println("Something went wrong while loading a patterncard from the database.");
-			e.printStackTrace();
-		}
+		fields = patterncardController.loadFields(idPatterncard, owner);
 	}
-	
+
 	public ArrayList<PatterncardField> getFields() {
 		return fields;
 	}
-	
+
 	public int getID() {
 		return idPatterncard;
 	}
