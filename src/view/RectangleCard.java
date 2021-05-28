@@ -49,10 +49,8 @@ public class RectangleCard extends Rectangle {
 			setStroke(Color.LIGHTPINK);
 			setStrokeWidth(4.0);
 			setStrokeType(StrokeType.INSIDE);
-			System.out.println("added stroke");
 		} else {
 			setStrokeWidth(0.0);
-			System.out.println("removed stroke");
 		}
 	}
 

@@ -68,12 +68,7 @@ public class ChooseButton extends VBox{
 			}
 		});
 		
-		button.setOnMouseClicked(e->
-			{
-			
-			System.out.println("click");
-			
-		});
+
 		
 	}
 

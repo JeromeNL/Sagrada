@@ -199,7 +199,7 @@ public class Game {
 					int_random = rand.nextInt(5);
 				}
 				break;
-          
+
 			default:
 				break;
 			}
@@ -249,7 +249,7 @@ public class Game {
 			System.out.println("Something went wrong while adding a new game to the database.");
 			e.printStackTrace();
 		}
-		
+
 		boolean increasingID = true;
 		while (increasingID) {
 			// Add a new row to the game table.
@@ -317,4 +317,5 @@ public class Game {
 			}
 		}
 	}
+
 }
