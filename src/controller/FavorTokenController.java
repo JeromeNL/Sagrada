@@ -4,8 +4,8 @@ public class FavorTokenController {
 
 	private DatabaseController dbController;
 
-	public FavorTokenController() {
-		this.dbController = new DatabaseController();
+	public FavorTokenController(DatabaseController dbController) {
+		this.dbController = dbController;
 	}
 
 	// Adds the favortoken to the gamefavortoken table.

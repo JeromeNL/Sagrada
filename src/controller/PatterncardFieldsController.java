@@ -5,6 +5,10 @@ import model.Die;
 public class PatterncardFieldsController {
 
 	private DatabaseController dbController;
+	
+	private PatterncardFieldsController(DatabaseController dbController) {
+		this.dbController = dbController;
+	}
 
 	// Adds a row to the playerframefield table so the placement of a die is saved
 	// to the database.

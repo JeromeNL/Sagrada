@@ -20,14 +20,14 @@ public class FavorToken {
 		this.idGame = idGame;
 		this.dbController = dbController;
 		isUsed = false;
-		favorTokenController = new FavorTokenController();
+		favorTokenController = new FavorTokenController(dbController);
 		favorTokenController.addToDatabase(idToken, idGame);
 	}
 
 	// Game favor tokens are assigned to game playerid after choosing patterncard
 	public void assignToPlayer(int playerID) {
 		assignedToPlayerID = playerID;
-		favorTokenController = new FavorTokenController();
+		favorTokenController = new FavorTokenController(dbController);
 		favorTokenController.updateDatabase();
 	}
 
@@ -36,7 +36,7 @@ public class FavorToken {
 		this.usedForToolcardID = toolcardID;
 		this.roundID = roundID;
 		isUsed = true;
-		favorTokenController = new FavorTokenController();
+		favorTokenController = new FavorTokenController(dbController);
 		favorTokenController.updateDatabase();
 	}
 
