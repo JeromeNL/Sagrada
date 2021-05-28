@@ -16,6 +16,7 @@ import model.Player;
 public class DatabaseController {
 
 	private Connection m_Conn;
+	private Statement statement;
 
 	public DatabaseController() {
 		// Setting up database connection
@@ -60,17 +61,15 @@ public class DatabaseController {
 	 * object that contains the data produced by the given query; never null
 	 */
 	public ResultSet doQuery(String query) {
-		Statement statement;
 		try {
 			statement = m_Conn.createStatement();
-			ResultSet resultSet = statement.executeQuery(query);
-
-			return resultSet;
+			return statement.executeQuery(query);
 		} catch (SQLException e) {
 			System.out.println("Something went wrong while executing the following query: " + query);
 			System.out.println(e.getMessage());
 		}
 		return null;
+		
 	}
 
 	/*
@@ -79,7 +78,6 @@ public class DatabaseController {
 	 * SQL statements that return nothing
 	 */
 	public int doUpdateQuery(String query) {
-		Statement statement;
 		try {
 			statement = m_Conn.createStatement();
 			return statement.executeUpdate(query);
@@ -130,14 +128,26 @@ public class DatabaseController {
 
 	public DiesInSupply getDiesInSupply(int idGame, int roundID) {
 		DiesInSupply diesInSupply = new DiesInSupply();
-		ResultSet rs = doQuery("SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundID = " + roundID
+		ResultSet allDies = doQuery("SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundID = " + roundID
 				+ " AND roundtrack IS NULL");
 		try {
-			while (rs.next()) {
-				String stringColor = rs.getString("diecolor");
-				GameColor gameColor = GameColor.valueOf(stringColor.toUpperCase());
-				Die die = new Die(gameColor, rs.getInt("eyes"), rs.getInt("dienumber"));
-				diesInSupply.addDie(die);
+			while (allDies.next()) {
+
+				int dieNumber = allDies.getInt("dienumber");
+				String stringColor = allDies.getString("diecolor");
+
+				String query = "SELECT * FROM playerframefield WHERE idGame = " + idGame + " AND dienumber = "
+						+ dieNumber + " AND diecolor = \"" + stringColor + "\"";
+				
+				ResultSet diePlaced = doQuery(query);
+				if (diePlaced.next()) {
+					continue;
+				} else {
+					GameColor gameColor = GameColor.valueOf(stringColor.toUpperCase());
+					Die die = new Die(gameColor, allDies.getInt("eyes"), allDies.getInt("dienumber"));
+					diesInSupply.addDie(die);					
+				}
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -178,7 +188,7 @@ public class DatabaseController {
 	}
 
 	public void placeDie(int idPlayer, int idGame, Die die, int xPosition, int yPosition) {
-		String query = "UPDATE playerframefield SET dienumber = " + die.getEyesCount() + ", diecolor = \""
+		String query = "UPDATE playerframefield SET dienumber = " + die.getDieID() + ", diecolor = \""
 				+ die.getColor().toString().toLowerCase() + "\" WHERE idplayer = " + idPlayer + " AND idgame = "
 				+ idGame + " AND position_x = " + xPosition + " AND position_y = " + yPosition;
 
@@ -197,9 +207,18 @@ public class DatabaseController {
 			while (rs.next()) {
 				String colorString = rs.getString("diecolor").toUpperCase();
 				GameColor color = GameColor.valueOf(colorString);
-				int eyesCount = rs.getInt("dienumber");
+				int dieNumber = rs.getInt("dienumber");
+				int idGame = rs.getInt("idgame");
 
-				return new Die(color, eyesCount, 0);
+				String query2 = "SELECT * FROM gamedie WHERE idgame = " + idGame + " AND dienumber = " + dieNumber
+						+ " AND diecolor = \"" + colorString + "\"";
+				ResultSet rs2 = doQuery(query2);
+				while (rs2.next()) {
+					int eyesCount = rs2.getInt("eyes");
+
+					return new Die(color, eyesCount, dieNumber);
+				}
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -260,7 +279,7 @@ public class DatabaseController {
 				done = true;
 		}
 	}
-	
+
 	public int getSeqNr(int idPlayer) {
 		int seqnr = 0;
 		ResultSet rs = doQuery("SELECT seqnr FROM player WHERE idplayer = " + idPlayer);
@@ -275,7 +294,7 @@ public class DatabaseController {
 		}
 		return seqnr;
 	}
-	
+
 	public ArrayList<String> getPlayerOrder(int gameID) {
 		ArrayList<String> playerOrder = new ArrayList<String>();
 		ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + gameID + " ORDER BY seqnr ASC");
@@ -294,14 +313,14 @@ public class DatabaseController {
 
 		return playerOrder;
 	}
-	
+
 	public void setRoundID(int idGame, int idRound) {
 		int result = doUpdateQuery("UPDATE game SET current_roundID = " + idRound + " WHERE idgame = " + idGame);
 		if (result != 1) {
 			System.out.println(getClass() + " - Something went wrong while setting roundID");
 		}
 	}
-	
+
 	public int getRoundID(int idGame) {
 		int roundID = 0;
 		ResultSet rs = doQuery("SELECT * FROM game WHERE idgame = " + idGame);
@@ -315,7 +334,7 @@ public class DatabaseController {
 		}
 		return roundID;
 	}
-	
+
 	public int getRoundNr(int roundID) {
 		int roundNr = 0;
 		ResultSet rs = doQuery("SELECT * FROM round WHERE roundID = " + roundID);
@@ -329,12 +348,12 @@ public class DatabaseController {
 		}
 		return roundNr;
 	}
-	
+
 	public boolean isClockwise(int roundID) {
 		boolean isClockwise = false;
 		ResultSet rs = doQuery("SELECT * FROM round WHERE roundID = " + roundID);
 		try {
-			while(rs.next()) {
+			while (rs.next()) {
 				isClockwise = rs.getBoolean("clockwise");
 			}
 		} catch (SQLException e) {
@@ -343,7 +362,7 @@ public class DatabaseController {
 		}
 		return isClockwise;
 	}
-	
+
 	public void setTurnIdPlayer(int idGame, int idPlayer) {
 		int result = doUpdateQuery("UPDATE game SET turn_idplayer = " + idPlayer + " WHERE idgame = " + idGame);
 		if (result != 1) {
@@ -354,7 +373,7 @@ public class DatabaseController {
 	public int getCurrentPlayerID(int idGame) {
 		int idPlayer = 0;
 		ResultSet rs = doQuery("SELECT * FROM game WHERE idgame = " + idGame);
-		
+
 		try {
 			while (rs.next()) {
 				idPlayer = rs.getInt("turn_idplayer");
@@ -365,7 +384,7 @@ public class DatabaseController {
 		}
 		return idPlayer;
 	}
-	
+
 	public int getPlayerID(int seqnr, int idGame) {
 		int idPlayer = 0;
 		ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + idGame + " AND seqnr = " + seqnr);
@@ -378,5 +397,15 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 		return idPlayer;
+	}
+
+	public void closeConnection() {
+		try {
+			statement.close();
+			m_Conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

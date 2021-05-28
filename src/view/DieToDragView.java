@@ -56,7 +56,7 @@ public class DieToDragView extends StackPane {
 				
 				// Adding the die data to the dragboard.
 				ClipboardContent content = new ClipboardContent();
-				content.putString(die.getEyesCount() + "" + die.getColor());
+				content.putString(die.getDieID() + " " + die.getColor() + " " + die.getEyesCount());
 				db.setContent(content);
 				
 				event.consume();

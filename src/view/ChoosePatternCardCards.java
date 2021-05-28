@@ -11,7 +11,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import model.ChoosePatternCardModel;
 import model.Patterncard;
 import model.Player;
 
@@ -23,23 +22,21 @@ public class ChoosePatternCardCards extends FlowPane {
 	private PatternCardView patternCardView2;
 	private PatternCardView patternCardView3;
 	private PatternCardView patternCardView4;
-	
+
 	private Patterncard patterncard1;
 	private Patterncard patterncard2;
 	private Patterncard patterncard3;
 	private Patterncard patterncard4;
-	
+
 	public RectangleCard rectanglePatternCard1;
 	public RectangleCard rectanglePatternCard2;
 	public RectangleCard rectanglePatternCard3;
 	public RectangleCard rectanglePatternCard4;
-	
+
 	private DatabaseController dbcontroller;
 	private ChoosePatternCardController choosePatternCardController;
-	
+
 	private Player player;
-	
-	
 
 	private int widthCard = 315;
 	private int heightCard = 315;
@@ -47,7 +44,7 @@ public class ChoosePatternCardCards extends FlowPane {
 	public ChoosePatternCardCards(ChoosePatternCardController choosePatternCardController) {
 		super(Orientation.HORIZONTAL, 25, 25);
 		this.choosePatternCardController = choosePatternCardController;
-		
+
 		DatabaseController dbcontroller = new DatabaseController();
 		Player player = new Player(dbcontroller, 0, 0);
 
@@ -55,12 +52,15 @@ public class ChoosePatternCardCards extends FlowPane {
 		this.setMaxWidth(750);
 
 		this.setPadding(new Insets(5, 5, 0, 5));
-		
-		patterncard1 = new Patterncard(choosePatternCardController.getPatternCard().get(0).getIdPatternCard(), dbcontroller, player);
-		patterncard2 = new Patterncard(choosePatternCardController.getPatternCard().get(1).getIdPatternCard(), dbcontroller, player);
-		patterncard3 = new Patterncard(choosePatternCardController.getPatternCard().get(2).getIdPatternCard(), dbcontroller, player);
-		patterncard4 = new Patterncard(choosePatternCardController.getPatternCard().get(3).getIdPatternCard(), dbcontroller, player);
-		
+
+		patterncard1 = new Patterncard(choosePatternCardController.getPatternCard().get(0).getIdPatternCard(),
+				dbcontroller, player);
+		patterncard2 = new Patterncard(choosePatternCardController.getPatternCard().get(1).getIdPatternCard(),
+				dbcontroller, player);
+		patterncard3 = new Patterncard(choosePatternCardController.getPatternCard().get(2).getIdPatternCard(),
+				dbcontroller, player);
+		patterncard4 = new Patterncard(choosePatternCardController.getPatternCard().get(3).getIdPatternCard(),
+				dbcontroller, player);
 
 		patternCardView1 = new PatternCardView(patterncard1);
 		patternCardView2 = new PatternCardView(patterncard2);
@@ -70,14 +70,14 @@ public class ChoosePatternCardCards extends FlowPane {
 		setAlignment(Pos.CENTER);
 
 		setBackground(new Background(new BackgroundFill(SAGRADAPINK, null, null)));
-		
+
 		addCards(4, 5, 6, 3);
 		cardSelects();
 
 	}
-	
+
 	private void cardSelects() {
-		
+
 		rectanglePatternCard1.setOnMouseClicked(e -> {
 			System.out.println("click " + "card1");
 			rectanglePatternCard1.selects();
@@ -115,8 +115,6 @@ public class ChoosePatternCardCards extends FlowPane {
 		});
 
 	}
-	
-
 
 	private void addCards(int drop1, int drop2, int drop3, int drop4) {
 
@@ -130,10 +128,14 @@ public class ChoosePatternCardCards extends FlowPane {
 		BorderPane viewDrops3 = new BorderPane();
 		BorderPane viewDrops4 = new BorderPane();
 
-		FractalDropsView fractalDrops1 = new FractalDropsView(choosePatternCardController.getPatternCard().get(0).getDifficulty());
-		FractalDropsView fractalDrops2 = new FractalDropsView(choosePatternCardController.getPatternCard().get(1).getDifficulty());
-		FractalDropsView fractalDrops3 = new FractalDropsView(choosePatternCardController.getPatternCard().get(2).getDifficulty());
-		FractalDropsView fractalDrops4 = new FractalDropsView(choosePatternCardController.getPatternCard().get(3).getDifficulty());
+		FractalDropsView fractalDrops1 = new FractalDropsView(
+				choosePatternCardController.getPatternCard().get(0).getDifficulty());
+		FractalDropsView fractalDrops2 = new FractalDropsView(
+				choosePatternCardController.getPatternCard().get(1).getDifficulty());
+		FractalDropsView fractalDrops3 = new FractalDropsView(
+				choosePatternCardController.getPatternCard().get(2).getDifficulty());
+		FractalDropsView fractalDrops4 = new FractalDropsView(
+				choosePatternCardController.getPatternCard().get(3).getDifficulty());
 
 		rectanglePatternCard1 = new RectangleCard(widthCard, heightCard, "card1");
 		rectanglePatternCard2 = new RectangleCard(widthCard, heightCard, "card2");
@@ -172,7 +174,6 @@ public class ChoosePatternCardCards extends FlowPane {
 		viewDrops2.setMouseTransparent(true);
 		viewDrops3.setMouseTransparent(true);
 		viewDrops4.setMouseTransparent(true);
-
 
 	}
 

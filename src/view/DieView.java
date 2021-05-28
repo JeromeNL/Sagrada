@@ -72,13 +72,16 @@ public class DieView extends StackPane {
 
 					String dieData = db.getString();
 					System.out.println(dieData);
+					String[] data = dieData.split("\\s+");
+					
 					// Extracting die data from the string.
-					int eyesCount = Integer.valueOf(dieData.substring(0, 1));
-					GameColor dieColor = GameColor.valueOf(dieData.substring(1));
+					int dieNumber = Integer.valueOf(data[0]);
+					GameColor dieColor = GameColor.valueOf(data[1]);
+					int eyesCount = Integer.valueOf(data[2]);
 
 					// Check if die can actually be placed.
 					if (isValidMove(eyesCount, dieColor)) {
-						patternCardField.placeDie(new Die(dieColor, eyesCount, 1));
+						patternCardField.placeDie(new Die(dieColor, eyesCount, dieNumber));
 						drawDieField();
 						diePlaced = true;
 					}
