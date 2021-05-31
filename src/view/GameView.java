@@ -1,6 +1,7 @@
 package view;
 
 
+import controller.ChoosePatternCardController;
 import controller.DatabaseController;
 import controller.MainController;
 import javafx.geometry.Insets;
@@ -64,7 +65,12 @@ public class GameView extends BorderPane {
 
 		setAlignment(topPart, Pos.TOP_CENTER);
 
-		showGame();
+		if (player.getPatterncard() == null && player.getUsername().equals(mainController.getLoggedInUsername())) {
+			showPatternCardChooser();
+		} else if(player.getPatterncard() != null || !player.getUsername().equals(mainController.getLoggedInUsername()) ) {
+			showGame();
+		}
+
 
 	}
 
@@ -79,6 +85,12 @@ public class GameView extends BorderPane {
 	public void showChangeCurrentPlayerView() {
 		getChildren().clear();
 		setCenter(changeCurrentPlayerView);
+	}
+	
+	public void showPatternCardChooser() {
+		getChildren().clear();
+		ChoosePatternCardController choosePatternCardController = new ChoosePatternCardController(dbController);
+		setCenter(new ChoosePatternCardView(choosePatternCardController, mainController, player));
 	}
 
 	public void showGame() {

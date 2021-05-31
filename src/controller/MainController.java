@@ -36,8 +36,7 @@ public class MainController {
 		
 		showLoginScreen();
 
-		createCardsToChoose(); // Creates 4 random cards to
-//		showChoosePatternCard();
+
 		// mainScene.getChoosePatternCardView().getCard(); //will give you an int after
 		// you clicked on kiezen
 
@@ -85,17 +84,6 @@ public class MainController {
 
 	public String getLoggedInUsername() {
 		return loggedInUsername;
-	}
-
-	// click on patterncard and kiezen will give you a cardId
-	// If you only click on kiezen nothing happens
-	public void showChoosePatternCard() {
-		mainScene.showChoosePatternCard(choosePatternCardController);
-	}
-
-	// Creates 4 random cards to choose from
-	public void createCardsToChoose() {
-		choosePatternCardController = new ChoosePatternCardController(dbController);
 	}
 	
 	public void showLoginView() {

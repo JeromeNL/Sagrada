@@ -3,15 +3,7 @@ package view;
 import controller.ChoosePatternCardController;
 import controller.DatabaseController;
 import controller.MainController;
-
-import imageChooser.CompactPrivateObjectiveCardImage;
-import imageChooser.CompactPublicObjectiveCardImage;
-import imageChooser.PrivateObjectiveCardImage;
-import imageChooser.PublicObjectiveCardImage;
-import imageChooser.ToolcardCardImage;
-
 import controller.RegisterLoginController;
-
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import model.Game;
@@ -93,19 +85,8 @@ public class MainScene extends Scene {
 		setRoot(loginView);
 	}
 
-	public void showChoosePatternCard(ChoosePatternCardController choosePatternCardController) {
-		choosePatterncardView = new ChoosePatternCardView(choosePatternCardController, mainController);
-		setRoot(choosePatterncardView);
-
-	}
-
 	public void changeCurrentPlayerView(Game game) {
 		setRoot(new ChangeCurrentPlayerView(game, mainController));
-	}
-
-	public ChoosePatternCardView getChoosePatternCardView() {
-		return choosePatterncardView;
-
 	}
 	
 	public void showLoginScreen() {
