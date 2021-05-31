@@ -1,14 +1,18 @@
 package view;
 
+
+import controller.ChoosePatternCardController;
 import controller.DatabaseController;
 import controller.MainController;
 import javafx.geometry.Insets;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -28,12 +32,15 @@ public class GameView extends BorderPane {
 	private Game game;
 	private Player player;
 	private MainController mainController;
+	private DatabaseController dbController;
 
-	public GameView(Game game, Player player, MainController mainController) {
+	public GameView(Game game, Player player, MainController mainController, DatabaseController dbController) {
 
 		this.game = game;
 		this.player = player;
 		this.mainController = mainController;
+		this.dbController = dbController;
+		
 		Patterncard playerPatterncard = player.getPatterncard();
 
 		objectiveInGameView = new ObjectiveInGameView();
@@ -42,8 +49,8 @@ public class GameView extends BorderPane {
 
 		topPart = new TopPart(game);
 
-		dieSupply = new DieSupply(game.getDiesInSupply());
-		gameButtonView = new GameButtonView(this, game);
+		dieSupply = new DieSupply(game.getDiesInSupply(), player);
+		gameButtonView = new GameButtonView(this, game, mainController);
 		changeCurrentPlayerView = new ChangeCurrentPlayerView(game, mainController);
 
 		if (!mainController.getLoggedInUsername().equals(player.getUsername())) {
@@ -58,37 +65,74 @@ public class GameView extends BorderPane {
 
 		setAlignment(topPart, Pos.TOP_CENTER);
 
-		showGame();
+		if (player.getPatterncard() == null && player.getUsername().equals(mainController.getLoggedInUsername())) {
+			showPatternCardChooser();
+		} else if(player.getPatterncard() != null || !player.getUsername().equals(mainController.getLoggedInUsername()) ) {
+			showGame();
+		}
+
 
 	}
+
+	private void disableElements() {
+		dieSupply.setDisable(true);
+		dieSupply.setOpacity(0.5);
+		gameButtonView.setDisable(true);
+		gameButtonView.setOpacity(0.5);
+	}
+
 
 	public void showChangeCurrentPlayerView() {
 		getChildren().clear();
 		setCenter(changeCurrentPlayerView);
 	}
+	
+	public void showPatternCardChooser() {
+		getChildren().clear();
+		ChoosePatternCardController choosePatternCardController = new ChoosePatternCardController(dbController);
+		setCenter(new ChoosePatternCardView(choosePatternCardController, mainController, player));
+	}
 
 	public void showGame() {
+		// Disable elements when it's not the gameview of the logged in player
+		if (!mainController.getLoggedInUsername().equals(player.getUsername())) {
+			disableElements();
+			objectiveInGameView.hide();
+		}
+		
+		// Disable elements when it's not the player's turn		
+		if (!player.getUsername().equals(game.getCurrentPlayer())) {
+			disableElements();
+		}
+		
 		getChildren().clear();
 
 		VBox topPane = new VBox();
-
-		topPane.getChildren().addAll(topPart, new InfoPane(game, new DatabaseController()));
-		setTop(topPane);
 		topPane.setAlignment(Pos.CENTER);
+		topPane.getChildren().addAll(topPart, new InfoPane(game, dbController));
+
+		setTop(topPane);
 
 		VBox leftPane = new VBox();
 		leftPane.setAlignment(Pos.CENTER);
 		leftPane.setSpacing(25);
 		leftPane.getChildren().addAll(new ChangePlayerButton(), objectiveInGameView);
+		leftPane.setPadding(new Insets(20));
 		setLeft(leftPane);
+
 		setCenter(patternCardView);
-		VBox vBox = new VBox(dieSupply, gameButtonView);
-		setBottom(vBox);
+		
+		Pane rightPane = new Pane();
+		rightPane.setMinWidth(400);
+		setRight(rightPane);
+		
+		VBox bottomPane = new VBox(dieSupply, gameButtonView);
+		setBottom(bottomPane);
 	}
 
 	public void showToolCardView() {
 		getChildren().clear();
-		setCenter(new ToolCardInUseView());
+		setCenter(new ToolCardInUseView(mainController));
 	}
 
 	private class ChangePlayerButton extends HBox {
@@ -129,6 +173,7 @@ public class GameView extends BorderPane {
 		public InfoPane(Game game, DatabaseController dbController) {
 
 			setSpacing(30);
+			setAlignment(Pos.CENTER);
 
 			Label gameStatus = new Label("Gameid: " + game.getIdGame());
 

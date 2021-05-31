@@ -29,6 +29,7 @@ public class PatterncardField {
 	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement,
 			DatabaseController dbController, Player owner) {
 
+
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
 
@@ -36,6 +37,7 @@ public class PatterncardField {
 		this.colorRequirement = colorRequirement;
 		this.dbController = dbController;
 		this.owner = owner;
+
 
 		leftX = xPosition - 1;
 		rightX = xPosition + 1;
@@ -144,6 +146,9 @@ public class PatterncardField {
 			return true;
 		}
 		return false;
+
+	//	dieOnField = dbController.getDie(owner.getIdPlayer(), xPosition, yPosition);
+
 	}
 
 	private boolean hasOtherValueAndColorSurrounding() {
@@ -303,19 +308,25 @@ public class PatterncardField {
 
 		dbController.placeDie(owner.getIdPlayer(), owner.getGameID(), die, xPosition, yPosition);
 
+		owner.setDiePlacedInRound(true);
+
 	}
 
 	// Removes the die from the database.
 	private void removeDieFromDatabase() {
+
 		String query = "UPDATE playerframefield SET dienumber = NULL, diecolor = NULL WHERE position_x = " + xPosition
 				+ " AND position_y = " + yPosition + ";";
 
 		dbController.doUpdateQuery(query);
+
+		
+
 	}
 
 	public void removeDie() {
 		dieOnField = null;
-//		removeDieFromDatabase();
+//		patterncardFieldsController.removeDieFromDatabase();
 	}
 
 	public int getXPosition() {

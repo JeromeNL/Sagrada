@@ -8,7 +8,7 @@ public class FavortokenView extends Circle {
 	public FavortokenView(int x, int y) {
 		
 		this.setRadius(15);
-		this.setFill(Color.RED);
+		this.setFill(Color.PINK);
 		setTranslateY(y);
 		setTranslateX(x);
 		setStroke(Color.BLACK);

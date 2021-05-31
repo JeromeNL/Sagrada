@@ -1,44 +1,56 @@
 package controller;
 
+
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
+
 
 import javafx.stage.Stage;
 import model.Game;
 import model.Player;
+import model.RegisterLoginModel;
 import view.MainScene;
 
 public class MainController {
 
 	private DatabaseController dbController;
 	private Game currentGame;
+
 	private String loggedInUsername = "";
 	private MainScene mainScene;
 
+	private String imageURL;
+	private String combinedURL;
+
+	private ChoosePatternCardController choosePatternCardController;
+
+
+		
+
 	public MainController(Stage stage) {
-		dbController = new DatabaseController();
-		mainScene = new MainScene(this, dbController);
+		dbController = new DatabaseController(this);
+		RegisterLoginController rlc = new RegisterLoginController(dbController);
+		RegisterLoginModel rlm = new RegisterLoginModel(this, dbController, rlc);
+		mainScene = new MainScene(this, dbController, rlm, rlc);		
+		combinedURL = "/Images/Compact Private Objectives/green.png";
+		imageURL = combinedURL.toString();
+		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
+		
+		showLoginScreen();
 
-		login("mandy");
-//		loadGame(759);
-		createGame();
-		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
-		currentGame.invitePlayer("jasper");
-		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
 
-		showChoosePatternCard();
 
-		currentGame.invitePlayer("jerome");
-		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
-		currentGame.invitePlayer("imke");
-		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
-		currentGame.startGame();
-
-		showGameLoggedInPlayer();
+		// mainScene.getChoosePatternCardView().getCard(); //will give you an int after
+		// you clicked on kiezen
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
+		stage.getIcons().add(new Image("/Images/Compact Public Objectives/4.png"));
 		stage.setScene(mainScene);
-		stage.setOnCloseRequest(e->dbController.closeConnection());
+		stage.getIcons().add(toolCardImage);
+		stage.setOnCloseRequest(e -> dbController.closeConnection());
+
 		stage.show();
 	}
 
@@ -77,9 +89,25 @@ public class MainController {
 	public String getLoggedInUsername() {
 		return loggedInUsername;
 	}
-
-	public void showChoosePatternCard() {
-		mainScene.showChoosePatternCard();
+	
+	public void showLoginView() {
+		mainScene.showLoginView();
+	}
+	
+	public void showLoginScreen() {
+		mainScene.showLoginScreen();
+	}
+	
+	public Game getCurrentGame() {
+		return currentGame;
+	}
+	
+	public void showMainMenu() {
+		mainScene.showMainMenu();
 	}
 
+
 }
+
+
+

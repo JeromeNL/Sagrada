@@ -17,8 +17,10 @@ public class DatabaseController {
 
 	private Connection m_Conn;
 	private Statement statement;
+	private MainController mainController;
 
-	public DatabaseController() {
+	public DatabaseController(MainController mainController) {
+		this.mainController = mainController;
 		// Setting up database connection
 		if (loadDataBaseDriver("com.mysql.jdbc.Driver")) {
 			makeConnection();
@@ -46,6 +48,8 @@ public class DatabaseController {
 		try {
 			m_Conn = DriverManager.getConnection(
 					"jdbc:mysql://databases.aii.avans.nl/jwkwette_db2?" + "user=jwkwette&password=Ab12345");
+//			m_Conn = DriverManager.getConnection(
+//			"jdbc:mysql://localhost:3306/sagrada?" + "user=root&password=1234");
 		} catch (SQLException ex) {
 			System.out.println("Kan geen verbinding maken met de database. Lees hieronder waarom:");
 			System.out.println("SQLException: " + ex.getMessage());
@@ -95,7 +99,7 @@ public class DatabaseController {
 		ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + idGame);
 		try {
 			while (rs.next()) {
-				Player player = new Player(this, rs.getInt(1), idGame);
+				Player player = new Player(this, rs.getInt(1), idGame, mainController);
 				players.add(player);
 			}
 		} catch (SQLException e) {
@@ -128,8 +132,9 @@ public class DatabaseController {
 
 	public DiesInSupply getDiesInSupply(int idGame, int roundID) {
 		DiesInSupply diesInSupply = new DiesInSupply();
-		ResultSet allDies = doQuery("SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundID = " + roundID
-				+ " AND roundtrack IS NULL");
+		String allDiesQuery = "SELECT * FROM gamedie WHERE idgame = " + idGame + " AND (roundID = " + roundID
+				+ " OR roundID = " + (roundID - 1) + ")" + " AND roundtrack IS NULL";
+		ResultSet allDies = doQuery(allDiesQuery);
 		try {
 			while (allDies.next()) {
 
@@ -138,14 +143,14 @@ public class DatabaseController {
 
 				String query = "SELECT * FROM playerframefield WHERE idGame = " + idGame + " AND dienumber = "
 						+ dieNumber + " AND diecolor = \"" + stringColor + "\"";
-				
+
 				ResultSet diePlaced = doQuery(query);
 				if (diePlaced.next()) {
 					continue;
 				} else {
 					GameColor gameColor = GameColor.valueOf(stringColor.toUpperCase());
 					Die die = new Die(gameColor, allDies.getInt("eyes"), allDies.getInt("dienumber"));
-					diesInSupply.addDie(die);					
+					diesInSupply.addDie(die);
 				}
 
 			}
@@ -192,9 +197,7 @@ public class DatabaseController {
 				+ die.getColor().toString().toLowerCase() + "\" WHERE idplayer = " + idPlayer + " AND idgame = "
 				+ idGame + " AND position_x = " + xPosition + " AND position_y = " + yPosition;
 
-		if (doUpdateQuery(query) == 1) {
-			System.out.println("Placed DIE in database");
-		} else {
+		if (doUpdateQuery(query) != 1) {
 			System.out.println("Error placing die");
 		}
 	}
@@ -399,13 +402,28 @@ public class DatabaseController {
 		return idPlayer;
 	}
 
+
+	public String getUsernameCreator(int idGame) {
+		String query = "SELECT * FROM player WHERE idgame = " + idGame + " AND playstatus = \"challenger\"";
+		ResultSet rs = doQuery(query);
+		try {
+			while (rs.next()) {
+				return rs.getString("username");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+
 	public void closeConnection() {
 		try {
-			statement.close();
-			m_Conn.close();
+			if (!m_Conn.isClosed()) {
+				m_Conn.close();				
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }

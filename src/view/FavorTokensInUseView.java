@@ -14,25 +14,24 @@ public class FavorTokensInUseView extends Pane{
 		
 		Label label = new Label(Username);
 		
-		label.setTextFill(Color.BLUE);
+		label.setTextFill(Color.BLACK);
 		label.setFont(new Font("Arial", 25));
 		label.setStyle("-fx-font-weight: bold");
 		label.setTranslateY(200);
-		label.setTranslateX(470);
+		label.setTranslateX(480);
 		
-		FavortokenView favortokenView = new FavortokenView(260,500);
+		FavortokenView favortokenView = new FavortokenView(490,500);
 		
 		this.getChildren().addAll(label);
 		
 		int counter =0;
-		int width =410;
+		int width =430;
 		
 		
 		while (counter < favortokenAmount) {
 			
 			width = width +20;
 			
-			System.out.println("test");
 			this.getChildren().add(new FavortokenView (width, 260));
 			
 			counter++;

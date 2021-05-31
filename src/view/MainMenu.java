@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import controller.DatabaseController;
+import controller.RegisterLoginController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -19,10 +20,10 @@ import model.RegisterLoginModel;
 
 public class MainMenu extends Pane {
 	private ImageView imageView;
-
-	public MainMenu(DatabaseController dbController) {
-
-		RegisterLoginModel rlm = new RegisterLoginModel(dbController);
+	private RegisterLoginModel rlm;
+	
+	public MainMenu(DatabaseController dbController, RegisterLoginController registerLoginController, RegisterLoginModel rlm) {
+		this.rlm = rlm;
 
 		InputStream stream;
 		try {
