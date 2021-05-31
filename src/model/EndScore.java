@@ -2,6 +2,8 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import controller.DatabaseController;
 
@@ -9,26 +11,99 @@ public class EndScore {
 
 	private int idGame;
 	private int idPlayer;
+	private int array[];
 
 	public EndScore(int idGame, int idPlayer) {
 		this.idGame = idGame;
 		this.idPlayer = idPlayer;
+		array = new int[5];
+
 	}
-	
+
+	// ZOU MOETEN WERKEN
 	public int publicObjectiveScore() {
-		int publicObjectiveScore = mediumShadesObjectiveScore() + shadeVarietyObjectiveScore() + colomnShadeVarietyObjectiveScore() + colomnColorVarietyObjectiveScore() + darkShadesObjectiveScore() + colorVarietyObjectiveScore() + rowColorVarietyObjectiveScore() + diagonalsObjectiveScore() + lightShadesObjectiveScore() + rowShadeVarietyObjectiveScore();
+		int publicObjectiveScore = mediumShadesObjectiveScore() + shadeVarietyObjectiveScore()
+				+ colomnShadeVarietyObjectiveScore() + colomnColorVarietyObjectiveScore() + darkShadesObjectiveScore()
+				+ colorVarietyObjectiveScore() + rowColorVarietyObjectiveScore() + diagonalsObjectiveScore()
+				+ lightShadesObjectiveScore() + rowShadeVarietyObjectiveScore();
 		return publicObjectiveScore;
 	}
-	
+
+	// ZOU MOETEN WERKEN!
 	public int shadeVarietyObjectiveScore() {
-		int publicObjectiveScore = 0;
-		return publicObjectiveScore;
 
+		int shadeVarietyObjectiveScore = 0;
+		DatabaseController db = new DatabaseController(null);
+
+		ResultSet TotalOnes = db.doQuery(
+				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '"
+						+ idGame + "'  AND playerframefield.idplayer = '" + idPlayer + "'AND gamedie.eyes = 1");
+		int intResultOnes = 0;
+		try {
+			intResultOnes = TotalOnes.getInt(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		ResultSet TotalTwos = db.doQuery(
+				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '"
+						+ idGame + "'  AND playerframefield.idplayer = '" + idPlayer + "'AND gamedie.eyes = 2");
+		int intResultTwos = 0;
+		try {
+			intResultTwos = TotalTwos.getInt(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		ResultSet TotalThrees = db.doQuery(
+				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '\" + idGame + \"'  AND playerframefield.idplayer = '\" + idPlayer + \"'AND gamedie.eyes = 3");
+		int intResultThrees = 0;
+		try {
+			intResultThrees = TotalThrees.getInt(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		ResultSet TotalFours = db.doQuery(
+				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '\" + idGame + \"'  AND playerframefield.idplayer = '\" + idPlayer + \"'AND gamedie.eyes = 4");
+		int intResultFours = 0;
+		try {
+			intResultFours = TotalFours.getInt(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		ResultSet TotalFives = db.doQuery(
+				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '\" + idGame + \"'  AND playerframefield.idplayer = '\" + idPlayer + \"'AND gamedie.eyes = 5");
+		int intResultFives = 0;
+		try {
+			intResultFives = TotalFives.getInt(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		array[0] = intResultOnes;
+		array[1] = intResultTwos;
+		array[2] = intResultThrees;
+		array[3] = intResultFours;
+		array[4] = intResultFives;
+
+		int minValue = array[0];
+		for (int i = 1; i < array.length; i++) {
+			if (array[i] < minValue) {
+				minValue = array[i];
+			}
+		}
+
+		shadeVarietyObjectiveScore = (minValue * 5);
+
+		return shadeVarietyObjectiveScore;
 	}
 
+	// QUERIES AANPASSEN
 	public int mediumShadesObjectiveScore() {
 		int mediumShadesObjectiveScore = 0;
-		DatabaseController db = new DatabaseController();
+		DatabaseController db = new DatabaseController(null);
 
 		ResultSet totalThrees = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
 				+ "'AND idplayer ='" + idPlayer + "'AND dienumber = 3");
@@ -56,21 +131,24 @@ public class EndScore {
 
 	}
 
+	// NOG MAKEN
 	public int colomnShadeVarietyObjectiveScore() {
 		int publicObjectiveScore = 0;
 		return publicObjectiveScore;
 
 	}
 
+	// NOG MAKEN
 	public int colomnColorVarietyObjectiveScore() {
 		int publicObjectiveScore = 0;
 		return publicObjectiveScore;
 
 	}
 
+	// QUERIES AANPASSEN
 	public int darkShadesObjectiveScore() {
 		int darkShadesObjectiveScore = 0;
-		DatabaseController db = new DatabaseController();
+		DatabaseController db = new DatabaseController(null);
 
 		ResultSet totalFives = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
 				+ "'AND idplayer ='" + idPlayer + "'AND dienumber = 5");
@@ -98,9 +176,10 @@ public class EndScore {
 
 	}
 
+	// ZOU MOETEN WERKEN
 	public int colorVarietyObjectiveScore() {
 		int colorVarietyObjectiveScore = 0;
-		DatabaseController db = new DatabaseController();
+		DatabaseController db = new DatabaseController(null);
 
 		ResultSet totalReds = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
 				+ "'AND idplayer ='" + idPlayer + "'AND diecolor = RED");
@@ -134,37 +213,52 @@ public class EndScore {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
-		
+		ResultSet totalPurples = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
+				+ "'AND idplayer ='" + idPlayer + "'AND diecolor = GREEN");
+		int intResultPurples = 0;
+		try {
+			intResultPurples = totalPurples.getInt(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		array[0] = intResultReds;
+		array[1] = intResultBlues;
+		array[2] = intResultGreens;
+		array[3] = intResultYellows;
+		array[4] = intResultPurples;
+
+		int minValue = array[0];
+		for (int i = 1; i < array.length; i++) {
+			if (array[i] < minValue) {
+				minValue = array[i];
+			}
+		}
+
+		colorVarietyObjectiveScore = (minValue * 4);
+		return colorVarietyObjectiveScore;
+
 	}
-
+	
+	// MOET NOG GEMAAKT WORDEN
 	public int rowColorVarietyObjectiveScore() {
 		int publicObjectiveScore = 0;
 		return publicObjectiveScore;
 
 	}
 
+	// MOET NOG GEMAAKT WORDEN
 	public int diagonalsObjectiveScore() {
 		int publicObjectiveScore = 0;
 		return publicObjectiveScore;
 
 	}
 
+	// QUERIES AANPASSEN
 	public int lightShadesObjectiveScore() {
 		int lightShadesObjectiveScore = 0;
-		DatabaseController db = new DatabaseController();
+		DatabaseController db = new DatabaseController(null);
 
 		ResultSet TotalOnes = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
 				+ "'AND idplayer ='" + idPlayer + "'AND dienumber = 1");
@@ -191,20 +285,24 @@ public class EndScore {
 		return lightShadesObjectiveScore;
 	}
 
+	// MOET NOG GEMAAKT WORDEN
 	public int rowShadeVarietyObjectiveScore() {
 		int rowShadeVarietyObjectiveScore = 0;
 		return rowShadeVarietyObjectiveScore;
 
 	}
-
+	
+	// ZOU MOETEN WERKEN
 	public int privateObjectiveScore() {
 		int privateObjectiveScore = 0;
-		DatabaseController db = new DatabaseController();
+		DatabaseController db = new DatabaseController(null);
 		ResultSet privateColor = db.doQuery("SELECT private_objectivecard_color FROM player WHERE idplayer = '"
 				+ idPlayer + "' AND idgame ='" + idGame);
 
-		ResultSet privateScore = db.doQuery("SELECT sum(dienumber) FROM playerframefield WHERE idgame = '" + 487
-				+ "'AND idplayer ='" + 962 + "' AND diecolor ='" + privateColor);
+		ResultSet privateScore = db.doQuery(
+				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor AND playerframefield.idgame = gamedie.idgame WHERE playerframefield.idgame = '"
+						+ idGame + "' AND playerframefield.idplayer = '" + idPlayer
+						+ "' AND playerframefield.diecolor = '" + privateColor + "'");
 
 		try {
 			privateScore.getInt(0);
@@ -216,9 +314,10 @@ public class EndScore {
 		return privateObjectiveScore;
 	}
 
+	// ZOU MOETEN WERKEN
 	public int favorToken() {
 		int favorToken = 0;
-		DatabaseController db = new DatabaseController();
+		DatabaseController db = new DatabaseController(null);
 		ResultSet amountOfFavorTokens = db.doQuery("SELECT count(gametoolcard) FROM gamefavortoken WHERE idgame ='"
 				+ idGame + "' AND idplayer = '" + idPlayer + "' AND gametoolcard = NULL");
 
@@ -233,9 +332,10 @@ public class EndScore {
 
 	}
 
+	// ZOU MOETEN WERKEN
 	public int emptyTileScore() {
 		int emptyScore = 0;
-		DatabaseController db = new DatabaseController();
+		DatabaseController db = new DatabaseController(null);
 
 		ResultSet totalTilesFilled = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
 				+ "'AND idplayer ='" + idPlayer);
@@ -254,7 +354,8 @@ public class EndScore {
 
 		return emptyScore;
 	}
-
+	
+	// ZOU MOETEN WERKEN
 	public int totalEndScore() {
 		int totalScore = publicObjectiveScore() + privateObjectiveScore() + favorToken() + emptyTileScore();
 		return totalScore;
