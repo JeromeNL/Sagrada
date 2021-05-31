@@ -1,13 +1,7 @@
-package controller;
+package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Random;
-
-import javafx.scene.paint.Color;
-import model.Die;
-import model.PatterncardField;
-import view.DieView;
+import controller.DatabaseController;
 
 public class DieBagModel {
 	DatabaseController databaseController;
@@ -119,25 +113,11 @@ public class DieBagModel {
 			randomizeNumber();
 
 			System.out.println(dieEyes + " " + dieColor + " " + bagamount);
-			System.out.println(blueCounter + " " + yellowCounter + " " + greenCounter + " " + redCounter + " " + purpleCounter);
-
+			System.out.println(
+					blueCounter + " " + yellowCounter + " " + greenCounter + " " + redCounter + " " + purpleCounter);
 
 		}
 
-	}
-
-	public void insertDie() {
-
-		databaseController = new DatabaseController();
-		databaseController.doUpdateQuery("SELECT * FROM public_objectivecard where points = 5");
-
-	}
-
-	private void addDieToDatabase(int idgame, int dienumber, String diecolor, int eyes, int roundtrack, int roundID) {
-		String query = "INSERT INTO gamedie VALUES (" + idgame + ", " + dienumber + ", " + diecolor + ", " + eyes + ", "
-				+ roundtrack + ", " + roundID + "\");";
-
-		databaseController.doUpdateQuery(query);
 	}
 
 }

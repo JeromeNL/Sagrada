@@ -14,7 +14,7 @@ public class EndScore {
 		this.idGame = idGame;
 		this.idPlayer = idPlayer;
 	}
-
+	
 	public int publicObjectiveScore() {
 		int publicObjectiveScore = mediumShadesObjectiveScore() + shadeVarietyObjectiveScore() + colomnShadeVarietyObjectiveScore() + colomnColorVarietyObjectiveScore() + darkShadesObjectiveScore() + colorVarietyObjectiveScore() + rowColorVarietyObjectiveScore() + diagonalsObjectiveScore() + lightShadesObjectiveScore() + rowShadeVarietyObjectiveScore();
 		return publicObjectiveScore;
@@ -146,7 +146,7 @@ public class EndScore {
 		
 		
 		
-		return colorVarietyObjectiveScore;
+
 		
 	}
 
