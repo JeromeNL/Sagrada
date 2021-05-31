@@ -20,7 +20,9 @@ public class EndScore {
 
 	}
 
+
 	// ZOU MOETEN WERKEN
+
 	public int publicObjectiveScore() {
 		int publicObjectiveScore = mediumShadesObjectiveScore() + shadeVarietyObjectiveScore()
 				+ colomnShadeVarietyObjectiveScore() + colomnColorVarietyObjectiveScore() + darkShadesObjectiveScore()
@@ -29,7 +31,9 @@ public class EndScore {
 		return publicObjectiveScore;
 	}
 
+
 	// ZOU MOETEN WERKEN!
+
 	public int shadeVarietyObjectiveScore() {
 
 		int shadeVarietyObjectiveScore = 0;
@@ -209,13 +213,12 @@ public class EndScore {
 				+ "'AND idplayer ='" + idPlayer + "'AND diecolor = YELLOW");
 		int intResultYellows = 0;
 		try {
-			intResultGreens = totalYellows.getInt(0);
+			intResultYellows = totalYellows.getInt(0);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		ResultSet totalPurples = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
-				+ "'AND idplayer ='" + idPlayer + "'AND diecolor = GREEN");
+				+ "'AND idplayer ='" + idPlayer + "'AND diecolor = YELLOW");
 		int intResultPurples = 0;
 		try {
 			intResultPurples = totalPurples.getInt(0);
@@ -223,24 +226,23 @@ public class EndScore {
 			e.printStackTrace();
 		}
 
-		array[0] = intResultReds;
-		array[1] = intResultBlues;
-		array[2] = intResultGreens;
-		array[3] = intResultYellows;
-		array[4] = intResultPurples;
-
-		int minValue = array[0];
-		for (int i = 1; i < array.length; i++) {
-			if (array[i] < minValue) {
-				minValue = array[i];
+		int[] KleurArray;	        // declare an array of integers
+		KleurArray = new int[5];
+		KleurArray[0] = intResultReds;
+		KleurArray[1] = intResultBlues;
+		KleurArray[2] = intResultGreens;
+		KleurArray[3] = intResultYellows;
+		KleurArray[4] = intResultPurples;
+		int max = 0;
+		for (int i = 0; i < KleurArray.length; i++) {
+			  if (KleurArray[i] > max) {
+			     max = KleurArray[i];
+			  }
 			}
-		}
-
-		colorVarietyObjectiveScore = (minValue * 4);
+		colorVarietyObjectiveScore = max;
 		return colorVarietyObjectiveScore;
-
 	}
-	
+
 	// MOET NOG GEMAAKT WORDEN
 	public int rowColorVarietyObjectiveScore() {
 		int publicObjectiveScore = 0;
