@@ -10,6 +10,9 @@ public class PatterncardField {
 
 	private int xPosition; // range: 1 to 5
 	private int yPosition; // range: 1 to 4
+
+	private GameColor selectedDieColor;
+	private int selectedDieEyes;
 //	private int gameID = 487;
 //	private int playerID = 962; // 961
 
@@ -29,7 +32,6 @@ public class PatterncardField {
 	public PatterncardField(int xPosition, int yPosition, int eyesCountRequirement, GameColor colorRequirement,
 			DatabaseController dbController, Player owner) {
 
-
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
 
@@ -37,7 +39,6 @@ public class PatterncardField {
 		this.colorRequirement = colorRequirement;
 		this.dbController = dbController;
 		this.owner = owner;
-
 
 		leftX = xPosition - 1;
 		rightX = xPosition + 1;
@@ -103,9 +104,9 @@ public class PatterncardField {
 		int value = 0;
 		while (amountOfDies.next()) {
 			value = ((Number) amountOfDies.getObject(1)).intValue();
+			System.out.println("isFirst Turn: " + value);
 		}
 
-		value = 1;
 		if (value == 0) {
 			return true;
 		} else {
@@ -147,7 +148,7 @@ public class PatterncardField {
 		}
 		return false;
 
-	//	dieOnField = dbController.getDie(owner.getIdPlayer(), xPosition, yPosition);
+		// dieOnField = dbController.getDie(owner.getIdPlayer(), xPosition, yPosition);
 
 	}
 
@@ -209,7 +210,8 @@ public class PatterncardField {
 	}
 
 	private boolean isAdjacentToDie() throws SQLException {
-		boolean isAdjacent;
+		// boolean isAdjacent;
+		// horizontal/vertical checks
 		if (isFieldEmpty(yPosition, leftX) == false) {
 			return true;
 		} else if (isFieldEmpty(yPosition, rightX) == false) {
@@ -218,34 +220,27 @@ public class PatterncardField {
 			return true;
 		} else if (isFieldEmpty(bottomY, xPosition) == false) {
 			return true;
+		}
+		// diagonal checks
+		else if (isFieldEmpty((yPosition + 1), (xPosition - 1)) == false) {
+			return true;
+		} else if (isFieldEmpty((yPosition + 1), xPosition + 1) == false) {
+			return true;
+		} else if (isFieldEmpty((yPosition - 1), xPosition + 1) == false) {
+			return true;
+		} else if (isFieldEmpty((yPosition - 1), xPosition - 1) == false) {
+			return true;
 		} else {
 			return false;
 		}
-
-//		if (isFieldEmpty(yPosition, leftX) || isFieldEmpty(yPosition, rightX) || isFieldEmpty(topY, xPosition)
-//				|| isFieldEmpty(bottomY, xPosition) == false) {
-//			System.out.println("surrounding");
-//			System.out.println(yPosition + " " + leftX);
-//			System.out.println(yPosition + " " + rightX);
-//			System.out.println(topY + " " + xPosition);
-//			System.out.println(bottomY + " " + xPosition);
-//			isAdjacent = true;
-//			System.out.println(isAdjacent);
-//			return isAdjacent;
-//		} else {
-//			isAdjacent = false;
-//			System.out.println(isAdjacent);
-//			return isAdjacent;
-//		}
-
 	}
 
 	public boolean isFieldEmpty(int y, int x) throws SQLException {
 
 		boolean isEmpty = false;
 		System.out.println("start isFieldEmpty Method");
-		if (leftX < 1 || rightX > 5 || topY < 1 || bottomY > 4) {
-			System.out.println(x + " " + y);
+		if (x < 1 || x > 5 || y < 1 || y > 4) {
+			System.out.println("x: " + x + " y: " + y);
 			return true;
 		} else {
 
@@ -258,7 +253,7 @@ public class PatterncardField {
 
 			while (zeroOrOneDie.next()) {
 				value = ((Number) zeroOrOneDie.getObject(1)).intValue();
-				System.out.println("value of fieldempty :" + value);
+				System.out.println("value of fieldempty (0 = empty, 1 = filled) :" + value);
 				System.out.println(x + " " + y);
 			}
 			System.out.println(value);
@@ -292,35 +287,8 @@ public class PatterncardField {
 
 	public void placeDie(Die die) {
 		this.dieOnField = die;
-
-//		addDieToDatabase(playerID, gameID, die);
-	}
-
-	// Adds a row to the playerframefield table so the placement of a die is saved
-	// to the database.
-	private void addDieToDatabase(int playerID, int gameID, Die die) {
-		// playerframfield has columns : idplayer, position_x, position_y, idgame,
-		// dienumber, diecolor
-		String query = "INSERT INTO playerframefield VALUES (" + playerID + ", " + xPosition + ", " + yPosition + ", "
-				+ gameID + ", " + die.getEyesCount() + ", \"" + die.getColor() + "\");";
-
-		dbController.doUpdateQuery(query);
-
 		dbController.placeDie(owner.getIdPlayer(), owner.getGameID(), die, xPosition, yPosition);
-
 		owner.setDiePlacedInRound(true);
-
-	}
-
-	// Removes the die from the database.
-	private void removeDieFromDatabase() {
-
-		String query = "UPDATE playerframefield SET dienumber = NULL, diecolor = NULL WHERE position_x = " + xPosition
-				+ " AND position_y = " + yPosition + ";";
-
-		dbController.doUpdateQuery(query);
-
-		
 
 	}
 

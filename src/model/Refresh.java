@@ -19,7 +19,7 @@ public class Refresh extends Thread {
 	
 	public void run() {
 		while(true) {
-			int gameID = game.getGameID();
+			int gameID = game.getIdGame();
 			int currentPlayerID = dbController.getCurrentPlayerID(gameID);
 			int currentRoundID = dbController.getRoundID(gameID);
 			
