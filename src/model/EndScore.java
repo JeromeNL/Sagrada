@@ -14,12 +14,15 @@ public class EndScore {
 		this.idGame = idGame;
 		this.idPlayer = idPlayer;
 	}
-	
+
 	public int publicObjectiveScore() {
-		int publicObjectiveScore = mediumShadesObjectiveScore() + shadeVarietyObjectiveScore() + colomnShadeVarietyObjectiveScore() + colomnColorVarietyObjectiveScore() + darkShadesObjectiveScore() + colorVarietyObjectiveScore() + rowColorVarietyObjectiveScore() + diagonalsObjectiveScore() + lightShadesObjectiveScore() + rowShadeVarietyObjectiveScore();
+		int publicObjectiveScore = mediumShadesObjectiveScore() + shadeVarietyObjectiveScore()
+				+ colomnShadeVarietyObjectiveScore() + colomnColorVarietyObjectiveScore() + darkShadesObjectiveScore()
+				+ colorVarietyObjectiveScore() + rowColorVarietyObjectiveScore() + diagonalsObjectiveScore()
+				+ lightShadesObjectiveScore() + rowShadeVarietyObjectiveScore();
 		return publicObjectiveScore;
 	}
-	
+
 	public int shadeVarietyObjectiveScore() {
 		int publicObjectiveScore = 0;
 		return publicObjectiveScore;
@@ -130,24 +133,11 @@ public class EndScore {
 				+ "'AND idplayer ='" + idPlayer + "'AND diecolor = YELLOW");
 		int intResultYellows = 0;
 		try {
-			intResultGreens = totalYellows.getInt(0);
+			intResultYellows = totalYellows.getInt(0);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
-		
 	}
 
 	public int rowColorVarietyObjectiveScore() {
