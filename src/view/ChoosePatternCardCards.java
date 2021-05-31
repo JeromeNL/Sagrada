@@ -42,10 +42,10 @@ public class ChoosePatternCardCards extends FlowPane {
 		this.setPadding(new Insets(5, 5, 0, 5));
 		
 
-		patterncard1 = new Patterncard(2, dbController);
-		patterncard2 = new Patterncard(5, dbController);
-		patterncard3 = new Patterncard(4, dbController);
-		patterncard4 = new Patterncard(2, dbController);
+//		patterncard1 = new Patterncard(2, dbController);
+//		patterncard2 = new Patterncard(5, dbController);
+//		patterncard3 = new Patterncard(4, dbController);
+//		patterncard4 = new Patterncard(2, dbController);
 
 		
 

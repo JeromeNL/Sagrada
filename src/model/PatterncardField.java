@@ -95,8 +95,8 @@ public class PatterncardField {
 	// All
 	private boolean isFirstTurn() throws SQLException {
 		// Check of de steen die gelegd gaat worden de eerste steen op het bord is.
-		DatabaseController db = new DatabaseController();
-		ResultSet amountOfDies = db.doQuery("SELECT count(diecolor) FROM playerframefield WHERE idgame ='"
+
+		ResultSet amountOfDies = dbController.doQuery("SELECT count(diecolor) FROM playerframefield WHERE idgame ='"
 				+ owner.getGameID() + "' AND idplayer ='" + owner.getIdPlayer() + "'");
 		int value = 0;
 		while (amountOfDies.next()) {
@@ -149,48 +149,74 @@ public class PatterncardField {
 	private boolean hasOtherValueAndColorSurrounding() {
 		// Check of de omliggende stenen een andere kleur/waarde hebben.
 
-		if (isAdjacentFieldSameColor(yPosition, leftX) && isAdjacentFieldSameColor(yPosition, rightX)
-				&& isAdjacentFieldSameColor(topY, xPosition) && isAdjacentFieldSameColor(bottomY, yPosition) == false) {
-			System.out.println("is adjacent to field with same color");
-			if (isAdjacentFieldSameValue(yPosition, leftX) && isAdjacentFieldSameValue(yPosition, rightX)
-					&& isAdjacentFieldSameValue(topY, xPosition)
+		if (isAdjacentFieldSameColor(yPosition, leftX) == false && isAdjacentFieldSameColor(yPosition, rightX) == false
+				&& isAdjacentFieldSameColor(topY, xPosition) == false
+				&& isAdjacentFieldSameColor(bottomY, yPosition) == false) {
+
+			System.out.println("Not adjacent to same color");
+
+			if (isAdjacentFieldSameValue(yPosition, leftX) == false
+					&& isAdjacentFieldSameValue(yPosition, rightX) == false
+					&& isAdjacentFieldSameValue(topY, xPosition) == false
 					&& isAdjacentFieldSameValue(bottomY, yPosition) == false) {
+
+				System.out.println("Not adjacent to same value");
 				return true;
+			} else {
+				System.out.println("INVALID! Adjacent to same value and/or color");
+				return false;
 			}
+		}
+
+		else {
+			System.out.println("INVALID! Adjacent to same value and/or color");
+			return false;
+		}
+
+	}
+
+	private boolean isAdjacentFieldSameColor(int x, int y) {
+		// check: same color surrounding
+		boolean isSameColor = false;
+		System.out.println("start isSameColor Method");
+		if (leftX < 1 || rightX > 5 || topY < 1 || bottomY > 4) {
+			System.out.println(x + " " + y);
+			return false;
+		} else {
 
 		}
 
 		return false;
 	}
 
-	private boolean isAdjacentFieldSameColor(int x, int y) {
-		// check: same color surrounding
-		return true;
-	}
-
 	private boolean isAdjacentFieldSameValue(int x, int y) {
 		// check: same value surrounding
-		return true;
+		boolean isSameValue = false;
+		System.out.println("start isSameValue Method");
+		if (leftX < 1 || rightX > 5 || topY < 1 || bottomY > 4) {
+			System.out.println(x + " " + y);
+			return false;
+		} else {
+
+		}
+
+		return false;
 	}
 
 	private boolean isAdjacentToDie() throws SQLException {
 		boolean isAdjacent;
-		if(isFieldEmpty(yPosition, leftX) == false){
+		if (isFieldEmpty(yPosition, leftX) == false) {
 			return true;
-		}
-		else if(isFieldEmpty(yPosition, rightX) == false){
+		} else if (isFieldEmpty(yPosition, rightX) == false) {
 			return true;
-		}
-		else if(isFieldEmpty(topY, xPosition) == false) {
+		} else if (isFieldEmpty(topY, xPosition) == false) {
 			return true;
-		}
-		else if(isFieldEmpty(bottomY, xPosition) == false) {
+		} else if (isFieldEmpty(bottomY, xPosition) == false) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
-		
+
 //		if (isFieldEmpty(yPosition, leftX) || isFieldEmpty(yPosition, rightX) || isFieldEmpty(topY, xPosition)
 //				|| isFieldEmpty(bottomY, xPosition) == false) {
 //			System.out.println("surrounding");
@@ -214,21 +240,21 @@ public class PatterncardField {
 		boolean isEmpty = false;
 		System.out.println("start isFieldEmpty Method");
 		if (leftX < 1 || rightX > 5 || topY < 1 || bottomY > 4) {
-			System.out.println(x +" "+ y);
+			System.out.println(x + " " + y);
 			return true;
 		} else {
 
-			DatabaseController db = new DatabaseController();
-			ResultSet zeroOrOneDie = db.doQuery(
-					"select COUNT(dienumber) from playerframefield where  idgame = '" + owner.getGameID() + "' AND idplayer = '"
-							+ owner.getIdPlayer() + "' AND position_y = '" + y + "' AND position_x = '" + x + "'");
+			ResultSet zeroOrOneDie = dbController
+					.doQuery("select COUNT(dienumber) from playerframefield where  idgame = '" + owner.getGameID()
+							+ "' AND idplayer = '" + owner.getIdPlayer() + "' AND position_y = '" + y
+							+ "' AND position_x = '" + x + "'");
 
 			int value = 0;
-			
+
 			while (zeroOrOneDie.next()) {
 				value = ((Number) zeroOrOneDie.getObject(1)).intValue();
 				System.out.println("value of fieldempty :" + value);
-				System.out.println(x +" "+ y);
+				System.out.println(x + " " + y);
 			}
 			System.out.println(value);
 			if (value == 0) {
