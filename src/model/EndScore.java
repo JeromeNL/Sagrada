@@ -60,7 +60,8 @@ public class EndScore {
 		}
 
 		ResultSet TotalThrees = db.doQuery(
-				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '\" + idGame + \"'  AND playerframefield.idplayer = '\" + idPlayer + \"'AND gamedie.eyes = 3");
+				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '" 
+						+ idGame + "'  AND playerframefield.idplayer = '" + idPlayer + "'AND gamedie.eyes = 3");
 		int intResultThrees = 0;
 		try {
 			intResultThrees = TotalThrees.getInt(0);
@@ -69,7 +70,8 @@ public class EndScore {
 		}
 
 		ResultSet TotalFours = db.doQuery(
-				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '\" + idGame + \"'  AND playerframefield.idplayer = '\" + idPlayer + \"'AND gamedie.eyes = 4");
+				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '" 
+						+ idGame + "'  AND playerframefield.idplayer = '" + idPlayer + "'AND gamedie.eyes = 4");
 		int intResultFours = 0;
 		try {
 			intResultFours = TotalFours.getInt(0);
@@ -78,7 +80,8 @@ public class EndScore {
 		}
 
 		ResultSet TotalFives = db.doQuery(
-				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '\" + idGame + \"'  AND playerframefield.idplayer = '\" + idPlayer + \"'AND gamedie.eyes = 5");
+				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '" 
+						+ idGame + "'  AND playerframefield.idplayer = '" + idPlayer + "'AND gamedie.eyes = 5");
 		int intResultFives = 0;
 		try {
 			intResultFives = TotalFives.getInt(0);
@@ -104,21 +107,21 @@ public class EndScore {
 		return shadeVarietyObjectiveScore;
 	}
 
-	// QUERIES AANPASSEN
+	// ZOU MOETEN WERKEN
 	public int mediumShadesObjectiveScore() {
 		int mediumShadesObjectiveScore = 0;
 		DatabaseController db = new DatabaseController(null);
 
-		ResultSet totalThrees = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
-				+ "'AND idplayer ='" + idPlayer + "'AND dienumber = 3");
+		ResultSet totalThrees = db.doQuery("SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '" 
+				+ idGame + "'  AND playerframefield.idplayer = '" + idPlayer + "'AND gamedie.eyes = 3");
 		int intResultThrees = 0;
 		try {
 			intResultThrees = totalThrees.getInt(0);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		ResultSet TotalFours = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
-				+ "'AND idplayer ='" + idPlayer + "'AND dienumber = 4");
+		ResultSet TotalFours = db.doQuery("SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '" 
+				+ idGame + "'  AND playerframefield.idplayer = '" + idPlayer + "'AND gamedie.eyes = 4");
 		int intResultFours = 0;
 		try {
 			intResultFours = TotalFours.getInt(0);
@@ -149,21 +152,21 @@ public class EndScore {
 
 	}
 
-	// QUERIES AANPASSEN
+	// ZOU MOETEN WERKEN
 	public int darkShadesObjectiveScore() {
 		int darkShadesObjectiveScore = 0;
 		DatabaseController db = new DatabaseController(null);
 
-		ResultSet totalFives = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
-				+ "'AND idplayer ='" + idPlayer + "'AND dienumber = 5");
+		ResultSet totalFives = db.doQuery("SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '" 
+				+ idGame + "'  AND playerframefield.idplayer = '" + idPlayer + "'AND gamedie.eyes = 5");
 		int intResultFives = 0;
 		try {
 			intResultFives = totalFives.getInt(0);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		ResultSet totalSixes = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
-				+ "'AND idplayer ='" + idPlayer + "'AND dienumber = 6");
+		ResultSet totalSixes = db.doQuery("\"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = ' "
+				 + idGame + "'  AND playerframefield.idplayer = '" + idPlayer + "'AND gamedie.eyes = 6");
 		int intResultSixes = 0;
 		try {
 			intResultSixes = totalSixes.getInt(0);
@@ -257,21 +260,21 @@ public class EndScore {
 
 	}
 
-	// QUERIES AANPASSEN
+	// ZOU MOETEN WERKEN
 	public int lightShadesObjectiveScore() {
 		int lightShadesObjectiveScore = 0;
 		DatabaseController db = new DatabaseController(null);
 
-		ResultSet TotalOnes = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
-				+ "'AND idplayer ='" + idPlayer + "'AND dienumber = 1");
+		ResultSet TotalOnes = db.doQuery("SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '" 
+				+ idGame + "'  AND playerframefield.idplayer = '" + idPlayer + "'AND gamedie.eyes = 1");
 		int intResultOnes = 0;
 		try {
 			intResultOnes = TotalOnes.getInt(0);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		ResultSet TotalTwos = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
-				+ "'AND idplayer ='" + idPlayer + "'AND dienumber = 2");
+		ResultSet TotalTwos = db.doQuery("SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '" 
+				+ idGame + "'  AND playerframefield.idplayer = '" + idPlayer + "'AND gamedie.eyes = 2");
 		int intResultTwos = 0;
 		try {
 			intResultTwos = TotalTwos.getInt(0);
@@ -349,7 +352,7 @@ public class EndScore {
 			e.printStackTrace();
 		}
 
-		emptyScore = 20 - intResult;
+		emptyScore = ((20 - intResult) * -1);
 		// query voor opvragen vakjes van speler.
 		// controleren hoeveel er null zijn (diecolor of dienumber)
 		// aantal null == aantal punten erbij
@@ -361,6 +364,12 @@ public class EndScore {
 	public int totalEndScore() {
 		int totalScore = publicObjectiveScore() + privateObjectiveScore() + favorToken() + emptyTileScore();
 		return totalScore;
+	}
+	
+	// ZOU MOETEN WERKEN
+	public int scoreDuringGame() {
+		int scoreDuringGame = publicObjectiveScore();
+		return scoreDuringGame;
 	}
 
 }
