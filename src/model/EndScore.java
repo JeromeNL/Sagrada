@@ -137,7 +137,30 @@ public class EndScore {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		ResultSet totalPurples = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
+				+ "'AND idplayer ='" + idPlayer + "'AND diecolor = YELLOW");
+		int intResultPurples = 0;
+		try {
+			intResultPurples = totalPurples.getInt(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		int[] KleurArray;	        // declare an array of integers
+		KleurArray = new int[5];
+		KleurArray[0] = intResultReds;
+		KleurArray[1] = intResultBlues;
+		KleurArray[2] = intResultGreens;
+		KleurArray[3] = intResultYellows;
+		KleurArray[4] = intResultPurples;
+		int max = 0;
+		for (int i = 0; i < KleurArray.length; i++) {
+			  if (KleurArray[i] > max) {
+			     max = KleurArray[i];
+			  }
+			}
+		colorVarietyObjectiveScore = max;
+		return colorVarietyObjectiveScore;
 	}
 
 	public int rowColorVarietyObjectiveScore() {
