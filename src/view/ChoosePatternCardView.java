@@ -1,6 +1,7 @@
 package view;
 
 import controller.ChoosePatternCardController;
+import controller.MainController;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -15,9 +16,11 @@ public class ChoosePatternCardView extends BorderPane {
 
 	private int cardId;
 	private boolean hasCard;
+	private MainController mainController;
 
-	public ChoosePatternCardView(ChoosePatternCardController choosePatternCardController) {
-		choosePatternCardCards = new ChoosePatternCardCards(choosePatternCardController);
+	public ChoosePatternCardView(ChoosePatternCardController choosePatternCardController, MainController mainController) {
+		this.mainController = mainController;
+		choosePatternCardCards = new ChoosePatternCardCards(choosePatternCardController, mainController);
 		button = new ChooseButton();
 		hasCard = false;
 

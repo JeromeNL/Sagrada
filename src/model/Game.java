@@ -32,6 +32,7 @@ public class Game {
 
 
 	private String usernameCreator;
+	
 
 	// Constructor to load an existing game.
 	public Game(int idGame, DatabaseController dbController, MainController mainController) {
@@ -44,8 +45,12 @@ public class Game {
 		objectiveCards = new ObjectiveCard[3];
 		players = new ArrayList<Player>();
 		diesInSupply = new DiesInSupply();
+		getUsernameCreator();
 
 		loadGame();
+		
+		Refresh refreshThread = new Refresh(this, mainController, dbController);
+		refreshThread.start();
 	}
 
 	// Constructor to create a new game.
@@ -67,6 +72,13 @@ public class Game {
 		diesInSupply = new DiesInSupply();
 
 		setupGame();
+		
+		Refresh refreshThread = new Refresh(this, mainController, dbController);
+		refreshThread.start();
+	}
+
+	private void getUsernameCreator() {
+		usernameCreator = dbController.getUsernameCreator(getGameID());
 	}
 
 	// Set up a new game.
@@ -123,7 +135,7 @@ public class Game {
 
 		boolean isCreator = true;
 		GameColor privateObjectiveCardColor = getObjectiveCardColor();
-		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController);
+		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController, mainController);
 		players.add(creator);
 	}
 
@@ -138,7 +150,7 @@ public class Game {
 		// Check if there is room for more players.
 		if (players.size() < 4) {
 			GameColor privateObjectiveCardColor = getObjectiveCardColor();
-			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController);
+			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController, mainController);
 			players.add(newPlayer);
 		}
 	}
@@ -147,7 +159,7 @@ public class Game {
 	// database.
 	public void addToDatabase() {
 
-		gameController = new GameController(dbController);
+		gameController = new GameController(dbController, mainController);
 
 		// Get an available gameID
 		newIdGame = gameController.getAvailableGameID();
@@ -279,12 +291,12 @@ public class Game {
 		dbController.setRoundID(idGame, nextRoundID);
 
 		if (nextRoundID % 2 != 0) {
-			System.out.println(getClass() + " - new die supply created");
-			createDiesInSupply();
-			loadDiesInSupply();
-			mainController.showGame(0);
+			if (usernameCreator.equals(mainController.getLoggedInUsername())) {
+				createDiesInSupply();
+				loadDiesInSupply();
+				mainController.showGame(0);				
+			}
 		}
-		System.out.println(getClass() + " - Next roundID");
 	}
 
 	private void endGame() {
@@ -340,11 +352,17 @@ public class Game {
 				}
 				newPlayerID = dbController.getPlayerID(newSeqNr, idGame);
 				dbController.setTurnIdPlayer(idGame, newPlayerID);
-
-				System.out.println(getClass() + " - Next turn");
 				return;
 			}
 		}
 	}
-
+	
+	public String getCurrentPlayer() {
+		int currentPlayerID = dbController.getCurrentPlayerID(idGame);
+		return dbController.getUsername(currentPlayerID);
+	}
+	
+	public int getRoundID() {
+		return dbController.getRoundID(idGame);
+	}
 }

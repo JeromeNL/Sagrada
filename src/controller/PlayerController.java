@@ -11,9 +11,11 @@ import model.PlayerStatus;
 public class PlayerController {
 
 	private DatabaseController dbController;
+	private MainController mainController;
 
-	public PlayerController(DatabaseController dbController) {
+	public PlayerController(DatabaseController dbController, MainController mainController) {
 		this.dbController = dbController;
+		this.mainController = mainController;
 	}
 
 	// Add a playerframefield row in the database.
@@ -57,9 +59,9 @@ public class PlayerController {
 	}
 
 
-	public static ArrayList<PlayerStats> AllPlayerStats() throws SQLException {
+	public ArrayList<PlayerStats> AllPlayerStats() throws SQLException {
 		ArrayList<PlayerStats> stats = new ArrayList<>();
-		DatabaseController db = new DatabaseController();
+		DatabaseController db = new DatabaseController(mainController);
 		ResultSet res = db.doQuery("SELECT p.username, p.idplayer, COALESCE(MAX(p.score), 0) as highscore,\n"
 				+ "(SELECT dienumber FROM playerframefield WHERE idplayer = p.idplayer GROUP BY dienumber ORDER BY COUNT(*) DESC LIMIT 1) as mostUsedDieValue,\n"
 				+ "(SELECT diecolor FROM playerframefield WHERE idplayer = p.idplayer GROUP BY diecolor ORDER BY COUNT(*) DESC LIMIT 1) as mostUsedDieColor,\n"

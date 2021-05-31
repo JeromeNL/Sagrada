@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import model.Game;
 import model.Patterncard;
 import model.Player;
+import model.RegisterLoginModel;
 
 public class MainScene extends Scene {
 
@@ -28,13 +29,16 @@ public class MainScene extends Scene {
 	private ChoosePatternCardView choosePatterncardView;
 	private boolean noCard;
 	private DatabaseController dbController;
+	private RegisterLoginModel rlm;
 	private RegisterLoginController registerLoginController;
 
-	public MainScene(MainController mainController, DatabaseController dbController) {
+	public MainScene(MainController mainController, DatabaseController dbController, RegisterLoginModel rlm, RegisterLoginController rlc) {
 		super(new Pane(), 1280, 720);
 		this.mainController = mainController;
 
 		this.dbController = dbController;
+		this.rlm = rlm;
+		this.registerLoginController = rlc;
 
 //		LobbyView lobbyView = new LobbyView();
 //		setRoot(lobbyView);
@@ -47,8 +51,7 @@ public class MainScene extends Scene {
 	public void showGame(Game game, int playerNR) {
 
 		Player playerShownOnScreen = game.getPlayers().get(playerNR); // creator of the game
-
-		GameView gameView = new GameView(game, playerShownOnScreen,mainController); 
+		GameView gameView = new GameView(game, playerShownOnScreen, mainController, dbController); 
 		setRoot(gameView);
 		
 	
@@ -83,23 +86,17 @@ public class MainScene extends Scene {
 		
 		
 	// LATEN STAAN ALSJEBLIEFT
-	
-		
-		
-		
-		
-		
 
 	}
 
 	public void showLoginView() {
 		RegisterLoginController registerLoginController = new RegisterLoginController(dbController);
-		LoginView loginView = new LoginView(dbController, registerLoginController);
+		LoginView loginView = new LoginView(dbController, registerLoginController, rlm);
 		setRoot(loginView);
 	}
 
 	public void showChoosePatternCard(ChoosePatternCardController choosePatternCardController) {
-		choosePatterncardView = new ChoosePatternCardView(choosePatternCardController);
+		choosePatterncardView = new ChoosePatternCardView(choosePatternCardController, mainController);
 		setRoot(choosePatterncardView);
 
 	}
@@ -113,6 +110,11 @@ public class MainScene extends Scene {
 
 	}
 	
+	public void showLoginScreen() {
+		setRoot(new LoginView(dbController, registerLoginController, rlm));
+	}
 
-	
+	public void showMainMenu() {
+		setRoot(new TemporaryMenuView(mainController));
+	}
 }

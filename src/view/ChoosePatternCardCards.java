@@ -2,6 +2,7 @@ package view;
 
 import controller.ChoosePatternCardController;
 import controller.DatabaseController;
+import controller.MainController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -37,16 +38,18 @@ public class ChoosePatternCardCards extends FlowPane {
 	private ChoosePatternCardController choosePatternCardController;
 
 	private Player player;
+	private MainController mainController;
 
 	private int widthCard = 315;
 	private int heightCard = 315;
 
-	public ChoosePatternCardCards(ChoosePatternCardController choosePatternCardController) {
+	public ChoosePatternCardCards(ChoosePatternCardController choosePatternCardController, MainController mainController) {
 		super(Orientation.HORIZONTAL, 25, 25);
+		this.mainController = mainController;
 		this.choosePatternCardController = choosePatternCardController;
 
-		DatabaseController dbcontroller = new DatabaseController();
-		Player player = new Player(dbcontroller, 0, 0);
+		DatabaseController dbcontroller = new DatabaseController(mainController);
+		Player player = new Player(dbcontroller, 0, 0, mainController);
 
 		this.setMinWidth(750);
 		this.setMaxWidth(750);

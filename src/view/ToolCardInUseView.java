@@ -105,10 +105,11 @@ public class ToolCardInUseView extends Pane{
 	 setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
 	 
 	 registerHandler2();
-//	 backButton.setOnMouseClicked(e -> {System.out.println("button is pressed");
-//	 mainController.showGame();
-//	 });
-	 
+
+	 backButton.setOnMouseClicked(e -> {System.out.println("button is pressed");
+	 mainController.showGameLoggedInPlayer();
+	 });
+
 	 registerHandler();
 	 confirmButton.setOnMouseClicked(e -> {System.out.println("button is pressed");
 	 this.getChildren().clear();

@@ -31,14 +31,14 @@ import model.RegisterLoginModel;
 
 public class LoginView extends VBox {
 	private ImageView imageView;
+	private RegisterLoginModel rlm;
 
-	public LoginView(DatabaseController dbController, RegisterLoginController registerLoginController) {
-
-		RegisterLoginModel rlm = new RegisterLoginModel(dbController, registerLoginController);
+	public LoginView(DatabaseController dbController, RegisterLoginController registerLoginController, RegisterLoginModel rlm) {
+		this.rlm = rlm;
 
 		InputStream stream;
 		try {
-			stream = new FileInputStream("LoginImg.png");
+			stream = new FileInputStream("src/LoginImg.png");
 			Image image = new Image(stream);
 			imageView = new ImageView();
 			imageView.setImage(image);

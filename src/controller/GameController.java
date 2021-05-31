@@ -9,9 +9,11 @@ import model.GameStats;
 public class GameController {
 
 	private DatabaseController dbController;
+	private MainController mainController;
 
-	public GameController(DatabaseController dbController) {
+	public GameController(DatabaseController dbController, MainController mainController) {
 		this.dbController = dbController;
+		this.mainController = mainController;
 	}
 
 	public int getAvailableGameID() {
@@ -43,9 +45,9 @@ public class GameController {
 		return result;
 	}
 
-	public static ArrayList<GameStats> AllGameStats() throws SQLException {
+	public ArrayList<GameStats> AllGameStats() throws SQLException {
 		ArrayList<GameStats> gameStats = new ArrayList<>();
-		DatabaseController db = new DatabaseController();
+		DatabaseController db = new DatabaseController(mainController);
 		ResultSet res = db.doQuery(
 				"SELECT game.idgame, GROUP_CONCAT(username) as username, COALESCE(current_roundID, 0) as round, creationdate, CASE WHEN playstatus IN ('challenger','accepted','challengee') THEN 'bezig' ELSE 'finished' END as gamestatus FROM game RIGHT JOIN player ON game.idgame = player.idgame GROUP BY idgame");
 		while (res.next()) {
