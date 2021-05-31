@@ -7,56 +7,37 @@ import java.util.ArrayList;
 
 
 import javafx.stage.Stage;
-import model.DieBagModel;
 import model.Game;
 import model.Player;
+import model.RegisterLoginModel;
 import view.MainScene;
 
 public class MainController {
 
 	private DatabaseController dbController;
 	private Game currentGame;
+
 	private String loggedInUsername = "";
 	private MainScene mainScene;
 
 	private String imageURL;
 	private String combinedURL;
 
+	private ChoosePatternCardController choosePatternCardController;
+
 	public MainController(Stage stage) {
-		dbController = new DatabaseController();
-		mainScene = new MainScene(this);
+		dbController = new DatabaseController(this);
+		RegisterLoginController rlc = new RegisterLoginController(dbController);
+		RegisterLoginModel rlm = new RegisterLoginModel(this, dbController, rlc);
+		mainScene = new MainScene(this, dbController, rlm, rlc);		
 		combinedURL = "/Images/Compact Private Objectives/green.png";
 		imageURL = combinedURL.toString();
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		
-		login("piet");
-
-	private ChoosePatternCardController choosePatternCardController;
-
-	public MainController(Stage stage) {
-		dbController = new DatabaseController();
-		mainScene = new MainScene(this, dbController);
-
-		login("mandy");
-//		loadGame(759);
-
-
-		createGame();
-		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
-		currentGame.invitePlayer("jasper");
-		currentGame.getPlayers().get(1).setPatternCard(1); // set patterncard for invited player
-
-		currentGame.invitePlayer("jerome");
-		currentGame.getPlayers().get(2).setPatternCard(3); // set patterncard for invited player
-		currentGame.invitePlayer("imke");
-		currentGame.getPlayers().get(3).setPatternCard(8); // set patterncard for invited player
-		currentGame.startGame();
-
-		showGameLoggedInPlayer();
-//		showLoginView();
+		showLoginScreen();
 
 		createCardsToChoose(); // Creates 4 random cards to
-		showChoosePatternCard();
+//		showChoosePatternCard();
 		// mainScene.getChoosePatternCardView().getCard(); //will give you an int after
 		// you clicked on kiezen
 
@@ -64,9 +45,7 @@ public class MainController {
 		stage.setResizable(false);
 		stage.getIcons().add(new Image("/Images/Compact Public Objectives/4.png"));
 		stage.setScene(mainScene);
-
 		stage.getIcons().add(toolCardImage);
-
 		stage.setOnCloseRequest(e -> dbController.closeConnection());
 
 		stage.show();
@@ -116,11 +95,22 @@ public class MainController {
 
 	// Creates 4 random cards to choose from
 	public void createCardsToChoose() {
-		choosePatternCardController = new ChoosePatternCardController();
+		choosePatternCardController = new ChoosePatternCardController(dbController);
 	}
 	
 	public void showLoginView() {
 		mainScene.showLoginView();
 	}
-
+	
+	public void showLoginScreen() {
+		mainScene.showLoginScreen();
+	}
+	
+	public Game getCurrentGame() {
+		return currentGame;
+	}
+	
+	public void showMainMenu() {
+		mainScene.showMainMenu();
+	}
 }

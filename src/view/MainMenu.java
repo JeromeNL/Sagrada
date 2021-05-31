@@ -20,10 +20,10 @@ import model.RegisterLoginModel;
 
 public class MainMenu extends Pane {
 	private ImageView imageView;
-
-	public MainMenu(DatabaseController dbController, RegisterLoginController registerLoginController) {
-
-		RegisterLoginModel rlm = new RegisterLoginModel(dbController, registerLoginController);
+	private RegisterLoginModel rlm;
+	
+	public MainMenu(DatabaseController dbController, RegisterLoginController registerLoginController, RegisterLoginModel rlm) {
+		this.rlm = rlm;
 
 		InputStream stream;
 		try {

@@ -38,10 +38,13 @@ public class PatterncardField {
 
 	public void placeDie(Die die) {
 		this.dieOnField = die;
-
-//		patterncardFieldsController.addDieToDatabase(playerID, gameID, die);
-
 		dbController.placeDie(owner.getIdPlayer(), owner.getGameID(), die, xPosition, yPosition);
+		owner.setDiePlacedInRound(true);
+	}
+	
+	// Removes the die from the database. 
+	private void removeDieFromDatabase() {
+		String query = "UPDATE playerframefield SET dienumber = NULL, diecolor = NULL WHERE position_x = " + xPosition + " AND position_y = " + yPosition + ";";
 	}
 
 	public void removeDie() {

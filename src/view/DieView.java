@@ -71,7 +71,6 @@ public class DieView extends StackPane {
 				if (db.hasString()) {
 
 					String dieData = db.getString();
-					System.out.println(dieData);
 					String[] data = dieData.split("\\s+");
 					
 					// Extracting die data from the string.

@@ -1,8 +1,8 @@
-// by JeromeNL :)
 
 package model;
 
 import controller.DatabaseController;
+import controller.MainController;
 import controller.RegisterLoginController;
 
 public class RegisterLoginModel {
@@ -14,20 +14,19 @@ public class RegisterLoginModel {
 	private String loginPasswordGiven;
 	private String warningText;
 	private String warningColor;
-
+	private MainController mainController;
 	private DatabaseController dbController;
 	private RegisterLoginController registerLoginController;
 
-	// constructor
-	public RegisterLoginModel(DatabaseController dbController, RegisterLoginController registerLoginController) {
+	public RegisterLoginModel(MainController mainController, DatabaseController dbController, RegisterLoginController registerLoginController) {
 		warningText = "Geen fouten opgetreden";
 		String warningColor = "black";
 
+		this.mainController = mainController;
 		this.dbController = dbController;
 		this.registerLoginController = registerLoginController;
 	}
 
-	// classes
 	public void registerAccount() {
 		System.out.println("username input: " + registerUsernameGiven + " password given: " + registerPasswordGiven);
 
@@ -81,7 +80,8 @@ public class RegisterLoginModel {
 						warningText = "Ingelogd!";
 						warningColor = "green";
 
-						// TODO set Scene to lobby !
+						mainController.login(loginUsernameGiven);
+						mainController.showMainMenu();
 
 					} else {
 						System.out.println("Error! Wrong password!");

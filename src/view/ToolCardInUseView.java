@@ -106,7 +106,7 @@ public class ToolCardInUseView extends Pane{
 	 
 	 registerHandler2();
 	 backButton.setOnMouseClicked(e -> {System.out.println("button is pressed");
-	 mainController.showGame();
+	 mainController.showGameLoggedInPlayer();
 	 });
 	 
 	 registerHandler();
