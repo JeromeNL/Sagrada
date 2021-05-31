@@ -15,7 +15,7 @@ public class EndScore {
 		this.idGame = idGame;
 		this.idPlayer = idPlayer;
 	}
-
+	
 	public int publicObjectiveScore() {
 		int publicObjectiveScore = 0;
 		return publicObjectiveScore;
@@ -27,7 +27,7 @@ public class EndScore {
 		DatabaseController db = new DatabaseController();
 		ResultSet privateColor = db.doQuery("SELECT private_objectivecard_color FROM player WHERE idplayer = '" + idPlayer + "' AND idgame ='" + idGame);
 		
-		ResultSet privateScore = db.doQuery("SELECT sum(dienumber) FROM playerframefield WHERE idgame = '" + 487 + "'AND idplayer ='" +  962 + "' AND diecolor ='" + privateColor);
+		ResultSet privateScore = db.doQuery("SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor AND playerframefield.idgame = gamedie.idgame WHERE playerframefield.idgame = '" +  idGame + "' AND playerframefield.idplayer = '" + idPlayer + "' AND playerframefield.diecolor = '" + privateColor + "'");
 		
 		try {
 			privateScore.getInt(0);

@@ -33,7 +33,7 @@ public class MainScene extends Scene {
 	public MainScene(MainController mainController, DatabaseController dbController) {
 		super(new Pane(), 1280, 720);
 		this.mainController = mainController;
-S
+
 		this.dbController = dbController;
 
 //		LobbyView lobbyView = new LobbyView();
@@ -88,8 +88,7 @@ S
 		
 		
 		
-		GameView gameView = new GameView(game, playerShownOnScreen, mainController);
-		setRoot(gameView);
+		
 
 	}
 

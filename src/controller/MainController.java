@@ -22,14 +22,15 @@ public class MainController {
 	private String imageURL;
 	private String combinedURL;
 
-	public MainController(Stage stage) {
-		dbController = new DatabaseController();
-		mainScene = new MainScene(this);
-		combinedURL = "/Images/Compact Private Objectives/green.png";
-		imageURL = combinedURL.toString();
-		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
-		
-		login("piet");
+//	public MainController(Stage stage) {
+//		dbController = new DatabaseController();
+//		mainScene = new MainScene(this);
+//		combinedURL = "/Images/Compact Private Objectives/green.png";
+//		imageURL = combinedURL.toString();
+//		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
+//		
+//		login("piet");
+//	}
 
 	private ChoosePatternCardController choosePatternCardController;
 
@@ -40,7 +41,7 @@ public class MainController {
 		login("mandy");
 //		loadGame(759);
 
-
+		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		createGame();
 		currentGame.getPlayers().get(0).setPatternCard(10); // set patterncard for logged in user
 		currentGame.invitePlayer("jasper");
