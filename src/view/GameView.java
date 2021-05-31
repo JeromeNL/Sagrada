@@ -47,7 +47,7 @@ public class GameView extends BorderPane {
 		patternCardView = new PatternCardView(playerPatterncard); // dit is een random patterncard moet later aangepast
 																	// worden
 
-		topPart = new TopPart(game);
+		topPart = new TopPart(dbController, game);
 
 		dieSupply = new DieSupply(game.getDiesInSupply(), player);
 		gameButtonView = new GameButtonView(this, game, mainController);

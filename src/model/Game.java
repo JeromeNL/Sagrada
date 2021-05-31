@@ -30,7 +30,6 @@ public class Game {
 	private GameController gameController;
 
 	private String usernameCreator;
-	
 
 	// Constructor to load an existing game.
 	public Game(int idGame, DatabaseController dbController, MainController mainController) {
@@ -46,7 +45,7 @@ public class Game {
 		getUsernameCreator();
 
 		loadGame();
-		
+
 		Refresh refreshThread = new Refresh(this, mainController, dbController);
 		refreshThread.start();
 	}
@@ -70,7 +69,7 @@ public class Game {
 		diesInSupply = new DiesInSupply();
 
 		setupGame();
-		
+
 		Refresh refreshThread = new Refresh(this, mainController, dbController);
 		refreshThread.start();
 	}
@@ -133,7 +132,8 @@ public class Game {
 
 		boolean isCreator = true;
 		GameColor privateObjectiveCardColor = getObjectiveCardColor();
-		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController, mainController);
+		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController,
+				mainController);
 		players.add(creator);
 	}
 
@@ -148,7 +148,8 @@ public class Game {
 		// Check if there is room for more players.
 		if (players.size() < 4) {
 			GameColor privateObjectiveCardColor = getObjectiveCardColor();
-			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController, mainController);
+			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController,
+					mainController);
 			players.add(newPlayer);
 		}
 	}
@@ -289,10 +290,14 @@ public class Game {
 		dbController.setRoundID(idGame, nextRoundID);
 
 		if (nextRoundID % 2 != 0) {
+			// place last die on roundtrack
+			Die lastDie = getDiesInSupply().getDies().get(0);
+			dbController.addDieToRoundtrack(lastDie, currentRoundID - 1, idGame);
+
 			if (usernameCreator.equals(mainController.getLoggedInUsername())) {
 				createDiesInSupply();
 				loadDiesInSupply();
-				mainController.showGame(0);				
+				mainController.showGame(0);
 			}
 		}
 	}
@@ -354,12 +359,12 @@ public class Game {
 			}
 		}
 	}
-	
+
 	public String getCurrentPlayer() {
 		int currentPlayerID = dbController.getCurrentPlayerID(idGame);
 		return dbController.getUsername(currentPlayerID);
 	}
-	
+
 	public int getRoundID() {
 		return dbController.getRoundID(idGame);
 	}

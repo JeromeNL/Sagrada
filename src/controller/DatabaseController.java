@@ -73,7 +73,7 @@ public class DatabaseController {
 			System.out.println(e.getMessage());
 		}
 		return null;
-		
+
 	}
 
 	/*
@@ -159,6 +159,38 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 		return diesInSupply;
+	}
+
+	public ArrayList<Die> getDieRoundTrack(int idGame) {
+		String query = "SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundtrack IS NOT NULL";
+		ResultSet rs = doQuery(query);
+		ArrayList<Die> roundTrackDies = new ArrayList<Die>();
+
+		try {
+			while (rs.next()) {
+				String colorString = rs.getString("diecolor").toUpperCase();
+				GameColor color = GameColor.valueOf(colorString);
+				int dieNumber = rs.getInt("dienumber");
+				int roundtracknr = rs.getInt("roundtrack");
+				int eyesCount = rs.getInt("eyes");
+
+				roundTrackDies.add(new Die(color, eyesCount, dieNumber, roundtracknr));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return roundTrackDies;
+
+	}
+
+	public void addDieToRoundtrack(Die die, int roundNR, int idGame) {
+		String query = "UPDATE gamedie SET roundtrack = " + roundNR + " WHERE idgame = " + idGame + " AND dienumber = "
+				+ die.getDieID() + " AND diecolor = \"" + die.getColor().toString().toLowerCase() + "\"";
+		System.out.println(query);
+		int result = doUpdateQuery(query);
+		if (result == 1) {
+			System.out.println("Succesfully added die to roundtrack");
+		}
 	}
 
 	public void createGameDies(int idGame) {
@@ -402,7 +434,6 @@ public class DatabaseController {
 		return idPlayer;
 	}
 
-
 	public String getUsernameCreator(int idGame) {
 		String query = "SELECT * FROM player WHERE idgame = " + idGame + " AND playstatus = \"challenger\"";
 		ResultSet rs = doQuery(query);
@@ -420,7 +451,7 @@ public class DatabaseController {
 	public void closeConnection() {
 		try {
 			if (!m_Conn.isClosed()) {
-				m_Conn.close();				
+				m_Conn.close();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
