@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 
+import controller.MainController;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import model.Die;
@@ -20,6 +21,7 @@ public class DieSupply extends HBox {
 		
 		setAlignment(Pos.CENTER);
 		setSpacing(25);
+
 	}
 	
 	public void updateView() {

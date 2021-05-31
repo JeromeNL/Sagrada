@@ -12,11 +12,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class ToolcardButtonView extends VBox{
+public class ChooseButton extends VBox{
 	
 	final static Color SAGRADAPINK = Color.rgb(247, 150, 150);
 	
-	public ToolcardButtonView() {
+	public ChooseButton() {
 		super();
 		
 		setAlignment(Pos.CENTER_RIGHT);
@@ -68,12 +68,7 @@ public class ToolcardButtonView extends VBox{
 			}
 		});
 		
-		button.setOnMouseClicked(e->
-			{
-			
-			System.out.println("click");
-			
-		});
+
 		
 	}
 
