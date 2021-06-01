@@ -88,20 +88,6 @@ public class MainMenu extends Pane {
 		login.setStyle(IDLE_BUTTON_STYLE);
 		login.setOnMouseEntered(e -> login.setStyle(HOVERED_BUTTON_STYLE));
 		login.setOnMouseExited(e -> login.setStyle(IDLE_BUTTON_STYLE));
-
-		// Event after clicking the "Login" button
-		login.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				System.out.println("Login knop test");
-				;
-
-				
-			
-				
-			}
-		});
-
 	}
 
 }

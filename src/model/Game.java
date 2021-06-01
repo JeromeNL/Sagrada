@@ -163,9 +163,6 @@ public class Game {
 			if (result == 1) {
 				increasingID = false;
 				idGame = newIdGame;
-				System.out.println(getClass() + " - New game created with id " + newIdGame); // for
-																								// testing
-																								// purposes
 			} else {
 				newIdGame++;
 			}
@@ -195,8 +192,6 @@ public class Game {
 			if (result == 1) {
 				increasingID = false;
 				idGame = newGameID;
-				System.out.println(getClass() + " - New game created with id " + idGame); // for testing
-																							// purposes
 			} else {
 				newGameID++;
 			}
@@ -278,6 +273,7 @@ public class Game {
 
 		if (currentRoundID == 20) {
 			addToRoundtrack(currentRoundID);
+			mainController.showGame(0);
 			endGame();
 			return;
 		}

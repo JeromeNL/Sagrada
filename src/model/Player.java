@@ -109,8 +109,6 @@ public class Player {
 			if (result == 1) {
 				increasingID = false;
 				idPlayer = newIdPlayer;
-				System.out.println(getClass() + " - New player created with id " + idPlayer); // for testing
-																								// purposes
 			} else {
 				newIdPlayer++;
 			}

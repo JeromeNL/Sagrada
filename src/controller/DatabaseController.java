@@ -186,11 +186,7 @@ public class DatabaseController {
 	public void addDieToRoundtrack(Die die, int roundNR, int idGame) {
 		String query = "UPDATE gamedie SET roundtrack = " + roundNR + " WHERE idgame = " + idGame + " AND dienumber = "
 				+ die.getDieID() + " AND diecolor = \"" + die.getColor().toString().toLowerCase() + "\"";
-		System.out.println(query);
 		int result = doUpdateQuery(query);
-		if (result == 1) {
-			System.out.println("Succesfully added die to roundtrack");
-		}
 	}
 
 	public void createGameDies(int idGame) {
