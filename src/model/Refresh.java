@@ -6,44 +6,63 @@ import javafx.application.Platform;
 
 public class Refresh extends Thread {
 	
-	private Game game;
 	private MainController mainController;
 	private DatabaseController dbController;
+	
+	private Game game;
+	private int gameID;
+	private int lastPlayerID;
+	private int lastRoundID;
 	
 	public Refresh(Game game, MainController mainController, DatabaseController dbController) {
 		this.game = game;
 		this.mainController = mainController;
 		this.dbController = dbController;
 		this.setDaemon(true);
+		
+		if (game != null) {
+			gameID = game.getGameID();
+			lastPlayerID = dbController.getCurrentPlayerID(gameID);
+			lastRoundID = dbController.getRoundID(gameID);
+		}
+	}
+	
+	public void setGame(Game game) {
+		this.game = game;
+		gameID = game.getGameID();
+		lastPlayerID = dbController.getCurrentPlayerID(gameID);
+		lastRoundID = dbController.getRoundID(gameID);
 	}
 	
 	public void run() {
+		    
 		while(true) {
-			int gameID = game.getGameID();
-			int currentPlayerID = dbController.getCurrentPlayerID(gameID);
-			int currentRoundID = dbController.getRoundID(gameID);
-			
 			try {
-				Thread.sleep(5 * 1000); // refresh game every 5 seconds
-				
+				Thread.sleep(1 * 1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			if (game != null && !dbController.isClosed()) {
 				int newPlayerID = dbController.getCurrentPlayerID(gameID);
 				int newRoundID = dbController.getRoundID(gameID);
 				
-				if ((currentPlayerID != newPlayerID) || (currentRoundID != newRoundID)) {
+				if ((lastPlayerID != newPlayerID) || (lastRoundID != newRoundID)) {
 					Platform.runLater(new Runnable( ) {
 
 						@Override
 						public void run() {
+							lastPlayerID = newPlayerID;
+							lastRoundID = newRoundID;
+							
 							mainController.loadGame(gameID);
 							mainController.showGameLoggedInPlayer();
 						}
 					});					
-				}
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				}		
+				
 			}
+
 		}
 	}
-
 }
