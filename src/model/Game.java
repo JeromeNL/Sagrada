@@ -277,6 +277,7 @@ public class Game {
 		int currentRoundID = dbController.getRoundID(idGame);
 
 		if (currentRoundID == 20) {
+			addToRoundtrack(currentRoundID);
 			endGame();
 			return;
 		}
@@ -284,9 +285,7 @@ public class Game {
 		dbController.setRoundID(idGame, nextRoundID);
 
 		if (nextRoundID % 2 != 0) {
-			// place last die on roundtrack
-			Die lastDie = getDiesInSupply().getDies().get(0);
-			dbController.addDieToRoundtrack(lastDie, currentRoundID - 1, idGame);
+			addToRoundtrack(currentRoundID);
 
 			if (usernameCreator.equals(mainController.getLoggedInUsername())) {
 				createDiesInSupply();
@@ -294,6 +293,12 @@ public class Game {
 				mainController.showGame(0);
 			}
 		}
+	}
+	
+	// Adds the last die of the die supply to the roundtrack
+	private void addToRoundtrack(int currentRoundID) {
+		Die lastDie = getDiesInSupply().getDies().get(0);
+		dbController.addDieToRoundtrack(lastDie, currentRoundID - 1, idGame);
 	}
 
 	private void endGame() {
