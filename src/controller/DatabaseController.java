@@ -162,7 +162,7 @@ public class DatabaseController {
 	}
 
 	public ArrayList<Die> getDieRoundTrack(int idGame) {
-		String query = "SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundtrack IS NOT NULL";
+		String query = "SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundtrack IS NOT NULL ORDER BY roundtrack ASC";
 		ResultSet rs = doQuery(query);
 		ArrayList<Die> roundTrackDies = new ArrayList<Die>();
 
