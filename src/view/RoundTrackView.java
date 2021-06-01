@@ -29,29 +29,29 @@ public class RoundTrackView extends HBox {
 
 		for (int i = 0; i < 10; i++) {
 
-			Rectangle emptyDie = new Rectangle(dieSize, dieSize);
-			emptyDie.setStroke(Color.BLACK);
-			emptyDie.setFill(Color.TRANSPARENT);
+			Rectangle dieRectangle = new Rectangle(dieSize, dieSize);
+			dieRectangle.setStroke(Color.BLACK);
+			dieRectangle.setFill(Color.TRANSPARENT);
 
-			emptyDie.setStrokeWidth(4);
+			dieRectangle.setStrokeWidth(2);
 			StackPane whiteDie = new StackPane();
 
-			Text dieNumberText = new Text(String.valueOf(i + 1));
-			dieNumberText.setFill(Color.GRAY);
-			dieNumberText.setFont(new Font("Arial", 20));
+			Text dieEyesText = new Text(String.valueOf(i + 1));
+			dieEyesText.setFill(Color.GRAY);
+			dieEyesText.setFont(new Font("Arial", 20));
 
 			if (i < size) {
 				if (diesOnRoundtrack.get(i) != null) {
 					Die die = diesOnRoundtrack.get(i);
-					Color color = die.getColor().toFXColor();
-					emptyDie.setFill(color);
+					Color color = die.getColor().toFXColor().brighter();
+					dieRectangle.setFill(color);
 
-					dieNumberText.setText(String.valueOf(die.getEyesCount()));
-					dieNumberText.setFill(Color.BLACK);
+					dieEyesText.setText(String.valueOf(die.getEyesCount()));
+					dieEyesText.setFill(Color.BLACK);
 				}
 			}
 
-			whiteDie.getChildren().addAll(emptyDie, dieNumberText);
+			whiteDie.getChildren().addAll(dieRectangle, dieEyesText);
 			getChildren().addAll(whiteDie);
 
 		}
