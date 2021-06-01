@@ -236,7 +236,7 @@ public class DatabaseController {
 	}
 
 	public int getPatterncardID(int idPlayer) {
-		ResultSet rs = doQuery("SELECT * FROM player WHERE idplayer = " + idPlayer);
+		ResultSet rs = doQuery("SELECT idpatterncard FROM player WHERE idplayer = " + idPlayer);
 		int idPatterncard = 0;
 		try {
 			while (rs.next()) {
@@ -250,7 +250,7 @@ public class DatabaseController {
 	}
 
 	public String getUsername(int idPlayer) {
-		ResultSet rs = doQuery("SELECT * FROM player WHERE idplayer = " + idPlayer);
+		ResultSet rs = doQuery("SELECT username FROM player WHERE idplayer = " + idPlayer);
 		String username = "";
 		try {
 			while (rs.next()) {
@@ -267,7 +267,7 @@ public class DatabaseController {
 		boolean done = false;
 		while (!done) {
 			int newSeqNr = 1;
-			ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + idGame + " ORDER BY seqnr DESC LIMIT 1");
+			ResultSet rs = doQuery("SELECT seqnr FROM player WHERE idgame = " + idGame + " ORDER BY seqnr DESC LIMIT 1");
 			try {
 				while (rs.next()) {
 					newSeqNr = rs.getInt("seqnr") + 1;
@@ -300,8 +300,8 @@ public class DatabaseController {
 
 	public ArrayList<String> getPlayerOrder(int gameID) {
 		ArrayList<String> playerOrder = new ArrayList<String>();
-		ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + gameID + " ORDER BY seqnr ASC");
-		ResultSet rs2 = doQuery("SELECT * FROM player WHERE idgame = " + gameID + " ORDER BY seqnr DESC");
+		ResultSet rs = doQuery("SELECT username FROM player WHERE idgame = " + gameID + " ORDER BY seqnr ASC");
+		ResultSet rs2 = doQuery("SELECT username FROM player WHERE idgame = " + gameID + " ORDER BY seqnr DESC");
 		try {
 			while (rs.next()) {
 				playerOrder.add(rs.getString("username"));
@@ -326,7 +326,7 @@ public class DatabaseController {
 
 	public int getRoundID(int idGame) {
 		int roundID = 0;
-		ResultSet rs = doQuery("SELECT * FROM game WHERE idgame = " + idGame);
+		ResultSet rs = doQuery("SELECT current_roundID FROM game WHERE idgame = " + idGame);
 		try {
 			while (rs.next()) {
 				return rs.getInt("current_roundID");
@@ -340,7 +340,7 @@ public class DatabaseController {
 
 	public int getRoundNr(int roundID) {
 		int roundNr = 0;
-		ResultSet rs = doQuery("SELECT * FROM round WHERE roundID = " + roundID);
+		ResultSet rs = doQuery("SELECT roundnr FROM round WHERE roundID = " + roundID);
 		try {
 			while (rs.next()) {
 				roundNr = rs.getInt("roundnr");
@@ -354,7 +354,7 @@ public class DatabaseController {
 
 	public boolean isClockwise(int roundID) {
 		boolean isClockwise = false;
-		ResultSet rs = doQuery("SELECT * FROM round WHERE roundID = " + roundID);
+		ResultSet rs = doQuery("SELECT clockwise FROM round WHERE roundID = " + roundID);
 		try {
 			while (rs.next()) {
 				isClockwise = rs.getBoolean("clockwise");
@@ -375,7 +375,7 @@ public class DatabaseController {
 
 	public int getCurrentPlayerID(int idGame) {
 		int idPlayer = 0;
-		ResultSet rs = doQuery("SELECT * FROM game WHERE idgame = " + idGame);
+		ResultSet rs = doQuery("SELECT turn_idplayer FROM game WHERE idgame = " + idGame);
 
 		try {
 			while (rs.next()) {
@@ -390,7 +390,7 @@ public class DatabaseController {
 
 	public int getPlayerID(int seqnr, int idGame) {
 		int idPlayer = 0;
-		ResultSet rs = doQuery("SELECT * FROM player WHERE idgame = " + idGame + " AND seqnr = " + seqnr);
+		ResultSet rs = doQuery("SELECT idplayer FROM player WHERE idgame = " + idGame + " AND seqnr = " + seqnr);
 		try {
 			while (rs.next()) {
 				idPlayer = rs.getInt("idplayer");
@@ -404,7 +404,7 @@ public class DatabaseController {
 
 
 	public String getUsernameCreator(int idGame) {
-		String query = "SELECT * FROM player WHERE idgame = " + idGame + " AND playstatus = \"challenger\"";
+		String query = "SELECT username FROM player WHERE idgame = " + idGame + " AND playstatus = \"challenger\"";
 		ResultSet rs = doQuery(query);
 		try {
 			while (rs.next()) {
@@ -425,5 +425,15 @@ public class DatabaseController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean isClosed() {
+		try {
+			return m_Conn.isClosed();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
 	}
 }

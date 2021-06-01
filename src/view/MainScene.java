@@ -23,6 +23,7 @@ public class MainScene extends Scene {
 	private DatabaseController dbController;
 	private RegisterLoginModel rlm;
 	private RegisterLoginController registerLoginController;
+	private MainMenu mmv;
 
 	public MainScene(MainController mainController, DatabaseController dbController, RegisterLoginModel rlm, RegisterLoginController rlc) {
 		super(new Pane(), 1280, 720);
@@ -91,6 +92,11 @@ public class MainScene extends Scene {
 	
 	public void showLoginScreen() {
 		setRoot(new LoginView(dbController, registerLoginController, rlm));
+	}
+	
+	public void showFirstMainMenu(MainMenu mmv, MainController mainController) {
+		mmv = new MainMenu(dbController, mainController);
+		setRoot( mmv );
 	}
 
 	public void showMainMenu() {
