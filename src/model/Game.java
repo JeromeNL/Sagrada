@@ -48,6 +48,7 @@ public class Game {
 
 		Refresh refreshThread = new Refresh(this, mainController, dbController);
 		refreshThread.start();
+
 	}
 
 	// Constructor to create a new game.
@@ -72,6 +73,7 @@ public class Game {
 
 		Refresh refreshThread = new Refresh(this, mainController, dbController);
 		refreshThread.start();
+
 	}
 
 	private void getUsernameCreator() {
