@@ -172,13 +172,13 @@ public class PatterncardField {
 				System.out.println("Not adjacent to same value");
 				return true;
 			} else {
-				System.out.println("INVALID! Adjacent to same value and/or color");
+				System.out.println("INVALID! Adjacent to same value");
 				return false;
 			}
 		}
 
 		else {
-			System.out.println("INVALID! Adjacent to same value and/or color");
+			System.out.println("INVALID! Adjacent to same color");
 			return false;
 		}
 
@@ -188,7 +188,7 @@ public class PatterncardField {
 		// check: same color surrounding
 		System.out.println("====== START OF ADJACENT OF FIELD SAME COLOR =====");
 		// boolean isSameColor = false;
-		
+
 		if (x < 1 || x > 5 || y < 1 || y > 4) {
 			System.out.println("Is out of board");
 			return false;
@@ -223,20 +223,40 @@ public class PatterncardField {
 
 	}
 
-	private boolean isAdjacentFieldSameValue(int x, int y) throws SQLException {
+	private boolean isAdjacentFieldSameValue(int y, int x) throws SQLException {
 		// check: same value surrounding
-		boolean isSameValue = false;
+	
 		System.out.println("start isSameValue Method");
-		if (leftX < 1 || rightX > 5 || topY < 1 || bottomY > 4) {
+		if (x < 1 || x > 5 || y < 1 || y > 4) {
 			System.out.println(x + " " + y);
 			return false;
 		} else if (isFieldEmpty(y, x) == true) {
 			return false;
 		} else {
+			ResultSet valueOfAdjacentDie = dbController.doQuery("SELECT gamedie.eyes FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idplayer = '" + owner.getIdPlayer() + "' AND playerframefield.idgame = '" + owner.getGameID() + "' AND playerframefield.position_x = '" + x + "' AND playerframefield.position_y = '" + y + "'");
+			
+			
+			int value = 0;
 
+			while (valueOfAdjacentDie.next()) {
+				value = valueOfAdjacentDie.getInt(1);
+				System.out.println("value of adjacent die: " + value);
+				System.out.println(x + " " + y);
+			}
+			System.out.println(value);
+			
+			if (value == selectedDieEyes) {
+				System.out.println("die value is the same!");
+				System.out.println("====== END OF ADJACENT OF FIELD SAME VALUE =====");
+				return true;
+			} else {
+				System.out.println("die color is not the same!");
+				System.out.println("====== END OF ADJACENT OF FIELD SAME VALUE =====");
+				return false;
+			}
 		}
-		return false;
-		// return true;
+
+	
 	}
 
 	private boolean isAdjacentToDie() throws SQLException {
