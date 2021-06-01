@@ -49,6 +49,9 @@ public class PatterncardField {
 
 	// The great 'isValidMove'-check.
 	public boolean isValidMove(int eyesCount, GameColor dieColor) throws SQLException {
+		this.selectedDieEyes = eyesCount;
+		this.selectedDieColor = dieColor;
+
 		// 1st check: Is the field empty?
 		if (fieldHasDie()) {
 			System.out.println(" 1 false");
@@ -91,7 +94,7 @@ public class PatterncardField {
 
 		}
 		System.out.println("This move is valid! | all statements == true");
-		// addDieToDatabase(owner.getIdPlayer(), owner.getGameID(), dieOnField);
+		System.out.println("Placed die | eyes: " + selectedDieEyes + " die color: " + selectedDieColor);
 		return true;
 	}
 
@@ -152,19 +155,19 @@ public class PatterncardField {
 
 	}
 
-	private boolean hasOtherValueAndColorSurrounding() {
+	private boolean hasOtherValueAndColorSurrounding() throws SQLException {
 		// Check of de omliggende stenen een andere kleur/waarde hebben.
 
 		if (isAdjacentFieldSameColor(yPosition, leftX) == false && isAdjacentFieldSameColor(yPosition, rightX) == false
 				&& isAdjacentFieldSameColor(topY, xPosition) == false
-				&& isAdjacentFieldSameColor(bottomY, yPosition) == false) {
+				&& isAdjacentFieldSameColor(bottomY, xPosition) == false) {
 
 			System.out.println("Not adjacent to same color");
 
 			if (isAdjacentFieldSameValue(yPosition, leftX) == false
 					&& isAdjacentFieldSameValue(yPosition, rightX) == false
 					&& isAdjacentFieldSameValue(topY, xPosition) == false
-					&& isAdjacentFieldSameValue(bottomY, yPosition) == false) {
+					&& isAdjacentFieldSameValue(bottomY, xPosition) == false) {
 
 				System.out.println("Not adjacent to same value");
 				return true;
@@ -181,32 +184,59 @@ public class PatterncardField {
 
 	}
 
-	private boolean isAdjacentFieldSameColor(int x, int y) {
+	private boolean isAdjacentFieldSameColor(int y, int x) throws SQLException {
 		// check: same color surrounding
-		boolean isSameColor = false;
-		System.out.println("start isSameColor Method");
-		if (leftX < 1 || rightX > 5 || topY < 1 || bottomY > 4) {
-			System.out.println(x + " " + y);
+		System.out.println("====== START OF ADJACENT OF FIELD SAME COLOR =====");
+		// boolean isSameColor = false;
+		
+		if (x < 1 || x > 5 || y < 1 || y > 4) {
+			System.out.println("Is out of board");
+			return false;
+		} else if (isFieldEmpty(y, x) == true) {
+			System.out.println("Field is empty");
 			return false;
 		} else {
+			ResultSet colorOfAdjacentDie = dbController.doQuery("SELECT diecolor FROM playerframefield "
+					+ "WHERE idgame = '" + owner.getGameID() + "' AND idplayer = '" + owner.getIdPlayer()
+					+ "' AND position_x = '" + x + "' AND position_y = '" + y + "'");
+
+			String color = "";
+
+			while (colorOfAdjacentDie.next()) {
+				color = colorOfAdjacentDie.getObject(1).toString().toLowerCase();
+				System.out.println("color of adjacent die: " + color);
+				System.out.println(x + " " + y);
+			}
+			System.out.println(color);
+			System.out.println(selectedDieColor.toString().toLowerCase());
+			if (color.equals(selectedDieColor.toString().toLowerCase())) {
+				System.out.println("die color is the same!");
+				System.out.println("====== END OF ADJACENT OF FIELD SAME COLOR =====");
+				return true;
+			} else {
+				System.out.println("die color is not the same!");
+				System.out.println("====== END OF ADJACENT OF FIELD SAME COLOR =====");
+				return false;
+			}
 
 		}
 
-		return false;
 	}
 
-	private boolean isAdjacentFieldSameValue(int x, int y) {
+	private boolean isAdjacentFieldSameValue(int x, int y) throws SQLException {
 		// check: same value surrounding
 		boolean isSameValue = false;
 		System.out.println("start isSameValue Method");
 		if (leftX < 1 || rightX > 5 || topY < 1 || bottomY > 4) {
 			System.out.println(x + " " + y);
 			return false;
+		} else if (isFieldEmpty(y, x) == true) {
+			return false;
 		} else {
 
 		}
-
 		return false;
+		// return true;
 	}
 
 	private boolean isAdjacentToDie() throws SQLException {
