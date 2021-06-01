@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javafx.stage.Stage;
 import model.Game;
 import model.Player;
+import model.Refresh;
 import model.RegisterLoginModel;
 import view.MainScene;
 
@@ -24,6 +25,7 @@ public class MainController {
 	private String combinedURL;
 
 	private ChoosePatternCardController choosePatternCardController;
+	private Refresh refreshThread;
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController(this);
@@ -35,7 +37,9 @@ public class MainController {
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		
 		showLoginScreen();
-
+		
+		refreshThread = new Refresh(currentGame, this, dbController);
+		refreshThread.start();
 
 		// mainScene.getChoosePatternCardView().getCard(); //will give you an int after
 		// you clicked on kiezen
@@ -58,12 +62,14 @@ public class MainController {
 
 	public void loadGame(int idGame) {
 		currentGame = new Game(idGame, dbController, this);
+		refreshThread.setGame(currentGame);
 	}
 
 	// Creates a new game with the loggedInUsername as the owner of the game.
 	// TODO: should be called by lobby create game view.
 	public void createGame() {
 		currentGame = new Game(loggedInUsername, dbController, this);
+		refreshThread.setGame(currentGame);
 	}
 
 	// Shows game of logged in player
