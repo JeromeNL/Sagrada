@@ -56,13 +56,13 @@ public class PatterncardField {
 
 		// 1st check: Is the field empty?
 		if (fieldHasDie()) {
-			System.out.println(" 1 false");
+			System.out.println(" 1 false | Already a die on field!");
 			return false;
 		}
 
 		// 2nd check: Is the color/value requirement correct?
 		if (!isCorrectNumber(eyesCount) || !isCorrectColor(dieColor)) {
-			System.out.println(" 2 false");
+			System.out.println(" 2 false | Not correct value of color!");
 			return false;
 		}
 
@@ -70,7 +70,7 @@ public class PatterncardField {
 		if (isFirstTurn()) {
 			// 5th check: Is the die in the corner or on the edge?
 			if (!firstDieIsOnEdge()) {
-				System.out.println(" 5 false");
+				System.out.println(" 5 false | This is the first die. Must be placed in corner or on the edge!");
 				return false;
 			}
 		}
@@ -79,22 +79,19 @@ public class PatterncardField {
 
 			// 3rd check: Is the field adjacent to a die of the same color or value?
 			if (!hasOtherValueAndColorSurrounding()) {
-				System.out.println(" 3 false");
+				System.out.println(" 3 false | has the same value/color surrounding!");
 
 				return false;
 			}
 
 			// 4th check: Is the field adjacent to a field with a die already on it?
 			if (!isAdjacentToDie()) {
-				System.out.println(" 4 false");
+				System.out.println(" 4 false | Is not adjacent to die!");
 				return false;
 			}
 
 		}
-		System.out.println("=========================");
-		System.out.println("Placed die | eyes: " + selectedDieEyes + " die color: " + selectedDieColor);
-		System.out.println("This move is valid! | all statements == true");
-		System.out.println("=========================");
+		
 		return true;
 	}
 
@@ -107,7 +104,6 @@ public class PatterncardField {
 		int value = 0;
 		while (amountOfDies.next()) {
 			value = ((Number) amountOfDies.getObject(1)).intValue();
-			System.out.println("isFirst Turn: " + value);
 		}
 
 		if (value == 0) {
@@ -179,10 +175,10 @@ public class PatterncardField {
 	private boolean isAdjacentFieldSameColor(int y, int x) throws SQLException {
 		System.out.println("====== START OF ADJACENT OF FIELD SAME COLOR =====");
 		if (x < 1 || x > 5 || y < 1 || y > 4) {
-			System.out.println("Die isn't on board");
+			
 			return false;
 		} else if (isFieldEmpty(y, x) == true) {
-			System.out.println("Field is empty");
+			
 			return false;
 		} else {
 			ResultSet colorOfAdjacentDie = dbController.doQuery("SELECT diecolor FROM playerframefield "
@@ -200,11 +196,11 @@ public class PatterncardField {
 			System.out.println(selectedDieColor.toString().toLowerCase());
 			if (color.equals(selectedDieColor.toString().toLowerCase())) {
 				System.out.println("die color is the same!");
-				System.out.println("====== END OF ADJACENT OF FIELD SAME COLOR =====");
+				
 				return true;
 			} else {
 				System.out.println("die color is not the same!");
-				System.out.println("====== END OF ADJACENT OF FIELD SAME COLOR =====");
+				
 				return false;
 			}
 
@@ -230,18 +226,16 @@ public class PatterncardField {
 
 			while (valueOfAdjacentDie.next()) {
 				value = valueOfAdjacentDie.getInt(1);
-				System.out.println("value of adjacent die: " + value);
-				System.out.println(x + " " + y);
+				
 			}
-			System.out.println(value);
+			
 
 			if (value == selectedDieEyes) {
 				System.out.println("die value is the same!");
-				System.out.println("====== END OF ADJACENT OF FIELD SAME VALUE =====");
+				
 				return true;
 			} else {
-				System.out.println("die color is not the same!");
-				System.out.println("====== END OF ADJACENT OF FIELD SAME VALUE =====");
+
 				return false;
 			}
 		}
@@ -296,9 +290,9 @@ public class PatterncardField {
 	public boolean isFieldEmpty(int y, int x) throws SQLException {
 
 		boolean isEmpty = false;
-		System.out.println("start isFieldEmpty Method");
+		
 		if (x < 1 || x > 5 || y < 1 || y > 4) {
-			System.out.println("x: " + x + " y: " + y);
+			
 			return true;
 		} else {
 
@@ -311,17 +305,16 @@ public class PatterncardField {
 
 			while (zeroOrOneDie.next()) {
 				value = ((Number) zeroOrOneDie.getObject(1)).intValue();
-				System.out.println("value of fieldempty (0 = empty, 1 = filled) :" + value);
-				System.out.println(x + " " + y);
+
 			}
-			System.out.println(value);
+
 			if (value == 0) {
 				isEmpty = true;
-				System.out.println(isEmpty);
+
 				return isEmpty;
 			} else {
 				isEmpty = false;
-				System.out.println(isEmpty);
+
 				return isEmpty;
 			}
 		}
