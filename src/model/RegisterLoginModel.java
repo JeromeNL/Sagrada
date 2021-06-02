@@ -4,6 +4,7 @@ package model;
 import controller.DatabaseController;
 import controller.MainController;
 import controller.RegisterLoginController;
+import view.MainMenu;
 
 public class RegisterLoginModel {
 
@@ -17,6 +18,7 @@ public class RegisterLoginModel {
 	private MainController mainController;
 	private DatabaseController dbController;
 	private RegisterLoginController registerLoginController;
+	private MainMenu mmv;
 
 	public RegisterLoginModel(MainController mainController, DatabaseController dbController, RegisterLoginController registerLoginController) {
 		warningText = "Geen fouten opgetreden";
@@ -69,7 +71,7 @@ public class RegisterLoginModel {
 						warningColor = "green";
 
 						mainController.login(loginUsernameGiven);
-						mainController.showMainMenu();
+						mainController.showFirstMainMenu(mmv, mainController);
 
 					} else {
 						warningText = "wachtwoord is incorrect!";

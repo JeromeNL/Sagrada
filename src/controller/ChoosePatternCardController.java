@@ -21,7 +21,7 @@ public class ChoosePatternCardController {
 		patternCards = new ArrayList<ChoosePatternCardModel>();
 
 		ResultSet rs = dbController
-				.doQuery("SELECT * " + "FROM patterncard " + "GROUP BY difficulty " + "ORDER BY RAND()");
+				.doQuery("SELECT * " + "FROM patterncard " + "ORDER BY RAND()" + "LIMIT 4");
 
 		try {
 			counterRand = 0;

@@ -1,16 +1,15 @@
 package controller;
 
 
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 
-
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.Game;
 import model.Player;
 import model.Refresh;
 import model.RegisterLoginModel;
+import view.MainMenu;
 import view.MainScene;
 
 public class MainController {
@@ -26,6 +25,8 @@ public class MainController {
 
 	private ChoosePatternCardController choosePatternCardController;
 	private Refresh refreshThread;
+	private MainMenu mmv;
+
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController(this);
@@ -35,6 +36,7 @@ public class MainController {
 		combinedURL = "/Images/Compact Private Objectives/green.png";
 		imageURL = combinedURL.toString();
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
+		
 		
 		showLoginScreen();
 		
@@ -98,6 +100,10 @@ public class MainController {
 	
 	public void showLoginScreen() {
 		mainScene.showLoginScreen();
+	}
+	
+	public void showFirstMainMenu(MainMenu mmv, MainController mainController) {
+		mainScene.showFirstMainMenu(mmv, this);
 	}
 	
 	public Game getCurrentGame() {
