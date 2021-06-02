@@ -148,6 +148,63 @@ public class EndScore {
 	// NOG MAKEN
 	public int colomnColorVarietyObjectiveScore() {
 		int publicObjectiveScore = 0;
+		DatabaseController db = new DatabaseController(null);
+		
+		int index;
+		index = 1;
+		while(index > 6) {
+			ResultSet totalReds = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
+					+ "'AND idplayer ='" + idPlayer + "'AND position_x ='" + index + "'AND diecolor = RED");
+			int intResultReds = 0;
+			try {
+				intResultReds = totalReds.getInt(0);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ResultSet totalBlues = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
+					+ "'AND idplayer ='" + idPlayer + "'AND position_x ='" + index + "'AND diecolor = BLUE");
+			int intResultBlues = 0;
+			try {
+				intResultBlues = totalBlues.getInt(0);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ResultSet totalGreens = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
+					+ "'AND idplayer ='" + idPlayer + "'AND position_x ='" + index + "'AND diecolor = GREEN");
+			int intResultGreens = 0;
+			try {
+				intResultGreens = totalGreens.getInt(0);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ResultSet totalYellows = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
+					+ "'AND idplayer ='" + idPlayer + "'AND position_x ='" + index + "'AND diecolor = YELLOW");
+			int intResultYellows = 0;
+			try {
+				intResultYellows = totalYellows.getInt(0);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ResultSet totalPurples = db.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + idGame
+					+ "'AND idplayer ='" + idPlayer + "'AND position_x ='" + index + "'AND diecolor = PURPLE");
+			int intResultPurples = 0;
+			try {
+				intResultPurples = totalPurples.getInt(0);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
 		return publicObjectiveScore;
 
 	}
