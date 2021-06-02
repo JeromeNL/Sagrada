@@ -82,6 +82,8 @@ public class Game {
 		dbController.setRoundID(idGame, 1);
 
 		dbController.setTurnIdPlayer(idGame, dbController.getPlayerID(1, idGame));
+		dbController.createNewPublicObjectives(idGame);
+		dbController.createNewToolcards(idGame);
 	}
 
 	public void startGame() {
