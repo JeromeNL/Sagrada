@@ -18,6 +18,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -36,19 +40,12 @@ public class LoginView extends VBox {
 	public LoginView(DatabaseController dbController, RegisterLoginController registerLoginController, RegisterLoginModel rlm) {
 		this.rlm = rlm;
 
-		InputStream stream;
-		try {
-			stream = new FileInputStream("src/LoginImg.png");
-			Image image = new Image(stream);
-			imageView = new ImageView();
-			imageView.setImage(image);
-			imageView.setX(10);
-			imageView.setY(10);
-			imageView.setFitWidth(575);
-			imageView.setPreserveRatio(true);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
+		Image image = new Image(getClass().getResource("/Images/Login/LoginImg.png").toString());
+		imageView = new ImageView(image);
+		imageView.setX(10);
+		imageView.setY(10);
+		imageView.setFitWidth(575);
+		imageView.setPreserveRatio(true);
 
 		VBox box = new VBox();
 		HBox sagradaText = new HBox();
@@ -68,14 +65,8 @@ public class LoginView extends VBox {
 		sagradaTxt.setTranslateX(-300);
 		sagradaTxt.setTranslateY(200);
 
-		Rectangle burnOverlay = new Rectangle();
-		burnOverlay.setWidth(500);
-		burnOverlay.setHeight(700);
-		burnOverlay.setFill(Color.TRANSPARENT);
-		burnOverlay.setBlendMode(BlendMode.COLOR_BURN);
-
 		box.getChildren().addAll(sagradaText, layout);
-		colorBurn.getChildren().addAll( burnOverlay);
+		colorBurn.getChildren().addAll(imageView);
 		layout.getChildren().addAll(textFields, colorBurn);
 		sagradaText.getChildren().addAll(sagradaTxt);
 		warnTextBox.getChildren().add(warnText);
@@ -164,7 +155,5 @@ public class LoginView extends VBox {
 				}
 			}
 		});
-
 	}
-
 }
