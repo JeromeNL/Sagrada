@@ -1,18 +1,10 @@
 package imageChooser;
 
-import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 
 public class CompactPrivateObjectiveCardImage extends Pane {
-
-
 
 	private String imageURL;
 	private String combinedURL;
@@ -22,18 +14,24 @@ public class CompactPrivateObjectiveCardImage extends Pane {
 		super();
 		
 		imageColor = newImageColor;
-		combinedURL = "/Images/Compact Private Objectives/" + imageColor + ".png";
+		combinedURL = "/Images/Compact Private Objectives GameView/" + imageColor + ".png";
 		imageURL = combinedURL.toString();
 		addCards();
-
 	}
 
 	public void addCards() {
-
+//		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		ImageView imageView = new ImageView(toolCardImage);
+		imageView.setFitWidth(350);
+		imageView.setPreserveRatio(true);
+
 		getChildren().addAll(imageView);
 
+	}
+	
+	public void hide() {
+		getChildren().clear();
 	}
 
 }
