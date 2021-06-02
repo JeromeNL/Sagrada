@@ -36,6 +36,11 @@ public class PatterncardField {
 		this.colorRequirement = colorRequirement;
 		this.dbController = dbController;
 		this.owner = owner;
+		
+		
+		dieOnField = dbController.getDie(owner.getIdPlayer(), xPosition, yPosition);
+
+
 
 		leftX = xPosition - 1;
 		rightX = xPosition + 1;
