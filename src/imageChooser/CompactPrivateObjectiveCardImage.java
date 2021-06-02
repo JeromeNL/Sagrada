@@ -14,7 +14,7 @@ public class CompactPrivateObjectiveCardImage extends Pane {
 		super();
 		
 		imageColor = newImageColor;
-		combinedURL = "/Images/Compact Private Objectives GameView/" + imageColor + ".png";
+		combinedURL = "/Images/In Game Objective Private/" + imageColor + ".png";
 		imageURL = combinedURL.toString();
 		addCards();
 	}
@@ -27,7 +27,6 @@ public class CompactPrivateObjectiveCardImage extends Pane {
 		imageView.setPreserveRatio(true);
 
 		getChildren().addAll(imageView);
-
 	}
 	
 	public void hide() {
