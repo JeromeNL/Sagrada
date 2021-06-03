@@ -1,13 +1,11 @@
 package view;
 
-import controller.ChoosePatternCardController;
 import controller.DatabaseController;
 import controller.MainController;
 import controller.RegisterLoginController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import model.Game;
-import model.Patterncard;
 import model.Player;
 import model.RegisterLoginModel;
 
@@ -16,16 +14,12 @@ public class MainScene extends Scene {
 ///////////////////////////////////////////////////////////////// Constructor
 
 	private MainController mainController;
-	private Patterncard patterncard;
-	private ChoosePatternCardController choosePatternCardController;
-	private ChoosePatternCardView choosePatterncardView;
-	private boolean noCard;
 	private DatabaseController dbController;
 	private RegisterLoginModel rlm;
 	private RegisterLoginController registerLoginController;
-	private MainMenu mmv;
 
-	public MainScene(MainController mainController, DatabaseController dbController, RegisterLoginModel rlm, RegisterLoginController rlc) {
+	public MainScene(MainController mainController, DatabaseController dbController, RegisterLoginModel rlm,
+			RegisterLoginController rlc) {
 		super(new Pane(), 1280, 720);
 		this.mainController = mainController;
 		this.dbController = dbController;
@@ -35,7 +29,6 @@ public class MainScene extends Scene {
 //		LobbyView lobbyView = new LobbyView();
 //		setRoot(lobbyView);
 
-
 	}
 
 	// show gameview of player of game with nr 1,2,3 or 4.
@@ -43,19 +36,14 @@ public class MainScene extends Scene {
 	public void showGame(Game game, int playerNR) {
 
 		Player playerShownOnScreen = game.getPlayers().get(playerNR); // creator of the game
-		GameView gameView = new GameView(game, playerShownOnScreen, mainController, dbController); 
+		GameView gameView = new GameView(game, playerShownOnScreen, mainController, dbController);
 		setRoot(gameView);
-		
-	
-		
-		
-	//////////// IMAGE CHOOSER EXAMPLE
-	// constuctor can be change to load a certain image.
-		
-		
-	// LATEN STAAN ALSJEBLIEFT
-		
-		
+
+		//////////// IMAGE CHOOSER EXAMPLE
+		// constuctor can be change to load a certain image.
+
+		// LATEN STAAN ALSJEBLIEFT
+
 //		ToolcardCardImage toolcardCardImage = new ToolcardCardImage(3); 
 //		setRoot(toolcardCardImage);
 //		
@@ -70,14 +58,8 @@ public class MainScene extends Scene {
 //		
 //		CompactPrivateObjectiveCardImage compactPrivateObjectiveCardImage = new CompactPrivateObjectiveCardImage("pink"); 
 //		setRoot(compactPrivateObjectiveCardImage); 
-		
-	
-	
-		
-		
-		
-		
-	// LATEN STAAN ALSJEBLIEFT
+
+		// LATEN STAAN ALSJEBLIEFT
 	}
 
 	public void showLoginView() {
@@ -89,17 +71,25 @@ public class MainScene extends Scene {
 	public void changeCurrentPlayerView(Game game) {
 		setRoot(new ChangeCurrentPlayerView(game, mainController));
 	}
-	
+
 	public void showLoginScreen() {
 		setRoot(new LoginView(dbController, registerLoginController, rlm));
 	}
-	
-	public void showFirstMainMenu(MainMenu mmv, MainController mainController) {
-		mmv = new MainMenu(dbController, mainController);
-		setRoot( mmv );
+
+	public void showFirstMainMenu() {
+		setRoot(new MainMenu(mainController));
+
 	}
 
 	public void showMainMenu() {
 		setRoot(new TemporaryMenuView(mainController));
+	}
+
+	public void showPlayerListView() {
+		setRoot(new PlayerListView(dbController, mainController));
+	}
+
+	public void showPlayedGames() {
+		setRoot(new PlayedGamesView(dbController, mainController));
 	}
 }

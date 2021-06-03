@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
@@ -9,7 +8,6 @@ import model.Game;
 import model.Player;
 import model.Refresh;
 import model.RegisterLoginModel;
-import view.MainMenu;
 import view.MainScene;
 
 public class MainController {
@@ -23,23 +21,21 @@ public class MainController {
 	private String imageURL;
 	private String combinedURL;
 
-	private ChoosePatternCardController choosePatternCardController;
 	private Refresh refreshThread;
-	private MainMenu mmv;
-
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController(this);
 		RegisterLoginController rlc = new RegisterLoginController(dbController);
-		RegisterLoginModel rlm = new RegisterLoginModel(this, dbController, rlc);
-		mainScene = new MainScene(this, dbController, rlm, rlc);		
+		RegisterLoginModel rlm = new RegisterLoginModel(this, rlc);
+		mainScene = new MainScene(this, dbController, rlm, rlc);
 		combinedURL = "/Images/Compact Private Objectives/green.png";
 		imageURL = combinedURL.toString();
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
-		
-		
+
 		showLoginScreen();
-		
+//		showPlayerListView();
+//		showPlayedGames();
+
 		refreshThread = new Refresh(currentGame, this, dbController);
 		refreshThread.start();
 
@@ -93,24 +89,32 @@ public class MainController {
 	public String getLoggedInUsername() {
 		return loggedInUsername;
 	}
-	
+
 	public void showLoginView() {
 		mainScene.showLoginView();
 	}
-	
+
 	public void showLoginScreen() {
 		mainScene.showLoginScreen();
 	}
-	
-	public void showFirstMainMenu(MainMenu mmv, MainController mainController) {
-		mainScene.showFirstMainMenu(mmv, this);
+
+	public void showFirstMainMenu() {
+		mainScene.showFirstMainMenu();
 	}
-	
+
 	public Game getCurrentGame() {
 		return currentGame;
 	}
-	
+
 	public void showMainMenu() {
 		mainScene.showMainMenu();
+	}
+
+	public void showPlayerListView() {
+		mainScene.showPlayerListView();
+	}
+
+	public void showPlayedGames() {
+		mainScene.showPlayedGames();
 	}
 }

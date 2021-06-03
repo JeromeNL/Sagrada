@@ -1,20 +1,9 @@
 package view;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
-import controller.DatabaseController;
 import controller.MainController;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -22,20 +11,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class MainMenu extends VBox {
-	private ImageView imageView;
+//	private ImageView imageView;
 	public Button spelen;
 	public Button spelersOverzicht;
 	public Button spelOverzicht;
 	private MainController mainController;
-	
-	
-	public MainMenu(DatabaseController dbController, MainController mainController) {
 
+	public MainMenu(MainController mainController) {
+		this.mainController = mainController;
 
 //		InputStream stream;
 //		try {
@@ -55,12 +41,11 @@ public class MainMenu extends VBox {
 		VBox buttons = new VBox();
 		StackPane colorBurn = new StackPane();
 		VBox sagradaText = new VBox();
-		
+
 		Button spelen = new Button("Spelen");
-		Button spelersOverzicht = new Button("SpelersOverzicht");
-		Button spelOverzicht = new Button("SpelOverzicht");
-		
-		
+		Button spelersOverzicht = new Button("Spelers Overzicht");
+		Button spellenOverzicht = new Button("Spellen Overzicht");
+
 		Text sagradaTxt = new Text("Sagrada ");
 //		sagradaTxt.setTranslateX(-300);
 //		sagradaTxt.setTranslateY(200);
@@ -70,29 +55,26 @@ public class MainMenu extends VBox {
 //		box.setHeight(700);
 //		burnOverlay.setFill(Color.TRANSPARENT);
 //		burnOverlay.setBlendMode(BlendMode.COLOR_BURN);
-		
-		
+
 		box.getChildren().addAll(sagradaText, layout);
 //		colorBurn.getChildren().addAll(burnOverlay);
 //		buttons.setAlignment(Pos.BASELINE_LEFT);
 		HBox.setMargin(buttons, new Insets(50, 10, 40, 100));
 		buttons.setSpacing(10);
 		layout.getChildren().addAll(buttons);
-		buttons.getChildren().addAll(spelen, spelersOverzicht, spelOverzicht);
+		buttons.getChildren().addAll(spelen, spelersOverzicht, spellenOverzicht);
 		sagradaText.getChildren().addAll(sagradaTxt);
 		box.setAlignment(Pos.CENTER);
 		box.setBackground(
 				new Background(new BackgroundFill(Color.rgb(247, 150, 150), CornerRadii.EMPTY, Insets.EMPTY)));
-		
+
 		sagradaText.setAlignment(Pos.CENTER_LEFT);
 		VBox.setMargin(sagradaTxt, new Insets(100, 10, 0, 100));
 		layout.setAlignment(Pos.CENTER_LEFT);
 
-		
 		sagradaText.setMinHeight(100);
-		sagradaTxt.setStyle("-fx-font: 80 Arial;" +
-				"-fx-fill: white;");
-		
+		sagradaTxt.setStyle("-fx-font: 80 Arial;" + "-fx-fill: white;");
+
 		this.getChildren().add(box);
 		this.setBackground(
 				new Background(new BackgroundFill(Color.rgb(247, 150, 150), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -105,23 +87,29 @@ public class MainMenu extends VBox {
 		spelen.setStyle(IDLE_BUTTON_STYLE);
 		spelen.setOnMouseEntered(e -> spelen.setStyle(HOVERED_BUTTON_STYLE));
 		spelen.setOnMouseExited(e -> spelen.setStyle(IDLE_BUTTON_STYLE));
-		
+
 		spelersOverzicht.setStyle(IDLE_BUTTON_STYLE);
 		spelersOverzicht.setOnMouseEntered(e -> spelersOverzicht.setStyle(HOVERED_BUTTON_STYLE));
 		spelersOverzicht.setOnMouseExited(e -> spelersOverzicht.setStyle(IDLE_BUTTON_STYLE));
-		
-		spelOverzicht.setStyle(IDLE_BUTTON_STYLE);
-		spelOverzicht.setOnMouseEntered(e -> spelOverzicht.setStyle(HOVERED_BUTTON_STYLE));
-		spelOverzicht.setOnMouseExited(e -> spelOverzicht.setStyle(IDLE_BUTTON_STYLE));
 
+		spellenOverzicht.setStyle(IDLE_BUTTON_STYLE);
+		spellenOverzicht.setOnMouseEntered(e -> spellenOverzicht.setStyle(HOVERED_BUTTON_STYLE));
+		spellenOverzicht.setOnMouseExited(e -> spellenOverzicht.setStyle(IDLE_BUTTON_STYLE));
 
-		
-		
-		// Event after clicking the "Login" button
+		// Event after clicking the "Spelen" button
 		spelen.setOnMouseClicked(e -> {
 			mainController.showMainMenu();
 		});
 
+		// Event after clicking the "Spelresultaten" button
+		spelersOverzicht.setOnMouseClicked(e -> {
+			mainController.showPlayerListView();
+		});
+
+		// Event after clicking the "Spellen Overzicht" button
+		spellenOverzicht.setOnMouseClicked(e -> {
+			mainController.showPlayedGames();
+		});
 	}
 
 }
