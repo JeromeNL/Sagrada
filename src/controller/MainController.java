@@ -9,8 +9,12 @@ import model.Game;
 import model.Player;
 import model.Refresh;
 import model.RegisterLoginModel;
+import view.AcceptDenyView;
+import view.EndScoreView;
 import view.MainMenu;
 import view.MainScene;
+import view.NewGameView;
+import view.YourGamesView;
 
 public class MainController {
 
@@ -26,6 +30,7 @@ public class MainController {
 	private ChoosePatternCardController choosePatternCardController;
 	private Refresh refreshThread;
 	private MainMenu mmv;
+	private RegisterLoginController rlc;
 
 
 	public MainController(Stage stage) {
@@ -94,23 +99,36 @@ public class MainController {
 		return loggedInUsername;
 	}
 	
-	public void showLoginView() {
-		mainScene.showLoginView();
-	}
-	
 	public void showLoginScreen() {
 		mainScene.showLoginScreen();
 	}
 	
-	public void showFirstMainMenu(MainMenu mmv, MainController mainController) {
-		mainScene.showFirstMainMenu(mmv, this);
+	public void showOpenChallenges() {
+		mainScene.setRoot(new AcceptDenyView(this, dbController));
+	}
+	
+	public void showYourGames() {
+		mainScene.setRoot(new YourGamesView(this, dbController));
+	}
+	
+	public void showFirstMainMenu() {
+		mainScene.showFirstMainMenu(new MainMenu(dbController, this), this);
 	}
 	
 	public Game getCurrentGame() {
 		return currentGame;
 	}
 	
-	public void showMainMenu() {
-		mainScene.showMainMenu();
+	public void showNewGame() {
+		mainScene.setRoot(new NewGameView(this, dbController));
+	}
+
+	public void logout() {
+		loggedInUsername = "";
+		showLoginScreen();
+	}
+	
+	public void showEndScoreView() {
+		mainScene.setRoot(new EndScoreView());
 	}
 }

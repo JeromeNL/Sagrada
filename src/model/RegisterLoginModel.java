@@ -83,7 +83,7 @@ public class RegisterLoginModel {
 						warningColor = "green";
 
 						mainController.login(loginUsernameGiven);
-						mainController.showFirstMainMenu(mmv, mainController);
+						mainController.showFirstMainMenu();
 
 					} else {
 						System.out.println("Error! Wrong password!");

@@ -98,8 +98,4 @@ public class MainScene extends Scene {
 		mmv = new MainMenu(dbController, mainController);
 		setRoot( mmv );
 	}
-
-	public void showMainMenu() {
-		setRoot(new TemporaryMenuView(mainController));
-	}
 }
