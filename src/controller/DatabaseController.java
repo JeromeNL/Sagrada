@@ -12,7 +12,10 @@ import model.Die;
 import model.DiesInSupply;
 import model.GameColor;
 import model.Player;
+
+import model.PatterncardField;
 import model.PlayerStatus;
+
 
 public class DatabaseController {
 
@@ -443,6 +446,10 @@ public class DatabaseController {
 		return true;
 	}
 
+	
+	
+
+
 	public ArrayList<Integer> getChallenges(String username) {
 		ArrayList<Integer> challenges = new ArrayList<Integer>();
 
@@ -505,4 +512,5 @@ public class DatabaseController {
 		}
 		return games;
 	}
+
 }

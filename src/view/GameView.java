@@ -178,13 +178,13 @@ public class GameView extends BorderPane {
 			setSpacing(30);
 			setAlignment(Pos.CENTER);
 
-			Label gameStatus = new Label("Gameid: " + game.getGameID());
+			Label gameStatus = new Label("Gameid: " + game.getIdGame());
 
-			int playerID = dbController.getCurrentPlayerID(game.getGameID());
+			int playerID = dbController.getCurrentPlayerID(game.getIdGame());
 			String username = dbController.getUsername(playerID);
 			Label currentPlayer = new Label("Current player: " + username + " (ID: " + playerID + ")");
 
-			int roundID = dbController.getRoundID(game.getGameID());
+			int roundID = dbController.getRoundID(game.getIdGame());
 			boolean isClockwise = dbController.isClockwise(roundID);
 			Label round = new Label("roundID: " + roundID + " (clockwise: " + isClockwise + ")" + " RoundNR: "
 					+ dbController.getRoundNr(roundID));

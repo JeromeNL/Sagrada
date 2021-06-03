@@ -11,7 +11,7 @@ import model.PlayerStatus;
 public class PlayerController {
 
 	private DatabaseController dbController;
-	private MainController mainController;
+	private static MainController mainController;
 
 	public PlayerController(DatabaseController dbController, MainController mainController) {
 		this.dbController = dbController;
@@ -59,7 +59,7 @@ public class PlayerController {
 	}
 
 
-	public ArrayList<PlayerStats> AllPlayerStats() throws SQLException {
+	public static ArrayList<PlayerStats> AllPlayerStats() throws SQLException {
 		ArrayList<PlayerStats> stats = new ArrayList<>();
 		DatabaseController db = new DatabaseController(mainController);
 		ResultSet res = db.doQuery("SELECT p.username, p.idplayer, COALESCE(MAX(p.score), 0) as highscore,\n"

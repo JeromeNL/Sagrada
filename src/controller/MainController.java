@@ -27,6 +27,9 @@ public class MainController {
 
 	private Refresh refreshThread;
 
+
+		
+
 	public MainController(Stage stage) {
 		dbController = new DatabaseController(this);
 		RegisterLoginController rlc = new RegisterLoginController(dbController);
@@ -42,6 +45,7 @@ public class MainController {
 
 		refreshThread = new Refresh(currentGame, this, dbController);
 		refreshThread.start();
+
 
 		// mainScene.getChoosePatternCardView().getCard(); //will give you an int after
 		// you clicked on kiezen
@@ -139,4 +143,9 @@ public class MainController {
 	public void showPlayedGames() {
 		mainScene.showPlayedGames();
 	}
+
+
 }
+
+
+
