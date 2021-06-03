@@ -12,6 +12,7 @@ import model.Die;
 import model.DiesInSupply;
 import model.GameColor;
 import model.Player;
+import model.PlayerStatus;
 
 public class DatabaseController {
 
@@ -159,6 +160,10 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 		return diesInSupply;
+	}
+	
+	public void setPlayerStatus(PlayerStatus status, String username, int idGame) {
+		doUpdateQuery("UPDATE player SET playstatus = \"" + status.toString().toLowerCase() + "\" WHERE username = \"" + username + "\" AND idgame = " + idGame);
 	}
 
 	public void createGameDies(int idGame) {
@@ -435,5 +440,34 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public ArrayList<Integer> getChallenges(String username) {
+		ArrayList<Integer> challenges = new ArrayList<Integer>();
+		
+		ResultSet rs = doQuery("SELECT idgame FROM player WHERE playstatus = \"challengee\" AND username = \"" + username + "\";");
+		try {
+			while (rs.next()) {
+				challenges.add(rs.getInt("idgame"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return challenges;
+	}
+	
+	public String getChallenger(int idGame) {
+		String username = "";
+		ResultSet rs = doQuery("SELECT username FROM player WHERE playstatus = \"challenger\" AND idgame = " + idGame);
+		try {
+			while (rs.next()) {
+				username = rs.getString("username");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return username;
 	}
 }

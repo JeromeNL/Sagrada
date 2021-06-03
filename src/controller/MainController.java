@@ -9,6 +9,7 @@ import model.Game;
 import model.Player;
 import model.Refresh;
 import model.RegisterLoginModel;
+import view.AcceptDenyView;
 import view.MainMenu;
 import view.MainScene;
 
@@ -94,16 +95,16 @@ public class MainController {
 		return loggedInUsername;
 	}
 	
-	public void showLoginView() {
-		mainScene.showLoginView();
-	}
-	
 	public void showLoginScreen() {
 		mainScene.showLoginScreen();
 	}
 	
-	public void showFirstMainMenu(MainMenu mmv, MainController mainController) {
-		mainScene.showFirstMainMenu(mmv, this);
+	public void showOpenChallenges() {
+		mainScene.setRoot(new AcceptDenyView(this, dbController));
+	}
+	
+	public void showFirstMainMenu() {
+		mainScene.showFirstMainMenu(new MainMenu(dbController, this), this);
 	}
 	
 	public Game getCurrentGame() {
