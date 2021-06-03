@@ -160,6 +160,20 @@ public class DatabaseController {
 		}
 		return diesInSupply;
 	}
+	
+	public GameColor getPrivateObjectiveCardColor(int playerID) {
+		ResultSet rs = doQuery("SELECT private_objectivecard_color FROM player WHERE idplayer = " + playerID);
+		try {
+			while (rs.next()) {
+				String colorString = rs.getString("private_objectivecard_color").toUpperCase();
+				return GameColor.valueOf(colorString);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public void createGameDies(int idGame) {
 		ResultSet rs = doQuery("SELECT * FROM die");
