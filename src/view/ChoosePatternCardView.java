@@ -6,6 +6,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import model.Player;
 
 public class ChoosePatternCardView extends BorderPane {
 
@@ -13,13 +14,15 @@ public class ChoosePatternCardView extends BorderPane {
 	private ChoosePatternCardCards choosePatternCardCards;
 	private ChooseButton button;
 	private ChoosePatternCardController choosePatternCardController;
+	private Player player;
 
 	private int cardId;
 	private boolean hasCard;
 	private MainController mainController;
 
-	public ChoosePatternCardView(ChoosePatternCardController choosePatternCardController, MainController mainController) {
+	public ChoosePatternCardView(ChoosePatternCardController choosePatternCardController, MainController mainController, Player player) {
 		this.mainController = mainController;
+		this.player = player;
 		choosePatternCardCards = new ChoosePatternCardCards(choosePatternCardController, mainController);
 		button = new ChooseButton();
 		hasCard = false;
@@ -29,27 +32,30 @@ public class ChoosePatternCardView extends BorderPane {
 				System.out.println(choosePatternCardController.getPatternCard().get(0).getIdPatternCard());
 				cardId = choosePatternCardController.getPatternCard().get(0).getIdPatternCard();
 				hasCard = true;
-
+				player.setPatternCard(cardId);
+				mainController.showGameLoggedInPlayer();
 			} else if (choosePatternCardCards.rectanglePatternCard2.select == true) {
 				System.out.println(choosePatternCardController.getPatternCard().get(1).getIdPatternCard());
 				cardId = choosePatternCardController.getPatternCard().get(1).getIdPatternCard();
 				hasCard = true;
-
+				player.setPatternCard(cardId);
+				mainController.showGameLoggedInPlayer();
 			} else if (choosePatternCardCards.rectanglePatternCard3.select == true) {
 				System.out.println(choosePatternCardController.getPatternCard().get(2).getIdPatternCard());
 				cardId = choosePatternCardController.getPatternCard().get(2).getIdPatternCard();
 				hasCard = true;
-
+				player.setPatternCard(cardId);
+				mainController.showGameLoggedInPlayer();
 			} else if (choosePatternCardCards.rectanglePatternCard4.select == true) {
 				System.out.println(choosePatternCardController.getPatternCard().get(3).getIdPatternCard());
 				cardId = choosePatternCardController.getPatternCard().get(3).getIdPatternCard();
 				hasCard = true;
-
+				player.setPatternCard(cardId);
+				mainController.showGameLoggedInPlayer();
 			} else
 
 				System.out.println("nothing is selected please select a card");
 			hasCard = false;
-
 		});
 
 		this.setBackground(new Background(new BackgroundFill(SAGRADAPINK, null, null)));

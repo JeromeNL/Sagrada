@@ -95,8 +95,8 @@ public class TemporaryMenuView extends BorderPane {
 				username.clear();
 				
 				// TODO: remove what's under here when patterncard chooser works
-				mainController.getCurrentGame().getPlayers().get(0).setPatternCard(1);
-				mainController.getCurrentGame().getPlayers().get(1).setPatternCard(2);
+//				mainController.getCurrentGame().getPlayers().get(0).setPatternCard(1);
+//				mainController.getCurrentGame().getPlayers().get(1).setPatternCard(2);
 			}
 		});
 		

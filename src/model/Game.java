@@ -48,9 +48,6 @@ public class Game {
 		getUsernameCreator();
 
 		loadGame();
-		
-		Refresh refreshThread = new Refresh(this, mainController, dbController);
-		refreshThread.start();
 	}
 
 	// Constructor to create a new game.
@@ -72,9 +69,6 @@ public class Game {
 		diesInSupply = new DiesInSupply();
 
 		setupGame();
-		
-		Refresh refreshThread = new Refresh(this, mainController, dbController);
-		refreshThread.start();
 	}
 
 	private void getUsernameCreator() {
@@ -90,6 +84,8 @@ public class Game {
 		dbController.setRoundID(idGame, 1);
 
 		dbController.setTurnIdPlayer(idGame, dbController.getPlayerID(1, idGame));
+		dbController.createNewPublicObjectives(idGame);
+		dbController.createNewToolcards(idGame);
 	}
 
 	public void startGame() {

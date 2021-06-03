@@ -1,15 +1,15 @@
 package controller;
 
 
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 
-
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import model.Game;
 import model.Player;
+import model.Refresh;
 import model.RegisterLoginModel;
+import view.MainMenu;
 import view.MainScene;
 
 public class MainController {
@@ -35,6 +35,9 @@ public class MainController {
 //	}
 
 	private ChoosePatternCardController choosePatternCardController;
+	private Refresh refreshThread;
+	private MainMenu mmv;
+
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController(this);
@@ -45,10 +48,12 @@ public class MainController {
 		imageURL = combinedURL.toString();
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		
+		
 		showLoginScreen();
+		
+		refreshThread = new Refresh(currentGame, this, dbController);
+		refreshThread.start();
 
-		createCardsToChoose(); // Creates 4 random cards to
-//		showChoosePatternCard();
 		// mainScene.getChoosePatternCardView().getCard(); //will give you an int after
 		// you clicked on kiezen
 
@@ -70,12 +75,14 @@ public class MainController {
 
 	public void loadGame(int idGame) {
 		currentGame = new Game(idGame, dbController, this);
+		refreshThread.setGame(currentGame);
 	}
 
 	// Creates a new game with the loggedInUsername as the owner of the game.
 	// TODO: should be called by lobby create game view.
 	public void createGame() {
 		currentGame = new Game(loggedInUsername, dbController, this);
+		refreshThread.setGame(currentGame);
 	}
 
 	// Shows game of logged in player
@@ -97,17 +104,6 @@ public class MainController {
 	public String getLoggedInUsername() {
 		return loggedInUsername;
 	}
-
-	// click on patterncard and kiezen will give you a cardId
-	// If you only click on kiezen nothing happens
-	public void showChoosePatternCard() {
-		mainScene.showChoosePatternCard(choosePatternCardController);
-	}
-
-	// Creates 4 random cards to choose from
-	public void createCardsToChoose() {
-		choosePatternCardController = new ChoosePatternCardController(dbController);
-	}
 	
 	public void showLoginView() {
 		mainScene.showLoginView();
@@ -115,6 +111,10 @@ public class MainController {
 	
 	public void showLoginScreen() {
 		mainScene.showLoginScreen();
+	}
+	
+	public void showFirstMainMenu(MainMenu mmv, MainController mainController) {
+		mainScene.showFirstMainMenu(mmv, this);
 	}
 	
 	public Game getCurrentGame() {

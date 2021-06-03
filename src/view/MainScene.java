@@ -3,15 +3,7 @@ package view;
 import controller.ChoosePatternCardController;
 import controller.DatabaseController;
 import controller.MainController;
-
-import imageChooser.CompactPrivateObjectiveCardImage;
-import imageChooser.CompactPublicObjectiveCardImage;
-import imageChooser.PrivateObjectiveCardImage;
-import imageChooser.PublicObjectiveCardImage;
-import imageChooser.ToolcardCardImage;
-
 import controller.RegisterLoginController;
-
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import model.Game;
@@ -31,6 +23,7 @@ public class MainScene extends Scene {
 	private DatabaseController dbController;
 	private RegisterLoginModel rlm;
 	private RegisterLoginController registerLoginController;
+	private MainMenu mmv;
 
 	public MainScene(MainController mainController, DatabaseController dbController, RegisterLoginModel rlm, RegisterLoginController rlc) {
 		super(new Pane(), 1280, 720);
@@ -95,23 +88,17 @@ public class MainScene extends Scene {
 		setRoot(loginView);
 	}
 
-	public void showChoosePatternCard(ChoosePatternCardController choosePatternCardController) {
-		choosePatterncardView = new ChoosePatternCardView(choosePatternCardController, mainController);
-		setRoot(choosePatterncardView);
-
-	}
-
 	public void changeCurrentPlayerView(Game game) {
 		setRoot(new ChangeCurrentPlayerView(game, mainController));
-	}
-
-	public ChoosePatternCardView getChoosePatternCardView() {
-		return choosePatterncardView;
-
 	}
 	
 	public void showLoginScreen() {
 		setRoot(new LoginView(dbController, registerLoginController, rlm));
+	}
+	
+	public void showFirstMainMenu(MainMenu mmv, MainController mainController) {
+		mmv = new MainMenu(dbController, mainController);
+		setRoot( mmv );
 	}
 
 	public void showMainMenu() {
