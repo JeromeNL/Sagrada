@@ -12,6 +12,7 @@ import model.RegisterLoginModel;
 import view.AcceptDenyView;
 import view.MainMenu;
 import view.MainScene;
+import view.NewGameView;
 import view.YourGamesView;
 
 public class MainController {
@@ -28,6 +29,7 @@ public class MainController {
 	private ChoosePatternCardController choosePatternCardController;
 	private Refresh refreshThread;
 	private MainMenu mmv;
+	private RegisterLoginController rlc;
 
 
 	public MainController(Stage stage) {
@@ -118,5 +120,14 @@ public class MainController {
 	
 	public void showMainMenu() {
 		mainScene.showMainMenu();
+	}
+	
+	public void showNewGame() {
+		mainScene.setRoot(new NewGameView(this, dbController));
+	}
+
+	public void logout() {
+		loggedInUsername = "";
+		showLoginScreen();
 	}
 }

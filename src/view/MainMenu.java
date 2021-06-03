@@ -29,18 +29,20 @@ public class MainMenu extends VBox {
 		VBox sagradaText = new VBox();
 
 		// Add buttons
-		Button spelen = new MenuButton("Spelen");
-		spelen.setOnMouseClicked(e -> mainController.showMainMenu());
-		Button yourGames = new MenuButton("Jouw spellen");
+		Button spelen = new MenuButton("Nieuw spel aanmaken");
+		spelen.setOnMouseClicked(e -> mainController.showNewGame());
+		Button yourGames = new MenuButton("Bestaande spellen");
 		yourGames.setOnMouseClicked(e->mainController.showYourGames());
 		Button challenges = new MenuButton("Openstaande uitdagingen");
 		challenges.setOnMouseClicked(e->mainController.showOpenChallenges());
 		Button spelersOverzicht = new MenuButton("SpelersOverzicht");
 		Button spelOverzicht = new MenuButton("SpelOverzicht");
+		Button logout = new MenuButton("Uitloggen");
+		logout.setOnMouseClicked(e->mainController.logout());
 
 		VBox buttons = new VBox();
 		Label loggedInUsername = new Label("Logged in user: " + mainController.getLoggedInUsername());
-		buttons.getChildren().addAll(loggedInUsername, spelen, yourGames, challenges, spelersOverzicht, spelOverzicht);
+		buttons.getChildren().addAll(loggedInUsername, spelen, yourGames, challenges, spelersOverzicht, spelOverzicht, logout);
 		buttons.setSpacing(10);
 
 		Text sagradaTxt = new Text("Sagrada");
