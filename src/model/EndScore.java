@@ -30,11 +30,34 @@ public class EndScore {
 	// ZOU MOETEN WERKEN
 
 	public int publicObjectiveScore() {
-		int publicObjectiveScore = mediumShadesObjectiveScore() + shadeVarietyObjectiveScore()
-				+ colomnShadeVarietyObjectiveScore() + colomnColorVarietyObjectiveScore() + darkShadesObjectiveScore()
-				+ colorVarietyObjectiveScore() + rowColorVarietyObjectiveScore() + lightShadesObjectiveScore()
-				+ rowShadeVarietyObjectiveScore();
-		return publicObjectiveScore;
+		int totalPublicObjectiveScore = 0;
+		for (int i = 0; i < 3; i++) {
+			dbController.getToolcardIDs(owner.getGameID()).get(i);
+			
+			if (dbController.getToolcardIDs(owner.getGameID()).get(0) == 1) {
+				totalPublicObjectiveScore += shadeVarietyObjectiveScore();
+			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 2) {
+				totalPublicObjectiveScore += mediumShadesObjectiveScore();
+			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 3) {
+				totalPublicObjectiveScore += colomnShadeVarietyObjectiveScore();
+			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 4) {
+				totalPublicObjectiveScore += colomnColorVarietyObjectiveScore();
+			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 5) {
+				totalPublicObjectiveScore += darkShadesObjectiveScore();
+			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 6) {
+				totalPublicObjectiveScore += colorVarietyObjectiveScore();
+			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 7) {
+				totalPublicObjectiveScore += rowColorVarietyObjectiveScore();
+//			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 8) {
+//				totalScore += rowColorVarietyObjectiveScore();
+			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 9) {
+				totalPublicObjectiveScore += lightShadesObjectiveScore();
+			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 10) {
+				totalPublicObjectiveScore += rowShadeVarietyObjectiveScore();
+			}
+
+		}
+		return totalPublicObjectiveScore;
 	}
 
 	// ZOU MOETEN WERKEN!
