@@ -12,6 +12,7 @@ import model.Die;
 import model.DiesInSupply;
 import model.GameColor;
 import model.Player;
+import model.PatterncardField;
 
 public class DatabaseController {
 
@@ -436,4 +437,6 @@ public class DatabaseController {
 		}
 		return true;
 	}
+	
+	
 }
