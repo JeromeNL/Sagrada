@@ -32,7 +32,8 @@ public class EndScore {
 	public int publicObjectiveScore() {
 		int publicObjectiveScore = mediumShadesObjectiveScore() + shadeVarietyObjectiveScore()
 				+ colomnShadeVarietyObjectiveScore() + colomnColorVarietyObjectiveScore() + darkShadesObjectiveScore()
-				+ colorVarietyObjectiveScore() + rowColorVarietyObjectiveScore() + lightShadesObjectiveScore() + rowShadeVarietyObjectiveScore();
+				+ colorVarietyObjectiveScore() + rowColorVarietyObjectiveScore() + lightShadesObjectiveScore()
+				+ rowShadeVarietyObjectiveScore();
 		return publicObjectiveScore;
 	}
 
@@ -73,15 +74,33 @@ public class EndScore {
 
 	// NOG MAKEN
 	public int colomnShadeVarietyObjectiveScore() {
-		int publicObjectiveScore = 0;
-		return publicObjectiveScore;
 
+		int score;
+		int index;
+		index = 1;
+		score = 0;
+
+		while (index < 6) {
+			if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 1, index) > 1)) {
+				if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 2, index) > 1)) {
+					if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 3, index) > 1)) {
+						if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 4, index) > 1)) {
+							if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 5, index) > 1)) {
+								score += 6;
+							}
+						}
+					}
+				}
+
+			}
+			index++;
+		}
+		return score;
 	}
 
 	// NOG MAKEN
 	public int colomnColorVarietyObjectiveScore() {
 
-		
 		int score;
 		int index;
 		index = 1;
@@ -98,18 +117,16 @@ public class EndScore {
 						}
 					}
 				}
-				
+
 			}
 			index++;
 		}
 		return score;
-}
-		
-	
-	
+	}
+
 	// MOET NOG GEMAAKT WORDEN
 	public int rowColorVarietyObjectiveScore() {
-		
+
 		int score;
 		int index;
 		index = 1;
@@ -126,13 +143,14 @@ public class EndScore {
 						}
 					}
 				}
-				
+
 			}
 			index++;
 		}
 		return score;
 
 	}
+
 	// ZOU MOETEN WERKEN
 	public int darkShadesObjectiveScore() {
 		int darkShadesObjectiveScore = 0;
@@ -168,7 +186,6 @@ public class EndScore {
 		return colorVarietyObjectiveScore;
 	}
 
-
 	// ZOU MOETEN WERKEN
 	public int lightShadesObjectiveScore() {
 		int darkShadesObjectiveScore = 0;
@@ -178,13 +195,32 @@ public class EndScore {
 		} else {
 			darkShadesObjectiveScore = (esdbController.darkShadesObjectiveScore(owner, 2) * 2);
 		}
-		return darkShadesObjectiveScore;		
+		return darkShadesObjectiveScore;
 	}
 
 	// MOET NOG GEMAAKT WORDEN
 	public int rowShadeVarietyObjectiveScore() {
-		int rowShadeVarietyObjectiveScore = 0;
-		return rowShadeVarietyObjectiveScore;
+		int score;
+		int index;
+		index = 1;
+		score = 0;
+
+		while (index < 5) {
+			if (esdbController.rowShadeVarietyObjectiveScore(owner, 1, index) == 1) {
+				if (esdbController.rowShadeVarietyObjectiveScore(owner, 2, index) == 1) {
+					if (esdbController.rowShadeVarietyObjectiveScore(owner, 3, index) == 1) {
+						if (esdbController.rowShadeVarietyObjectiveScore(owner, 4, index) == 1) {
+							if (esdbController.rowShadeVarietyObjectiveScore(owner, 5, index) == 1) {
+								score += 6;
+							}
+						}
+					}
+				}
+
+			}
+			index++;
+		}
+		return score;
 
 	}
 

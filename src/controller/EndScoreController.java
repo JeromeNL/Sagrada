@@ -28,21 +28,6 @@ public class EndScoreController {
 		return intResult;
 	}
 	
-	public int amountOfDiesOfColorInRow(Player owner, int color, int position_x) {
-
-		ResultSet Total = dbController.doQuery(
-				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '"
-						+ owner.getGameID() + "'  AND playerframefield.idplayer = '" + owner.getIdPlayer()
-						+ "'AND gamedie.eyes = '" + eyes + "'");
-		int intResult = 0;
-		try {
-			intResult = Total.getInt(0);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return intResult;
-	}
-
 	public int colomnColorVarietyObjectiveScore(Player owner, String color, int position_x) {
 
 		ResultSet Total = dbController.doQuery(
@@ -64,6 +49,50 @@ public class EndScoreController {
 				"SELECT count(dienumber) from playerframefield WHERE idgame ='" + owner.getGameID() + "'AND idplayer ='"
 						+ owner.getIdPlayer() + "'AND position_x ='" + position_y + "'AND diecolor = '" + color.toUpperCase() + "'");
 		int intResult = 0;
+		try {
+			intResult = Total.getInt(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	return intResult;
+	}
+	
+	public int colomnShadeVarietyObjectiveScore(Player owner, int eyes, int position_x) {
+
+		ResultSet Total = dbController.doQuery(
+				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '"
+						+ owner.getGameID() 
+						+ "'  AND playerframefield.idplayer = '" 
+						+ owner.getIdPlayer()
+						+ "' AND gamedie.eyes = '" 
+						+ eyes 
+						+ "' AND playerframefield.position_y = '"
+						+ position_x +
+						 "'");
+				int intResult = 0;
+		try {
+			intResult = Total.getInt(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	return intResult;
+	}
+	
+	public int rowShadeVarietyObjectiveScore(Player owner, int eyes, int position_y) {
+
+		ResultSet Total = dbController.doQuery(
+				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '"
+						+ owner.getGameID() 
+						+ "'  AND playerframefield.idplayer = '" 
+						+ owner.getIdPlayer()
+						+ "' AND gamedie.eyes = '" 
+						+ eyes 
+						+ "' AND playerframefield.position_y = '"
+						+ position_y +
+						 "'");
+						int intResult = 0;
 		try {
 			intResult = Total.getInt(0);
 		} catch (SQLException e) {
