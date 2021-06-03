@@ -72,6 +72,31 @@ public class EndScore {
 
 	}
 
+	public int colomnColorVarietyObjectiveScore() {
+
+		int score;
+		int index;
+		index = 1;
+		score = 0;
+
+		while (index < 6) {
+			if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "red", index) > 1)) {
+				if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "blue", index) > 1)) {
+					if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "yellow", index) > 1)) {
+						if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "purple", index) > 1)) {
+							if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "green", index) > 1)) {
+								score += 6;
+							}
+						}
+					}
+				}
+
+			}
+			index++;
+		}
+		return score;
+	}
+
 	// NOG MAKEN
 	public int colomnShadeVarietyObjectiveScore() {
 
@@ -98,32 +123,6 @@ public class EndScore {
 		return score;
 	}
 
-	// NOG MAKEN
-	public int colomnColorVarietyObjectiveScore() {
-
-		int score;
-		int index;
-		index = 1;
-		score = 0;
-
-		while (index < 6) {
-			if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "red", index) > 1)) {
-				if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "blue", index) > 1)) {
-					if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "yellow", index) > 1)) {
-						if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "purple", index) > 1)) {
-							if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "green", index) > 1)) {
-								score += 6;
-							}
-						}
-					}
-				}
-
-			}
-			index++;
-		}
-		return score;
-	}
-
 	// MOET NOG GEMAAKT WORDEN
 	public int rowColorVarietyObjectiveScore() {
 
@@ -138,6 +137,31 @@ public class EndScore {
 					if (esdbController.rowColorVarietyObjectiveScore(owner, "yellow", index) == 1) {
 						if (esdbController.rowColorVarietyObjectiveScore(owner, "purple", index) == 1) {
 							if (esdbController.rowColorVarietyObjectiveScore(owner, "green", index) == 1) {
+								score += 6;
+							}
+						}
+					}
+				}
+
+			}
+			index++;
+		}
+		return score;
+
+	}
+
+	public int rowShadeVarietyObjectiveScore() {
+		int score;
+		int index;
+		index = 1;
+		score = 0;
+
+		while (index < 5) {
+			if (esdbController.rowShadeVarietyObjectiveScore(owner, 1, index) == 1) {
+				if (esdbController.rowShadeVarietyObjectiveScore(owner, 2, index) == 1) {
+					if (esdbController.rowShadeVarietyObjectiveScore(owner, 3, index) == 1) {
+						if (esdbController.rowShadeVarietyObjectiveScore(owner, 4, index) == 1) {
+							if (esdbController.rowShadeVarietyObjectiveScore(owner, 5, index) == 1) {
 								score += 6;
 							}
 						}
@@ -196,32 +220,6 @@ public class EndScore {
 			darkShadesObjectiveScore = (esdbController.darkShadesObjectiveScore(owner, 2) * 2);
 		}
 		return darkShadesObjectiveScore;
-	}
-
-	// MOET NOG GEMAAKT WORDEN
-	public int rowShadeVarietyObjectiveScore() {
-		int score;
-		int index;
-		index = 1;
-		score = 0;
-
-		while (index < 5) {
-			if (esdbController.rowShadeVarietyObjectiveScore(owner, 1, index) == 1) {
-				if (esdbController.rowShadeVarietyObjectiveScore(owner, 2, index) == 1) {
-					if (esdbController.rowShadeVarietyObjectiveScore(owner, 3, index) == 1) {
-						if (esdbController.rowShadeVarietyObjectiveScore(owner, 4, index) == 1) {
-							if (esdbController.rowShadeVarietyObjectiveScore(owner, 5, index) == 1) {
-								score += 6;
-							}
-						}
-					}
-				}
-
-			}
-			index++;
-		}
-		return score;
-
 	}
 
 	// ZOU MOETEN WERKEN
