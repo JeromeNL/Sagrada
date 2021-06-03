@@ -7,6 +7,7 @@ import controller.MainController;
 import javafx.geometry.Insets;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -113,10 +114,13 @@ public class GameView extends BorderPane {
 
 		setTop(topPane);
 
+		Button backToMenu = new Button("Terug naar menu");
+		backToMenu.setOnAction(e -> mainController.showFirstMainMenu());
+		
 		VBox leftPane = new VBox();
-		leftPane.setAlignment(Pos.CENTER);
+		leftPane.setAlignment(Pos.CENTER_LEFT);
 		leftPane.setSpacing(25);
-		leftPane.getChildren().addAll(new ChangePlayerButton(), objectiveInGameView);
+		leftPane.getChildren().addAll(new ChangePlayerButton(), backToMenu, objectiveInGameView);
 		leftPane.setPadding(new Insets(20));
 		setLeft(leftPane);
 
@@ -139,7 +143,6 @@ public class GameView extends BorderPane {
 
 		public ChangePlayerButton() {
 			setSpacing(10);
-			setPadding(new Insets(10));
 			setAlignment(Pos.BASELINE_LEFT);
 
 			setOnMouseClicked(e -> showChangeCurrentPlayerView());

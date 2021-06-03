@@ -20,11 +20,11 @@ public class GameController {
 
 		ResultSet rs = dbController.doQuery("SELECT idgame FROM game ORDER BY idgame DESC LIMIT 1;");
 
-		int availableGameID = 0;
+		int availableGameID = 1;
 
 		try {
 			while (rs.next()) {
-				availableGameID = rs.getInt(1) + 1;
+				availableGameID += rs.getInt(1);
 
 			}
 

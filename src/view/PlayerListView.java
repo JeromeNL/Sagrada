@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 import controller.DatabaseController;
+import controller.MainController;
 import controller.PlayerController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,24 +27,26 @@ public class PlayerListView extends VBox {
 	private VBox container;
 	private Text playerTxt;
 	private TableView<PlayerStats> table = new TableView<>();
-	
-	private DatabaseController dbController;
 
-	public PlayerListView(DatabaseController dbController) {
+	private DatabaseController dbController;
+	private MainController mainController;
+
+	public PlayerListView(DatabaseController dbController, MainController mainController) {
 		this.dbController = dbController;
-		
-//creating the view
+		this.mainController = mainController;
+
+		// creating the view
 		container = new VBox();
 		container.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(0), new Insets(0))));
 		container.setPrefHeight(600);
 		container.setMaxWidth(1005);
 		container.setStyle("-fx-hgap: 4;");
-		Text tekst = new Text("fill");
-		Button backButton = new Button("Back");
 
-		playerTxt = new Text("Spelers");
+		playerTxt = new Text("Spelers Overzicht");
 		playerTxt.setFont(new Font("Arial", 30));
-		//Styling button
+
+		Button backButton = new Button("Terug naar menu");
+		// Styling button
 		String IDLE_BUTTON_STYLE = "-fx-border-width: 2;" + "-fx-border-color: white;"
 				+ "-fx-background-color: transparent;" + "-fx-font-size: 20;" + "-fx-text-fill: white;";
 		String HOVERED_BUTTON_STYLE = "-fx-border-width: 2;" + "-fx-border-color: white;"
@@ -53,41 +56,47 @@ public class PlayerListView extends VBox {
 		backButton.setOnMouseEntered(e -> backButton.setStyle(HOVERED_BUTTON_STYLE));
 		backButton.setOnMouseExited(e -> backButton.setStyle(IDLE_BUTTON_STYLE));
 
+		// Event after clicking the "Terug naar menu" button
+		backButton.setOnMouseClicked(e -> {
+			mainController.showFirstMainMenu();
+		});
+
 		// Creating the tables
-		TableColumn<PlayerStats,String> username = new TableColumn<>("Naam");
+		TableColumn<PlayerStats, String> username = new TableColumn<>("Naam");
 		username.setCellValueFactory(new PropertyValueFactory<PlayerStats, String>("Username"));
 		username.prefWidthProperty().setValue(155);
-		
-		TableColumn<PlayerStats,Integer>  highScore = new TableColumn<>("Top score");
+
+		TableColumn<PlayerStats, Integer> highScore = new TableColumn<>("Top score");
 		highScore.setCellValueFactory(new PropertyValueFactory<PlayerStats, Integer>("Highscore"));
-		
-		TableColumn<PlayerStats,Integer>  mostUsedDieValue = new TableColumn<>("Meest gebruikte waarde");
+
+		TableColumn<PlayerStats, Integer> mostUsedDieValue = new TableColumn<>("Meest gebruikte waarde");
 		mostUsedDieValue.setCellValueFactory(new PropertyValueFactory<PlayerStats, Integer>("mostUsedDieValue"));
-		
-		TableColumn<PlayerStats,String>  mostUsedDieColor = new TableColumn<>("Meest gebruikte kleur");
+
+		TableColumn<PlayerStats, String> mostUsedDieColor = new TableColumn<>("Meest gebruikte kleur");
 		mostUsedDieColor.setCellValueFactory(new PropertyValueFactory<PlayerStats, String>("mostUsedDieColor"));
-		
-		TableColumn<PlayerStats,Integer>  oponentCount = new TableColumn<>("Aantal verschillende tegenstanders");
+
+		TableColumn<PlayerStats, Integer> oponentCount = new TableColumn<>("Aantal verschillende tegenstanders");
 		oponentCount.setCellValueFactory(new PropertyValueFactory<PlayerStats, Integer>("oponentCount"));
-		
-		TableColumn<PlayerStats,Integer> wins = new TableColumn<>("Gewonnen");
+
+		TableColumn<PlayerStats, Integer> wins = new TableColumn<>("Gewonnen");
 		wins.setCellValueFactory(new PropertyValueFactory<PlayerStats, Integer>("wins"));
-		
-		TableColumn<PlayerStats,Integer>  losses = new TableColumn<>("Verloren");
+
+		TableColumn<PlayerStats, Integer> losses = new TableColumn<>("Verloren");
 		losses.setCellValueFactory(new PropertyValueFactory<PlayerStats, Integer>("losses"));
 
-		table.getColumns().addAll(Arrays.asList(username, highScore, mostUsedDieValue, mostUsedDieColor, oponentCount, wins, losses));
+		table.getColumns().addAll(
+				Arrays.asList(username, highScore, mostUsedDieValue, mostUsedDieColor, oponentCount, wins, losses));
 		ObservableList<PlayerStats> playerStats;
 		try {
-			playerStats = FXCollections.observableArrayList(PlayerController.AllPlayerStats());
+			playerStats = FXCollections
+					.observableArrayList(new PlayerController(dbController, mainController).AllPlayerStats());
 			table.setItems(playerStats);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		table.setMaxHeight(600);
 		table.setMinHeight(600);
-		
-		
+
 // Adding everything to the view
 		container.getChildren().addAll(table);
 		this.setBackground(new Background(new BackgroundFill(Color.PINK, new CornerRadii(0), new Insets(0))));

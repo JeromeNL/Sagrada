@@ -293,6 +293,7 @@ public class Game {
 
 	private void endGame() {
 		System.out.println(getClass() + " - Game ended.");
+		mainController.showEndScoreView();
 	}
 
 	public ArrayList<String> getPlayerOrder() {

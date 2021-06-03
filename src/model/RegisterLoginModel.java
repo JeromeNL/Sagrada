@@ -1,10 +1,8 @@
 
 package model;
 
-import controller.DatabaseController;
 import controller.MainController;
 import controller.RegisterLoginController;
-import view.MainMenu;
 
 public class RegisterLoginModel {
 
@@ -16,16 +14,12 @@ public class RegisterLoginModel {
 	private String warningText;
 	private String warningColor;
 	private MainController mainController;
-	private DatabaseController dbController;
 	private RegisterLoginController registerLoginController;
-	private MainMenu mmv;
 
-	public RegisterLoginModel(MainController mainController, DatabaseController dbController, RegisterLoginController registerLoginController) {
+	public RegisterLoginModel(MainController mainController, RegisterLoginController registerLoginController) {
 		warningText = "Geen fouten opgetreden";
-		String warningColor = "black";
 
 		this.mainController = mainController;
-		this.dbController = dbController;
 		this.registerLoginController = registerLoginController;
 	}
 
@@ -83,7 +77,7 @@ public class RegisterLoginModel {
 						warningColor = "green";
 
 						mainController.login(loginUsernameGiven);
-						mainController.showFirstMainMenu(mmv, mainController);
+						mainController.showFirstMainMenu();
 
 					} else {
 						System.out.println("Error! Wrong password!");
