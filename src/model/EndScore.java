@@ -80,6 +80,7 @@ public class EndScore {
 
 	// NOG MAKEN
 	public int colomnColorVarietyObjectiveScore() {
+
 		
 		int score;
 		int index;
@@ -102,8 +103,9 @@ public class EndScore {
 			index++;
 		}
 		return score;
-
-	}
+}
+		
+	
 	
 	// MOET NOG GEMAAKT WORDEN
 	public int rowColorVarietyObjectiveScore() {
