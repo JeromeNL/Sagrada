@@ -119,10 +119,6 @@ public class MainController {
 		return currentGame;
 	}
 	
-	public void showMainMenu() {
-		mainScene.showMainMenu();
-	}
-	
 	public void showNewGame() {
 		mainScene.setRoot(new NewGameView(this, dbController));
 	}
