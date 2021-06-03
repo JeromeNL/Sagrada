@@ -84,7 +84,7 @@ public class MainScene extends Scene {
 		setRoot(new PlayerListView(dbController, mainController));
 	}
 
-}
+
 
 
 	public void showPlayedGames() {

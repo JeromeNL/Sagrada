@@ -147,7 +147,7 @@ public class NewGameView extends BorderPane {
 	
 	private boolean gameReadyToStart() {
 		ArrayList<Integer> gamesToStart = dbController.getGames(mainController.getLoggedInUsername());
-		int gameCreatedID = mainController.getCurrentGame().getGameID();
+		int gameCreatedID = mainController.getCurrentGame().getIdGame();
 		if (gamesToStart.contains(gameCreatedID)) {
 			return true;
 		}
@@ -170,7 +170,7 @@ public class NewGameView extends BorderPane {
 	}
 	
 	private boolean isAlreadyInvited(String username) {
-		int gameID = mainController.getCurrentGame().getGameID();
+		int gameID = mainController.getCurrentGame().getIdGame();
 		ArrayList<Player> playersInGame = dbController.getPlayers(gameID);
 		for (Player player : playersInGame) {
 			if (player.getUsername().equals(username)) {
@@ -181,7 +181,7 @@ public class NewGameView extends BorderPane {
 	}
 	
 	private boolean tooManyPlayers() {
-		int gameID = mainController.getCurrentGame().getGameID();
+		int gameID = mainController.getCurrentGame().getIdGame();
 		ArrayList<Player> playersInGame = dbController.getPlayers(gameID);
 		if (playersInGame.size() == 4) {
 			inviteButton.setDisable(true);
