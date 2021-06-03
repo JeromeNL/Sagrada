@@ -10,6 +10,7 @@ import model.Player;
 import model.Refresh;
 import model.RegisterLoginModel;
 import view.AcceptDenyView;
+import view.EndScoreView;
 import view.MainMenu;
 import view.MainScene;
 import view.NewGameView;
@@ -129,5 +130,9 @@ public class MainController {
 	public void logout() {
 		loggedInUsername = "";
 		showLoginScreen();
+	}
+	
+	public void showEndScoreView() {
+		mainScene.setRoot(new EndScoreView());
 	}
 }
