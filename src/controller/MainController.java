@@ -8,7 +8,11 @@ import model.Game;
 import model.Player;
 import model.Refresh;
 import model.RegisterLoginModel;
+import view.AcceptDenyView;
+import view.EndScoreView;
 import view.MainScene;
+import view.NewGameView;
+import view.YourGamesView;
 
 public class MainController {
 
@@ -102,12 +106,30 @@ public class MainController {
 		mainScene.showFirstMainMenu();
 	}
 
+	public void showOpenChallenges() {
+		mainScene.setRoot(new AcceptDenyView(this, dbController));
+	}
+
+	public void showYourGames() {
+		mainScene.setRoot(new YourGamesView(this, dbController));
+	}
+
 	public Game getCurrentGame() {
 		return currentGame;
 	}
 
-	public void showMainMenu() {
-		mainScene.showMainMenu();
+	public void showNewGame() {
+		mainScene.setRoot(new NewGameView(this, dbController));
+	}
+
+	public void logout() {
+		loggedInUsername = "";
+		showLoginScreen();
+	}
+
+	public void showEndScoreView() {
+		mainScene.setRoot(new EndScoreView());
+
 	}
 
 	public void showPlayerListView() {

@@ -77,12 +77,7 @@ public class MainScene extends Scene {
 	}
 
 	public void showFirstMainMenu() {
-		setRoot(new MainMenu(mainController));
-
-	}
-
-	public void showMainMenu() {
-		setRoot(new TemporaryMenuView(mainController));
+		setRoot(new MainMenu(dbController, mainController));
 	}
 
 	public void showPlayerListView() {
@@ -92,4 +87,5 @@ public class MainScene extends Scene {
 	public void showPlayedGames() {
 		setRoot(new PlayedGamesView(dbController, mainController));
 	}
+
 }
