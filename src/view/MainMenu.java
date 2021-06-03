@@ -6,7 +6,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -16,11 +15,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class MainMenu extends VBox {
-	private ImageView imageView;
+//	private ImageView imageView;
 	public Button spelen;
 	public Button spelersOverzicht;
-	public Button spelOverzicht;
-	private MainController mainController;
+	public Button spellenOverzicht;
 
 	public MainMenu(DatabaseController dbController, MainController mainController) {
 
@@ -32,26 +30,30 @@ public class MainMenu extends VBox {
 		Button spelen = new MenuButton("Nieuw spel aanmaken");
 		spelen.setOnMouseClicked(e -> mainController.showNewGame());
 		Button yourGames = new MenuButton("Bestaande spellen");
-		yourGames.setOnMouseClicked(e->mainController.showYourGames());
+		yourGames.setOnMouseClicked(e -> mainController.showYourGames());
 		Button challenges = new MenuButton("Openstaande uitdagingen");
-		challenges.setOnMouseClicked(e->mainController.showOpenChallenges());
-		Button spelersOverzicht = new MenuButton("SpelersOverzicht");
-		Button spelOverzicht = new MenuButton("SpelOverzicht");
+		challenges.setOnMouseClicked(e -> mainController.showOpenChallenges());
+		Button spelersOverzicht = new MenuButton("Spelers Overzicht");
+		spelersOverzicht.setOnMouseClicked(e -> mainController.showPlayerListView());
+		Button spellenOverzicht = new MenuButton("Spellen Overzicht");
+		spellenOverzicht.setOnMouseClicked(e -> mainController.showPlayedGames());
 		Button logout = new MenuButton("Uitloggen");
-		logout.setOnMouseClicked(e->mainController.logout());
+		logout.setOnMouseClicked(e -> mainController.logout());
 
 		VBox buttons = new VBox();
 		Label loggedInUsername = new Label("Logged in user: " + mainController.getLoggedInUsername());
-		buttons.getChildren().addAll(loggedInUsername, spelen, yourGames, challenges, spelersOverzicht, spelOverzicht, logout);
+		buttons.getChildren().addAll(loggedInUsername, spelen, yourGames, challenges, spelersOverzicht, spellenOverzicht,
+				logout);
 		buttons.setSpacing(10);
 
 		Text sagradaTxt = new Text("Sagrada");
 		sagradaText.setAlignment(Pos.CENTER_LEFT);
+
 		sagradaText.getChildren().addAll(sagradaTxt);
 
 		layout.getChildren().addAll(buttons);
 		box.getChildren().addAll(sagradaText, layout);
-		
+
 		HBox.setMargin(buttons, new Insets(50, 10, 40, 100));
 		box.setAlignment(Pos.CENTER);
 		box.setBackground(

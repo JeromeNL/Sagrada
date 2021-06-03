@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
@@ -11,7 +10,6 @@ import model.Refresh;
 import model.RegisterLoginModel;
 import view.AcceptDenyView;
 import view.EndScoreView;
-import view.MainMenu;
 import view.MainScene;
 import view.NewGameView;
 import view.YourGamesView;
@@ -27,24 +25,21 @@ public class MainController {
 	private String imageURL;
 	private String combinedURL;
 
-	private ChoosePatternCardController choosePatternCardController;
 	private Refresh refreshThread;
-	private MainMenu mmv;
-	private RegisterLoginController rlc;
-
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController(this);
 		RegisterLoginController rlc = new RegisterLoginController(dbController);
-		RegisterLoginModel rlm = new RegisterLoginModel(this, dbController, rlc);
-		mainScene = new MainScene(this, dbController, rlm, rlc);		
+		RegisterLoginModel rlm = new RegisterLoginModel(this, rlc);
+		mainScene = new MainScene(this, dbController, rlm, rlc);
 		combinedURL = "/Images/Compact Private Objectives/green.png";
 		imageURL = combinedURL.toString();
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
-		
-		
+
 		showLoginScreen();
-		
+//		showPlayerListView();
+//		showPlayedGames();
+
 		refreshThread = new Refresh(currentGame, this, dbController);
 		refreshThread.start();
 
@@ -98,27 +93,31 @@ public class MainController {
 	public String getLoggedInUsername() {
 		return loggedInUsername;
 	}
-	
+
+	public void showLoginView() {
+		mainScene.showLoginView();
+	}
+
 	public void showLoginScreen() {
 		mainScene.showLoginScreen();
 	}
-	
+
+	public void showFirstMainMenu() {
+		mainScene.showFirstMainMenu();
+	}
+
 	public void showOpenChallenges() {
 		mainScene.setRoot(new AcceptDenyView(this, dbController));
 	}
-	
+
 	public void showYourGames() {
 		mainScene.setRoot(new YourGamesView(this, dbController));
 	}
-	
-	public void showFirstMainMenu() {
-		mainScene.showFirstMainMenu(new MainMenu(dbController, this), this);
-	}
-	
+
 	public Game getCurrentGame() {
 		return currentGame;
 	}
-	
+
 	public void showNewGame() {
 		mainScene.setRoot(new NewGameView(this, dbController));
 	}
@@ -127,8 +126,17 @@ public class MainController {
 		loggedInUsername = "";
 		showLoginScreen();
 	}
-	
+
 	public void showEndScoreView() {
 		mainScene.setRoot(new EndScoreView());
+
+	}
+
+	public void showPlayerListView() {
+		mainScene.showPlayerListView();
+	}
+
+	public void showPlayedGames() {
+		mainScene.showPlayedGames();
 	}
 }
