@@ -12,6 +12,7 @@ import model.RegisterLoginModel;
 import view.AcceptDenyView;
 import view.MainMenu;
 import view.MainScene;
+import view.YourGamesView;
 
 public class MainController {
 
@@ -101,6 +102,10 @@ public class MainController {
 	
 	public void showOpenChallenges() {
 		mainScene.setRoot(new AcceptDenyView(this, dbController));
+	}
+	
+	public void showYourGames() {
+		mainScene.setRoot(new YourGamesView(this, dbController));
 	}
 	
 	public void showFirstMainMenu() {

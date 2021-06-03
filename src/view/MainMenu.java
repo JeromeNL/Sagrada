@@ -1,29 +1,18 @@
 package view;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 import controller.DatabaseController;
 import controller.MainController;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.image.Image;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class MainMenu extends VBox {
@@ -42,13 +31,16 @@ public class MainMenu extends VBox {
 		// Add buttons
 		Button spelen = new MenuButton("Spelen");
 		spelen.setOnMouseClicked(e -> mainController.showMainMenu());
+		Button yourGames = new MenuButton("Jouw spellen");
+		yourGames.setOnMouseClicked(e->mainController.showYourGames());
 		Button challenges = new MenuButton("Openstaande uitdagingen");
 		challenges.setOnMouseClicked(e->mainController.showOpenChallenges());
 		Button spelersOverzicht = new MenuButton("SpelersOverzicht");
 		Button spelOverzicht = new MenuButton("SpelOverzicht");
 
 		VBox buttons = new VBox();
-		buttons.getChildren().addAll(spelen, challenges, spelersOverzicht, spelOverzicht);
+		Label loggedInUsername = new Label("Logged in user: " + mainController.getLoggedInUsername());
+		buttons.getChildren().addAll(loggedInUsername, spelen, yourGames, challenges, spelersOverzicht, spelOverzicht);
 		buttons.setSpacing(10);
 
 		Text sagradaTxt = new Text("Sagrada");

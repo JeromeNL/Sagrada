@@ -59,6 +59,7 @@ public class AcceptDenyView extends BorderPane {
 
 		if (challengesIDs.size() == 0) {
 			Label noChallengeLabel = new Label("Je hebt geen openstaande uitdagingen.");
+			noChallengeLabel.setTextFill(Color.WHITE);
 			challengeBox.getChildren().addAll(noChallengeLabel, refreshButton);
 			
 			return;
