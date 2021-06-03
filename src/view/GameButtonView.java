@@ -47,7 +47,7 @@ public class GameButtonView extends HBox {
 
 		setAlignment(Pos.CENTER);
 		setSpacing(40);
-		setPadding(new Insets(40));
+		setPadding(new Insets(10));
 		getChildren().addAll(privateScore,backButton, toolCardButton1, toolCardButton2, toolCardButton3,
 				
 				

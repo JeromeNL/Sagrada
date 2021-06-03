@@ -1,10 +1,13 @@
 package view;
 
 
+import java.util.ArrayList;
+
 import controller.ChoosePatternCardController;
 import controller.DatabaseController;
 import controller.MainController;
 import imageChooser.CompactPrivateObjectiveCardImage;
+import imageChooser.CompactPublicObjectiveCardImage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -18,7 +21,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import model.Game;
-import model.Patterncard;
 import model.Player;
 
 public class GameView extends BorderPane {
@@ -112,12 +114,18 @@ public class GameView extends BorderPane {
 
 		setTop(topPane);
 
+		ArrayList<Integer> objectiveIDs = game.getPublicObjectives();
+		VBox objectives = new VBox();
+		objectives.setSpacing(5);
+		objectives.getChildren().add(privateObjective);
+		for (Integer id : objectiveIDs) {
+			objectives.getChildren().add(new CompactPublicObjectiveCardImage(id));
+		}
+		
 		VBox leftPane = new VBox();
-//		leftPane.setAlignment(Pos.);
-		leftPane.setSpacing(20);
+		leftPane.setPadding(new Insets(0,0,0,10));
 		leftPane.setMinWidth(400);
-		leftPane.getChildren().addAll(new ChangePlayerButton(), privateObjective);
-		leftPane.setPadding(new Insets(20));
+		leftPane.getChildren().addAll(new ChangePlayerButton(), objectives);
 		setLeft(leftPane);
 
 		setCenter(patternCardView);

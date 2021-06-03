@@ -359,4 +359,8 @@ public class Game {
 	public int getRoundID() {
 		return dbController.getRoundID(idGame);
 	}
+	
+	public ArrayList<Integer> getPublicObjectives() {
+		return dbController.getPublicObjectiveIDs(idGame);
+	}
 }
