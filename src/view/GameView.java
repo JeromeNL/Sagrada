@@ -10,6 +10,7 @@ import imageChooser.CompactPrivateObjectiveCardImage;
 import imageChooser.CompactPublicObjectiveCardImage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -114,6 +115,9 @@ public class GameView extends BorderPane {
 
 		setTop(topPane);
 
+		Button backToMenu = new Button("Terug naar menu");
+		backToMenu.setOnAction(e -> mainController.showFirstMainMenu());
+		
 		ArrayList<Integer> objectiveIDs = game.getPublicObjectives();
 		VBox objectives = new VBox();
 		objectives.setSpacing(5);
@@ -125,7 +129,8 @@ public class GameView extends BorderPane {
 		VBox leftPane = new VBox();
 		leftPane.setPadding(new Insets(0,0,0,10));
 		leftPane.setMinWidth(400);
-		leftPane.getChildren().addAll(new ChangePlayerButton(), objectives);
+		leftPane.getChildren().addAll(new ChangePlayerButton(), backToMenu, objectives);
+		
 		setLeft(leftPane);
 
 		setCenter(patternCardView);
@@ -147,7 +152,6 @@ public class GameView extends BorderPane {
 
 		public ChangePlayerButton() {
 			setSpacing(10);
-			setPadding(new Insets(10));
 			setAlignment(Pos.BASELINE_LEFT);
 
 			setOnMouseClicked(e -> showChangeCurrentPlayerView());
@@ -183,13 +187,13 @@ public class GameView extends BorderPane {
 			setSpacing(30);
 			setAlignment(Pos.CENTER);
 
-			Label gameStatus = new Label("Gameid: " + game.getGameID());
+			Label gameStatus = new Label("Gameid: " + game.getIdGame());
 
-			int playerID = dbController.getCurrentPlayerID(game.getGameID());
+			int playerID = dbController.getCurrentPlayerID(game.getIdGame());
 			String username = dbController.getUsername(playerID);
 			Label currentPlayer = new Label("Current player: " + username + " (ID: " + playerID + ")");
 
-			int roundID = dbController.getRoundID(game.getGameID());
+			int roundID = dbController.getRoundID(game.getIdGame());
 			boolean isClockwise = dbController.isClockwise(roundID);
 			Label round = new Label("roundID: " + roundID + " (clockwise: " + isClockwise + ")" + " RoundNR: "
 					+ dbController.getRoundNr(roundID));
