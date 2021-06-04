@@ -155,7 +155,9 @@ public class GameView extends BorderPane {
 	
 	public void refreshChat() {
 		try {
-			chatpane.refresh();
+			if (chatpane != null) {
+				chatpane.refresh();				
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
