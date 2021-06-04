@@ -12,7 +12,7 @@ public class MessagePane extends StackPane {
 		Label label = new Label(message);
 		label.setWrapText(true);
 		getChildren().add(label);
-		setMaxSize(320, Region.USE_PREF_SIZE );
+		setMaxSize(370, Region.USE_PREF_SIZE );
 		setAlignment(label, Pos.TOP_LEFT);
 		
 		label.setStyle("-fx-font-size: 16; -fx-text-fill: black; -fx-background-color: transparent");

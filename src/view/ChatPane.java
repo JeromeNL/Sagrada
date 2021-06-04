@@ -7,9 +7,9 @@ import java.util.List;
 
 import controller.ChatController;
 import controller.DatabaseController;
-import controller.MainController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -35,11 +35,13 @@ public class ChatPane extends VBox {
 
 	public ChatPane(Player player, DatabaseController dbController) {
 		this.player = player;
+		
 		chatController = new ChatController(dbController);
 		Input.setMinHeight(30);
-		Input.setPrefWidth(295);
-		sendButton = new Button("SEND");
-		sendButton.setPrefSize(70, 30);
+		Input.setMinWidth(290);
+		setPadding(new Insets(10,10,0,0));
+		sendButton = new Button("VERZEND");
+		sendButton.setPrefSize(100, 30);
 		sendButton.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
 		sendButton.setTextFill(Color.WHITE);
 		sendButton.setOnMouseClicked(e -> {
@@ -55,7 +57,6 @@ public class ChatPane extends VBox {
 		HBox messageInput = new HBox();
 		messageInput.getChildren().addAll(Input, sendButton);
 		getChildren().addAll(chatBox, messageInput);
-		setPrefWidth(295);
 		
 		sendButton.setStyle("-fx-font-weight: bold; -fx-font-size: 15; -fx-text-fill: Black; -fx-background-color: lightblue");
 		Input.setStyle("-fx-font-weight: bold; -fx-font-size: 15; -fx-text-fill: Black; -fx-background-color: lightblue; -fx-prompt-text-fill: black;");
@@ -111,8 +112,8 @@ public class ChatPane extends VBox {
 		}
 		ObservableList<MessagePane> chatList = FXCollections.observableList(list);
 		chatBox.setItems(chatList);
-		chatBox.setStyle("-fx-background-color: lightblue");
-		setPrefHeight(150);
+		chatBox.setStyle("-fx-background-color: white");
+		chatBox.setMinHeight(200);
 		int index = list.size();
 		chatBox.scrollTo(index);
 	}
