@@ -145,7 +145,9 @@ public class MainController {
 	}
 
 	public void refreshChat() {
-		mainScene.refreshChat();
+		if (mainScene.getGameView() != null) {
+			mainScene.refreshChat();			
+		}
 	}
 
 }

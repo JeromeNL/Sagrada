@@ -62,6 +62,10 @@ public class MainScene extends Scene {
 
 		// LATEN STAAN ALSJEBLIEFT
 	}
+	
+	public GameView getGameView() {
+		return gameView;
+	}
 
 	public void showLoginView() {
 		RegisterLoginController registerLoginController = new RegisterLoginController(dbController);

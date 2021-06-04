@@ -53,7 +53,10 @@ public class Refresh extends Thread {
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
-						mainController.refreshChat();
+						int idGame = mainController.getCurrentGame().getIdGame();
+						if (dbController.getRoundID(idGame) == 1) {
+							mainController.refreshChat();							
+						}
 						
 					}
 				});
