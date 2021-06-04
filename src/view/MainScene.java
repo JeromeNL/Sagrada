@@ -64,8 +64,10 @@ public class MainScene extends Scene {
 
 	public void showLoginView() {
 		RegisterLoginController registerLoginController = new RegisterLoginController(dbController);
-		LoginView loginView = new LoginView(dbController, registerLoginController, rlm);
-		setRoot(loginView);
+//		LoginView loginView = new LoginView(dbController, registerLoginController, rlm);
+//		setRoot(loginView);
+		
+		
 	}
 
 	public void changeCurrentPlayerView(Game game) {
@@ -74,7 +76,26 @@ public class MainScene extends Scene {
 
 	public void showLoginScreen() {
 		setRoot(new LoginView(dbController, registerLoginController, rlm));
+		
+		
 	}
+	
+	public void showObjectivecardCardView() {
+		
+		ObjectivecardCardView objectivecardCardView = new ObjectivecardCardView(dbController, mainController);
+		setRoot(objectivecardCardView);
+		
+	}
+	
+	
+	public void showToolcardCardView() {
+		
+		ToolcardCardView toolcardCardView = new ToolcardCardView(dbController, mainController);
+		setRoot(toolcardCardView);
+		
+	}
+	
+	
 
 	public void showFirstMainMenu() {
 		setRoot(new MainMenu(dbController, mainController));

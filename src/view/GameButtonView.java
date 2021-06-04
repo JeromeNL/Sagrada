@@ -11,8 +11,9 @@ import model.Game;
 
 public class GameButtonView extends HBox {
 
-	private Circle backButton, toolCardButton1,beerButton, toolCardButton2, toolCardButton3, confirmButton, menuButton,logoutButton,cheatButton;
+	private Circle backButton, toolCardButton1,beerButton, ObjectivecardButton, toolCardButton3, confirmButton, menuButton,logoutButton,cheatButton;
 	private Label score, privateScore;
+	
 	
 	GameButtonView(GameView gameView, Game game, MainController mainController) {
 		
@@ -26,7 +27,12 @@ public class GameButtonView extends HBox {
 		toolCardButton1.setOnMouseClicked(e -> {
 			gameView.showToolCardView();
 		});
-		toolCardButton2 = new GameButton();
+		
+		ObjectivecardButton = new GameButton();
+		ObjectivecardButton.setOnMouseClicked(e -> {
+			mainController.ToolCardButton();;
+		});
+		
 		toolCardButton3 = new GameButton();
 		confirmButton = new GameButton();
 
@@ -48,7 +54,7 @@ public class GameButtonView extends HBox {
 		setAlignment(Pos.CENTER);
 		setSpacing(40);
 		setPadding(new Insets(10));
-		getChildren().addAll(privateScore,backButton, toolCardButton1, toolCardButton2, toolCardButton3,
+		getChildren().addAll(privateScore,backButton, toolCardButton1, ObjectivecardButton, toolCardButton3,
 				
 				
 				

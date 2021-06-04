@@ -1,5 +1,10 @@
 package view;
 
+import java.util.ArrayList;
+
+import controller.DatabaseController;
+import controller.MainController;
+import imageChooser.PublicObjectiveCardImage;
 import javafx.beans.value.ObservableValue;
 
 
@@ -22,10 +27,14 @@ public class ObjectivecardCardView extends HBox {
 RectangleCard rectangleCard1 ;
 	private int widthCard = 230;
 	private int heightCard = 334;
+	private DatabaseController dbController;
+	private MainController mainController;
 
-	public ObjectivecardCardView() {
+	public ObjectivecardCardView(DatabaseController dbController, MainController mainController) {
 		super();
 
+		this.dbController = dbController;
+		this.mainController = mainController;
 		setSpacing(128);
 		setAlignment(Pos.CENTER);
 
@@ -50,26 +59,20 @@ RectangleCard rectangleCard1 ;
 		imageView2.setFitWidth(widthCard - 30);
 		imageView3.setFitHeight(heightCard - 30);
 		imageView3.setFitWidth(widthCard - 30);
-
-		StackPane card1 = new StackPane();
-		StackPane card2 = new StackPane();
-		StackPane card3 = new StackPane();
-
-
-
-
-
-
-		RectangleCard rectangleCard1 = new RectangleCard(widthCard, heightCard, "card1");
-		RectangleCard rectangleCard2 = new RectangleCard(widthCard, heightCard, "card2");
-		RectangleCard rectangleCard3 = new RectangleCard(widthCard, heightCard, "card3");
 		
-		card1.getChildren().addAll(rectangleCard1, imageView);
-		card2.getChildren().addAll(rectangleCard2, imageView2);
-		card3.getChildren().addAll(rectangleCard3, imageView3);
+		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(55);
 
-		getChildren().addAll(card1, card2, card3);
+//		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(mainController.getCurrentGame().getIdGame());
+		
+		for (Integer id : ids) {
+			StackPane card = new StackPane();
+			PublicObjectiveCardImage publicObjectiveCardImage = new PublicObjectiveCardImage(id);
+			publicObjectiveCardImage.setTranslateX(15);
+			publicObjectiveCardImage.setTranslateY(200);
+			card.getChildren().add(publicObjectiveCardImage);
+			getChildren().add(card);
+		}
+	
 
 	}
-
 }

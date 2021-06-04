@@ -12,8 +12,8 @@ import javafx.scene.paint.Color;
 
 public class ToolcardCardImage extends Pane {
 
-	private int widthCard = 419;
-	private int heightCard = 606;
+	private int widthCard = 200;
+	private int heightCard = 300;
 	private String imageURL;
 	private String combinedURL;
 	private int imageNumber;

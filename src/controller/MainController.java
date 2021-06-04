@@ -125,6 +125,18 @@ public class MainController {
 	public void showNewGame() {
 		mainScene.setRoot(new NewGameView(this, dbController));
 	}
+	
+	public void ToolCardButton() {
+		
+		mainScene.showToolcardCardView();
+		
+	}
+	
+	public void ObjectiveCardButton() {
+		
+		mainScene.showObjectivecardCardView();
+		
+	}
 
 	public void logout() {
 		loggedInUsername = "";
