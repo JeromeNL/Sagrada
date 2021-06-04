@@ -24,7 +24,7 @@ public class RoundTrackView extends HBox {
 		this.setAlignment(Pos.CENTER);
 		this.setSpacing(5);
 
-		ArrayList<Die> diesOnRoundtrack = dbController.getDieRoundTrack(game.getGameID());
+		ArrayList<Die> diesOnRoundtrack = dbController.getDieRoundTrack(game.getIdGame());
 		int size = diesOnRoundtrack.size();
 
 		for (int i = 0; i < 10; i++) {
@@ -58,7 +58,7 @@ public class RoundTrackView extends HBox {
 	}
 
 	public void getDieRoundTrack() {
-		dbController.getDieRoundTrack(game.getGameID());
+		dbController.getDieRoundTrack(game.getIdGame());
 	}
 
 }
