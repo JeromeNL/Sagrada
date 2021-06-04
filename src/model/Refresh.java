@@ -38,7 +38,7 @@ public class Refresh extends Thread {
 		    
 		while(true) {
 			try {
-				Thread.sleep(1 * 1000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

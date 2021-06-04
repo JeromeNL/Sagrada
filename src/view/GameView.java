@@ -52,7 +52,7 @@ public class GameView extends BorderPane {
 		privateObjective = new CompactPrivateObjectiveCardImage(player.getPrivateObjectiveCardColor().toString());
 //		}
 
-		topPart = new TopPart(game);
+		topPart = new TopPart(dbController, game);
 
 		dieSupply = new DieSupply(game.getDiesInSupply(), player);
 		gameButtonView = new GameButtonView(this, game, mainController);
