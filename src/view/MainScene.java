@@ -17,6 +17,7 @@ public class MainScene extends Scene {
 	private DatabaseController dbController;
 	private RegisterLoginModel rlm;
 	private RegisterLoginController registerLoginController;
+	private GameView gameView;
 
 	public MainScene(MainController mainController, DatabaseController dbController, RegisterLoginModel rlm,
 			RegisterLoginController rlc) {
@@ -36,7 +37,7 @@ public class MainScene extends Scene {
 	public void showGame(Game game, int playerNR) {
 
 		Player playerShownOnScreen = game.getPlayers().get(playerNR); // creator of the game
-		GameView gameView = new GameView(game, playerShownOnScreen, mainController, dbController);
+		gameView = new GameView(game, playerShownOnScreen, mainController, dbController);
 		setRoot(gameView);
 
 		//////////// IMAGE CHOOSER EXAMPLE
@@ -61,6 +62,10 @@ public class MainScene extends Scene {
 
 		// LATEN STAAN ALSJEBLIEFT
 	}
+	
+	public GameView getGameView() {
+		return gameView;
+	}
 
 	public void showLoginView() {
 		RegisterLoginController registerLoginController = new RegisterLoginController(dbController);
@@ -84,8 +89,9 @@ public class MainScene extends Scene {
 		setRoot(new PlayerListView(dbController, mainController));
 	}
 
-
-
+	public void refreshChat() {
+		gameView.refreshChat();
+	}
 
 	public void showPlayedGames() {
 		setRoot(new PlayedGamesView(dbController, mainController));
