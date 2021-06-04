@@ -31,6 +31,7 @@ public class ChatPane extends VBox {
 	private ChatController chatController;
 	private Button sendButton;
 	private Player player;
+	private DatabaseController dbController;
 
 	public ChatPane(Player player) {
 		this.player = player;
@@ -65,7 +66,7 @@ public class ChatPane extends VBox {
 		
 
 	private void sendMessage() {
-		ChatController chatController = new ChatController();
+		ChatController chatController = new ChatController(dbController);
 		String message = Input.getText();
 		if (message.trim().length() > 0) {
 			if (ChatController.validateLetters(message)) {
@@ -113,7 +114,7 @@ public class ChatPane extends VBox {
 
 	public void refresh() throws SQLException { // Refresh chat messages
 
-		chatmessages = chatController.getChatMessages();
+		chatmessages = chatController.getChatMessages(player);
 		refreshPane();
 
 	}

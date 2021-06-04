@@ -126,6 +126,9 @@ public class GameView extends BorderPane {
 		rightPane.setMinWidth(400);
 		setRight(rightPane);
 		
+		ChatPane chatpane = new ChatPane(player);
+		setRight(chatpane);
+		
 		VBox bottomPane = new VBox(dieSupply, gameButtonView);
 		setBottom(bottomPane);
 	}
