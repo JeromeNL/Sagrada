@@ -25,7 +25,7 @@ public class EndScore {
 		this.owner = owner;
 
 		esdbController = new EndScoreController(dbController);
-	}
+	} 
 
 	// ZOU MOETEN WERKEN
 
@@ -48,12 +48,13 @@ public class EndScore {
 				totalPublicObjectiveScore += colorVarietyObjectiveScore();
 			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 7) {
 				totalPublicObjectiveScore += rowColorVarietyObjectiveScore();
-//			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 8) {
-//				totalScore += rowColorVarietyObjectiveScore();
 			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 9) {
 				totalPublicObjectiveScore += lightShadesObjectiveScore();
 			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 10) {
 				totalPublicObjectiveScore += rowShadeVarietyObjectiveScore();
+			}
+			else {
+				
 			}
 
 		}
@@ -95,6 +96,7 @@ public class EndScore {
 
 	}
 
+	// ZOU MOETEN WERKEN
 	public int colomnColorVarietyObjectiveScore() {
 
 		int score;
@@ -120,7 +122,7 @@ public class EndScore {
 		return score;
 	}
 
-	// NOG MAKEN
+	// ZOU MOETEN WERKEN
 	public int colomnShadeVarietyObjectiveScore() {
 
 		int score;
@@ -146,7 +148,7 @@ public class EndScore {
 		return score;
 	}
 
-	// MOET NOG GEMAAKT WORDEN
+	// ZOU MOETEN WERKEN
 	public int rowColorVarietyObjectiveScore() {
 
 		int score;
@@ -173,6 +175,7 @@ public class EndScore {
 
 	}
 
+	// ZOU MOETEN WERKEN
 	public int rowShadeVarietyObjectiveScore() {
 		int score;
 		int index;
