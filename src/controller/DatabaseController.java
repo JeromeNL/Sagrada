@@ -164,6 +164,20 @@ public class DatabaseController {
 		}
 		return diesInSupply;
 	}
+	
+	public GameColor getPrivateObjectiveCardColor(int playerID) {
+		ResultSet rs = doQuery("SELECT private_objectivecard_color FROM player WHERE idplayer = " + playerID);
+		try {
+			while (rs.next()) {
+				String colorString = rs.getString("private_objectivecard_color").toUpperCase();
+				return GameColor.valueOf(colorString);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public void setPlayerStatus(PlayerStatus status, String username, int idGame) {
 		doUpdateQuery("UPDATE player SET playstatus = \"" + status.toString().toLowerCase() + "\" WHERE username = \""
@@ -446,9 +460,81 @@ public class DatabaseController {
 		return true;
 	}
 
+	// Add 3 random public objectivecards to a game.
+	public void createNewPublicObjectives(int idgame) {
+		Random random = new Random();
+		ArrayList<Integer> objectiveIDs = new ArrayList<Integer>();
+		
+		boolean done = false;
+		while (!done) {
+			int newID = random.nextInt(10) + 1; // value between 1 and 10 (both inclusive)
+			// Check if it's a unique objectivecard ID
+			if (!objectiveIDs.contains(newID)) {
+				objectiveIDs.add(newID);
+				
+				// Check if enough IDs have been generated
+				if (objectiveIDs.size() == 3) {
+					done = true;
+				}
+			}
+		}
+		
+		for (Integer id : objectiveIDs) {
+			doUpdateQuery("INSERT INTO gameobjectivecard_public (idpublic_objectivecard, idgame) VALUES (" + id + ", " + idgame + ");");
+		}
+	}
 	
+	// Get all the public objectivecard ids from a game.
+	public ArrayList<Integer> getPublicObjectiveIDs(int idgame) {
+		ArrayList<Integer> publicObjectiveIDs = new ArrayList<Integer>();
+		ResultSet rs = doQuery("SELECT idpublic_objectivecard FROM gameobjectivecard_public WHERE idgame = " + idgame);
+		try {
+			while (rs.next()) {
+				publicObjectiveIDs.add(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return publicObjectiveIDs;
+	}
 	
-
+	// Get all the toolcard ids from a game.
+	public ArrayList<Integer> getToolcardIDs(int idgame) {
+		ArrayList<Integer> toolcardIDs = new ArrayList<Integer>();
+		ResultSet rs = doQuery("SELECT idtoolcard FROM gametoolcard WHERE idgame = " + idgame);
+		try {
+			while (rs.next()) {
+				toolcardIDs.add(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return toolcardIDs;
+	}
+	
+	// Add 3 random toolcards to a game.
+	public void createNewToolcards(int idgame) {
+		Random random = new Random();
+		ArrayList<Integer> toolcardIDs = new ArrayList<Integer>();
+		
+		boolean done = false;
+		while (!done) {
+			int newID = random.nextInt(12) + 1; // value between 1 and 12 (both inclusive)
+			// Check if it's a unique toolcard ID
+			if (!toolcardIDs.contains(newID)) {
+				toolcardIDs.add(newID);
+				
+				// Check if enough IDs have been generated
+				if (toolcardIDs.size() == 3) {
+					done = true;
+				}
+			}
+		}
+		
+		for (Integer id : toolcardIDs) {
+			doUpdateQuery("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + id + ", " + idgame + ");");
+		}
+	}
 
 	public ArrayList<Integer> getChallenges(String username) {
 		ArrayList<Integer> challenges = new ArrayList<Integer>();
