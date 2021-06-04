@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 
 public class ChatController {
 	private boolean messageSent;
+	private DatabaseController dbController;
+	
 
 	public ArrayList<ChatMessage> getChatMessages() throws SQLException { // Maakt een arraylist van alle verstuurde
 																			// berichten in de database
