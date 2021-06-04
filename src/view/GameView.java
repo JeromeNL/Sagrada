@@ -1,12 +1,16 @@
 package view;
 
 
+import java.util.ArrayList;
+
 import controller.ChoosePatternCardController;
 import controller.DatabaseController;
 import controller.MainController;
+import imageChooser.CompactPrivateObjectiveCardImage;
+import imageChooser.CompactPublicObjectiveCardImage;
 import javafx.geometry.Insets;
-
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -18,7 +22,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import model.Game;
-import model.Patterncard;
 import model.Player;
 
 public class GameView extends BorderPane {
@@ -27,12 +30,12 @@ public class GameView extends BorderPane {
 	private PatternCardView patternCardView;
 	private DieSupply dieSupply;
 	private GameButtonView gameButtonView;
-	private ObjectiveInGameView objectiveInGameView;
 	private ChangeCurrentPlayerView changeCurrentPlayerView;
 	private Game game;
 	private Player player;
 	private MainController mainController;
 	private DatabaseController dbController;
+	private CompactPrivateObjectiveCardImage privateObjective;
 
 	public GameView(Game game, Player player, MainController mainController, DatabaseController dbController) {
 
@@ -41,12 +44,11 @@ public class GameView extends BorderPane {
 		this.mainController = mainController;
 		this.dbController = dbController;
 		
-		Patterncard playerPatterncard = player.getPatterncard();
-
-		objectiveInGameView = new ObjectiveInGameView();
-		patternCardView = new PatternCardView(playerPatterncard); // dit is een random patterncard moet later aangepast
-																	// worden
-
+		patternCardView = new PatternCardView(player.getPatterncard());
+//		if (player.getPrivateObjectiveCardColor() != null) {
+			privateObjective = new CompactPrivateObjectiveCardImage(player.getPrivateObjectiveCardColor().toString());			
+//		}
+		
 		topPart = new TopPart(game);
 
 		dieSupply = new DieSupply(game.getDiesInSupply(), player);
@@ -58,7 +60,7 @@ public class GameView extends BorderPane {
 			dieSupply.setOpacity(0.5);
 			gameButtonView.setDisable(true);
 			gameButtonView.setOpacity(0.5);
-			objectiveInGameView.hide();
+			privateObjective.hide();
 		}
 
 		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
@@ -97,7 +99,7 @@ public class GameView extends BorderPane {
 		// Disable elements when it's not the gameview of the logged in player
 		if (!mainController.getLoggedInUsername().equals(player.getUsername())) {
 			disableElements();
-			objectiveInGameView.hide();
+			privateObjective.hide();
 		}
 		
 		// Disable elements when it's not the player's turn		
@@ -113,15 +115,26 @@ public class GameView extends BorderPane {
 
 		setTop(topPane);
 
+		Button backToMenu = new Button("Terug naar menu");
+		backToMenu.setOnAction(e -> mainController.showFirstMainMenu());
+		
+		ArrayList<Integer> objectiveIDs = game.getPublicObjectives();
+		VBox objectives = new VBox();
+		objectives.setSpacing(5);
+		objectives.getChildren().add(privateObjective);
+		for (Integer id : objectiveIDs) {
+			objectives.getChildren().add(new CompactPublicObjectiveCardImage(id));
+		}
+		
 		VBox leftPane = new VBox();
-		leftPane.setAlignment(Pos.CENTER);
-		leftPane.setSpacing(25);
-		leftPane.getChildren().addAll(new ChangePlayerButton(), objectiveInGameView);
-		leftPane.setPadding(new Insets(20));
+		leftPane.setPadding(new Insets(0,0,0,10));
+		leftPane.setMinWidth(400);
+		leftPane.getChildren().addAll(new ChangePlayerButton(), backToMenu, objectives);
+		
 		setLeft(leftPane);
 
 		setCenter(patternCardView);
-		
+			
 		Pane rightPane = new Pane();
 		rightPane.setMinWidth(400);
 		setRight(rightPane);
@@ -142,7 +155,6 @@ public class GameView extends BorderPane {
 
 		public ChangePlayerButton() {
 			setSpacing(10);
-			setPadding(new Insets(10));
 			setAlignment(Pos.BASELINE_LEFT);
 
 			setOnMouseClicked(e -> showChangeCurrentPlayerView());
@@ -178,13 +190,13 @@ public class GameView extends BorderPane {
 			setSpacing(30);
 			setAlignment(Pos.CENTER);
 
-			Label gameStatus = new Label("Gameid: " + game.getGameID());
+			Label gameStatus = new Label("Gameid: " + game.getIdGame());
 
-			int playerID = dbController.getCurrentPlayerID(game.getGameID());
+			int playerID = dbController.getCurrentPlayerID(game.getIdGame());
 			String username = dbController.getUsername(playerID);
 			Label currentPlayer = new Label("Current player: " + username + " (ID: " + playerID + ")");
 
-			int roundID = dbController.getRoundID(game.getGameID());
+			int roundID = dbController.getRoundID(game.getIdGame());
 			boolean isClockwise = dbController.isClockwise(roundID);
 			Label round = new Label("roundID: " + roundID + " (clockwise: " + isClockwise + ")" + " RoundNR: "
 					+ dbController.getRoundNr(roundID));
