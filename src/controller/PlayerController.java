@@ -50,7 +50,7 @@ public class PlayerController {
 			GameColor privateObjectiveCardColor) {
 
 		// Add a new row to the player table.
-		String query = "INSERT INTO player VALUES (" + newIdPlayer + ",\"" + username + "\"," + idGame + ",\"" + status
+		String query = "INSERT INTO player VALUES (" + newIdPlayer + ",\"" + username + "\"," + idGame + ",\"" + status.toString().toLowerCase()
 				+ "\", NULL, \"" + privateObjectiveCardColor + "\", NULL, NULL);";
 
 		int result = dbController.doUpdateQuery(query);

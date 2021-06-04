@@ -21,7 +21,7 @@ public class Refresh extends Thread {
 		this.setDaemon(true);
 		
 		if (game != null) {
-			gameID = game.getGameID();
+			gameID = game.getIdGame();
 			lastPlayerID = dbController.getCurrentPlayerID(gameID);
 			lastRoundID = dbController.getRoundID(gameID);
 		}
@@ -29,7 +29,7 @@ public class Refresh extends Thread {
 	
 	public void setGame(Game game) {
 		this.game = game;
-		gameID = game.getGameID();
+		gameID = game.getIdGame();
 		lastPlayerID = dbController.getCurrentPlayerID(gameID);
 		lastRoundID = dbController.getRoundID(gameID);
 	}

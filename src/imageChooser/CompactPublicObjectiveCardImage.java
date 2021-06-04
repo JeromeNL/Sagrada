@@ -21,7 +21,7 @@ public class CompactPublicObjectiveCardImage extends Pane {
 		super();
 
 		imageNumber = newImageNumber;
-		combinedURL = "/Images/Compact Public Objectives/" + imageNumber + ".png";
+		combinedURL = "/Images/In Game Objective Public/" + imageNumber + ".png";
 		imageURL = combinedURL.toString();
 		addCards();
 		
@@ -31,7 +31,10 @@ public class CompactPublicObjectiveCardImage extends Pane {
 
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		ImageView imageView = new ImageView(toolCardImage);
+		imageView.setPreserveRatio(true);
+		imageView.setFitHeight(90);
 		getChildren().addAll(imageView);
+		setMinHeight(imageView.getFitHeight());
 
 	}
 

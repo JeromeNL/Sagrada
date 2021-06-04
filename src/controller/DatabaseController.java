@@ -13,6 +13,10 @@ import model.DiesInSupply;
 import model.GameColor;
 import model.Player;
 
+import model.PatterncardField;
+import model.PlayerStatus;
+
+
 public class DatabaseController {
 
 	private Connection m_Conn;
@@ -73,7 +77,7 @@ public class DatabaseController {
 			System.out.println(e.getMessage());
 		}
 		return null;
-		
+
 	}
 
 	/*
@@ -159,6 +163,25 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 		return diesInSupply;
+	}
+	
+	public GameColor getPrivateObjectiveCardColor(int playerID) {
+		ResultSet rs = doQuery("SELECT private_objectivecard_color FROM player WHERE idplayer = " + playerID);
+		try {
+			while (rs.next()) {
+				String colorString = rs.getString("private_objectivecard_color").toUpperCase();
+				return GameColor.valueOf(colorString);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void setPlayerStatus(PlayerStatus status, String username, int idGame) {
+		doUpdateQuery("UPDATE player SET playstatus = \"" + status.toString().toLowerCase() + "\" WHERE username = \""
+				+ username + "\" AND idgame = " + idGame);
 	}
 
 	public void createGameDies(int idGame) {
@@ -267,7 +290,8 @@ public class DatabaseController {
 		boolean done = false;
 		while (!done) {
 			int newSeqNr = 1;
-			ResultSet rs = doQuery("SELECT seqnr FROM player WHERE idgame = " + idGame + " ORDER BY seqnr DESC LIMIT 1");
+			ResultSet rs = doQuery(
+					"SELECT seqnr FROM player WHERE idgame = " + idGame + " ORDER BY seqnr DESC LIMIT 1");
 			try {
 				while (rs.next()) {
 					newSeqNr = rs.getInt("seqnr") + 1;
@@ -402,7 +426,6 @@ public class DatabaseController {
 		return idPlayer;
 	}
 
-
 	public String getUsernameCreator(int idGame) {
 		String query = "SELECT username FROM player WHERE idgame = " + idGame + " AND playstatus = \"challenger\"";
 		ResultSet rs = doQuery(query);
@@ -420,13 +443,13 @@ public class DatabaseController {
 	public void closeConnection() {
 		try {
 			if (!m_Conn.isClosed()) {
-				m_Conn.close();				
+				m_Conn.close();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean isClosed() {
 		try {
 			return m_Conn.isClosed();
@@ -436,7 +459,7 @@ public class DatabaseController {
 		}
 		return true;
 	}
-	
+
 	// Add 3 random public objectivecards to a game.
 	public void createNewPublicObjectives(int idgame) {
 		Random random = new Random();
@@ -512,4 +535,68 @@ public class DatabaseController {
 			doUpdateQuery("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + id + ", " + idgame + ");");
 		}
 	}
+
+	public ArrayList<Integer> getChallenges(String username) {
+		ArrayList<Integer> challenges = new ArrayList<Integer>();
+
+		ResultSet rs = doQuery(
+				"SELECT idgame FROM player WHERE playstatus = \"challengee\" AND username = \"" + username + "\";");
+		try {
+			while (rs.next()) {
+				challenges.add(rs.getInt("idgame"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return challenges;
+	}
+
+	public String getChallenger(int idGame) {
+		String username = "";
+		ResultSet rs = doQuery("SELECT username FROM player WHERE playstatus = \"challenger\" AND idgame = " + idGame);
+		try {
+			while (rs.next()) {
+				username = rs.getString("username");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return username;
+	}
+
+	// Get the games of a user that can be played. 
+	public ArrayList<Integer> getGames(String username) {
+		ArrayList<Integer> games = new ArrayList<Integer>();
+
+		ResultSet gameIDs = doQuery(
+				"SELECT idgame FROM player WHERE (playstatus = \"accepted\" OR playstatus = \"challenger\") AND username = \"" + username + "\";");
+		try {
+			while (gameIDs.next()) {
+				int idGame = gameIDs.getInt("idgame");
+				ResultSet players = doQuery("SELECT playstatus FROM player WHERE idgame = " + idGame);
+				boolean canBePlayed = true;
+				// Check if the game can be played.
+				while (players.next()) {
+					PlayerStatus status = PlayerStatus.valueOf(players.getString("playstatus").toUpperCase());
+					if (status == PlayerStatus.FINISHED) {
+						canBePlayed = false;						
+					} else if (status == PlayerStatus.REFUSED) {
+						canBePlayed = false;
+					} else if (status == PlayerStatus.CHALLENGEE) {
+						canBePlayed = false;
+					}
+				}
+				if (canBePlayed) {
+					games.add(idGame);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return games;
+	}
+
 }

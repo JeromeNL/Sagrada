@@ -72,7 +72,7 @@ public class Game {
 	}
 
 	private void getUsernameCreator() {
-		usernameCreator = dbController.getUsernameCreator(getGameID());
+		usernameCreator = dbController.getUsernameCreator(getIdGame());
 	}
 
 	// Set up a new game.
@@ -297,6 +297,7 @@ public class Game {
 
 	private void endGame() {
 		System.out.println(getClass() + " - Game ended.");
+		mainController.showEndScoreView();
 	}
 
 	public ArrayList<String> getPlayerOrder() {
@@ -311,9 +312,11 @@ public class Game {
 		return diesInSupply;
 	}
 
-	public int getGameID() {
+
+	public int getIdGame() {
 		return idGame;
 	}
+	
 
 	public void setNextTurn() {
 		int currentPlayerID = dbController.getCurrentPlayerID(idGame);
@@ -352,6 +355,7 @@ public class Game {
 			}
 		}
 	}
+
 	
 	public String getCurrentPlayer() {
 		int currentPlayerID = dbController.getCurrentPlayerID(idGame);
@@ -360,5 +364,9 @@ public class Game {
 	
 	public int getRoundID() {
 		return dbController.getRoundID(idGame);
+	}
+	
+	public ArrayList<Integer> getPublicObjectives() {
+		return dbController.getPublicObjectiveIDs(idGame);
 	}
 }
