@@ -1,6 +1,7 @@
 package view;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.ChoosePatternCardController;
@@ -36,6 +37,7 @@ public class GameView extends BorderPane {
 	private MainController mainController;
 	private DatabaseController dbController;
 	private CompactPrivateObjectiveCardImage privateObjective;
+	private ChatPane chatpane;
 
 	public GameView(Game game, Player player, MainController mainController, DatabaseController dbController) {
 
@@ -139,7 +141,7 @@ public class GameView extends BorderPane {
 		rightPane.setMinWidth(400);
 		setRight(rightPane);
 		
-		ChatPane chatpane = new ChatPane(player);
+		chatpane = new ChatPane(player, dbController);
 		setRight(chatpane);
 		
 		VBox bottomPane = new VBox(dieSupply, gameButtonView);
@@ -149,6 +151,15 @@ public class GameView extends BorderPane {
 	public void showToolCardView() {
 		getChildren().clear();
 		setCenter(new ToolCardInUseView(mainController));
+	}
+	
+	public void refreshChat() {
+		try {
+			chatpane.refresh();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private class ChangePlayerButton extends HBox {

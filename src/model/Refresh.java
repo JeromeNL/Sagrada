@@ -47,6 +47,17 @@ public class Refresh extends Thread {
 				int newPlayerID = dbController.getCurrentPlayerID(gameID);
 				int newRoundID = dbController.getRoundID(gameID);
 				
+				
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						mainController.refreshChat();
+						
+					}
+				});
+				
 				if ((lastPlayerID != newPlayerID) || (lastRoundID != newRoundID)) {
 					Platform.runLater(new Runnable( ) {
 

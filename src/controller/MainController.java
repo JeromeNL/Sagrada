@@ -144,6 +144,9 @@ public class MainController {
 		mainScene.showPlayedGames();
 	}
 
+	public void refreshChat() {
+		mainScene.refreshChat();
+	}
 
 }
 

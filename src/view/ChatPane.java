@@ -33,9 +33,9 @@ public class ChatPane extends VBox {
 	private Player player;
 	private DatabaseController dbController;
 
-	public ChatPane(Player player) {
+	public ChatPane(Player player, DatabaseController dbController) {
 		this.player = player;
-		
+		chatController = new ChatController(dbController);
 		Input.setMinHeight(30);
 		Input.setPrefWidth(295);
 		sendButton = new Button("SEND");
@@ -60,7 +60,12 @@ public class ChatPane extends VBox {
 		sendButton.setStyle("-fx-font-weight: bold; -fx-font-size: 15; -fx-text-fill: Black; -fx-background-color: lightblue");
 		Input.setStyle("-fx-font-weight: bold; -fx-font-size: 15; -fx-text-fill: Black; -fx-background-color: lightblue; -fx-prompt-text-fill: black;");
 		Input.setPromptText("Type een bericht");
-		
+		try {
+			refresh();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	
 		
