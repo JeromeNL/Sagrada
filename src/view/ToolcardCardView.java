@@ -11,33 +11,62 @@ import javafx.beans.value.ObservableValue;
 
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
 
-public class ToolcardCardView extends HBox {
+public class ToolcardCardView extends Pane {
 
 	final static Color SAGRADAPINK = Color.rgb(247, 150, 150);
 	static final String URL_TO_IMAGE = "/Group_24.png";
-RectangleCard rectangleCard1 ;
+	RectangleCard rectangleCard1 ;
 	private int widthCard = 230;
 	private int heightCard = 334;
 	private DatabaseController dbController;
 	private MainController mainController;
+	private Rectangle rect;
+	private int X=135;
+	private StackPane card;
+	private Label backButtonText;
+
 
 	public ToolcardCardView(DatabaseController dbController, MainController mainController) {
 		super();
-
+		
+		rect = new Rectangle();
+		rect.setWidth(200);
+		rect.setHeight(60);
+		rect.setFill(Color.TRANSPARENT);
+		rect.setX(940);
+		rect.setY(600);
+		rect.setArcHeight(50);
+		rect.setArcWidth(50);
+		rect.setStrokeWidth(5);
+		rect.setStroke(Color.WHITE);
+		
+		backButtonText = new Label("Terug");
+		backButtonText.setTextFill(Color.WHITE);
+		backButtonText.setFont(new Font("Arial", 15));
+		backButtonText.setStyle("-fx-font-weight: bold");
+		backButtonText.setTranslateY(620);
+		backButtonText.setTranslateX(1015);
+		 
+		 rect.setOnMouseClicked(e -> {System.out.println("button is pressed");
+		 mainController.showGameLoggedInPlayer();
+		 });
+		
 		this.dbController = dbController;
 		this.mainController = mainController;
-		setSpacing(128);
-		setAlignment(Pos.CENTER);
+	
 
 		setBackground(new Background(new BackgroundFill(SAGRADAPINK, null, null)));
 
@@ -48,32 +77,33 @@ RectangleCard rectangleCard1 ;
 
 	public void addCards() {
 
-		Image group = new Image(getClass().getResource(URL_TO_IMAGE).toString());
 
-		ImageView imageView = new ImageView(group);
-		ImageView imageView2 = new ImageView(group);
-		ImageView imageView3 = new ImageView(group);
 
-		imageView.setFitHeight(heightCard - 30);
-		imageView.setFitWidth(widthCard - 30);
-		imageView2.setFitHeight(heightCard - 30);
-		imageView2.setFitWidth(widthCard - 30);
-		imageView3.setFitHeight(heightCard - 30);
-		imageView3.setFitWidth(widthCard - 30);
 		
 		ArrayList<Integer> ids = dbController.getToolcardIDs(55);
 
-//		ArrayList<Integer> ids = dbController.getToolcardIDs(mainController.getCurrentGame().getIdGame());
-		
+		//ArrayList<Integer> ids = dbController.getToolcardIDs(mainController.getCurrentGame().getIdGame());
+
 		for (Integer id : ids) {
 			StackPane card = new StackPane();
 			ToolcardCardImage toolcardCardImage = new ToolcardCardImage(id);
-			toolcardCardImage.setTranslateX(15);
+			toolcardCardImage.setTranslateX(X);
 			toolcardCardImage.setTranslateY(200);
+			X=X+350;
 			card.getChildren().add(toolcardCardImage);
 			getChildren().add(card);
 		}
-	
+		
+		getChildren().add(rect);
+		getChildren().add(backButtonText);
 
 	}
 }
+
+
+
+
+
+
+
+

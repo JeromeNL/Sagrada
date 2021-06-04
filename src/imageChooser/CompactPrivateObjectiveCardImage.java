@@ -20,7 +20,6 @@ public class CompactPrivateObjectiveCardImage extends Pane {
 	}
 
 	public void addCards() {
-//		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 		ImageView imageView = new ImageView(toolCardImage);
 		imageView.setPreserveRatio(true);

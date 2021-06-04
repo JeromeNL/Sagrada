@@ -22,22 +22,25 @@ public class GameButtonView extends HBox {
 		                          
 		
 		
-		backButton = new GameButton();
+	
 		toolCardButton1 = new GameButton();
+		toolCardButton1.setFill(Color.LIGHTBLUE);
+		toolCardButton1.setOnMouseEntered(e -> toolCardButton1.setFill(Color.BLUE));
+		toolCardButton1.setOnMouseExited(e -> toolCardButton1.setFill(Color.LIGHTBLUE));
 		toolCardButton1.setOnMouseClicked(e -> {
-			gameView.showToolCardView();
-		});
-		
-		ObjectivecardButton = new GameButton();
-		ObjectivecardButton.setOnMouseClicked(e -> {
 			mainController.ToolCardButton();;
 		});
 		
-		toolCardButton3 = new GameButton();
+		ObjectivecardButton = new GameButton();
+		ObjectivecardButton.setFill(Color.RED);
+		ObjectivecardButton.setOnMouseEntered(e -> ObjectivecardButton.setFill(Color.INDIANRED));
+		ObjectivecardButton.setOnMouseExited(e -> ObjectivecardButton.setFill(Color.RED));
+		ObjectivecardButton.setOnMouseClicked(e -> {
+			mainController.ObjectiveCardButton();;
+		});
+		
+		
 		confirmButton = new GameButton();
-
-
-
 		confirmButton.setFill(Color.GREENYELLOW);
 		confirmButton.setOnMouseEntered(e -> confirmButton.setFill(Color.GREEN));
 		confirmButton.setOnMouseExited(e -> confirmButton.setFill(Color.GREENYELLOW));
@@ -45,20 +48,9 @@ public class GameButtonView extends HBox {
 		gameView.showGame();
 		});
 		
-		menuButton = new GameButton();
-		cheatButton = new GameButton();
-		logoutButton = new GameButton();
-		beerButton = new GameButton();
-
-
 		setAlignment(Pos.CENTER);
 		setSpacing(40);
 		setPadding(new Insets(10));
-		getChildren().addAll(privateScore,backButton, toolCardButton1, ObjectivecardButton, toolCardButton3,
-				
-				
-				
-				
-				confirmButton,score);
+		getChildren().addAll(toolCardButton1, ObjectivecardButton, confirmButton);
 	}
 }
