@@ -9,7 +9,7 @@ import model.GameStats;
 public class GameController {
 
 	private DatabaseController dbController;
-	private MainController mainController;
+	private static MainController mainController;
 
 	public GameController(DatabaseController dbController, MainController mainController) {
 		this.dbController = dbController;
@@ -20,11 +20,11 @@ public class GameController {
 
 		ResultSet rs = dbController.doQuery("SELECT idgame FROM game ORDER BY idgame DESC LIMIT 1;");
 
-		int availableGameID = 0;
+		int availableGameID = 1;
 
 		try {
 			while (rs.next()) {
-				availableGameID = rs.getInt(1) + 1;
+				availableGameID += rs.getInt(1);
 
 			}
 
@@ -45,7 +45,7 @@ public class GameController {
 		return result;
 	}
 
-	public ArrayList<GameStats> AllGameStats() throws SQLException {
+	public static ArrayList<GameStats> AllGameStats() throws SQLException {
 		ArrayList<GameStats> gameStats = new ArrayList<>();
 		DatabaseController db = new DatabaseController(mainController);
 		ResultSet res = db.doQuery(

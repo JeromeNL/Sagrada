@@ -1,5 +1,7 @@
 package view;
 
+import java.sql.SQLException;
+
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.DragEvent;
@@ -79,10 +81,15 @@ public class DieView extends StackPane {
 					int eyesCount = Integer.valueOf(data[2]);
 
 					// Check if die can actually be placed.
-					if (isValidMove(eyesCount, dieColor)) {
-						patternCardField.placeDie(new Die(dieColor, eyesCount, dieNumber));
-						drawDieField();
-						diePlaced = true;
+					try {
+						if (patternCardField.isValidMove(eyesCount, dieColor)) {
+							patternCardField.placeDie(new Die(dieColor, eyesCount, dieNumber));
+							drawDieField();
+							diePlaced = true;
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 
 				}
@@ -95,50 +102,50 @@ public class DieView extends StackPane {
 	}
 
 	// Checks if die can be placed. Returns boolean representing the validity.
-	private boolean isValidMove(int eyesCount, GameColor dieColor) {
-		if (fieldHasDie()) {
-			return false;
-		}
-		
-		// to-do: more checks...
-
-		if (isCorrectNumber(eyesCount) && isCorrectColor(dieColor)) {
-			return true;
-		}
-		return false;
-	}
-
-	private boolean fieldHasDie() {
-		if (patternCardField.hasDie()) {
-			return true;
-		}
-		return false;
-	}
-
-	// Checks if color requirement of diefield allows the die to be placed.
-	private boolean isCorrectColor(GameColor dieColor) {
-		if (patternCardField.hasColorRequirement()) {
-			GameColor colorRequirement = patternCardField.getColorRequirement();
-			if (colorRequirement == dieColor) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	// Checks if number of eyes requirement of diefield allows the die to be placed.
-	private boolean isCorrectNumber(int eyesCount) {
-		if (patternCardField.hasEyesCountRequirement()) {
-			if (patternCardField.getEyesCountRequirement() == eyesCount) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return true;
-	}
+//	private boolean isValidMove(int eyesCount, GameColor dieColor) {
+//		if (fieldHasDie()) {
+//			return false;
+//		}
+//		
+//		// to-do: more checks...
+//
+//		if (isCorrectNumber(eyesCount) && isCorrectColor(dieColor)) {
+//			return true;
+//		}
+//		return false;
+//	}
+//
+//	private boolean fieldHasDie() {
+//		if (patternCardField.hasDie()) {
+//			return true;
+//		}
+//		return false;
+//	}
+//
+//	// Checks if color requirement of diefield allows the die to be placed.
+//	private boolean isCorrectColor(GameColor dieColor) {
+//		if (patternCardField.hasColorRequirement()) {
+//			GameColor colorRequirement = patternCardField.getColorRequirement();
+//			if (colorRequirement == dieColor) {
+//				return true;
+//			} else {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
+//
+//	// Checks if number of eyes requirement of diefield allows the die to be placed.
+//	private boolean isCorrectNumber(int eyesCount) {
+//		if (patternCardField.hasEyesCountRequirement()) {
+//			if (patternCardField.getEyesCountRequirement() == eyesCount) {
+//				return true;
+//			} else {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 
 	// Draws a die on the patterncard.
 	private void drawDieField() {
@@ -196,3 +203,4 @@ public class DieView extends StackPane {
 		getChildren().add(eyesCountLabel);
 	}
 }
+

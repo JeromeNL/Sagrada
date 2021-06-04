@@ -13,6 +13,10 @@ import model.DiesInSupply;
 import model.GameColor;
 import model.Player;
 
+import model.PatterncardField;
+import model.PlayerStatus;
+
+
 public class DatabaseController {
 
 	private Connection m_Conn;
@@ -160,6 +164,25 @@ public class DatabaseController {
 		}
 		return diesInSupply;
 	}
+	
+	public GameColor getPrivateObjectiveCardColor(int playerID) {
+		ResultSet rs = doQuery("SELECT private_objectivecard_color FROM player WHERE idplayer = " + playerID);
+		try {
+			while (rs.next()) {
+				String colorString = rs.getString("private_objectivecard_color").toUpperCase();
+				return GameColor.valueOf(colorString);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void setPlayerStatus(PlayerStatus status, String username, int idGame) {
+		doUpdateQuery("UPDATE player SET playstatus = \"" + status.toString().toLowerCase() + "\" WHERE username = \""
+				+ username + "\" AND idgame = " + idGame);
+	}
 
 	public ArrayList<Die> getDieRoundTrack(int idGame) {
 		String query = "SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundtrack IS NOT NULL ORDER BY roundtrack ASC";
@@ -295,7 +318,8 @@ public class DatabaseController {
 		boolean done = false;
 		while (!done) {
 			int newSeqNr = 1;
-			ResultSet rs = doQuery("SELECT seqnr FROM player WHERE idgame = " + idGame + " ORDER BY seqnr DESC LIMIT 1");
+			ResultSet rs = doQuery(
+					"SELECT seqnr FROM player WHERE idgame = " + idGame + " ORDER BY seqnr DESC LIMIT 1");
 			try {
 				while (rs.next()) {
 					newSeqNr = rs.getInt("seqnr") + 1;
@@ -453,7 +477,7 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean isClosed() {
 		try {
 			return m_Conn.isClosed();
@@ -463,4 +487,144 @@ public class DatabaseController {
 		}
 		return true;
 	}
+
+	// Add 3 random public objectivecards to a game.
+	public void createNewPublicObjectives(int idgame) {
+		Random random = new Random();
+		ArrayList<Integer> objectiveIDs = new ArrayList<Integer>();
+		
+		boolean done = false;
+		while (!done) {
+			int newID = random.nextInt(10) + 1; // value between 1 and 10 (both inclusive)
+			// Check if it's a unique objectivecard ID
+			if (!objectiveIDs.contains(newID)) {
+				objectiveIDs.add(newID);
+				
+				// Check if enough IDs have been generated
+				if (objectiveIDs.size() == 3) {
+					done = true;
+				}
+			}
+		}
+		
+		for (Integer id : objectiveIDs) {
+			doUpdateQuery("INSERT INTO gameobjectivecard_public (idpublic_objectivecard, idgame) VALUES (" + id + ", " + idgame + ");");
+		}
+	}
+	
+	// Get all the public objectivecard ids from a game.
+	public ArrayList<Integer> getPublicObjectiveIDs(int idgame) {
+		ArrayList<Integer> publicObjectiveIDs = new ArrayList<Integer>();
+		ResultSet rs = doQuery("SELECT idpublic_objectivecard FROM gameobjectivecard_public WHERE idgame = " + idgame);
+		try {
+			while (rs.next()) {
+				publicObjectiveIDs.add(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return publicObjectiveIDs;
+	}
+	
+	// Get all the toolcard ids from a game.
+	public ArrayList<Integer> getToolcardIDs(int idgame) {
+		ArrayList<Integer> toolcardIDs = new ArrayList<Integer>();
+		ResultSet rs = doQuery("SELECT idtoolcard FROM gametoolcard WHERE idgame = " + idgame);
+		try {
+			while (rs.next()) {
+				toolcardIDs.add(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return toolcardIDs;
+	}
+	
+	// Add 3 random toolcards to a game.
+	public void createNewToolcards(int idgame) {
+		Random random = new Random();
+		ArrayList<Integer> toolcardIDs = new ArrayList<Integer>();
+		
+		boolean done = false;
+		while (!done) {
+			int newID = random.nextInt(12) + 1; // value between 1 and 12 (both inclusive)
+			// Check if it's a unique toolcard ID
+			if (!toolcardIDs.contains(newID)) {
+				toolcardIDs.add(newID);
+				
+				// Check if enough IDs have been generated
+				if (toolcardIDs.size() == 3) {
+					done = true;
+				}
+			}
+		}
+		
+		for (Integer id : toolcardIDs) {
+			doUpdateQuery("INSERT INTO gametoolcard (idtoolcard, idgame) VALUES (" + id + ", " + idgame + ");");
+		}
+	}
+
+	public ArrayList<Integer> getChallenges(String username) {
+		ArrayList<Integer> challenges = new ArrayList<Integer>();
+
+		ResultSet rs = doQuery(
+				"SELECT idgame FROM player WHERE playstatus = \"challengee\" AND username = \"" + username + "\";");
+		try {
+			while (rs.next()) {
+				challenges.add(rs.getInt("idgame"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return challenges;
+	}
+
+	public String getChallenger(int idGame) {
+		String username = "";
+		ResultSet rs = doQuery("SELECT username FROM player WHERE playstatus = \"challenger\" AND idgame = " + idGame);
+		try {
+			while (rs.next()) {
+				username = rs.getString("username");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return username;
+	}
+
+	// Get the games of a user that can be played. 
+	public ArrayList<Integer> getGames(String username) {
+		ArrayList<Integer> games = new ArrayList<Integer>();
+
+		ResultSet gameIDs = doQuery(
+				"SELECT idgame FROM player WHERE (playstatus = \"accepted\" OR playstatus = \"challenger\") AND username = \"" + username + "\";");
+		try {
+			while (gameIDs.next()) {
+				int idGame = gameIDs.getInt("idgame");
+				ResultSet players = doQuery("SELECT playstatus FROM player WHERE idgame = " + idGame);
+				boolean canBePlayed = true;
+				// Check if the game can be played.
+				while (players.next()) {
+					PlayerStatus status = PlayerStatus.valueOf(players.getString("playstatus").toUpperCase());
+					if (status == PlayerStatus.FINISHED) {
+						canBePlayed = false;						
+					} else if (status == PlayerStatus.REFUSED) {
+						canBePlayed = false;
+					} else if (status == PlayerStatus.CHALLENGEE) {
+						canBePlayed = false;
+					}
+				}
+				if (canBePlayed) {
+					games.add(idGame);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return games;
+	}
+
 }

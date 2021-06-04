@@ -160,7 +160,7 @@ public class Player {
 	}
 
 	public GameColor getPrivateObjectiveCardColor() {
-		// to-do: get color from database table and convert it to instance variable.
+		privateObjectiveCardColor = dbController.getPrivateObjectiveCardColor(idPlayer);
 		return privateObjectiveCardColor;
 	}
 

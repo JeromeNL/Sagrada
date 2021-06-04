@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
@@ -9,8 +8,11 @@ import model.Game;
 import model.Player;
 import model.Refresh;
 import model.RegisterLoginModel;
-import view.MainMenu;
+import view.AcceptDenyView;
+import view.EndScoreView;
 import view.MainScene;
+import view.NewGameView;
+import view.YourGamesView;
 
 public class MainController {
 
@@ -23,25 +25,27 @@ public class MainController {
 	private String imageURL;
 	private String combinedURL;
 
-	private ChoosePatternCardController choosePatternCardController;
 	private Refresh refreshThread;
-	private MainMenu mmv;
 
+
+		
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController(this);
 		RegisterLoginController rlc = new RegisterLoginController(dbController);
-		RegisterLoginModel rlm = new RegisterLoginModel(this, dbController, rlc);
-		mainScene = new MainScene(this, dbController, rlm, rlc);		
+		RegisterLoginModel rlm = new RegisterLoginModel(this, rlc);
+		mainScene = new MainScene(this, dbController, rlm, rlc);
 		combinedURL = "/Images/Compact Private Objectives/green.png";
 		imageURL = combinedURL.toString();
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
-		
-		
+
 		showLoginScreen();
-		
+//		showPlayerListView();
+//		showPlayedGames();
+
 		refreshThread = new Refresh(currentGame, this, dbController);
 		refreshThread.start();
+
 
 		// mainScene.getChoosePatternCardView().getCard(); //will give you an int after
 		// you clicked on kiezen
@@ -93,24 +97,60 @@ public class MainController {
 	public String getLoggedInUsername() {
 		return loggedInUsername;
 	}
-	
+
 	public void showLoginView() {
 		mainScene.showLoginView();
 	}
-	
+
 	public void showLoginScreen() {
 		mainScene.showLoginScreen();
 	}
-	
-	public void showFirstMainMenu(MainMenu mmv, MainController mainController) {
-		mainScene.showFirstMainMenu(mmv, this);
+
+	public void showFirstMainMenu() {
+		mainScene.showFirstMainMenu();
 	}
-	
+
+	public void showOpenChallenges() {
+		mainScene.setRoot(new AcceptDenyView(this, dbController));
+	}
+
+	public void showYourGames() {
+		mainScene.setRoot(new YourGamesView(this, dbController));
+	}
+
 	public Game getCurrentGame() {
 		return currentGame;
 	}
-	
-	public void showMainMenu() {
-		mainScene.showMainMenu();
+
+	public void showNewGame() {
+		mainScene.setRoot(new NewGameView(this, dbController));
 	}
+
+	public void logout() {
+		loggedInUsername = "";
+		showLoginScreen();
+	}
+
+	public void showEndScoreView() {
+		mainScene.setRoot(new EndScoreView());
+
+	}
+
+	public void showPlayerListView() {
+		mainScene.showPlayerListView();
+	}
+
+	public void showPlayedGames() {
+		mainScene.showPlayedGames();
+	}
+
+	public void refreshChat() {
+		if (mainScene.getGameView() != null) {
+			mainScene.refreshChat();			
+		}
+	}
+
 }
+
+
+

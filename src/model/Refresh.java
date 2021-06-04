@@ -21,7 +21,7 @@ public class Refresh extends Thread {
 		this.setDaemon(true);
 		
 		if (game != null) {
-			gameID = game.getGameID();
+			gameID = game.getIdGame();
 			lastPlayerID = dbController.getCurrentPlayerID(gameID);
 			lastRoundID = dbController.getRoundID(gameID);
 		}
@@ -29,7 +29,7 @@ public class Refresh extends Thread {
 	
 	public void setGame(Game game) {
 		this.game = game;
-		gameID = game.getGameID();
+		gameID = game.getIdGame();
 		lastPlayerID = dbController.getCurrentPlayerID(gameID);
 		lastRoundID = dbController.getRoundID(gameID);
 	}
@@ -46,6 +46,20 @@ public class Refresh extends Thread {
 			if (game != null && !dbController.isClosed()) {
 				int newPlayerID = dbController.getCurrentPlayerID(gameID);
 				int newRoundID = dbController.getRoundID(gameID);
+				
+				
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						int idGame = mainController.getCurrentGame().getIdGame();
+						if (dbController.getRoundID(idGame) == 1) {
+							mainController.refreshChat();							
+						}
+						
+					}
+				});
 				
 				if ((lastPlayerID != newPlayerID) || (lastRoundID != newRoundID)) {
 					Platform.runLater(new Runnable( ) {
