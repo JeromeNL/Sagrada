@@ -280,36 +280,40 @@ public class Game {
 		int currentRoundID = dbController.getRoundID(idGame);
 
 		
-			if (currentRoundID == 1) {
+			if (currentRoundID == 4) {
 				endGame();
 				
-				EndScore endscore = new EndScore(players.get(1), dbController, mainController);
+				System.out.println("===============");
+				System.out.println(players.get(0).toString());
+				EndScore endscore = new EndScore(players.get(0), dbController, mainController);
 				endscore.totalEndScore();
-				EndScore endscore2 = new EndScore(players.get(2), dbController, mainController);
-				endscore2.totalEndScore();
 				
-				try {
-						EndScore endscore3 = new EndScore(players.get(3), dbController, mainController);
-						endscore3.totalEndScore();
-						EndScore endscore4 = new EndScore(players.get(4), dbController, mainController);
-						endscore4.totalEndScore();
-						System.out.println("4 spelers");
-				}
-				catch(Exception e){
-					
-					
-					try {
-					EndScore endscore3 = new EndScore(players.get(3), dbController, mainController);
-					endscore3.totalEndScore();
-					System.out.println("3 spelers");
-					
-						
-				} catch(Exception ee){
-					
-					System.out.println("2 spelers");	
-				}	
-			}
-				System.out.println(endscore.publicObjectiveScore());
+				System.out.println(players.get(1).toString());
+				EndScore endscore2 = new EndScore(players.get(1), dbController, mainController);
+				endscore2.totalEndScore();
+//				
+//				try {
+//						EndScore endscore3 = new EndScore(players.get(2), dbController, mainController);
+//						endscore3.totalEndScore();
+//						EndScore endscore4 = new EndScore(players.get(3), dbController, mainController);
+//						endscore4.totalEndScore();
+//						System.out.println("4 spelers");
+//				}
+//				catch(Exception e){
+//					
+//					
+//					try {
+//					EndScore endscore3 = new EndScore(players.get(3), dbController, mainController);
+//					endscore3.totalEndScore();
+//					System.out.println("3 spelers");
+//					
+//						
+//				} catch(Exception ee){
+//					
+//					System.out.println("2 spelers");	
+//				}	
+			//}
+				// System.out.println("ENDSCORE: " + endscore.publicObjectiveScore());
 				return;
 				
 			}

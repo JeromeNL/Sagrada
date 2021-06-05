@@ -22,6 +22,7 @@ public class EndScore {
 //		this.idPlayer = idPlayer;
 		array = new int[5];
 		this.owner = owner;
+		this.dbController = dbController;
 		mainController = newMainController;
 		esdbController = new EndScoreController(dbController);
 	} 
@@ -32,38 +33,35 @@ public class EndScore {
 		int totalPublicObjectiveScore = 0;
 		int i=1;
 		
-		
-		
-		System.out.println("TEST TEST TEST "+mainController.getCurrentGame().getIdGame());
+
+		System.out.println("TEST TEST TEST "+ mainController.getCurrentGame().getIdGame());
     
 		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(mainController.getCurrentGame().getIdGame());
+		
 	
 	
-	
-		for (Integer id : ids) {
-	
-			dbController.getToolcardIDs(owner.getGameID()).get(i);
+		//for (Integer id : ids) {
+		for(int id = 0; id < 3; id++) {
+			System.out.println("GET ID FROM GETPUBLICOBJECTIVECARDID: " + dbController.getPublicObjectiveIDs(owner.getGameID()).get(id)); 
 			
-			if (dbController.getToolcardIDs(owner.getGameID()).get(0) == 1) {
+			if (ids.get(id) == 1) {
 				totalPublicObjectiveScore += shadeVarietyObjectiveScore();
 				
-				
-				
-			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 2) {
+			} else if (ids.get(id) == 2) {
 				totalPublicObjectiveScore += mediumShadesObjectiveScore();
-			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 3) {
+			} else if (ids.get(id) == 3) {
 				totalPublicObjectiveScore += colomnShadeVarietyObjectiveScore();
-			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 4) {
+			} else if (ids.get(id) == 4) {
 				totalPublicObjectiveScore += colomnColorVarietyObjectiveScore();
-			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 5) {
+			} else if (ids.get(id) == 5) {
 				totalPublicObjectiveScore += darkShadesObjectiveScore();
-			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 6) {
+			} else if (ids.get(id) == 6) {
 				totalPublicObjectiveScore += colorVarietyObjectiveScore();
-			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 7) {
+			} else if (ids.get(id) == 7) {
 				totalPublicObjectiveScore += rowColorVarietyObjectiveScore();
-			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 9) {
+			} else if (ids.get(id) == 9) {
 				totalPublicObjectiveScore += lightShadesObjectiveScore();
-			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 10) {
+			} else if (ids.get(id) == 10) {
 				totalPublicObjectiveScore += rowShadeVarietyObjectiveScore();
 			}
 			else {
@@ -73,6 +71,7 @@ public class EndScore {
 		i++;
 		
 		}
+		System.out.println("totalPublic " + totalPublicObjectiveScore);
 		return totalPublicObjectiveScore;
 	}
 
@@ -95,18 +94,20 @@ public class EndScore {
 			}
 		}
 		shadeVarietyObjectiveScore = (minValue * 5);
+		System.out.println("PUBLIC shadeVariety: "  + shadeVarietyObjectiveScore);
 		return shadeVarietyObjectiveScore;
 	}
 
-	// ZOU MOETEN WERKEN
+	// WERKT
 	public int mediumShadesObjectiveScore() {
 		int mediumShadesObjectiveScore = 0;
 
 		if (esdbController.amountOfDiesOfValue(owner, 3) > esdbController.amountOfDiesOfValue(owner, 4)) {
-			mediumShadesObjectiveScore = (esdbController.amountOfDiesOfValue(owner, 3) * 2);
-		} else {
 			mediumShadesObjectiveScore = (esdbController.amountOfDiesOfValue(owner, 4) * 2);
+		} else {
+			mediumShadesObjectiveScore = (esdbController.amountOfDiesOfValue(owner, 3) * 2);
 		}
+		System.out.println("PUBLIC mediumShades: " + mediumShadesObjectiveScore );
 		return mediumShadesObjectiveScore;
 
 	}
@@ -134,6 +135,7 @@ public class EndScore {
 			}
 			index++;
 		}
+		System.out.println("PUBLIC colomnColorVariety: " + score);
 		return score;
 	}
 
@@ -160,6 +162,7 @@ public class EndScore {
 			}
 			index++;
 		}
+		System.out.println("PUBLIC colomnShadeVariety: " + score);
 		return score;
 	}
 
@@ -186,6 +189,7 @@ public class EndScore {
 			}
 			index++;
 		}
+		System.out.println("PUBLIC RowColorVariety: " + score);
 		return score;
 
 	}
@@ -212,19 +216,21 @@ public class EndScore {
 			}
 			index++;
 		}
+		System.out.println("PUBLIC rowShadesVariety: " + score);
 		return score;
 
 	}
 
-	// ZOU MOETEN WERKEN
+	// WERKT
 	public int darkShadesObjectiveScore() {
 		int darkShadesObjectiveScore = 0;
 
 		if (esdbController.darkShadesObjectiveScore(owner, 5) > esdbController.darkShadesObjectiveScore(owner, 6)) {
-			darkShadesObjectiveScore = (esdbController.darkShadesObjectiveScore(owner, 5) * 2);
-		} else {
 			darkShadesObjectiveScore = (esdbController.darkShadesObjectiveScore(owner, 6) * 2);
+		} else {
+			darkShadesObjectiveScore = (esdbController.darkShadesObjectiveScore(owner, 5) * 2);
 		}
+		System.out.println("PUBLIC darkShades: " + darkShadesObjectiveScore);
 		return darkShadesObjectiveScore;
 
 	}
@@ -248,50 +254,58 @@ public class EndScore {
 			}
 		}
 		colorVarietyObjectiveScore = max;
+		System.out.println("PUBLIC Color varierty: " + colorVarietyObjectiveScore);
 		return colorVarietyObjectiveScore;
 	}
 
-	// ZOU MOETEN WERKEN
+	// WERKT
 	public int lightShadesObjectiveScore() {
-		int darkShadesObjectiveScore = 0;
+		int lightShadesObjectiveScore = 0;
 
 		if (esdbController.darkShadesObjectiveScore(owner, 1) > esdbController.darkShadesObjectiveScore(owner, 2)) {
-			darkShadesObjectiveScore = (esdbController.darkShadesObjectiveScore(owner, 1) * 2);
+			lightShadesObjectiveScore = (esdbController.darkShadesObjectiveScore(owner, 2) * 2);
 		} else {
-			darkShadesObjectiveScore = (esdbController.darkShadesObjectiveScore(owner, 2) * 2);
+			lightShadesObjectiveScore = (esdbController.darkShadesObjectiveScore(owner, 1) * 2);
 		}
-		return darkShadesObjectiveScore;
+		System.out.println("PUBLIC lightShades: " + lightShadesObjectiveScore);
+		return lightShadesObjectiveScore;
 	}
 
-	// ZOU MOETEN WERKEN
+	//FOUT: TELT STEEDS 0.... 
 	public int privateObjectiveScore() {
 		int privateObjectiveScore = esdbController.privateObjectiveScore(owner);
+		System.out.println("PRIVATE privateObjectiveScore: " + privateObjectiveScore);
 		return privateObjectiveScore;
 	}
 
-	// ZOU MOETEN WERKEN
-	public int favorToken() {
-		int favorToken = esdbController.favorToken(owner);
-		return favorToken;
-	}
+	// UIT SPEL GEHAALD
+//	public int favorToken() {
+//		int favorToken = esdbController.favorToken(owner);
+//		System.out.println("FAVOR TOKEN: " + favorToken);
+//		return favorToken;
+//	}
 
-	// ZOU MOETEN WERKEN
+	// WERKT
 	public int emptyTileScore() {
 
 		int emptyScore = ((20 - esdbController.emptyTileScore(owner)) * -1);
 		// query voor opvragen vakjes van speler.
 		// controleren hoeveel er null zijn (diecolor of dienumber)
 		// aantal null == aantal punten erbij
-
+		System.out.println("EMPTY TILES SCORE (should be negative): " + emptyScore);
 		return emptyScore;
 	}
 
-	// ZOU MOETEN WERKEN
+	// WERKT
 	public int totalEndScore() {
-		int totalScore = publicObjectiveScore() + privateObjectiveScore() + favorToken() + emptyTileScore();
+		int totalScore = publicObjectiveScore() + privateObjectiveScore()  + emptyTileScore();
+		System.out.println("Total endscore: " + totalScore);
 		return totalScore;
 	}
 
+	
+	
+	
 	// ZOU MOETEN WERKEN
 	public int scoreDuringGame() {
 		int scoreDuringGame = publicObjectiveScore();
