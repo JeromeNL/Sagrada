@@ -27,8 +27,8 @@ public class EndScore {
 		esdbController = new EndScoreController(dbController);
 	} 
 
-	// ZOU MOETEN WERKEN
-
+	
+	// werkt
 	public int publicObjectiveScore() {
 		int totalPublicObjectiveScore = 0;
 		int i=1;
@@ -75,7 +75,7 @@ public class EndScore {
 		return totalPublicObjectiveScore;
 	}
 
-	// ZOU MOETEN WERKEN!
+	// NIET WERKEND
 
 	public int shadeVarietyObjectiveScore() {
 
@@ -112,7 +112,7 @@ public class EndScore {
 
 	}
 
-	// ZOU MOETEN WERKEN
+	// NIET WERKEND
 	public int colomnColorVarietyObjectiveScore() {
 
 		int score;
@@ -139,7 +139,7 @@ public class EndScore {
 		return score;
 	}
 
-	// ZOU MOETEN WERKEN
+	// NIET WERKEND
 	public int colomnShadeVarietyObjectiveScore() {
 
 		int score;
@@ -166,7 +166,7 @@ public class EndScore {
 		return score;
 	}
 
-	// ZOU MOETEN WERKEN
+	// NIET WERKEND
 	public int rowColorVarietyObjectiveScore() {
 
 		int score;
@@ -194,7 +194,7 @@ public class EndScore {
 
 	}
 
-	// ZOU MOETEN WERKEN
+	// NIET WERKEND
 	public int rowShadeVarietyObjectiveScore() {
 		int score;
 		int index;
@@ -235,7 +235,7 @@ public class EndScore {
 
 	}
 
-	// ZOU MOETEN WERKEN
+	// NIET WERKEND
 	public int colorVarietyObjectiveScore() {
 		int colorVarietyObjectiveScore = 0;
 
@@ -285,6 +285,16 @@ public class EndScore {
 //		return favorToken;
 //	}
 
+	// New method
+	
+	public int countAllDieEyes() {
+		int allCountedEyes = esdbController.countAllDieEyes(owner);
+		
+		
+		System.out.println(allCountedEyes);
+		return allCountedEyes;
+	}
+	
 	// WERKT
 	public int emptyTileScore() {
 
@@ -298,7 +308,7 @@ public class EndScore {
 
 	// WERKT
 	public int totalEndScore() {
-		int totalScore = publicObjectiveScore() + privateObjectiveScore()  + emptyTileScore();
+		int totalScore = publicObjectiveScore() + privateObjectiveScore()  + emptyTileScore() + countAllDieEyes();
 		System.out.println("Total endscore: " + totalScore);
 		return totalScore;
 	}
