@@ -141,11 +141,10 @@ public class EndScoreController {
 	
 	public int countAllDieEyes(Player owner) {
 		
-		ResultSet total = dbController.doQuery("SELECT SUM(eyes) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.diecolor = gamedie.diecolor AND playerframefield.dienumber = gamedie.dienumber WHERE playerframefield.idgame = '" + owner.getGameID() + "' + AND playerframefield.idplayer = '" + owner.getIdPlayer() + "'");
+		ResultSet total = dbController.doQuery("SELECT SUM(eyes) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.diecolor = gamedie.diecolor AND playerframefield.dienumber = gamedie.dienumber WHERE playerframefield.idgame = '" + owner.getGameID() + "' AND playerframefield.idplayer = '" + owner.getIdPlayer() + "'");
 		
 		double doubleResult = 0;
 		int intResult = 0;
-		
 		try {
 			if (total.next()) {
 				doubleResult = total.getDouble(1);

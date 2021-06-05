@@ -287,6 +287,7 @@ public class EndScore {
 
 	// New method
 	
+	// Foutmelding in dbController
 	public int countAllDieEyes() {
 		int allCountedEyes = esdbController.countAllDieEyes(owner);
 		
