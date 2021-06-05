@@ -12,9 +12,9 @@ public class CompactPrivateObjectiveCardImage extends Pane {
 
 	public CompactPrivateObjectiveCardImage(String newImageColor) {
 		super();
-		
+		System.out.println(newImageColor);
 		imageColor = newImageColor;
-		combinedURL = "/Images/In Game Objective Private/" + imageColor + ".png";
+		combinedURL = "/ingame_private_" + imageColor.toLowerCase() + ".png";
 		imageURL = combinedURL.toString();
 		addCards();
 	}

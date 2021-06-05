@@ -22,7 +22,7 @@ public class ToolcardCardImage extends Pane {
 		super();
 		
 		imageNumber = newImageNumber;
-		combinedURL = "/Images/Tool Cards/" + imageNumber + ".png";
+		combinedURL = "/toolcard_" + imageNumber + ".png";
 		imageURL = combinedURL.toString();
 		addCards();
 	}
