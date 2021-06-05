@@ -144,19 +144,12 @@ public EndScoreView() {
 	 registerHandler(backButton, Color.BLACK, Color.BLACK);
 	 backButton.setOnMouseClicked(e -> {System.out.println("button is pressed");
 	 this.getChildren().clear();
-	 });
-	
-	
+	 this.getChildren().addAll(outline,title,user1,user2,user3,user4,line,line2,line3,line4,line5,backButton,backButtonText,tag1); 
 	 
-	 
-	this.getChildren().addAll(outline,title,user1,user2,user3,user4,line,line2,line3,line4,line5,backButton,backButtonText,tag1);
-	
-	
-	
-	
-	
+});
 }
 
+	 
 private void registerHandler(Shape s, Color defaultColor, Color hoverColor) {
 	
 	s.setOnMouseEntered(e -> {
@@ -169,3 +162,4 @@ private void registerHandler(Shape s, Color defaultColor, Color hoverColor) {
 }
 
 }
+
