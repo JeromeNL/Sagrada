@@ -156,6 +156,11 @@ public class MainController {
 		mainScene.showPlayedGames();
 	}
 
+	public void refreshChat() {
+		if (mainScene.getGameView() != null) {
+			mainScene.refreshChat();			
+		}
+	}
 
 }
 

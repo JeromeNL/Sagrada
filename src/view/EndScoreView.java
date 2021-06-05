@@ -142,7 +142,6 @@ public EndScoreView() {
 	setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, new CornerRadii(0), new Insets(0))));
 	
 	 registerHandler(backButton, Color.BLACK, Color.BLACK);
-	 backButton.setOnMouseClicked(e -> {System.out.println("button is pressed");
 	 this.getChildren().clear();
 	 });
 	

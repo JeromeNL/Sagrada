@@ -38,7 +38,7 @@ public class Refresh extends Thread {
 		    
 		while(true) {
 			try {
-				Thread.sleep(1 * 1000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -46,6 +46,20 @@ public class Refresh extends Thread {
 			if (game != null && !dbController.isClosed()) {
 				int newPlayerID = dbController.getCurrentPlayerID(gameID);
 				int newRoundID = dbController.getRoundID(gameID);
+				
+				
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						int idGame = mainController.getCurrentGame().getIdGame();
+						if (dbController.getRoundID(idGame) == 1) {
+							mainController.refreshChat();							
+						}
+						
+					}
+				});
 				
 				if ((lastPlayerID != newPlayerID) || (lastRoundID != newRoundID)) {
 					Platform.runLater(new Runnable( ) {
