@@ -279,10 +279,41 @@ public class Game {
 	public void setNextRound() {
 		int currentRoundID = dbController.getRoundID(idGame);
 
-		if (currentRoundID == 20) {
-			endGame();
-			return;
-		}
+		
+			if (currentRoundID == 1) {
+				endGame();
+				
+				EndScore endscore = new EndScore(players.get(1), dbController, mainController);
+				endscore.totalEndScore();
+				EndScore endscore2 = new EndScore(players.get(2), dbController, mainController);
+				endscore2.totalEndScore();
+				
+				try {
+						EndScore endscore3 = new EndScore(players.get(3), dbController, mainController);
+						endscore3.totalEndScore();
+						EndScore endscore4 = new EndScore(players.get(4), dbController, mainController);
+						endscore4.totalEndScore();
+						System.out.println("4 spelers");
+				}
+				catch(Exception e){
+					
+					
+					try {
+					EndScore endscore3 = new EndScore(players.get(3), dbController, mainController);
+					endscore3.totalEndScore();
+					System.out.println("3 spelers");
+					
+						
+				} catch(Exception ee){
+					
+					System.out.println("2 spelers");	
+				}	
+			}
+				System.out.println(endscore.publicObjectiveScore());
+				return;
+				
+			}
+
 		int nextRoundID = currentRoundID + 1;
 		dbController.setRoundID(idGame, nextRoundID);
 

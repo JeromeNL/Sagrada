@@ -1,12 +1,10 @@
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import controller.DatabaseController;
 import controller.EndScoreController;
+import controller.MainController;
 
 public class EndScore {
 
@@ -17,13 +15,14 @@ public class EndScore {
 	private Player owner;
 	private DatabaseController dbController;
 	private EndScoreController esdbController;
+	private MainController mainController;
 
-	public EndScore(Player owner, DatabaseController dbController) {
+	public EndScore(Player owner, DatabaseController dbController, MainController newMainController) {
 //		this.idGame = idGame;
 //		this.idPlayer = idPlayer;
 		array = new int[5];
 		this.owner = owner;
-
+		mainController = newMainController;
 		esdbController = new EndScoreController(dbController);
 	} 
 
@@ -31,11 +30,25 @@ public class EndScore {
 
 	public int publicObjectiveScore() {
 		int totalPublicObjectiveScore = 0;
-		for (int i = 0; i < 3; i++) {
+		int i=1;
+		
+		
+		
+		System.out.println("TEST TEST TEST "+mainController.getCurrentGame().getIdGame());
+    
+		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(mainController.getCurrentGame().getIdGame());
+	
+	
+	
+		for (Integer id : ids) {
+	
 			dbController.getToolcardIDs(owner.getGameID()).get(i);
 			
 			if (dbController.getToolcardIDs(owner.getGameID()).get(0) == 1) {
 				totalPublicObjectiveScore += shadeVarietyObjectiveScore();
+				
+				
+				
 			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 2) {
 				totalPublicObjectiveScore += mediumShadesObjectiveScore();
 			} else if (dbController.getToolcardIDs(owner.getGameID()).get(i) == 3) {
@@ -56,7 +69,9 @@ public class EndScore {
 			else {
 				
 			}
-
+		
+		i++;
+		
 		}
 		return totalPublicObjectiveScore;
 	}
