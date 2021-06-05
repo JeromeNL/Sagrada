@@ -15,6 +15,21 @@ public class GameController {
 		this.dbController = dbController;
 		this.mainController = mainController;
 	}
+	
+	public boolean isFinished(int idGame) {
+		ResultSet rs = dbController.doQuery("SELECT playstatus FROM player WHERE idgame = " + idGame + " LIMIT 1");
+		try {
+			while (rs.next()) {
+				if (rs.getString("playstatus").equals("finished")) {
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	public int getAvailableGameID() {
 
