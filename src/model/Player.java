@@ -1,11 +1,7 @@
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import controller.DatabaseController;
 import controller.MainController;
-import controller.GameController;
 import controller.PlayerController;
 
 public class Player {
@@ -48,6 +44,7 @@ public class Player {
 
 		setUpPlayer();
 	}
+	
 
 	private void loadPatterncard() {
 		int idPatterncard = dbController.getPatterncardID(idPlayer);
@@ -139,6 +136,7 @@ public class Player {
 
 		dbController.setPatterncard(idPlayer, patterncard.getID());
 	}
+	
 
 	public int getScore() {
 		// to-do: get score from database table instead of instance variable.

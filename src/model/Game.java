@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import controller.DatabaseController;
+import controller.FavorTokenController;
 import controller.GameController;
 import controller.MainController;
 
@@ -118,9 +119,28 @@ public class Game {
 	private void createFavorTokens() {
 		for (int i = 0; i < favorTokens.length; i++) {
 			int idToken = i + 1;
+
 			favorTokens[i] = new FavorToken(idToken, idGame, dbController);
+
 		}
 	}
+	
+	// check all players in game. assign favortokens with how many they have to get
+	public void assignFavorTokens(int difficulty, int playerID) {
+		FavorTokenController favorTokenController = new FavorTokenController(dbController);
+		favorTokenController.assignFavorTokens(idGame, difficulty, playerID);
+	}
+	
+	public FavorToken[] getFavorTokens() {
+		return dbController.getFavorToken(idGame);
+	}
+	
+	public int getAmountFavorTokens(int playerId) {
+		// to-do: get the amount of favortokens
+		FavorTokenController favorTokenController = new FavorTokenController(dbController);
+		return favorTokenController.getAmountFavortokens(idGame, playerId);
+	}
+	
 
 	// Add the creator of the game to the players of the game.
 	private void addCreatorPlayer(String usernameCreator) {
@@ -136,6 +156,7 @@ public class Game {
 	private void loadPlayers() {
 		players = dbController.getPlayers(idGame);
 	}
+	
 
 	// Add / invite a new player to the game.
 	public void invitePlayer(String username) {
@@ -372,4 +393,5 @@ public class Game {
 	public ArrayList<Integer> getPublicObjectives() {
 		return dbController.getPublicObjectiveIDs(idGame);
 	}
+
 }
