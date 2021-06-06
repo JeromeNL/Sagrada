@@ -40,7 +40,11 @@ public class LoginView extends VBox {
 	public LoginView(DatabaseController dbController, RegisterLoginController registerLoginController, RegisterLoginModel rlm) {
 		this.rlm = rlm;
 
-		Image image = new Image(getClass().getResource("/Images/Login/LoginImg.png").toString());
+		Image image = new Image(getClass().getResource("/Images/Tool Cards/LoginImg.png").toString());
+		
+//		/Images/Tool Cards/LoginImg.png
+		
+		
 		imageView = new ImageView(image);
 		imageView.setX(10);
 		imageView.setY(10);
@@ -57,7 +61,9 @@ public class LoginView extends VBox {
 		StackPane colorBurn = new StackPane();
 
 		Text warnText = new Text(rlm.getWarningText());
+	
 		TextField tfName = new TextField();
+	
 		PasswordField tfPassword = new PasswordField();
 		Button login = new Button("  Login  ");
 		Button register = new Button("Register");
@@ -89,8 +95,10 @@ public class LoginView extends VBox {
 		warnTextBox.setAlignment(Pos.BOTTOM_CENTER);
 		sagradaText.setMinHeight(100);
 		textFields.setMinWidth(400);
+		warnText.setX(-500);
 
 		warnText.setFont(Font.font("Arial", FontWeight.BOLD, 13));
+		warnText.setFill(Color.WHITE);
 		sagradaTxt.setStyle("-fx-font: 80 Arial;" +
 
 				"-fx-fill: white;");
@@ -103,7 +111,7 @@ public class LoginView extends VBox {
 		String IDLE_BUTTON_STYLE = "-fx-border-width: 2;" + "-fx-border-color: white;"
 				+ "-fx-background-color: transparent;" + "-fx-font-size: 20;" + "-fx-text-fill: white;";
 		String HOVERED_BUTTON_STYLE = "-fx-border-width: 2;" + "-fx-border-color: white;"
-				+ "-fx-background-color:white;" + "-fx-font-size: 20;" + "-fx-text-fill:blue;";
+				+ "-fx-background-color:white;" + "-fx-font-size: 20;" + "-fx-text-fill:deeppink;";
 
 		register.setStyle(IDLE_BUTTON_STYLE);
 		register.setOnMouseEntered(e -> register.setStyle(HOVERED_BUTTON_STYLE));
