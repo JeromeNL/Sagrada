@@ -282,7 +282,7 @@ public class Game {
 
 		int currentRoundID = dbController.getRoundID(idGame);
 
-		if (currentRoundID == 2) {
+		if (currentRoundID == 20) {
 
 			System.out.println("===============");
 			System.out.println(players.get(0).toString());
