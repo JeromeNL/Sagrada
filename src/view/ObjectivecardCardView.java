@@ -26,17 +26,16 @@ public class ObjectivecardCardView extends Pane {
 	final static Color SAGRADAPINK = Color.rgb(247, 150, 150);
 	static final String URL_TO_IMAGE = "/Group_24.png";
 	RectangleCard rectangleCard1;
-	private int widthCard = 230;
-	private int heightCard = 334;
 	private DatabaseController dbController;
-	private MainController mainController;
 	private Rectangle rect;
 	private int X = 135;
 	private StackPane card;
 	private Label backButtonText;
+	private MainController mainController;
 
 	public ObjectivecardCardView(DatabaseController dbController, MainController mainController) {
 		super();
+		this.mainController = mainController;
 
 		rect = new Rectangle();
 		rect.setWidth(200);
@@ -72,20 +71,15 @@ public class ObjectivecardCardView extends Pane {
 		});
 
 		this.dbController = dbController;
-		this.mainController = mainController;
-
 		setBackground(new Background(new BackgroundFill(SAGRADAPINK, null, null)));
 
 		addCards();
-//		showImage();
 
 	}
 
 	public void addCards() {
 
-		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(55);
-
-//		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(mainController.getCurrentGame().getIdGame());
+		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(mainController.getCurrentGame().getIdGame());
 
 		for (Integer id : ids) {
 			card = new StackPane();

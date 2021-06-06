@@ -1,7 +1,5 @@
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -24,10 +22,9 @@ public class Game {
 	private int newIdGame;
 
 	private FavorToken[] favorTokens; // 24 favor tokens per game.
-	private Toolcard[] toolcards; // 3 toolcards per game.
-	private ObjectiveCard[] objectiveCards; // 3 public objective cards per game.
 	private ArrayList<Player> players; // 1 to 4 players per game
 	private DiesInSupply diesInSupply;
+
 	private GameController gameController;
 
 	private String usernameCreator;
@@ -39,8 +36,6 @@ public class Game {
 		this.mainController = mainController;
 
 		favorTokens = new FavorToken[24];
-		toolcards = new Toolcard[3];
-		objectiveCards = new ObjectiveCard[3];
 		players = new ArrayList<Player>();
 		diesInSupply = new DiesInSupply();
 		getUsernameCreator();
@@ -61,8 +56,6 @@ public class Game {
 		this.mainController = mainController;
 
 		favorTokens = new FavorToken[24];
-		toolcards = new Toolcard[3];
-		objectiveCards = new ObjectiveCard[3];
 		players = new ArrayList<Player>();
 		diesInSupply = new DiesInSupply();
 
@@ -111,10 +104,6 @@ public class Game {
 		dbController.createGameDies(idGame);
 	}
 
-	private Die[] getDies() {
-		return dbController.getDies(idGame);
-	}
-
 	// Create 24 favortokens to be used in the game.
 	private void createFavorTokens() {
 		for (int i = 0; i < favorTokens.length; i++) {
@@ -124,23 +113,22 @@ public class Game {
 
 		}
 	}
-	
+
 	// check all players in game. assign favortokens with how many they have to get
 	public void assignFavorTokens(int difficulty, int playerID) {
 		FavorTokenController favorTokenController = new FavorTokenController(dbController);
 		favorTokenController.assignFavorTokens(idGame, difficulty, playerID);
 	}
-	
+
 	public FavorToken[] getFavorTokens() {
 		return dbController.getFavorToken(idGame);
 	}
-	
+
 	public int getAmountFavorTokens(int playerId) {
 		// to-do: get the amount of favortokens
 		FavorTokenController favorTokenController = new FavorTokenController(dbController);
 		return favorTokenController.getAmountFavortokens(idGame, playerId);
 	}
-	
 
 	// Add the creator of the game to the players of the game.
 	private void addCreatorPlayer(String usernameCreator) {
@@ -156,7 +144,6 @@ public class Game {
 	private void loadPlayers() {
 		players = dbController.getPlayers(idGame);
 	}
-	
 
 	// Add / invite a new player to the game.
 	public void invitePlayer(String username) {
@@ -188,35 +175,6 @@ public class Game {
 				idGame = newIdGame;
 			} else {
 				newIdGame++;
-			}
-		}
-	}
-
-	// Gets an available gameID and then adds a new row to the game table in the
-	// database.
-	private void addToDatabaseNew() {
-		// Get an available gameID
-		ResultSet rs = dbController.doQuery("SELECT idgame FROM game ORDER BY idgame DESC LIMIT 1;");
-		int newGameID = 1; // default value
-		try {
-			while (rs.next()) {
-				newGameID = rs.getInt(1) + 1;
-			}
-		} catch (SQLException e) {
-			System.out.println("Something went wrong while adding a new game to the database.");
-			e.printStackTrace();
-		}
-
-		boolean increasingID = true;
-		while (increasingID) {
-			// Add a new row to the game table.
-			String query = "INSERT INTO game VALUES (" + newGameID + ",NULL,NULL,CURRENT_TIMESTAMP);";
-			int result = dbController.doUpdateQuery(query);
-			if (result == 1) {
-				increasingID = false;
-				idGame = newGameID;
-			} else {
-				newGameID++;
 			}
 		}
 	}
@@ -292,14 +250,47 @@ public class Game {
 	}
 
 	public void setNextRound() {
+
 		int currentRoundID = dbController.getRoundID(idGame);
 
 		if (currentRoundID == 20) {
-			addToRoundtrack(currentRoundID);
-			mainController.showGame(0);
-			endGame();
+
+			System.out.println("===============");
+			System.out.println(players.get(0).toString());
+			EndScore endscore = new EndScore(players.get(0), dbController, mainController);
+			endscore.totalEndScore();
+
+			System.out.println(players.get(1).toString());
+			EndScore endscore2 = new EndScore(players.get(1), dbController, mainController);
+			endscore2.totalEndScore();
+
+			endGame(endscore.totalEndScore(), endscore2.totalEndScore(), 786, 786);
+
+			if (players.size() == 4) {
+
+				EndScore endscore3 = new EndScore(players.get(2), dbController, mainController);
+				endscore3.totalEndScore();
+				EndScore endscore4 = new EndScore(players.get(3), dbController, mainController);
+				endscore4.totalEndScore();
+				System.out.println("4 spelers");
+				endGame(endscore.totalEndScore(), endscore2.totalEndScore(), endscore3.totalEndScore(),
+						endscore4.totalEndScore());
+			}
+
+			if (players.size() == 3) {
+
+				EndScore endscore3 = new EndScore(players.get(2), dbController, mainController);
+				endscore3.totalEndScore();
+				System.out.println("3 spelers");
+				endGame(endscore.totalEndScore(), endscore2.totalEndScore(), endscore3.totalEndScore(), 786);
+
+			}
+
+			System.out.println("ENDSCORE: " + endscore.publicObjectiveScore());
 			return;
+
 		}
+
 		int nextRoundID = currentRoundID + 1;
 		dbController.setRoundID(idGame, nextRoundID);
 
@@ -313,19 +304,19 @@ public class Game {
 			}
 		}
 	}
-	
+
 	// Adds the last die of the die supply to the roundtrack
 	private void addToRoundtrack(int currentRoundID) {
 		Die lastDie = getDiesInSupply().getDies().get(0);
 		dbController.addDieToRoundtrack(lastDie, currentRoundID - 1, idGame);
 	}
 
-	private void endGame() {
+	private void endGame(int player1, int player2, int player3, int player4) {
 		System.out.println(getClass() + " - Game ended.");
+		mainController.showEndScoreView(player1, player2, player3, player4, players);
 		for (Player player : players) {
 			player.setStatus(PlayerStatus.FINISHED);
 		}
-		mainController.showEndScoreView();
 	}
 
 	public ArrayList<String> getPlayerOrder() {
@@ -340,11 +331,9 @@ public class Game {
 		return diesInSupply;
 	}
 
-
 	public int getIdGame() {
 		return idGame;
 	}
-	
 
 	public void setNextTurn() {
 		int currentPlayerID = dbController.getCurrentPlayerID(idGame);
@@ -392,7 +381,7 @@ public class Game {
 	public int getRoundID() {
 		return dbController.getRoundID(idGame);
 	}
-	
+
 	public ArrayList<Integer> getPublicObjectives() {
 		return dbController.getPublicObjectiveIDs(idGame);
 	}

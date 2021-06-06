@@ -35,6 +35,7 @@ public class ChatPane extends VBox {
 
 	public ChatPane(Player player, DatabaseController dbController) {
 		this.player = player;
+		this.dbController = dbController;
 		
 		chatController = new ChatController(dbController);
 		Input.setMinHeight(30);

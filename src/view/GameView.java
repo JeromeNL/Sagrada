@@ -10,14 +10,12 @@ import imageChooser.CompactPrivateObjectiveCardImage;
 import imageChooser.CompactPublicObjectiveCardImage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -117,11 +115,7 @@ public class GameView extends BorderPane {
 
 		getChildren().clear();
 
-		VBox topPane = new VBox();
-		topPane.setAlignment(Pos.CENTER);
-		topPane.getChildren().addAll(topPart, new InfoPane(game, dbController));
-
-		setTop(topPane);
+		setTop(topPart);
 
 		Button backToMenu = new Button("Terug naar menu");
 		backToMenu.setStyle("-fx-background-color: #ffffff");
@@ -217,28 +211,27 @@ public class GameView extends BorderPane {
 		}
 	}
 
-	// Temporary class to show game details while developing
-	private class InfoPane extends HBox {
-
-		public InfoPane(Game game, DatabaseController dbController) {
-
-			setSpacing(30);
-			setAlignment(Pos.CENTER);
-
-			Label gameStatus = new Label("Gameid: " + game.getIdGame());
-
-			int playerID = dbController.getCurrentPlayerID(game.getIdGame());
-			String username = dbController.getUsername(playerID);
-			Label currentPlayer = new Label("Current player: " + username + " (ID: " + playerID + ")");
-
-			int roundID = dbController.getRoundID(game.getIdGame());
-			boolean isClockwise = dbController.isClockwise(roundID);
-			Label round = new Label("roundID: " + roundID + " (clockwise: " + isClockwise + ")" + " RoundNR: "
-					+ dbController.getRoundNr(roundID));
-
-			getChildren().addAll(gameStatus, currentPlayer, round);
-		}
-
-	}
+//	private class InfoPane extends HBox {
+//
+//		public InfoPane(Game game, DatabaseController dbController) {
+//
+//			setSpacing(30);
+//			setAlignment(Pos.CENTER);
+//
+//			Label gameStatus = new Label("Gameid: " + game.getIdGame());
+//
+//			int playerID = dbController.getCurrentPlayerID(game.getIdGame());
+//			String username = dbController.getUsername(playerID);
+//			Label currentPlayer = new Label("Current player: " + username + " (ID: " + playerID + ")");
+//
+//			int roundID = dbController.getRoundID(game.getIdGame());
+//			boolean isClockwise = dbController.isClockwise(roundID);
+//			Label round = new Label("roundID: " + roundID + " (clockwise: " + isClockwise + ")" + " RoundNR: "
+//					+ dbController.getRoundNr(roundID));
+//
+//			getChildren().addAll(gameStatus, currentPlayer, round);
+//		}
+//
+//	}
 
 }

@@ -1,6 +1,8 @@
 package view;
 
-import javafx.animation.RotateTransition;
+import java.util.ArrayList;
+
+import controller.MainController;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
@@ -11,16 +13,23 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
+import model.Player;
 
 public class EndScoreView extends Pane {
 
 	private Rectangle outline;
 	private Label title;
-	private Label currentPlayerText, user1, user2, user3, user4, backButtonText, tag1;
-	private Rectangle dropDownButton, backButton, line, line2, line3, line4, line5;
+	private Label backButtonText, player1, player2, player3, player4;
+	private Rectangle backButton, line, line2, line3, line4, line5;
+	private int playerOne, playerTwo, playerThree, playerFour;
 
-	public EndScoreView() {
+	public EndScoreView(int newPlayerOne, int newPlayerTwo, int newPlayerThree, int newPlayerFour,
+			ArrayList<Player> players) {
+
+		playerOne = newPlayerOne;
+		playerTwo = newPlayerTwo;
+		playerThree = newPlayerThree;
+		playerFour = newPlayerFour;
 
 // Score Table
 
@@ -38,12 +47,37 @@ public class EndScoreView extends Pane {
 		title.setTranslateX(30);
 		title.setTranslateY(50);
 
-		tag1 = new Label("Private Objectives");
-		tag1.setStyle("-fx-font-weight: bold");
-		tag1.setTextFill(Color.BLACK);
-		tag1.setFont(new Font("Arial", 35));
-		tag1.setTranslateX(100);
-		tag1.setTranslateY(190);
+		player1 = new Label(players.get(0).getUsername() + "   " + playerOne);
+		player1.setStyle("-fx-font-weight: bold");
+		player1.setTextFill(Color.BLACK);
+		player1.setFont(new Font("Arial", 35));
+		player1.setTranslateX(100);
+		player1.setTranslateY(190);
+
+		player2 = new Label(players.get(1).getUsername() + "   " + playerTwo);
+		player2.setStyle("-fx-font-weight: bold");
+		player2.setTextFill(Color.BLACK);
+		player2.setFont(new Font("Arial", 35));
+		player2.setTranslateX(100);
+		player2.setTranslateY(285);
+
+		if (players.size() > 2) {
+			player3 = new Label(players.get(2).getUsername() + "   " + playerThree);
+			player3.setStyle("-fx-font-weight: bold");
+			player3.setTextFill(Color.BLACK);
+			player3.setFont(new Font("Arial", 35));
+			player3.setTranslateX(100);
+			player3.setTranslateY(380);
+		}
+
+		if (players.size() > 3) {
+			player4 = new Label(players.get(3).getUsername() + "   " + playerFour);
+			player4.setStyle("-fx-font-weight: bold");
+			player4.setTextFill(Color.BLACK);
+			player4.setFont(new Font("Arial", 35));
+			player4.setTranslateX(100);
+			player4.setTranslateY(475);
+		}
 
 		line = new Rectangle(10, 500);
 		line.setTranslateX(450);
@@ -70,48 +104,6 @@ public class EndScoreView extends Pane {
 		line5.setTranslateY(550);
 		line5.setFill(Color.BLACK);
 
-// TEXTBUTTONS
-
-		user1 = new Label("Jasper");
-		user1.setStyle("-fx-font-weight: bold");
-		user1.setFont(new Font("Arial", 40));
-		user1.setTranslateX(750);
-		user1.setTranslateY(250);
-		user1.setTextFill(Color.BLACK);
-
-		user1.setOnMouseEntered(e -> user1.setUnderline(true));
-		user1.setOnMouseExited(e -> user1.setUnderline(false));
-
-		user2 = new Label("Janique");
-		user2.setStyle("-fx-font-weight: bold");
-		user2.setFont(new Font("Arial", 40));
-		user2.setTranslateX(750);
-		user2.setTranslateY(300);
-		user2.setTextFill(Color.BLACK);
-
-		user2.setOnMouseEntered(e -> user2.setUnderline(true));
-		user2.setOnMouseExited(e -> user2.setUnderline(false));
-
-		user3 = new Label("Imke");
-		user3.setStyle("-fx-font-weight: bold");
-		user3.setFont(new Font("Arial", 40));
-		user3.setTranslateX(750);
-		user3.setTranslateY(350);
-		user3.setTextFill(Color.BLACK);
-
-		user3.setOnMouseEntered(e -> user3.setUnderline(true));
-		user3.setOnMouseExited(e -> user3.setUnderline(false));
-
-		user4 = new Label("Mandy");
-		user4.setStyle("-fx-font-weight: bold");
-		user4.setFont(new Font("Arial", 40));
-		user4.setTranslateX(750);
-		user4.setTranslateY(400);
-		user4.setTextFill(Color.BLACK);
-
-		user4.setOnMouseEntered(e -> user4.setUnderline(true));
-		user4.setOnMouseExited(e -> user4.setUnderline(false));
-
 //Button
 
 		backButton = new Rectangle(400, 400, 155, 50);
@@ -132,12 +124,34 @@ public class EndScoreView extends Pane {
 
 		setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, new CornerRadii(0), new Insets(0))));
 
+		System.out.println("0000000000000000000000000000000000000000000000 " + playerThree);
+
+		if ((playerThree == 786) && (playerFour == 786)) {
+
+			this.getChildren().addAll(outline, title, line, line2, line3, line4, line5, backButton, backButtonText,
+					player1, player2);
+
+			System.out.println("111111111111111111111111111111111111111111111111111111111111111111111111111");
+
+		} else if ((playerThree != 786) && (playerFour == 786)) {
+
+			this.getChildren().addAll(outline, title, line, line2, line3, line4, line5, backButton, backButtonText,
+					player1, player2, player3);
+
+			System.out.println("22222222222222222222222222222222222222222222222222222222222222222222222222");
+
+		} else if ((playerThree != 786) && (playerFour != 786)) {
+
+			this.getChildren().addAll(outline, title, line, line2, line3, line4, line5, backButton, backButtonText,
+					player1, player2, player3, player4);
+
+			System.out.println("333333333333333333333333333333333333333333333333333333333333333333333333333");
+		}
+
 		registerHandler(backButton, Color.BLACK, Color.BLACK);
-		this.getChildren().clear();
-
-		this.getChildren().addAll(outline, title, user1, user2, user3, user4, line, line2, line3, line4, line5,
-				backButton, backButtonText, tag1);
-
+		backButton.setOnMouseClicked(e -> {
+			
+		});
 	}
 
 	private void registerHandler(Shape s, Color defaultColor, Color hoverColor) {

@@ -13,8 +13,6 @@ import model.DiesInSupply;
 import model.FavorToken;
 import model.GameColor;
 import model.Player;
-
-import model.PatterncardField;
 import model.PlayerStatus;
 
 
@@ -23,6 +21,7 @@ public class DatabaseController {
 	private Connection m_Conn;
 	private Statement statement;
 	private MainController mainController;
+	private int iterator =8;
 
 	public DatabaseController(MainController mainController) {
 		this.mainController = mainController;
@@ -52,7 +51,7 @@ public class DatabaseController {
 	public boolean makeConnection() {
 		try {
 			m_Conn = DriverManager.getConnection(
-					"jdbc:mysql://databases.aii.avans.nl/jwkwette_db2?" + "user=jwkwette&password=Ab12345");
+					"jdbc:mysql://databases.aii.avans.nl/2021_sagrada_qr?" + "user=2021_soprj_r&password=Ab12345");
 //			m_Conn = DriverManager.getConnection(
 //			"jdbc:mysql://localhost:3306/sagrada?" + "user=root&password=1234");
 		} catch (SQLException ex) {
@@ -236,7 +235,7 @@ public class DatabaseController {
 	public void addDieToRoundtrack(Die die, int roundNR, int idGame) {
 		String query = "UPDATE gamedie SET roundtrack = " + roundNR + " WHERE idgame = " + idGame + " AND dienumber = "
 				+ die.getDieID() + " AND diecolor = \"" + die.getColor().toString().toLowerCase() + "\"";
-		int result = doUpdateQuery(query);
+		doUpdateQuery(query);
 	}
 
 	public void createGameDies(int idGame) {
@@ -535,11 +534,17 @@ public class DatabaseController {
 	public void createNewPublicObjectives(int idgame) {
 		Random random = new Random();
 		ArrayList<Integer> objectiveIDs = new ArrayList<Integer>();
-		
-		boolean done = false;
+
+				boolean done = false;
 		while (!done) {
 			int newID = random.nextInt(10) + 1; // value between 1 and 10 (both inclusive)
 			// Check if it's a unique objectivecard ID
+			
+			while(newID == iterator){
+				newID = random.nextInt(10) + 1;
+				
+			}
+			
 			if (!objectiveIDs.contains(newID)) {
 				objectiveIDs.add(newID);
 				
@@ -548,7 +553,9 @@ public class DatabaseController {
 					done = true;
 				}
 			}
+			
 		}
+		
 		
 		for (Integer id : objectiveIDs) {
 			doUpdateQuery("INSERT INTO gameobjectivecard_public (idpublic_objectivecard, idgame) VALUES (" + id + ", " + idgame + ");");

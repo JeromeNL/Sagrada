@@ -18,7 +18,6 @@ public class ChatController {
 	
 
 	public ArrayList<ChatMessage> getChatMessages(Player player) throws SQLException { // Maakt een arraylist van alle verstuurde
-																			// berichten in de database
 		ArrayList<ChatMessage> chatMessages = new ArrayList<ChatMessage>();
 		ResultSet rs = dbController.doQuery(
 				"SELECT username, chatline.time, message FROM chatline INNER JOIN player ON player.idplayer = chatline.idplayer AND player.idgame = "
@@ -31,18 +30,12 @@ public class ChatController {
 	}
 
 	public void sendChatMessageToDB(String chatMessage, Player player) { // Sends a message to the database.
-
-		DatabaseController sendChat = new DatabaseController(null);
-		sendChat.doUpdateQuery("INSERT INTO chatline VALUES (" + player.getIdPlayer() + ", NOW() ,'" + chatMessage + "')");
-		// (" + player.getPlayerId() + ", '" + chatMessage + "', NOW())");
+		dbController.doUpdateQuery("INSERT INTO chatline VALUES (" + player.getIdPlayer() + ", NOW() ,'" + chatMessage + "')");
 		messageSent = true;
-
 	}
 
-	public Timestamp getTimestamp() throws SQLException{
-		
-		DatabaseController getTime = new DatabaseController(null);
-		ResultSet rs = getTime.doQuery("SELECT NOW()");
+	public Timestamp getTimestamp() throws SQLException {
+		ResultSet rs = dbController.doQuery("SELECT NOW()");
 		rs.next();
 		return rs.getTimestamp("NOW()");
 	}

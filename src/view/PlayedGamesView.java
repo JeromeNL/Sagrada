@@ -27,13 +27,8 @@ public class PlayedGamesView extends VBox {
 	private VBox container;
 	private Text gameTxt;
 	private TableView<GameStats> table = new TableView<>();
-	private DatabaseController dbController;
-	private MainController mainController;
 
 	public PlayedGamesView(DatabaseController dbController, MainController mainController) {
-		this.dbController = dbController;
-		this.mainController = mainController;
-
 		// creating the view
 		container = new VBox();
 		container.setPrefHeight(600);
@@ -82,7 +77,8 @@ public class PlayedGamesView extends VBox {
 
 		table.getColumns().addAll(Arrays.asList(idgame, round, creationdate, gamestatus, username));
 		try {
-			ObservableList<GameStats> gameStats = FXCollections.observableArrayList(new GameController(dbController, mainController).AllGameStats());
+			ObservableList<GameStats> gameStats = FXCollections
+					.observableArrayList(new GameController(dbController, mainController).AllGameStats());
 			table.setItems(gameStats);
 		} catch (SQLException e) {
 			e.printStackTrace();

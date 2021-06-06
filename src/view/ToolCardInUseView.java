@@ -3,15 +3,11 @@ package view;
 import controller.MainController;
 import imageChooser.ToolcardCardImage;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 
 public class ToolCardInUseView extends Pane {
@@ -21,7 +17,6 @@ public class ToolCardInUseView extends Pane {
 	private Rectangle background, backButton, card, confirmButton;
 	private Label backButtonText, confirmButtonText;
 	private FavorTokensInUseView favortokensPlayer1, favortokensPlayer2, favortokensPlayer3, favortokensPlayer4;
-	private GameView gameview;
 
 ///////////////////////////////////////////////////////////////// Getters And Setters	
 

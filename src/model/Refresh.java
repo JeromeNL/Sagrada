@@ -3,7 +3,6 @@ package model;
 import controller.DatabaseController;
 import controller.GameController;
 import controller.MainController;
-import controller.PlayerController;
 import javafx.application.Platform;
 
 public class Refresh extends Thread {
@@ -16,12 +15,14 @@ public class Refresh extends Thread {
 	private int gameID;
 	private int lastPlayerID;
 	private int lastRoundID;
+	private boolean endScoreLoaded;
 
 	public Refresh(Game game, MainController mainController, DatabaseController dbController) {
 		this.game = game;
 		this.mainController = mainController;
 		this.dbController = dbController;
 		this.setDaemon(true);
+		endScoreLoaded = false;
 
 		gameController = new GameController(dbController, mainController);
 
@@ -37,6 +38,7 @@ public class Refresh extends Thread {
 		gameID = game.getIdGame();
 		lastPlayerID = dbController.getCurrentPlayerID(gameID);
 		lastRoundID = dbController.getRoundID(gameID);
+		endScoreLoaded = false;
 	}
 
 	public void run() {
@@ -82,13 +84,17 @@ public class Refresh extends Thread {
 
 				// Check if end score view needs to be
 				if (lastRoundID == 20 && gameController.isFinished(gameID)) {
-					Platform.runLater(new Runnable() {
-
-						@Override
-						public void run() {
-							mainController.showEndScoreView();
-						}
-					});
+					
+					if (!endScoreLoaded) {
+						endScoreLoaded = true;
+						Platform.runLater(new Runnable() {
+							
+							@Override
+							public void run() {
+								game.setNextRound();
+							}
+						});
+					}
 				}
 
 			}

@@ -4,22 +4,14 @@ import java.util.ArrayList;
 
 import controller.DatabaseController;
 import controller.MainController;
-import imageChooser.PublicObjectiveCardImage;
 import imageChooser.ToolcardCardImage;
-import javafx.beans.value.ObservableValue;
-
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 
 public class ToolcardCardView extends Pane {
@@ -27,17 +19,15 @@ public class ToolcardCardView extends Pane {
 	final static Color SAGRADAPINK = Color.rgb(247, 150, 150);
 	static final String URL_TO_IMAGE = "/Group_24.png";
 	RectangleCard rectangleCard1;
-	private int widthCard = 230;
-	private int heightCard = 334;
 	private DatabaseController dbController;
-	private MainController mainController;
 	private Rectangle rect;
 	private int X = 135;
-	private StackPane card;
 	private Label backButtonText;
+	private MainController mainController;
 
 	public ToolcardCardView(DatabaseController dbController, MainController mainController) {
 		super();
+		this.mainController = mainController;
 
 		rect = new Rectangle();
 		rect.setWidth(200);
@@ -73,21 +63,15 @@ public class ToolcardCardView extends Pane {
 		});
 
 		this.dbController = dbController;
-		this.mainController = mainController;
-
 		setBackground(new Background(new BackgroundFill(SAGRADAPINK, null, null)));
 
 		addCards();
-//		showImage();
 
 	}
 
 	public void addCards() {
 
-		ArrayList<Integer> ids = dbController.getToolcardIDs(55);
-
-		// ArrayList<Integer> ids =
-		// dbController.getToolcardIDs(mainController.getCurrentGame().getIdGame());
+		ArrayList<Integer> ids = dbController.getToolcardIDs(mainController.getCurrentGame().getIdGame());
 
 		for (Integer id : ids) {
 			StackPane card = new StackPane();

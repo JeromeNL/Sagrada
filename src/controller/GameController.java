@@ -8,7 +8,7 @@ import model.GameStats;
 
 public class GameController {
 
-	private DatabaseController dbController;
+	private static DatabaseController dbController;
 	private static MainController mainController;
 
 	public GameController(DatabaseController dbController, MainController mainController) {
@@ -62,8 +62,7 @@ public class GameController {
 
 	public static ArrayList<GameStats> AllGameStats() throws SQLException {
 		ArrayList<GameStats> gameStats = new ArrayList<>();
-		DatabaseController db = new DatabaseController(mainController);
-		ResultSet res = db.doQuery(
+		ResultSet res = dbController.doQuery(
 				"SELECT game.idgame, GROUP_CONCAT(username) as username, COALESCE(current_roundID, 0) as round, creationdate, CASE WHEN playstatus IN ('challenger','accepted','challengee') THEN 'bezig' ELSE 'finished' END as gamestatus FROM game RIGHT JOIN player ON game.idgame = player.idgame GROUP BY idgame");
 		while (res.next()) {
 			gameStats.add(new GameStats(res.getString("username"), res.getInt("round"), res.getInt("idgame"),

@@ -22,7 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Popup;
 import model.Player;
 
 public class NewGameView extends BorderPane {
@@ -36,7 +35,6 @@ public class NewGameView extends BorderPane {
 	private Button inviteButton;
 	private TextField username;
 	private HBox bottom;
-	private Button backToMenu;
 	private Label menuErrorMessage;
 
 	public NewGameView(MainController mainController, DatabaseController dbController) {
@@ -145,7 +143,7 @@ public class NewGameView extends BorderPane {
 
 		Button startGameButton = new Button("Start het spel");
 		startGameButton.setStyle("-fx-background-color: #ffffff");
-		
+
 		bottom.getChildren().addAll(cannotStart, startGameButton);
 		
 		startGameButton.setOnMouseClicked(new EventHandler<Event>() {
