@@ -51,9 +51,7 @@ public class EndScoreController {
 
 	public int rowColorVarietyObjectiveScore(Player owner, String color, int position_y) {
 
-		ResultSet total = dbController.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='"
-				+ owner.getGameID() + "'AND idplayer ='" + owner.getIdPlayer() + "'AND position_x ='" + position_y
-				+ "'AND diecolor = '" + color.toUpperCase() + "'");
+		ResultSet total = dbController.doQuery("SELECT count(dienumber) from playerframefield WHERE idgame ='" + owner.getGameID() + "'AND idplayer ='" + owner.getIdPlayer() + "'AND position_y ='" + position_y +  "'AND diecolor = '" + color.toUpperCase() + "'");
 		int intResult = 0;
 		try {
 			if (total.next()) {
@@ -72,7 +70,7 @@ public class EndScoreController {
 		ResultSet total = dbController.doQuery(
 				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.dienumber = gamedie.dienumber AND playerframefield.diecolor = gamedie.diecolor WHERE playerframefield.idgame = '"
 						+ owner.getGameID() + "' AND playerframefield.idplayer = '" + owner.getIdPlayer()
-						+ "' AND gamedie.eyes = '" + eyes + "' AND playerframefield.position_y = '" + position_x + "'");
+						+ "' AND gamedie.eyes = '" + eyes + "' AND playerframefield.position_x = '" + position_x + "'");
 		int intResult = 0;
 		try {
 			if (total.next()) {

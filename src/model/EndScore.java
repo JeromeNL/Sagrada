@@ -25,28 +25,25 @@ public class EndScore {
 		this.dbController = dbController;
 		mainController = newMainController;
 		esdbController = new EndScoreController(dbController);
-	} 
+	}
 
-	
-	// werkt
+	// WERKT 6-6-2021
 	public int publicObjectiveScore() {
 		int totalPublicObjectiveScore = 0;
-		int i=1;
-		
+		int i = 1;
 
-		System.out.println("TEST TEST TEST "+ mainController.getCurrentGame().getIdGame());
-    
+		System.out.println("TEST TEST TEST " + mainController.getCurrentGame().getIdGame());
+
 		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(mainController.getCurrentGame().getIdGame());
-		
-	
-	
-		//for (Integer id : ids) {
-		for(int id = 0; id < 3; id++) {
-			System.out.println("GET ID FROM GETPUBLICOBJECTIVECARDID: " + dbController.getPublicObjectiveIDs(owner.getGameID()).get(id)); 
-			
+
+		// for (Integer id : ids) {
+		for (int id = 0; id < 3; id++) {
+			System.out.println("GET ID FROM GETPUBLICOBJECTIVECARDID: "
+					+ dbController.getPublicObjectiveIDs(owner.getGameID()).get(id));
+
 			if (ids.get(id) == 1) {
 				totalPublicObjectiveScore += shadeVarietyObjectiveScore();
-				
+
 			} else if (ids.get(id) == 2) {
 				totalPublicObjectiveScore += mediumShadesObjectiveScore();
 			} else if (ids.get(id) == 3) {
@@ -63,20 +60,18 @@ public class EndScore {
 				totalPublicObjectiveScore += lightShadesObjectiveScore();
 			} else if (ids.get(id) == 10) {
 				totalPublicObjectiveScore += rowShadeVarietyObjectiveScore();
+			} else {
+
 			}
-			else {
-				
-			}
-		
-		i++;
-		
+
+			i++;
+
 		}
 		System.out.println("totalPublic " + totalPublicObjectiveScore);
 		return totalPublicObjectiveScore;
 	}
 
-	// NIET WERKEND
-
+	// WERKT 6-6-2021
 	public int shadeVarietyObjectiveScore() {
 
 		int shadeVarietyObjectiveScore = 0;
@@ -94,11 +89,11 @@ public class EndScore {
 			}
 		}
 		shadeVarietyObjectiveScore = (minValue * 5);
-		System.out.println("PUBLIC shadeVariety: "  + shadeVarietyObjectiveScore);
+		System.out.println("PUBLIC shadeVariety: " + shadeVarietyObjectiveScore);
 		return shadeVarietyObjectiveScore;
 	}
 
-	// WERKT
+	// WERKT 6-6-2021
 	public int mediumShadesObjectiveScore() {
 		int mediumShadesObjectiveScore = 0;
 
@@ -107,7 +102,7 @@ public class EndScore {
 		} else {
 			mediumShadesObjectiveScore = (esdbController.amountOfDiesOfValue(owner, 3) * 2);
 		}
-		System.out.println("PUBLIC mediumShades: " + mediumShadesObjectiveScore );
+		System.out.println("PUBLIC mediumShades: " + mediumShadesObjectiveScore);
 		return mediumShadesObjectiveScore;
 
 	}
@@ -117,21 +112,46 @@ public class EndScore {
 
 		int score;
 		int index;
+		int amountOfDie = 0;
 		index = 1;
 		score = 0;
 
 		while (index < 6) {
-			if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "red", index) > 1)) {
-				if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "blue", index) > 1)) {
-					if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "yellow", index) > 1)) {
-						if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "purple", index) > 1)) {
-							if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "green", index) > 1)) {
-								score += 6;
+			if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "red", index) < 2)) {
+				if (esdbController.colomnColorVarietyObjectiveScore(owner, "red", index) == 1) {
+					amountOfDie++;
+				}
+
+				if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "blue", index) < 2)) {
+					if (esdbController.colomnColorVarietyObjectiveScore(owner, "blue", index) == 1) {
+						amountOfDie++;
+					}
+
+					if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "yellow", index) < 2)) {
+						if (esdbController.colomnColorVarietyObjectiveScore(owner, "yellow", index) == 1) {
+							amountOfDie++;
+						}
+
+						if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "purple", index) < 2)) {
+							if (esdbController.colomnColorVarietyObjectiveScore(owner, "purple", index) == 1) {
+								amountOfDie++;
+							}
+
+							if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "green", index) < 2)) {
+								if (esdbController.colomnColorVarietyObjectiveScore(owner, "green", index) == 1) {
+									amountOfDie++;
+								}
+
+							
 							}
 						}
 					}
 				}
+				if (amountOfDie == 4) {
 
+					score += 5;
+
+				}
 			}
 			index++;
 		}
@@ -144,19 +164,60 @@ public class EndScore {
 
 		int score;
 		int index;
+		int amountOfDie = 0;
 		index = 1;
 		score = 0;
 
 		while (index < 6) {
-			if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 1, index) > 1)) {
-				if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 2, index) > 1)) {
-					if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 3, index) > 1)) {
-						if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 4, index) > 1)) {
-							if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 5, index) > 1)) {
-								score += 6;
-							}
-						}
+			if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 1, index) < 2)) {
+
+				if (esdbController.colomnShadeVarietyObjectiveScore(owner, 1, index) == 1) {
+					amountOfDie++;
+				}
+
+				if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 2, index) < 2)) {
+
+					if (esdbController.colomnShadeVarietyObjectiveScore(owner, 2, index) == 1) {
+						amountOfDie++;
 					}
+
+					if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 3, index) < 2)) {
+
+						if (esdbController.colomnShadeVarietyObjectiveScore(owner, 3, index) == 1) {
+							amountOfDie++;
+						}
+
+						if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 4, index) < 2)) {
+
+							if (esdbController.colomnShadeVarietyObjectiveScore(owner, 4, index) == 1) {
+								amountOfDie++;
+							}
+
+							if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 5, index) < 2)) {
+
+								if (esdbController.colomnShadeVarietyObjectiveScore(owner, 5, index) == 1) {
+									amountOfDie++;
+								}
+
+								if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 6, index) < 2)) {
+
+									if (esdbController.colomnShadeVarietyObjectiveScore(owner, 6, index) == 1) {
+										amountOfDie++;
+									}
+
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+				if (amountOfDie == 5) {
+
+					score += 4;
+
 				}
 
 			}
@@ -164,6 +225,7 @@ public class EndScore {
 		}
 		System.out.println("PUBLIC colomnShadeVariety: " + score);
 		return score;
+
 	}
 
 	// NIET WERKEND
@@ -181,6 +243,7 @@ public class EndScore {
 						if (esdbController.rowColorVarietyObjectiveScore(owner, "purple", index) == 1) {
 							if (esdbController.rowColorVarietyObjectiveScore(owner, "green", index) == 1) {
 								score += 6;
+
 							}
 						}
 					}
@@ -198,30 +261,69 @@ public class EndScore {
 	public int rowShadeVarietyObjectiveScore() {
 		int score;
 		int index;
+		int amountOfDie = 0;
 		index = 1;
 		score = 0;
 
 		while (index < 5) {
-			if (esdbController.rowShadeVarietyObjectiveScore(owner, 1, index) == 1) {
-				if (esdbController.rowShadeVarietyObjectiveScore(owner, 2, index) == 1) {
-					if (esdbController.rowShadeVarietyObjectiveScore(owner, 3, index) == 1) {
-						if (esdbController.rowShadeVarietyObjectiveScore(owner, 4, index) == 1) {
-							if (esdbController.rowShadeVarietyObjectiveScore(owner, 5, index) == 1) {
-								score += 6;
+			if (esdbController.rowShadeVarietyObjectiveScore(owner, 1, index) < 2) {
+
+				if (esdbController.rowShadeVarietyObjectiveScore(owner, 1, index) == 1) {
+					amountOfDie++;
+				}
+
+				if (esdbController.rowShadeVarietyObjectiveScore(owner, 2, index) < 2) {
+
+					if (esdbController.rowShadeVarietyObjectiveScore(owner, 2, index) == 1) {
+						amountOfDie++;
+					}
+
+					if (esdbController.rowShadeVarietyObjectiveScore(owner, 3, index) < 2) {
+
+						if (esdbController.rowShadeVarietyObjectiveScore(owner, 3, index) == 1) {
+							amountOfDie++;
+						}
+
+						if (esdbController.rowShadeVarietyObjectiveScore(owner, 4, index) < 2) {
+
+							if (esdbController.rowShadeVarietyObjectiveScore(owner, 4, index) == 1) {
+								amountOfDie++;
+							}
+
+							if (esdbController.rowShadeVarietyObjectiveScore(owner, 5, index) < 2) {
+
+								if (esdbController.rowShadeVarietyObjectiveScore(owner, 5, index) == 1) {
+									amountOfDie++;
+								}
+
+								if (esdbController.rowShadeVarietyObjectiveScore(owner, 6, index) < 2) {
+
+									if (esdbController.rowShadeVarietyObjectiveScore(owner, 6, index) == 1) {
+										amountOfDie++;
+									}
+
+								}
 							}
 						}
 					}
+
 				}
 
 			}
 			index++;
-		}
-		System.out.println("PUBLIC rowShadesVariety: " + score);
-		return score;
+			if (amountOfDie == 5) {
 
+				score += 5;
+
+			}
+		}
+
+		System.out.println("PUBLIC rowShadesVariety: " + score);
+
+		return score;
 	}
 
-	// WERKT
+	// WERKT 6-6-2021
 	public int darkShadesObjectiveScore() {
 		int darkShadesObjectiveScore = 0;
 
@@ -247,18 +349,20 @@ public class EndScore {
 		KleurArray[3] = esdbController.amountOfDiesOfColor(owner, "YELLOW");
 		KleurArray[4] = esdbController.amountOfDiesOfColor(owner, "PURPLE");
 
-		int max = 0;
+		int min = KleurArray[0];
+
 		for (int i = 0; i < KleurArray.length; i++) {
-			if (KleurArray[i] > max) {
-				max = KleurArray[i];
+			if (KleurArray[i] < min) {
+				min = KleurArray[i];
 			}
 		}
-		colorVarietyObjectiveScore = max;
-		System.out.println("PUBLIC Color varierty: " + colorVarietyObjectiveScore);
+
+		colorVarietyObjectiveScore = (min * 4);
+		System.out.println("PUBLIC Color variety: " + colorVarietyObjectiveScore);
 		return colorVarietyObjectiveScore;
 	}
 
-	// WERKT
+	// WERKT 6-6-2021
 	public int lightShadesObjectiveScore() {
 		int lightShadesObjectiveScore = 0;
 
@@ -271,7 +375,7 @@ public class EndScore {
 		return lightShadesObjectiveScore;
 	}
 
-	//FOUT: TELT STEEDS 0.... 
+	// FOUT: TELT STEEDS 0....
 	public int privateObjectiveScore() {
 		int privateObjectiveScore = esdbController.privateObjectiveScore(owner);
 		System.out.println("PRIVATE privateObjectiveScore: " + privateObjectiveScore);
@@ -286,17 +390,16 @@ public class EndScore {
 //	}
 
 	// New method
-	
-	// Foutmelding in dbController
+
+	// WERKT 6-6-2021
 	public int countAllDieEyes() {
 		int allCountedEyes = esdbController.countAllDieEyes(owner);
-		
-		
+
 		System.out.println(allCountedEyes);
 		return allCountedEyes;
 	}
-	
-	// WERKT
+
+	// WERKT 6-6-2021
 	public int emptyTileScore() {
 
 		int emptyScore = ((20 - esdbController.emptyTileScore(owner)) * -1);
@@ -307,16 +410,13 @@ public class EndScore {
 		return emptyScore;
 	}
 
-	// WERKT
+	// WERKT 6-6-2021
 	public int totalEndScore() {
-		int totalScore = publicObjectiveScore() + privateObjectiveScore()  + emptyTileScore() + countAllDieEyes();
+		int totalScore = publicObjectiveScore() + privateObjectiveScore() + emptyTileScore() + countAllDieEyes();
 		System.out.println("Total endscore: " + totalScore);
 		return totalScore;
 	}
 
-	
-	
-	
 	// ZOU MOETEN WERKEN
 	public int scoreDuringGame() {
 		int scoreDuringGame = publicObjectiveScore();
