@@ -166,9 +166,6 @@ public class Game {
 			if (result == 1) {
 				increasingID = false;
 				idGame = newIdGame;
-				System.out.println(getClass() + " - New game created with id " + newIdGame); // for
-																								// testing
-																								// purposes
 			} else {
 				newIdGame++;
 			}
@@ -198,8 +195,6 @@ public class Game {
 			if (result == 1) {
 				increasingID = false;
 				idGame = newGameID;
-				System.out.println(getClass() + " - New game created with id " + idGame); // for testing
-																							// purposes
 			} else {
 				newGameID++;
 			}
@@ -324,6 +319,8 @@ public class Game {
 		dbController.setRoundID(idGame, nextRoundID);
 
 		if (nextRoundID % 2 != 0) {
+			addToRoundtrack(currentRoundID);
+
 			if (usernameCreator.equals(mainController.getLoggedInUsername())) {
 				createDiesInSupply();
 				loadDiesInSupply();
@@ -331,10 +328,19 @@ public class Game {
 			}
 		}
 	}
+	
+	// Adds the last die of the die supply to the roundtrack
+	private void addToRoundtrack(int currentRoundID) {
+		Die lastDie = getDiesInSupply().getDies().get(0);
+		dbController.addDieToRoundtrack(lastDie, currentRoundID - 1, idGame);
+	}
 
 	private void endGame(int player1, int player2, int player3, int player4) {
 		System.out.println(getClass() + " - Game ended.");
 		mainController.showEndScoreView(player1, player2, player3, player4, players );
+		for (Player player : players) {
+			player.setStatus(PlayerStatus.FINISHED);
+		}
 	}
 
 	public ArrayList<String> getPlayerOrder() {

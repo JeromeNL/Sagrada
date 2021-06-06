@@ -59,6 +59,8 @@ public class MainMenu extends VBox {
 		box.setBackground(
 				new Background(new BackgroundFill(Color.rgb(247, 150, 150), CornerRadii.EMPTY, Insets.EMPTY)));
 
+		sagradaText.setAlignment(Pos.CENTER_LEFT);
+
 		VBox.setMargin(sagradaTxt, new Insets(100, 10, 0, 100));
 		layout.setAlignment(Pos.CENTER_LEFT);
 
@@ -79,7 +81,6 @@ public class MainMenu extends VBox {
 					+ "-fx-background-color: transparent;" + "-fx-font-size: 20;" + "-fx-text-fill: white;";
 			String HOVERED_BUTTON_STYLE = "-fx-border-width: 2;" + "-fx-border-color: white;"
 					+ "-fx-background-color:white;" + "-fx-font-size: 20;" + "-fx-text-fill:blue;";
-
 			setStyle(IDLE_BUTTON_STYLE);
 			setOnMouseEntered(e -> setStyle(HOVERED_BUTTON_STYLE));
 			setOnMouseExited(e -> setStyle(IDLE_BUTTON_STYLE));

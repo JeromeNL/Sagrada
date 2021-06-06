@@ -20,15 +20,16 @@ public class EndScoreView extends Pane {
 	private Label title;
 	private Label currentPlayerText, user1, user2, user3, user4, backButtonText, player1, player2, player3, player4;
 	private Rectangle dropDownButton, backButton, line, line2, line3, line4, line5;
- 	private int playerOne,playerTwo,playerThree,playerFour;
+	private int playerOne, playerTwo, playerThree, playerFour;
 
-
-	public EndScoreView(int newPlayerOne, int newPlayerTwo, int newPlayerThree, int newPlayerFour, ArrayList<Player> players) {
+	public EndScoreView(int newPlayerOne, int newPlayerTwo, int newPlayerThree, int newPlayerFour,
+			ArrayList<Player> players) {
 
 		playerOne = newPlayerOne;
 		playerTwo = newPlayerTwo;
 		playerThree = newPlayerThree;
 		playerFour = newPlayerFour;
+
 // Score Table
 
 		outline = new Rectangle(500, 500);
@@ -38,8 +39,6 @@ public class EndScoreView extends Pane {
 		outline.setStrokeWidth(30);
 		outline.setStroke(Color.BLACK);
 
-		players.get(0).getUsername();
-		
 		title = new Label("EindScore");
 		title.setStyle("-fx-font-weight: bold");
 		title.setTextFill(Color.BLACK);
@@ -47,8 +46,7 @@ public class EndScoreView extends Pane {
 		title.setTranslateX(30);
 		title.setTranslateY(50);
 
-		
-		player1 = new Label(players.get(0).getUsername()  + "   " + playerOne);
+		player1 = new Label(players.get(0).getUsername() + "   " + playerOne);
 		player1.setStyle("-fx-font-weight: bold");
 		player1.setTextFill(Color.BLACK);
 		player1.setFont(new Font("Arial", 35));
@@ -62,24 +60,23 @@ public class EndScoreView extends Pane {
 		player2.setTranslateX(100);
 		player2.setTranslateY(285);
 
-		if(players.size() > 2) {
-		player3 = new Label(players.get(2).getUsername() + "   " + playerThree);
-		player3.setStyle("-fx-font-weight: bold");
-		player3.setTextFill(Color.BLACK);
-		player3.setFont(new Font("Arial", 35));
-		player3.setTranslateX(100);
-		player3.setTranslateY(380);
+		if (players.size() > 2) {
+			player3 = new Label(players.get(2).getUsername() + "   " + playerThree);
+			player3.setStyle("-fx-font-weight: bold");
+			player3.setTextFill(Color.BLACK);
+			player3.setFont(new Font("Arial", 35));
+			player3.setTranslateX(100);
+			player3.setTranslateY(380);
 		}
-		
-		if(players.size() > 3) {
-		player4 = new Label(players.get(3).getUsername() + "   " + playerFour);
-		player4.setStyle("-fx-font-weight: bold");
-		player4.setTextFill(Color.BLACK);
-		player4.setFont(new Font("Arial", 35));
-		player4.setTranslateX(100);
-		player4.setTranslateY(475);
+
+		if (players.size() > 3) {
+			player4 = new Label(players.get(3).getUsername() + "   " + playerFour);
+			player4.setStyle("-fx-font-weight: bold");
+			player4.setTextFill(Color.BLACK);
+			player4.setFont(new Font("Arial", 35));
+			player4.setTranslateX(100);
+			player4.setTranslateY(475);
 		}
-		
 
 		line = new Rectangle(10, 500);
 		line.setTranslateX(450);
@@ -106,8 +103,6 @@ public class EndScoreView extends Pane {
 		line5.setTranslateY(550);
 		line5.setFill(Color.BLACK);
 
-// TEXTBUTTONS
-
 //Button
 
 		backButton = new Rectangle(400, 400, 155, 50);
@@ -127,41 +122,31 @@ public class EndScoreView extends Pane {
 		backButtonText.setTranslateX(1050);
 
 		setBackground(new Background(new BackgroundFill(Color.LIGHTBLUE, new CornerRadii(0), new Insets(0))));
-		
-		System.out.println("0000000000000000000000000000000000000000000000 "+playerThree);
-		
-		
-		if((playerThree == 786) && (playerFour == 786)){
-			
-			this.getChildren().addAll(outline, title, line, line2, line3, line4, line5, backButton, backButtonText, player1,
-				player2);
-				
-				System.out.println("111111111111111111111111111111111111111111111111111111111111111111111111111");
-				
-				
-		}else if((playerThree != 786) && (playerFour == 786)){
-				
-			this.getChildren().addAll(outline, title, line, line2, line3, line4, line5, backButton, backButtonText, player1,
-				player2, player3);
-				
-				
-					System.out.println("22222222222222222222222222222222222222222222222222222222222222222222222222");
-				
-				
-				
-		} else if((playerThree != 786) && (playerFour != 786)){
-			
-			this.getChildren().addAll(outline, title, line, line2, line3, line4, line5, backButton, backButtonText, player1,
-				player2,player3,player4);
-				
-					System.out.println("333333333333333333333333333333333333333333333333333333333333333333333333333");
-		}
-		
-		
 
-		
-		
-		
+		System.out.println("0000000000000000000000000000000000000000000000 " + playerThree);
+
+		if ((playerThree == 786) && (playerFour == 786)) {
+
+			this.getChildren().addAll(outline, title, line, line2, line3, line4, line5, backButton, backButtonText,
+					player1, player2);
+
+			System.out.println("111111111111111111111111111111111111111111111111111111111111111111111111111");
+
+		} else if ((playerThree != 786) && (playerFour == 786)) {
+
+			this.getChildren().addAll(outline, title, line, line2, line3, line4, line5, backButton, backButtonText,
+					player1, player2, player3);
+
+			System.out.println("22222222222222222222222222222222222222222222222222222222222222222222222222");
+
+		} else if ((playerThree != 786) && (playerFour != 786)) {
+
+			this.getChildren().addAll(outline, title, line, line2, line3, line4, line5, backButton, backButtonText,
+					player1, player2, player3, player4);
+
+			System.out.println("333333333333333333333333333333333333333333333333333333333333333333333333333");
+		}
+
 		registerHandler(backButton, Color.BLACK, Color.BLACK);
 		backButton.setOnMouseClicked(e -> {
 			System.out.println("button is pressed");

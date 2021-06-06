@@ -49,7 +49,7 @@ public class MainController {
 		RegisterLoginController rlc = new RegisterLoginController(dbController);
 		RegisterLoginModel rlm = new RegisterLoginModel(this, rlc);
 		mainScene = new MainScene(this, dbController, rlm, rlc);
-		combinedURL = "/Images/Compact Private Objectives/green.png";
+		combinedURL = "/compact_private_purple.png";
 		imageURL = combinedURL.toString();
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 
@@ -66,7 +66,7 @@ public class MainController {
 
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
-		stage.getIcons().add(new Image("/Images/Compact Public Objectives/4.png"));
+//		stage.getIcons().add(new Image("/Images/Compact Public Objectives/4.png"));
 		stage.setScene(mainScene);
 		stage.getIcons().add(toolCardImage);
 		stage.setOnCloseRequest(e -> dbController.closeConnection());
@@ -139,6 +139,18 @@ public class MainController {
 	public void showNewGame() {
 		mainScene.setRoot(new NewGameView(this, dbController));
 	}
+	
+	public void ToolCardButton() {
+		
+		mainScene.showToolcardCardView();
+		
+	}
+	
+	public void ObjectiveCardButton() {
+		
+		mainScene.showObjectivecardCardView();
+		
+	}
 
 	public void logout() {
 		loggedInUsername = "";
@@ -158,6 +170,11 @@ public class MainController {
 		mainScene.showPlayedGames();
 	}
 
+	public void refreshChat() {
+		if (mainScene.getGameView() != null) {
+			mainScene.refreshChat();			
+		}
+	}
 
 }
 
