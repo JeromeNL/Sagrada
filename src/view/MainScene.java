@@ -73,7 +73,11 @@ public class MainScene extends Scene {
 	}
 
 	public void showLoginScreen() {
-		setRoot(new LoginView(dbController, registerLoginController, rlm));
+		 setRoot(new LoginView(dbController, registerLoginController, rlm));
+		
+		
+//		EndScoreView esv = new EndScoreView();
+//		setRoot(esv);
 	}
 
 	public void showFirstMainMenu() {

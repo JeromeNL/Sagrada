@@ -30,9 +30,7 @@ public class Game {
 
 	private GameController gameController;
 
-
 	private String usernameCreator;
-	
 
 	// Constructor to load an existing game.
 	public Game(int idGame, DatabaseController dbController, MainController mainController) {
@@ -131,7 +129,8 @@ public class Game {
 
 		boolean isCreator = true;
 		GameColor privateObjectiveCardColor = getObjectiveCardColor();
-		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController, mainController);
+		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController,
+				mainController);
 		players.add(creator);
 	}
 
@@ -146,7 +145,8 @@ public class Game {
 		// Check if there is room for more players.
 		if (players.size() < 4) {
 			GameColor privateObjectiveCardColor = getObjectiveCardColor();
-			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController, mainController);
+			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController,
+					mainController);
 			players.add(newPlayer);
 		}
 	}
@@ -277,46 +277,48 @@ public class Game {
 	}
 
 	public void setNextRound() {
+
+		boolean test = false;
+
 		int currentRoundID = dbController.getRoundID(idGame);
 
-		
-			if (currentRoundID == 2) {
-				endGame();
-				
-				System.out.println("===============");
-				System.out.println(players.get(0).toString());
-				EndScore endscore = new EndScore(players.get(0), dbController, mainController);
-				endscore.totalEndScore();
-				
-				System.out.println(players.get(1).toString());
-				EndScore endscore2 = new EndScore(players.get(1), dbController, mainController);
-				endscore2.totalEndScore();
-//				
-//				try {
-//						EndScore endscore3 = new EndScore(players.get(2), dbController, mainController);
-//						endscore3.totalEndScore();
-//						EndScore endscore4 = new EndScore(players.get(3), dbController, mainController);
-//						endscore4.totalEndScore();
-//						System.out.println("4 spelers");
-//				}
-//				catch(Exception e){
-//					
-//					
-//					try {
-//					EndScore endscore3 = new EndScore(players.get(3), dbController, mainController);
-//					endscore3.totalEndScore();
-//					System.out.println("3 spelers");
-//					
-//						
-//				} catch(Exception ee){
-//					
-//					System.out.println("2 spelers");	
-//				}	
-			//}
-				// System.out.println("ENDSCORE: " + endscore.publicObjectiveScore());
-				return;
-				
+		if (currentRoundID == 2) {
+
+			System.out.println("===============");
+			System.out.println(players.get(0).toString());
+			EndScore endscore = new EndScore(players.get(0), dbController, mainController);
+			endscore.totalEndScore();
+
+			System.out.println(players.get(1).toString());
+			EndScore endscore2 = new EndScore(players.get(1), dbController, mainController);
+			endscore2.totalEndScore();
+
+			endGame(endscore.totalEndScore(), endscore2.totalEndScore(), 786, 786);
+
+			if (players.size() == 4) {
+
+				EndScore endscore3 = new EndScore(players.get(2), dbController, mainController);
+				endscore3.totalEndScore();
+				EndScore endscore4 = new EndScore(players.get(3), dbController, mainController);
+				endscore4.totalEndScore();
+				System.out.println("4 spelers");
+				endGame(endscore.totalEndScore(), endscore2.totalEndScore(), endscore3.totalEndScore(),
+						endscore4.totalEndScore());
 			}
+
+			if (players.size() == 3) {
+
+				EndScore endscore3 = new EndScore(players.get(2), dbController, mainController);
+				endscore3.totalEndScore();
+				System.out.println("3 spelers");
+				endGame(endscore.totalEndScore(), endscore2.totalEndScore(), endscore3.totalEndScore(), 786);
+
+			}
+
+			System.out.println("ENDSCORE: " + endscore.publicObjectiveScore());
+			return;
+
+		}
 
 		int nextRoundID = currentRoundID + 1;
 		dbController.setRoundID(idGame, nextRoundID);
@@ -325,14 +327,14 @@ public class Game {
 			if (usernameCreator.equals(mainController.getLoggedInUsername())) {
 				createDiesInSupply();
 				loadDiesInSupply();
-				mainController.showGame(0);				
+				mainController.showGame(0);
 			}
 		}
 	}
 
-	private void endGame() {
+	private void endGame(int player1, int player2, int player3, int player4) {
 		System.out.println(getClass() + " - Game ended.");
-		mainController.showEndScoreView();
+		mainController.showEndScoreView(player1, player2, player3, player4, players );
 	}
 
 	public ArrayList<String> getPlayerOrder() {
@@ -347,11 +349,9 @@ public class Game {
 		return diesInSupply;
 	}
 
-
 	public int getIdGame() {
 		return idGame;
 	}
-	
 
 	public void setNextTurn() {
 		int currentPlayerID = dbController.getCurrentPlayerID(idGame);
@@ -391,16 +391,15 @@ public class Game {
 		}
 	}
 
-	
 	public String getCurrentPlayer() {
 		int currentPlayerID = dbController.getCurrentPlayerID(idGame);
 		return dbController.getUsername(currentPlayerID);
 	}
-	
+
 	public int getRoundID() {
 		return dbController.getRoundID(idGame);
 	}
-	
+
 	public ArrayList<Integer> getPublicObjectives() {
 		return dbController.getPublicObjectiveIDs(idGame);
 	}
