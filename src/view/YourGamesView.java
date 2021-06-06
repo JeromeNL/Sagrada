@@ -39,6 +39,7 @@ public class YourGamesView extends BorderPane {
 				new Background(new BackgroundFill(Color.rgb(247, 150, 150), CornerRadii.EMPTY, Insets.EMPTY)));
 
 		Button backToMenu = new Button("Terug naar menu");
+		backToMenu.setStyle("-fx-background-color: #ffffff");
 		backToMenu.setOnAction(e -> mainController.showFirstMainMenu());
 		setTop(backToMenu);
 
@@ -64,6 +65,7 @@ public class YourGamesView extends BorderPane {
 		description.setTextFill(Color.WHITE);
 		gamesBox.getChildren().addAll(title, description);
 		Button refreshButton = new Button("Lijst vernieuwen");
+		refreshButton.setStyle("-fx-background-color: #ffffff");
 		refreshButton.setOnMouseClicked(e -> mainController.showYourGames());
 
 		if (gamesToBePlayed.size() == 0) {
@@ -87,6 +89,7 @@ public class YourGamesView extends BorderPane {
 			challengerLabel.setTextFill(Color.WHITE);
 
 			Button loadGame = new Button("Spel laden");
+			loadGame.setStyle("-fx-background-color: #ffffff");
 			loadGame.setOnMouseClicked(new EventHandler<Event>() {
 
 				@Override
