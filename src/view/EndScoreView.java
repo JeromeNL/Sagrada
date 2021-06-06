@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 
+import controller.MainController;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
@@ -149,8 +150,7 @@ public class EndScoreView extends Pane {
 
 		registerHandler(backButton, Color.BLACK, Color.BLACK);
 		backButton.setOnMouseClicked(e -> {
-			System.out.println("button is pressed");
-
+			
 		});
 	}
 

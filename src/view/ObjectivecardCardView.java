@@ -31,9 +31,11 @@ public class ObjectivecardCardView extends Pane {
 	private int X = 135;
 	private StackPane card;
 	private Label backButtonText;
+	private MainController mainController;
 
 	public ObjectivecardCardView(DatabaseController dbController, MainController mainController) {
 		super();
+		this.mainController = mainController;
 
 		rect = new Rectangle();
 		rect.setWidth(200);
@@ -77,7 +79,7 @@ public class ObjectivecardCardView extends Pane {
 
 	public void addCards() {
 
-		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(55);
+		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(mainController.getCurrentGame().getIdGame());
 
 		for (Integer id : ids) {
 			card = new StackPane();

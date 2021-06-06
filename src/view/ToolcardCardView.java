@@ -23,9 +23,11 @@ public class ToolcardCardView extends Pane {
 	private Rectangle rect;
 	private int X = 135;
 	private Label backButtonText;
+	private MainController mainController;
 
 	public ToolcardCardView(DatabaseController dbController, MainController mainController) {
 		super();
+		this.mainController = mainController;
 
 		rect = new Rectangle();
 		rect.setWidth(200);
@@ -69,7 +71,7 @@ public class ToolcardCardView extends Pane {
 
 	public void addCards() {
 
-		ArrayList<Integer> ids = dbController.getToolcardIDs(55);
+		ArrayList<Integer> ids = dbController.getToolcardIDs(mainController.getCurrentGame().getIdGame());
 
 		for (Integer id : ids) {
 			StackPane card = new StackPane();

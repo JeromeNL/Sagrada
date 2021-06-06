@@ -10,7 +10,7 @@ import model.PlayerStatus;
 
 public class PlayerController {
 
-	private DatabaseController dbController;
+	private static DatabaseController dbController;
 	private static MainController mainController;
 
 	public PlayerController(DatabaseController dbController, MainController mainController) {
@@ -61,8 +61,7 @@ public class PlayerController {
 
 	public static ArrayList<PlayerStats> AllPlayerStats() throws SQLException {
 		ArrayList<PlayerStats> stats = new ArrayList<>();
-		DatabaseController db = new DatabaseController(mainController);
-		ResultSet res = db.doQuery("SELECT p.username, p.idplayer, COALESCE(MAX(p.score), 0) as highscore,\n"
+		ResultSet res = dbController.doQuery("SELECT p.username, p.idplayer, COALESCE(MAX(p.score), 0) as highscore,\n"
 				+ "(SELECT dienumber FROM playerframefield WHERE idplayer = p.idplayer GROUP BY dienumber ORDER BY COUNT(*) DESC LIMIT 1) as mostUsedDieValue,\n"
 				+ "(SELECT diecolor FROM playerframefield WHERE idplayer = p.idplayer GROUP BY diecolor ORDER BY COUNT(*) DESC LIMIT 1) as mostUsedDieColor,\n"
 				+ "(SELECT COUNT(DISTINCT username) FROM player WHERE idgame IN (SELECT idgame FROM player WHERE username = p.username) AND username != p.username) as oponentCount,\n"
