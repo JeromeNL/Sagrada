@@ -118,7 +118,7 @@ public class Player {
 	}
 
 	public void setStatus(PlayerStatus status) {
-		// to-do: set status in database.
+		dbController.setPlayerStatus(status, username, idGame);
 		this.status = status;
 	}
 

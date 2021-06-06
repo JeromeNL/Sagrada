@@ -1,33 +1,78 @@
 package view;
 
+import java.util.ArrayList;
+
+import controller.DatabaseController;
+import controller.MainController;
+import imageChooser.PublicObjectiveCardImage;
 import javafx.beans.value.ObservableValue;
 
-
-
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
 
-public class ObjectivecardCardView extends HBox {
+public class ObjectivecardCardView extends Pane {
 
 	final static Color SAGRADAPINK = Color.rgb(247, 150, 150);
 	static final String URL_TO_IMAGE = "/Group_24.png";
-RectangleCard rectangleCard1 ;
+	RectangleCard rectangleCard1;
 	private int widthCard = 230;
 	private int heightCard = 334;
+	private DatabaseController dbController;
+	private MainController mainController;
+	private Rectangle rect;
+	private int X = 135;
+	private StackPane card;
+	private Label backButtonText;
 
-	public ObjectivecardCardView() {
+	public ObjectivecardCardView(DatabaseController dbController, MainController mainController) {
 		super();
 
-		setSpacing(128);
-		setAlignment(Pos.CENTER);
+		rect = new Rectangle();
+		rect.setWidth(200);
+		rect.setHeight(60);
+		rect.setFill(Color.TRANSPARENT);
+		rect.setX(940);
+		rect.setY(600);
+		rect.setArcHeight(50);
+		rect.setArcWidth(50);
+		rect.setStrokeWidth(5);
+		rect.setStroke(Color.WHITE);
+
+		backButtonText = new Label("Terug");
+		backButtonText.setTextFill(Color.WHITE);
+		backButtonText.setFont(new Font("Arial", 15));
+		backButtonText.setStyle("-fx-font-weight: bold");
+		backButtonText.setTranslateY(620);
+		backButtonText.setTranslateX(1015);
+
+		rect.setOnMouseClicked(e -> {
+			System.out.println("button is pressed");
+			mainController.showGameLoggedInPlayer();
+		});
+
+		rect.setOnMouseEntered(e -> {
+			rect.setFill(Color.WHITE);
+			backButtonText.setTextFill(SAGRADAPINK);
+		});
+
+		rect.setOnMouseExited(e -> {
+			rect.setFill(SAGRADAPINK);
+			backButtonText.setTextFill(Color.WHITE);
+		});
+
+		this.dbController = dbController;
+		this.mainController = mainController;
 
 		setBackground(new Background(new BackgroundFill(SAGRADAPINK, null, null)));
 
@@ -38,38 +83,22 @@ RectangleCard rectangleCard1 ;
 
 	public void addCards() {
 
-		Image group = new Image(getClass().getResource(URL_TO_IMAGE).toString());
+		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(55);
 
-		ImageView imageView = new ImageView(group);
-		ImageView imageView2 = new ImageView(group);
-		ImageView imageView3 = new ImageView(group);
+//		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(mainController.getCurrentGame().getIdGame());
 
-		imageView.setFitHeight(heightCard - 30);
-		imageView.setFitWidth(widthCard - 30);
-		imageView2.setFitHeight(heightCard - 30);
-		imageView2.setFitWidth(widthCard - 30);
-		imageView3.setFitHeight(heightCard - 30);
-		imageView3.setFitWidth(widthCard - 30);
+		for (Integer id : ids) {
+			card = new StackPane();
+			PublicObjectiveCardImage publicObjectiveCardImage = new PublicObjectiveCardImage(id);
+			publicObjectiveCardImage.setTranslateX(X);
+			X = X + 350;
+			publicObjectiveCardImage.setTranslateY(200);
+			card.getChildren().add(publicObjectiveCardImage);
+			getChildren().add(card);
+		}
 
-		StackPane card1 = new StackPane();
-		StackPane card2 = new StackPane();
-		StackPane card3 = new StackPane();
-
-
-
-
-
-
-		RectangleCard rectangleCard1 = new RectangleCard(widthCard, heightCard, "card1");
-		RectangleCard rectangleCard2 = new RectangleCard(widthCard, heightCard, "card2");
-		RectangleCard rectangleCard3 = new RectangleCard(widthCard, heightCard, "card3");
-		
-		card1.getChildren().addAll(rectangleCard1, imageView);
-		card2.getChildren().addAll(rectangleCard2, imageView2);
-		card3.getChildren().addAll(rectangleCard3, imageView3);
-
-		getChildren().addAll(card1, card2, card3);
+		getChildren().add(rect);
+		getChildren().add(backButtonText);
 
 	}
-
 }

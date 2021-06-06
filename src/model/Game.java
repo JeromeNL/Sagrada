@@ -322,6 +322,9 @@ public class Game {
 
 	private void endGame() {
 		System.out.println(getClass() + " - Game ended.");
+		for (Player player : players) {
+			player.setStatus(PlayerStatus.FINISHED);
+		}
 		mainController.showEndScoreView();
 	}
 
