@@ -50,6 +50,7 @@ public class LoginView extends VBox {
 		imageView.setY(10);
 		imageView.setFitWidth(575);
 		imageView.setPreserveRatio(true);
+		
 
 		VBox box = new VBox();
 		HBox sagradaText = new HBox();
@@ -95,7 +96,7 @@ public class LoginView extends VBox {
 		warnTextBox.setAlignment(Pos.BOTTOM_CENTER);
 		sagradaText.setMinHeight(100);
 		textFields.setMinWidth(400);
-		warnText.setX(-500);
+		
 
 		warnText.setFont(Font.font("Arial", FontWeight.BOLD, 13));
 		warnText.setFill(Color.WHITE);

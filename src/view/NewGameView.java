@@ -49,6 +49,7 @@ public class NewGameView extends BorderPane {
 				new Background(new BackgroundFill(Color.rgb(247, 150, 150), CornerRadii.EMPTY, Insets.EMPTY)));
 
 		Button backToMenu = new Button("Terug naar menu");
+		backToMenu.setStyle("-fx-background-color: #ffffff");
 		backToMenu.setOnAction(e -> mainController.showFirstMainMenu());
 		setTop(backToMenu);
 		
@@ -66,6 +67,7 @@ public class NewGameView extends BorderPane {
 		createGameBox.getChildren().addAll(title, description);
 		
 		Button createGameButton = new Button("Nieuw spel aanmaken");
+		createGameButton.setStyle("-fx-background-color: #ffffff");
 		createGameButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -91,6 +93,7 @@ public class NewGameView extends BorderPane {
 		inviteLabel.setTextFill(Color.WHITE);
 		username = new TextField();
 		inviteButton = new Button("Uitdagen");
+		inviteButton.setStyle("-fx-background-color: #ffffff");
 		inviteButton.setOnMouseClicked(new EventHandler<Event>() {
 
 			@Override
@@ -128,6 +131,7 @@ public class NewGameView extends BorderPane {
 		setBottom(bottom);
 
 		Button startGameButton = new Button("Start het spel");
+		startGameButton.setStyle("-fx-background-color: #ffffff");
 		bottom.getChildren().addAll(cannotStart, startGameButton);
 		
 		startGameButton.setOnMouseClicked(new EventHandler<Event>() {

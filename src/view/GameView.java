@@ -120,6 +120,7 @@ public class GameView extends BorderPane {
 		setTop(topPane);
 
 		Button backToMenu = new Button("Terug naar menu");
+		backToMenu.setStyle("-fx-background-color: #ffffff");
 		backToMenu.setOnAction(e -> mainController.showFirstMainMenu());
 
 		ArrayList<Integer> objectiveIDs = game.getPublicObjectives();
