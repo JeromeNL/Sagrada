@@ -10,6 +10,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -25,6 +27,8 @@ public class YourGamesView extends BorderPane {
 	private MainController mainController;
 	private DatabaseController dbController;
 	private VBox gamesBox;
+	private VBox scrollBox;
+	private VBox boxAround;
 
 	public YourGamesView(MainController mainController, DatabaseController dbController) {
 		this.mainController = mainController;
@@ -41,6 +45,9 @@ public class YourGamesView extends BorderPane {
 		gamesBox = new VBox();
 		gamesBox.setAlignment(Pos.CENTER);
 		gamesBox.setSpacing(10);
+		
+		boxAround = new VBox();
+		boxAround.setSpacing(10);
 		fillGamesBox();
 		setCenter(gamesBox);
 	}
@@ -91,8 +98,21 @@ public class YourGamesView extends BorderPane {
 			});
 
 			game.getChildren().addAll(idGameLabel, challengerLabel, loadGame);
-			gamesBox.getChildren().add(game);
+			scrollBox = new VBox();
+			scrollBox.getChildren().add(game);
+			boxAround.getChildren().addAll(scrollBox);
+
 		}
+
+		ScrollPane sc = new ScrollPane();
+		sc.setContent(boxAround);
+		sc.setHbarPolicy(ScrollBarPolicy.NEVER);
+		sc.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		sc.setMaxWidth(400);
+		sc.setStyle(
+				"-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0; -fx-background-insets: 0;");
+		
+		gamesBox.getChildren().addAll(sc);
 		gamesBox.getChildren().add(refreshButton);
 	}
 }

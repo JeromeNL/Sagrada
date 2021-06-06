@@ -25,7 +25,6 @@ public class RegisterLoginController {
 		try {
 			while (nameAvailable.next()) {
 				int oneOrZero = Integer.parseInt(nameAvailable.getString("counter"));
-				System.out.println(oneOrZero);
 
 				if (oneOrZero == 0) {
 					return 0;
@@ -51,7 +50,6 @@ public class RegisterLoginController {
 		try {
 			while (askedPassword.next()) {
 				int oneOrZero = Integer.parseInt(askedPassword.getString("counter"));
-				System.out.println(oneOrZero);
 
 				if (oneOrZero == 0) {
 					return 0;

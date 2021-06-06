@@ -1,5 +1,6 @@
 package view;
 
+import controller.DatabaseController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
@@ -13,8 +14,11 @@ public class TopPart extends VBox {
 
 	private PlayerOrderView playerOrderView;
 	private RoundTrackView roundTrackView;
+	private DatabaseController dbController;
 
-	public TopPart(Game game) {
+	public TopPart(DatabaseController dbController, Game game) {
+		this.dbController = dbController;
+		
 
 		this.setPadding(new Insets(8, 5, 15, 5));
 
@@ -22,7 +26,7 @@ public class TopPart extends VBox {
 		setMaxSize(900, 120);
 
 		playerOrderView = new PlayerOrderView(game);
-		roundTrackView = new RoundTrackView();
+		roundTrackView = new RoundTrackView(dbController, game);
 
 		setAlignment(Pos.CENTER);
 		setSpacing(15);

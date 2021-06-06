@@ -185,6 +185,34 @@ public class DatabaseController {
 				+ username + "\" AND idgame = " + idGame);
 	}
 
+	public ArrayList<Die> getDieRoundTrack(int idGame) {
+		String query = "SELECT * FROM gamedie WHERE idgame = " + idGame + " AND roundtrack IS NOT NULL ORDER BY roundtrack ASC";
+		ResultSet rs = doQuery(query);
+		ArrayList<Die> roundTrackDies = new ArrayList<Die>();
+
+		try {
+			while (rs.next()) {
+				String colorString = rs.getString("diecolor").toUpperCase();
+				GameColor color = GameColor.valueOf(colorString);
+				int dieNumber = rs.getInt("dienumber");
+				int roundtracknr = rs.getInt("roundtrack");
+				int eyesCount = rs.getInt("eyes");
+
+				roundTrackDies.add(new Die(color, eyesCount, dieNumber, roundtracknr));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return roundTrackDies;
+
+	}
+
+	public void addDieToRoundtrack(Die die, int roundNR, int idGame) {
+		String query = "UPDATE gamedie SET roundtrack = " + roundNR + " WHERE idgame = " + idGame + " AND dienumber = "
+				+ die.getDieID() + " AND diecolor = \"" + die.getColor().toString().toLowerCase() + "\"";
+		int result = doUpdateQuery(query);
+	}
+
 	public void createGameDies(int idGame) {
 		ResultSet rs = doQuery("SELECT * FROM die");
 		Random random = new Random();
