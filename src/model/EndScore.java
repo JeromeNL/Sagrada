@@ -377,7 +377,7 @@ public class EndScore {
 		return lightShadesObjectiveScore;
 	}
 
-	// FOUT: TELT STEEDS 0....
+	// WERKT 7-6-2021
 	public int privateObjectiveScore() {
 		int privateObjectiveScore = esdbController.privateObjectiveScore(owner);
 		
@@ -421,7 +421,7 @@ public class EndScore {
 
 	// ZOU MOETEN WERKEN
 	public int scoreDuringGame() {
-		int scoreDuringGame = publicObjectiveScore();
+		int scoreDuringGame = publicObjectiveScore() + countAllDieEyes();
 		return scoreDuringGame;
 	}
 
