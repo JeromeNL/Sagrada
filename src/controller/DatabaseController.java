@@ -22,6 +22,7 @@ public class DatabaseController {
 	private Connection m_Conn;
 	private Statement statement;
 	private MainController mainController;
+	private int iterator =8;
 
 	public DatabaseController(MainController mainController) {
 		this.mainController = mainController;
@@ -465,34 +466,44 @@ public class DatabaseController {
 		Random random = new Random();
 		ArrayList<Integer> objectiveIDs = new ArrayList<Integer>();
 		
-		boolean done = false;
-		while (!done) {
-		
-				objectiveIDs.add(3);
-				objectiveIDs.add(4);
-				objectiveIDs.add(1);
-				
-				// Check if enough IDs have been generated
-				if (objectiveIDs.size() == 3) {
-					done = true;
-				}
-			}
-		
-		
-		
-//				boolean done = false;
+
+// Initializing specific objectivecards 
+
+//		boolean done = false;
 //		while (!done) {
-//			int newID = random.nextInt(10) + 1; // value between 1 and 10 (both inclusive)
-//			// Check if it's a unique objectivecard ID
-//			if (!objectiveIDs.contains(newID)) {
-//				objectiveIDs.add(newID);
+//		
+//				objectiveIDs.add(3);
+//				objectiveIDs.add(4);
+//				objectiveIDs.add(1);
 //				
 //				// Check if enough IDs have been generated
 //				if (objectiveIDs.size() == 3) {
 //					done = true;
 //				}
 //			}
-//		}
+		
+		
+		
+				boolean done = false;
+		while (!done) {
+			int newID = random.nextInt(10) + 1; // value between 1 and 10 (both inclusive)
+			// Check if it's a unique objectivecard ID
+			
+			while(newID==iterator){
+				newID = random.nextInt(10) + 1;
+				
+			}
+			
+			if (!objectiveIDs.contains(newID)) {
+				objectiveIDs.add(newID);
+				
+				// Check if enough IDs have been generated
+				if (objectiveIDs.size() == 3) {
+					done = true;
+				}
+			}
+			
+		}
 		
 		
 		for (Integer id : objectiveIDs) {

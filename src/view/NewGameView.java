@@ -128,6 +128,7 @@ public class NewGameView extends BorderPane {
 		setBottom(bottom);
 
 		Button startGameButton = new Button("Start het spel");
+		startGameButton.setStyle("-fx-background-color: #ffffff");
 		bottom.getChildren().addAll(cannotStart, startGameButton);
 		
 		startGameButton.setOnMouseClicked(new EventHandler<Event>() {

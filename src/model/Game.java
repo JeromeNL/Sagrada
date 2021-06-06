@@ -280,7 +280,7 @@ public class Game {
 		int currentRoundID = dbController.getRoundID(idGame);
 
 		
-			if (currentRoundID == 10) {
+			if (currentRoundID == 2) {
 				endGame();
 				
 				System.out.println("===============");

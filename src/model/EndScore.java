@@ -107,7 +107,7 @@ public class EndScore {
 
 	}
 
-	// NIET WERKEND
+	// WERKT 7-6-2021
 	public int colomnColorVarietyObjectiveScore() {
 
 		int score;
@@ -161,7 +161,7 @@ public class EndScore {
 		return score;
 	}
 
-	// NIET WERKEND
+	// WERKT 7-6-2021
 	public int colomnShadeVarietyObjectiveScore() {
 
 		int score;
@@ -230,7 +230,7 @@ public class EndScore {
 
 	}
 
-	// NIET WERKEND
+	// WERKT 6-6-2021
 	public int rowColorVarietyObjectiveScore() {
 
 		int score;
@@ -380,6 +380,8 @@ public class EndScore {
 	// FOUT: TELT STEEDS 0....
 	public int privateObjectiveScore() {
 		int privateObjectiveScore = esdbController.privateObjectiveScore(owner);
+		
+		
 		System.out.println("PRIVATE privateObjectiveScore: " + privateObjectiveScore);
 		return privateObjectiveScore;
 	}

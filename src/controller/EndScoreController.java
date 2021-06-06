@@ -3,6 +3,7 @@ package controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.GameColor;
 import model.Player;
 
 public class EndScoreController {
@@ -206,12 +207,26 @@ public class EndScoreController {
 		ResultSet privateColor = dbController
 				.doQuery("SELECT private_objectivecard_color FROM player WHERE idplayer = '" + owner.getIdPlayer() + "' AND idgame ='" + owner.getGameID()+"'");
 
-		privateColor.toString();
-		ResultSet privateScore = dbController.doQuery(
-				"SELECT COUNT(*) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.diecolor = gamedie.diecolor AND playerframefield.dienumber = gamedie.dienumber WHERE playerframefield.idgame = '" + owner.getGameID() + "' AND playerframefield.idplayer = '" + owner.getIdPlayer() + "' AND playerframefield.diecolor = '" + privateColor + "'");
+		String colorString = "";
+		try {
+			while (privateColor.next()) {
+				 colorString = privateColor.getString("private_objectivecard_color").toUpperCase();
+				 System.out.println("DBCONTROLLER --- PRIVATE: "+ privateObjectiveScore);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//
+		
+		
+		
+		
+		ResultSet privateScore = dbController.doQuery("SELECT SUM(gamedie.eyes) FROM playerframefield INNER JOIN gamedie ON playerframefield.idgame = gamedie.idgame AND playerframefield.diecolor = gamedie.diecolor AND playerframefield.dienumber = gamedie.dienumber WHERE playerframefield.idgame = '" + owner.getGameID() + "' AND playerframefield.idplayer = '" + owner.getIdPlayer()  + "' AND playerframefield.diecolor = '" + colorString + "'");
 
 		try {
-			if (privateScore.next()) {
+			while (privateScore.next()) {
 				privateObjectiveScore = privateScore.getInt(1);
 				System.out.println("DBCONTROLLER --- PRIVATE: "+ privateObjectiveScore);
 			}
