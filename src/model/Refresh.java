@@ -3,7 +3,6 @@ package model;
 import controller.DatabaseController;
 import controller.GameController;
 import controller.MainController;
-import controller.PlayerController;
 import javafx.application.Platform;
 
 public class Refresh extends Thread {

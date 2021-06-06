@@ -24,25 +24,7 @@ public class MainController {
 
 	private String imageURL;
 	private String combinedURL;
-
-
-
-//	public MainController(Stage stage) {
-//		dbController = new DatabaseController();
-//		mainScene = new MainScene(this);
-//		combinedURL = "/Images/Compact Private Objectives/green.png";
-//		imageURL = combinedURL.toString();
-//		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
-//		
-//		login("piet");
-//	}
-
-	private ChoosePatternCardController choosePatternCardController;
-
 	private Refresh refreshThread;
-
-
-		
 
 	public MainController(Stage stage) {
 		dbController = new DatabaseController(this);
@@ -54,19 +36,12 @@ public class MainController {
 		Image toolCardImage = new Image(getClass().getResource(imageURL).toString());
 
 		showLoginScreen();
-//		showPlayerListView();
-//		showPlayedGames();
 
 		refreshThread = new Refresh(currentGame, this, dbController);
 		refreshThread.start();
 
-
-		// mainScene.getChoosePatternCardView().getCard(); //will give you an int after
-		// you clicked on kiezen
-
 		stage.setTitle("SOPRJ4 Sagrada - Groep R");
 		stage.setResizable(false);
-//		stage.getIcons().add(new Image("/Images/Compact Public Objectives/4.png"));
 		stage.setScene(mainScene);
 		stage.getIcons().add(toolCardImage);
 		stage.setOnCloseRequest(e -> dbController.closeConnection());
@@ -112,10 +87,6 @@ public class MainController {
 		return loggedInUsername;
 	}
 
-	public void showLoginView() {
-		mainScene.showLoginView();
-	}
-
 	public void showLoginScreen() {
 		mainScene.showLoginScreen();
 	}
@@ -139,17 +110,13 @@ public class MainController {
 	public void showNewGame() {
 		mainScene.setRoot(new NewGameView(this, dbController));
 	}
-	
+
 	public void ToolCardButton() {
-		
 		mainScene.showToolcardCardView();
-		
 	}
-	
+
 	public void ObjectiveCardButton() {
-		
 		mainScene.showObjectivecardCardView();
-		
 	}
 
 	public void logout() {
@@ -158,7 +125,7 @@ public class MainController {
 	}
 
 	public void showEndScoreView(int player1, int player2, int player3, int player4, ArrayList<Player> players) {
-		mainScene.setRoot(new EndScoreView(player1, player2, player3, player4, players ));
+		mainScene.setRoot(new EndScoreView(player1, player2, player3, player4, players));
 
 	}
 
@@ -172,11 +139,8 @@ public class MainController {
 
 	public void refreshChat() {
 		if (mainScene.getGameView() != null) {
-			mainScene.refreshChat();			
+			mainScene.refreshChat();
 		}
 	}
 
 }
-
-
-

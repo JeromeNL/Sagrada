@@ -1,7 +1,7 @@
 package model;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import controller.DatabaseController;
 import controller.PatterncardFieldsController;
 

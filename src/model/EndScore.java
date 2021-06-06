@@ -8,8 +8,6 @@ import controller.MainController;
 
 public class EndScore {
 
-//	private int idGame;
-//	private int idPlayer;
 	private int array[];
 
 	private Player owner;
@@ -18,8 +16,6 @@ public class EndScore {
 	private MainController mainController;
 
 	public EndScore(Player owner, DatabaseController dbController, MainController newMainController) {
-//		this.idGame = idGame;
-//		this.idPlayer = idPlayer;
 		array = new int[5];
 		this.owner = owner;
 		this.dbController = dbController;
@@ -27,16 +23,13 @@ public class EndScore {
 		esdbController = new EndScoreController(dbController);
 	}
 
-	// WERKT 6-6-2021
 	public int publicObjectiveScore() {
 		int totalPublicObjectiveScore = 0;
-		int i = 1;
 
 		System.out.println("TEST TEST TEST " + mainController.getCurrentGame().getIdGame());
 
 		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(mainController.getCurrentGame().getIdGame());
 
-		// for (Integer id : ids) {
 		for (int id = 0; id < 3; id++) {
 			System.out.println("GET ID FROM GETPUBLICOBJECTIVECARDID: "
 					+ dbController.getPublicObjectiveIDs(owner.getGameID()).get(id));
@@ -63,15 +56,11 @@ public class EndScore {
 			} else {
 
 			}
-
-			i++;
-
 		}
 		System.out.println("totalPublic " + totalPublicObjectiveScore);
 		return totalPublicObjectiveScore;
 	}
 
-	// WERKT 6-6-2021
 	public int shadeVarietyObjectiveScore() {
 
 		int shadeVarietyObjectiveScore = 0;
@@ -93,7 +82,6 @@ public class EndScore {
 		return shadeVarietyObjectiveScore;
 	}
 
-	// WERKT 6-6-2021
 	public int mediumShadesObjectiveScore() {
 		int mediumShadesObjectiveScore = 0;
 
@@ -107,7 +95,6 @@ public class EndScore {
 
 	}
 
-	// WERKT 7-6-2021
 	public int colomnColorVarietyObjectiveScore() {
 
 		int score;
@@ -148,11 +135,11 @@ public class EndScore {
 					}
 				}
 
-			} 
+			}
 			if (amountOfDie == 4) {
 
 				score += 5;
-				
+
 				amountOfDie = 0;
 			}
 			index++;
@@ -161,7 +148,6 @@ public class EndScore {
 		return score;
 	}
 
-	// WERKT 7-6-2021
 	public int colomnShadeVarietyObjectiveScore() {
 
 		int score;
@@ -230,7 +216,6 @@ public class EndScore {
 
 	}
 
-	// WERKT 6-6-2021
 	public int rowColorVarietyObjectiveScore() {
 
 		int score;
@@ -259,7 +244,6 @@ public class EndScore {
 
 	}
 
-	// WERKT 6-6-2021
 	public int rowShadeVarietyObjectiveScore() {
 		int score;
 		int index;
@@ -325,7 +309,6 @@ public class EndScore {
 		return score;
 	}
 
-	// WERKT 6-6-2021
 	public int darkShadesObjectiveScore() {
 		int darkShadesObjectiveScore = 0;
 
@@ -339,7 +322,6 @@ public class EndScore {
 
 	}
 
-	// WERKT 6-6-2021
 	public int colorVarietyObjectiveScore() {
 		int colorVarietyObjectiveScore = 0;
 
@@ -377,23 +359,13 @@ public class EndScore {
 		return lightShadesObjectiveScore;
 	}
 
-	// WERKT 7-6-2021
 	public int privateObjectiveScore() {
 		int privateObjectiveScore = esdbController.privateObjectiveScore(owner);
-		
-		
+
 		System.out.println("PRIVATE privateObjectiveScore: " + privateObjectiveScore);
 		return privateObjectiveScore;
 	}
 
-	// UIT SPEL GEHAALD
-//	public int favorToken() {
-//		int favorToken = esdbController.favorToken(owner);
-//		System.out.println("FAVOR TOKEN: " + favorToken);
-//		return favorToken;
-//	}
-
-	// WERKT 6-6-2021
 	public int countAllDieEyes() {
 		int allCountedEyes = esdbController.countAllDieEyes(owner);
 
@@ -401,7 +373,6 @@ public class EndScore {
 		return allCountedEyes;
 	}
 
-	// WERKT 6-6-2021
 	public int emptyTileScore() {
 
 		int emptyScore = ((20 - esdbController.emptyTileScore(owner)) * -1);
@@ -412,14 +383,12 @@ public class EndScore {
 		return emptyScore;
 	}
 
-	// WERKT 6-6-2021
 	public int totalEndScore() {
 		int totalScore = publicObjectiveScore() + privateObjectiveScore() + emptyTileScore() + countAllDieEyes();
 		System.out.println("Total endscore: " + totalScore);
 		return totalScore;
 	}
 
-	// ZOU MOETEN WERKEN
 	public int scoreDuringGame() {
 		int scoreDuringGame = publicObjectiveScore() + countAllDieEyes();
 		return scoreDuringGame;

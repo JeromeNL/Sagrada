@@ -18,8 +18,8 @@ public class EndScoreView extends Pane {
 
 	private Rectangle outline;
 	private Label title;
-	private Label currentPlayerText, user1, user2, user3, user4, backButtonText, player1, player2, player3, player4;
-	private Rectangle dropDownButton, backButton, line, line2, line3, line4, line5;
+	private Label backButtonText, player1, player2, player3, player4;
+	private Rectangle backButton, line, line2, line3, line4, line5;
 	private int playerOne, playerTwo, playerThree, playerFour;
 
 	public EndScoreView(int newPlayerOne, int newPlayerTwo, int newPlayerThree, int newPlayerFour,

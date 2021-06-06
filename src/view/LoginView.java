@@ -25,10 +25,9 @@ import model.RegisterLoginModel;
 
 public class LoginView extends VBox {
 	private ImageView imageView;
-	private RegisterLoginModel rlm;
 
-	public LoginView(DatabaseController dbController, RegisterLoginController registerLoginController, RegisterLoginModel rlm) {
-		this.rlm = rlm;
+	public LoginView(DatabaseController dbController, RegisterLoginController registerLoginController,
+			RegisterLoginModel rlm) {
 
 		Image image = new Image(getClass().getResource("/LoginImg.png").toString());
 
@@ -37,7 +36,6 @@ public class LoginView extends VBox {
 		imageView.setY(10);
 		imageView.setFitWidth(575);
 		imageView.setPreserveRatio(true);
-		
 
 		VBox box = new VBox();
 		HBox sagradaText = new HBox();
@@ -49,9 +47,9 @@ public class LoginView extends VBox {
 		StackPane colorBurn = new StackPane();
 
 		Text warnText = new Text(rlm.getWarningText());
-	
+
 		TextField tfName = new TextField();
-	
+
 		PasswordField tfPassword = new PasswordField();
 		Button login = new Button("  Login  ");
 		Button register = new Button("Register");
@@ -83,7 +81,6 @@ public class LoginView extends VBox {
 		warnTextBox.setAlignment(Pos.BOTTOM_CENTER);
 		sagradaText.setMinHeight(100);
 		textFields.setMinWidth(400);
-		
 
 		warnText.setFont(Font.font("Arial", FontWeight.BOLD, 13));
 		warnText.setFill(Color.WHITE);

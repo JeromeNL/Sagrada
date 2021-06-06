@@ -3,7 +3,6 @@ package controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.GameColor;
 import model.Player;
 
 public class EndScoreController {

@@ -6,22 +6,17 @@ import java.util.ArrayList;
 
 import model.ChoosePatternCardModel;
 
-
 public class ChoosePatternCardController {
-	
+
 	private int counterRand;
 	private ArrayList<ChoosePatternCardModel> patternCards;
-	private DatabaseController dbController;
-	
 
 	public ChoosePatternCardController(DatabaseController dbController) {
-		this.dbController = dbController;
 		// query kiest 1 random van de 24 van idpatterncard ALS de volgende kaart
 		// NIET dezelfde difficulty heeft -> kies
 		patternCards = new ArrayList<ChoosePatternCardModel>();
 
-		ResultSet rs = dbController
-				.doQuery("SELECT * " + "FROM patterncard " + "ORDER BY RAND()" + "LIMIT 4");
+		ResultSet rs = dbController.doQuery("SELECT * " + "FROM patterncard " + "ORDER BY RAND()" + "LIMIT 4");
 
 		try {
 			counterRand = 0;
@@ -31,7 +26,8 @@ public class ChoosePatternCardController {
 
 				int difficulty = rs.getInt("difficulty");
 
-				ChoosePatternCardModel newChoosePatternCardModel = new ChoosePatternCardModel(idpatterncard, difficulty, counterRand);
+				ChoosePatternCardModel newChoosePatternCardModel = new ChoosePatternCardModel(idpatterncard, difficulty,
+						counterRand);
 				patternCards.add(newChoosePatternCardModel);
 
 			}
@@ -41,10 +37,9 @@ public class ChoosePatternCardController {
 		}
 
 	}
-	
-	public ArrayList<ChoosePatternCardModel> getPatternCard(){
+
+	public ArrayList<ChoosePatternCardModel> getPatternCard() {
 		return patternCards;
 	}
-
 
 }

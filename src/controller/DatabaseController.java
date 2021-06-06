@@ -13,8 +13,6 @@ import model.DiesInSupply;
 import model.FavorToken;
 import model.GameColor;
 import model.Player;
-
-import model.PatterncardField;
 import model.PlayerStatus;
 
 
@@ -237,7 +235,7 @@ public class DatabaseController {
 	public void addDieToRoundtrack(Die die, int roundNR, int idGame) {
 		String query = "UPDATE gamedie SET roundtrack = " + roundNR + " WHERE idgame = " + idGame + " AND dienumber = "
 				+ die.getDieID() + " AND diecolor = \"" + die.getColor().toString().toLowerCase() + "\"";
-		int result = doUpdateQuery(query);
+		doUpdateQuery(query);
 	}
 
 	public void createGameDies(int idGame) {
