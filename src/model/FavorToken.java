@@ -24,12 +24,13 @@ public class FavorToken {
 		favorTokenController.addToDatabase(idToken, idGame);
 	}
 
-	// Game favor tokens are assigned to game playerid after choosing patterncard
-	public void assignToPlayer(int playerID) {
-		assignedToPlayerID = playerID;
-		favorTokenController = new FavorTokenController(dbController);
-		favorTokenController.updateDatabase();
-	}
+//	// Game favor tokens are assigned to game playerid after choosing patterncard
+//	public void assignToPlayer(int playerID) {
+//		assignedToPlayerID = playerID;
+//		favorTokenController = new FavorTokenController(dbController);
+//		favorTokenController.assignFavorTokens(idToken, idGame, assignedToPlayerID);
+////		favorTokenController.updateDatabase();
+//	}
 
 	// Method that is called when a favortoken is used.
 	public void useToken(int toolcardID, int roundID) {
@@ -55,4 +56,7 @@ public class FavorToken {
 	public int getAssignedToPlayerID() {
 		return assignedToPlayerID;
 	}
+	
+
+	
 }

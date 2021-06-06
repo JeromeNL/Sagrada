@@ -36,6 +36,8 @@ public class NewGameView extends BorderPane {
 	private Button inviteButton;
 	private TextField username;
 	private HBox bottom;
+	private Button backToMenu;
+	private Label menuErrorMessage;
 
 	public NewGameView(MainController mainController, DatabaseController dbController) {
 		this.mainController = mainController;
@@ -48,10 +50,18 @@ public class NewGameView extends BorderPane {
 		this.setBackground(
 				new Background(new BackgroundFill(Color.rgb(247, 150, 150), CornerRadii.EMPTY, Insets.EMPTY)));
 
+
 		Button backToMenu = new Button("Terug naar menu");
 		backToMenu.setStyle("-fx-background-color: #ffffff");
+
 		backToMenu.setOnAction(e -> mainController.showFirstMainMenu());
-		setTop(backToMenu);
+		
+		menuErrorMessage = new Label("");
+		menuErrorMessage.setTextFill(Color.WHITE);
+		HBox menuBox = new HBox();
+		menuBox.setSpacing(20);
+		menuBox.getChildren().addAll(backToMenu, menuErrorMessage);
+		setTop(menuBox);
 		
 		createGameBox = new VBox();
 		createGameBox.setAlignment(Pos.CENTER);
@@ -78,6 +88,8 @@ public class NewGameView extends BorderPane {
 				createGameBox.getChildren().add(gameCreatedLabel);
 				mainController.createGame();
 				showInviteBox();
+				backToMenu.setDisable(true);
+				menuErrorMessage.setText("Nodig eerst iemand uit en start daarna het spel met de knop rechtsonder in het scherm.");
 			}
 			
 		});
@@ -102,6 +114,7 @@ public class NewGameView extends BorderPane {
 				String typedUsername = username.getText();
 				username.clear();
 				if (isValidInvite(typedUsername)) {
+					menuErrorMessage.setText("Start het spel via de knop rechtsonder in het beeld.");
 					mainController.getCurrentGame().invitePlayer(typedUsername);
 					Label invitedUser = new Label(typedUsername + " is uitgedaagd voor dit spel!");
 					invitedUser.setTextFill(Color.WHITE);
@@ -132,6 +145,7 @@ public class NewGameView extends BorderPane {
 
 		Button startGameButton = new Button("Start het spel");
 		startGameButton.setStyle("-fx-background-color: #ffffff");
+		
 		bottom.getChildren().addAll(cannotStart, startGameButton);
 		
 		startGameButton.setOnMouseClicked(new EventHandler<Event>() {
@@ -143,7 +157,6 @@ public class NewGameView extends BorderPane {
 					mainController.showGameLoggedInPlayer();
 				} else {
 					cannotStart.setText("(Nog) niet iedereen heeft de uitnodiging geaccepteerd, probeer later opnieuw.");
-					
 				}
 			}
 		});

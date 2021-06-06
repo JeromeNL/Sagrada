@@ -1,9 +1,5 @@
 package view;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 import controller.DatabaseController;
 import controller.RegisterLoginController;
 import javafx.event.ActionEvent;
@@ -13,21 +9,15 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -40,11 +30,8 @@ public class LoginView extends VBox {
 	public LoginView(DatabaseController dbController, RegisterLoginController registerLoginController, RegisterLoginModel rlm) {
 		this.rlm = rlm;
 
-		Image image = new Image(getClass().getResource("/Images/Tool Cards/LoginImg.png").toString());
-		
-//		/Images/Tool Cards/LoginImg.png
-		
-		
+		Image image = new Image(getClass().getResource("/LoginImg.png").toString());
+
 		imageView = new ImageView(image);
 		imageView.setX(10);
 		imageView.setY(10);

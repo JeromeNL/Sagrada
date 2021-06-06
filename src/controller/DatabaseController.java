@@ -10,6 +10,7 @@ import java.util.Random;
 
 import model.Die;
 import model.DiesInSupply;
+import model.FavorToken;
 import model.GameColor;
 import model.Player;
 
@@ -165,12 +166,36 @@ public class DatabaseController {
 		return diesInSupply;
 	}
 	
+
+
+	public FavorToken[] getFavorToken(int idGame) {
+		FavorToken[] favorTokens = new FavorToken[24];
+		int counter = 0;
+		ResultSet rs = doQuery("SELECT * FROM gamefavortoken WHERE idgame = " + idGame);
+
+		try {
+			while (rs.next()) {
+				int idfavortoken = rs.getInt("idfavortoken");
+				FavorToken favortoken = new FavorToken(idfavortoken, idGame, this);
+				favorTokens[counter] = favortoken;
+				counter++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return favorTokens;
+	}
+
+
 	public GameColor getPrivateObjectiveCardColor(int playerID) {
 		ResultSet rs = doQuery("SELECT private_objectivecard_color FROM player WHERE idplayer = " + playerID);
 		try {
 			while (rs.next()) {
 				String colorString = rs.getString("private_objectivecard_color").toUpperCase();
 				return GameColor.valueOf(colorString);
+
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -178,6 +203,8 @@ public class DatabaseController {
 		}
 		return null;
 	}
+
+
 
 	public void setPlayerStatus(PlayerStatus status, String username, int idGame) {
 		doUpdateQuery("UPDATE player SET playstatus = \"" + status.toString().toLowerCase() + "\" WHERE username = \""
@@ -299,6 +326,22 @@ public class DatabaseController {
 		}
 		return idPatterncard;
 	}
+	
+	public int getPatternCardDifficulty(int idPatterncard) {
+		ResultSet rs = doQuery("SELECT * FROM patterncard WHERE idpatterncard =" + idPatterncard);
+		int difficulty = 0;
+		try {
+			while (rs.next()) {
+				difficulty = rs.getInt("difficulty");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return difficulty;
+	}
+	
+	
 
 	public String getUsername(int idPlayer) {
 		ResultSet rs = doQuery("SELECT username FROM player WHERE idplayer = " + idPlayer);
