@@ -1,13 +1,19 @@
 package imageChooser;
 
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
 public class PublicObjectiveCardImage extends Pane {
 
-	private int widthCard = 200;
-	private int heightCard = 300;
+	private int widthCard = 419;
+	private int heightCard = 606;
 	private String imageURL;
 	private String combinedURL;
 	private int imageNumber;
@@ -16,7 +22,7 @@ public class PublicObjectiveCardImage extends Pane {
 		super();
 		
 		imageNumber = newImageNumber;
-		combinedURL = "/public_objective_" + imageNumber + ".png";
+		combinedURL = "/Images/Public Objectives/" + imageNumber + ".png";
 		imageURL = combinedURL.toString();
 		addCards();
 

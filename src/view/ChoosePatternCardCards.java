@@ -34,13 +34,18 @@ public class ChoosePatternCardCards extends FlowPane {
 	public RectangleCard rectanglePatternCard3;
 	public RectangleCard rectanglePatternCard4;
 
+	private DatabaseController dbcontroller;
 	private ChoosePatternCardController choosePatternCardController;
+
+	private Player player;
+	private MainController mainController;
 
 	private int widthCard = 315;
 	private int heightCard = 315;
 
 	public ChoosePatternCardCards(ChoosePatternCardController choosePatternCardController, MainController mainController) {
 		super(Orientation.HORIZONTAL, 25, 25);
+		this.mainController = mainController;
 		this.choosePatternCardController = choosePatternCardController;
 
 		DatabaseController dbcontroller = new DatabaseController(mainController);
@@ -82,6 +87,7 @@ public class ChoosePatternCardCards extends FlowPane {
 	private void cardSelects() {
 
 		rectanglePatternCard1.setOnMouseClicked(e -> {
+			System.out.println("click " + "card1");
 			rectanglePatternCard1.selects();
 			rectanglePatternCard2.notSelect();
 			rectanglePatternCard3.notSelect();
@@ -90,6 +96,7 @@ public class ChoosePatternCardCards extends FlowPane {
 		});
 
 		rectanglePatternCard2.setOnMouseClicked(e -> {
+			System.out.println("click " + "card2");
 			rectanglePatternCard2.selects();
 			rectanglePatternCard1.notSelect();
 			rectanglePatternCard3.notSelect();
@@ -98,6 +105,7 @@ public class ChoosePatternCardCards extends FlowPane {
 		});
 
 		rectanglePatternCard3.setOnMouseClicked(e -> {
+			System.out.println("click " + "card3");
 			rectanglePatternCard3.selects();
 			rectanglePatternCard2.notSelect();
 			rectanglePatternCard1.notSelect();
@@ -106,6 +114,7 @@ public class ChoosePatternCardCards extends FlowPane {
 		});
 
 		rectanglePatternCard4.setOnMouseClicked(e -> {
+			System.out.println("click " + "card4");
 			rectanglePatternCard4.selects();
 			rectanglePatternCard2.notSelect();
 			rectanglePatternCard3.notSelect();

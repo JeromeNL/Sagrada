@@ -13,37 +13,47 @@ public class ChoosePatternCardView extends BorderPane {
 	final static Color SAGRADAPINK = Color.rgb(247, 150, 150);
 	private ChoosePatternCardCards choosePatternCardCards;
 	private ChooseButton button;
+	private ChoosePatternCardController choosePatternCardController;
+	private Player player;
 
 	private int cardId;
 	private boolean hasCard;
+	private MainController mainController;
 
 	public ChoosePatternCardView(ChoosePatternCardController choosePatternCardController, MainController mainController, Player player) {
+		this.mainController = mainController;
+		this.player = player;
 		choosePatternCardCards = new ChoosePatternCardCards(choosePatternCardController, mainController);
 		button = new ChooseButton();
 		hasCard = false;
 
 		button.setOnMouseClicked(e -> {
 			if (choosePatternCardCards.rectanglePatternCard1.select == true) {
+				System.out.println(choosePatternCardController.getPatternCard().get(0).getIdPatternCard());
 				cardId = choosePatternCardController.getPatternCard().get(0).getIdPatternCard();
 				hasCard = true;
 				player.setPatternCard(cardId);
 				mainController.showGameLoggedInPlayer();
 			} else if (choosePatternCardCards.rectanglePatternCard2.select == true) {
+				System.out.println(choosePatternCardController.getPatternCard().get(1).getIdPatternCard());
 				cardId = choosePatternCardController.getPatternCard().get(1).getIdPatternCard();
 				hasCard = true;
 				player.setPatternCard(cardId);
 				mainController.showGameLoggedInPlayer();
 			} else if (choosePatternCardCards.rectanglePatternCard3.select == true) {
+				System.out.println(choosePatternCardController.getPatternCard().get(2).getIdPatternCard());
 				cardId = choosePatternCardController.getPatternCard().get(2).getIdPatternCard();
 				hasCard = true;
 				player.setPatternCard(cardId);
 				mainController.showGameLoggedInPlayer();
 			} else if (choosePatternCardCards.rectanglePatternCard4.select == true) {
+				System.out.println(choosePatternCardController.getPatternCard().get(3).getIdPatternCard());
 				cardId = choosePatternCardController.getPatternCard().get(3).getIdPatternCard();
 				hasCard = true;
 				player.setPatternCard(cardId);
 				mainController.showGameLoggedInPlayer();
 			} else
+
 				System.out.println("nothing is selected please select a card");
 			hasCard = false;
 		});

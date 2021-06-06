@@ -1,6 +1,6 @@
 package view;
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 
 import controller.ChoosePatternCardController;
@@ -36,7 +36,6 @@ public class GameView extends BorderPane {
 	private MainController mainController;
 	private DatabaseController dbController;
 	private CompactPrivateObjectiveCardImage privateObjective;
-	private ChatPane chatpane;
 
 	public GameView(Game game, Player player, MainController mainController, DatabaseController dbController) {
 
@@ -44,22 +43,19 @@ public class GameView extends BorderPane {
 		this.player = player;
 		this.mainController = mainController;
 		this.dbController = dbController;
-
-		chatpane = new ChatPane(player, dbController);
-
+		
 		patternCardView = new PatternCardView(player.getPatterncard());
 //		if (player.getPrivateObjectiveCardColor() != null) {
-		privateObjective = new CompactPrivateObjectiveCardImage(player.getPrivateObjectiveCardColor().toString());
+			privateObjective = new CompactPrivateObjectiveCardImage(player.getPrivateObjectiveCardColor().toString());			
 //		}
-
-		topPart = new TopPart(dbController, game);
+		
+		topPart = new TopPart(game);
 
 		dieSupply = new DieSupply(game.getDiesInSupply(), player);
 		gameButtonView = new GameButtonView(this, game, mainController);
 		changeCurrentPlayerView = new ChangeCurrentPlayerView(game, mainController);
 
 		if (!mainController.getLoggedInUsername().equals(player.getUsername())) {
-			chatpane.setDisable(true);
 			dieSupply.setDisable(true);
 			dieSupply.setOpacity(0.5);
 			gameButtonView.setDisable(true);
@@ -73,10 +69,10 @@ public class GameView extends BorderPane {
 
 		if (player.getPatterncard() == null && player.getUsername().equals(mainController.getLoggedInUsername())) {
 			showPatternCardChooser();
-		} else if (player.getPatterncard() != null
-				|| !player.getUsername().equals(mainController.getLoggedInUsername())) {
+		} else if(player.getPatterncard() != null || !player.getUsername().equals(mainController.getLoggedInUsername()) ) {
 			showGame();
 		}
+
 
 	}
 
@@ -85,14 +81,14 @@ public class GameView extends BorderPane {
 		dieSupply.setOpacity(0.5);
 		gameButtonView.setDisable(true);
 		gameButtonView.setOpacity(0.5);
-		
 	}
+
 
 	public void showChangeCurrentPlayerView() {
 		getChildren().clear();
 		setCenter(changeCurrentPlayerView);
 	}
-
+	
 	public void showPatternCardChooser() {
 		getChildren().clear();
 		ChoosePatternCardController choosePatternCardController = new ChoosePatternCardController(dbController);
@@ -105,12 +101,12 @@ public class GameView extends BorderPane {
 			disableElements();
 			privateObjective.hide();
 		}
-
-		// Disable elements when it's not the player's turn
+		
+		// Disable elements when it's not the player's turn		
 		if (!player.getUsername().equals(game.getCurrentPlayer())) {
 			disableElements();
 		}
-
+		
 		getChildren().clear();
 
 		VBox topPane = new VBox();
@@ -121,7 +117,7 @@ public class GameView extends BorderPane {
 
 		Button backToMenu = new Button("Terug naar menu");
 		backToMenu.setOnAction(e -> mainController.showFirstMainMenu());
-
+		
 		ArrayList<Integer> objectiveIDs = game.getPublicObjectives();
 		VBox objectives = new VBox();
 		objectives.setSpacing(5);
@@ -129,18 +125,20 @@ public class GameView extends BorderPane {
 		for (Integer id : objectiveIDs) {
 			objectives.getChildren().add(new CompactPublicObjectiveCardImage(id));
 		}
-
+		
 		VBox leftPane = new VBox();
-		leftPane.setPadding(new Insets(0, 0, 0, 10));
+		leftPane.setPadding(new Insets(0,0,0,10));
 		leftPane.setMinWidth(400);
 		leftPane.getChildren().addAll(new ChangePlayerButton(), backToMenu, objectives);
-
+		
 		setLeft(leftPane);
 
 		setCenter(patternCardView);
-
-		setRight(chatpane);
-
+			
+		Pane rightPane = new Pane();
+		rightPane.setMinWidth(400);
+		setRight(rightPane);
+		
 		VBox bottomPane = new VBox(dieSupply, gameButtonView);
 		setBottom(bottomPane);
 	}
@@ -148,15 +146,6 @@ public class GameView extends BorderPane {
 	public void showToolCardView() {
 		getChildren().clear();
 		setCenter(new ToolCardInUseView(mainController));
-	}
-
-	public void refreshChat() {
-		try {
-			chatpane.refresh();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	private class ChangePlayerButton extends HBox {

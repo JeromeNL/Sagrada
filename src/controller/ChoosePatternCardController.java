@@ -28,8 +28,12 @@ public class ChoosePatternCardController {
 			while (rs.next()) {
 				counterRand += 1;
 				int idpatterncard = rs.getInt("idpatterncard");
+				System.out.println("idpatterncard " + rs.getInt("idpatterncard"));
 
 				int difficulty = rs.getInt("difficulty");
+				System.out.println("difficulty " + rs.getInt("difficulty"));
+
+				System.out.println(counterRand);
 
 				ChoosePatternCardModel newChoosePatternCardModel = new ChoosePatternCardModel(idpatterncard, difficulty, counterRand);
 				patternCards.add(newChoosePatternCardModel);

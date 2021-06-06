@@ -18,6 +18,6 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 
 		new MainController(stage);
-		System.out.println();
+
 	}
 }

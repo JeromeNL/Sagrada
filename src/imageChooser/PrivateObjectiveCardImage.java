@@ -1,8 +1,14 @@
 package imageChooser;
 
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
 public class PrivateObjectiveCardImage extends Pane {
 
@@ -17,7 +23,7 @@ public class PrivateObjectiveCardImage extends Pane {
 		super();
 		
 		imageColor = newImageColor;
-		combinedURL = "/private_objective_" + imageColor.toLowerCase() + ".png";
+		combinedURL = "/Images/Private Objectives/" + imageColor + ".png";
 		imageURL = combinedURL.toString();
 		addCards();
 

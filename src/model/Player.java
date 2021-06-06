@@ -109,6 +109,8 @@ public class Player {
 			if (result == 1) {
 				increasingID = false;
 				idPlayer = newIdPlayer;
+				System.out.println(getClass() + " - New player created with id " + idPlayer); // for testing
+																								// purposes
 			} else {
 				newIdPlayer++;
 			}
@@ -121,7 +123,7 @@ public class Player {
 	}
 
 	public void setStatus(PlayerStatus status) {
-		dbController.setPlayerStatus(status, username, idGame);
+		// to-do: set status in database.
 		this.status = status;
 	}
 

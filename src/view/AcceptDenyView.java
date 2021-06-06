@@ -10,8 +10,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -28,8 +26,6 @@ public class AcceptDenyView extends BorderPane {
 	private MainController mainController;
 	private DatabaseController dbController;
 	private VBox challengeBox;
-	private VBox scrollBox;
-	private VBox boxAround;
 
 	public AcceptDenyView(MainController mainController, DatabaseController dbController) {
 		this.mainController = mainController;
@@ -42,10 +38,6 @@ public class AcceptDenyView extends BorderPane {
 		challengeBox = new VBox();
 		challengeBox.setAlignment(Pos.CENTER);
 		challengeBox.setSpacing(10);
-		
-		boxAround = new VBox();
-		boxAround.setSpacing(10);
-		
 		fillChallengeBox();
 		setCenter(challengeBox);
 
@@ -89,21 +81,9 @@ public class AcceptDenyView extends BorderPane {
 			AcceptButton acceptButton = new AcceptButton(idGame);
 
 			challenge.getChildren().addAll(idGameLabel, challengerLabel, declineButton, acceptButton);
-			
-			scrollBox = new VBox();
-			scrollBox.getChildren().add(challenge);
-			boxAround.getChildren().addAll(scrollBox);
+			challengeBox.getChildren().add(challenge);
 		}
 		
-		ScrollPane sc = new ScrollPane();
-		sc.setContent(boxAround);
-		sc.setHbarPolicy(ScrollBarPolicy.NEVER);
-		sc.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		sc.setMaxWidth(450);
-		sc.setStyle(
-				"-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0; -fx-background-insets: 0;");
-		
-		challengeBox.getChildren().addAll(sc);
 		challengeBox.getChildren().add(refreshButton);
 	}
 

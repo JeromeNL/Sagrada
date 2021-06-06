@@ -32,6 +32,7 @@ public class Game {
 
 
 	private String usernameCreator;
+	
 
 	// Constructor to load an existing game.
 	public Game(int idGame, DatabaseController dbController, MainController mainController) {
@@ -130,8 +131,7 @@ public class Game {
 
 		boolean isCreator = true;
 		GameColor privateObjectiveCardColor = getObjectiveCardColor();
-		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController,
-				mainController);
+		Player creator = new Player(usernameCreator, isCreator, idGame, privateObjectiveCardColor, dbController, mainController);
 		players.add(creator);
 	}
 
@@ -146,8 +146,7 @@ public class Game {
 		// Check if there is room for more players.
 		if (players.size() < 4) {
 			GameColor privateObjectiveCardColor = getObjectiveCardColor();
-			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController,
-					mainController);
+			Player newPlayer = new Player(username, false, idGame, privateObjectiveCardColor, dbController, mainController);
 			players.add(newPlayer);
 		}
 	}
@@ -167,6 +166,9 @@ public class Game {
 			if (result == 1) {
 				increasingID = false;
 				idGame = newIdGame;
+				System.out.println(getClass() + " - New game created with id " + newIdGame); // for
+																								// testing
+																								// purposes
 			} else {
 				newIdGame++;
 			}
@@ -196,6 +198,8 @@ public class Game {
 			if (result == 1) {
 				increasingID = false;
 				idGame = newGameID;
+				System.out.println(getClass() + " - New game created with id " + idGame); // for testing
+																							// purposes
 			} else {
 				newGameID++;
 			}
@@ -275,11 +279,8 @@ public class Game {
 	public void setNextRound() {
 		int currentRoundID = dbController.getRoundID(idGame);
 
-
 		
-			if (currentRoundID == 20) {
-				addToRoundtrack(currentRoundID);
-				mainController.showGame(0);
+			if (currentRoundID == 2) {
 				endGame();
 				
 				System.out.println("===============");
@@ -312,40 +313,25 @@ public class Game {
 //					System.out.println("2 spelers");	
 //				}	
 			//}
-				// System.oxut.println("ENDSCORE: " + endscore.publicObjectiveScore());
+				// System.out.println("ENDSCORE: " + endscore.publicObjectiveScore());
 				return;
 				
 			}
-
-
-		
-		
 
 		int nextRoundID = currentRoundID + 1;
 		dbController.setRoundID(idGame, nextRoundID);
 
 		if (nextRoundID % 2 != 0) {
-			addToRoundtrack(currentRoundID);
-
 			if (usernameCreator.equals(mainController.getLoggedInUsername())) {
 				createDiesInSupply();
 				loadDiesInSupply();
-				mainController.showGame(0);
+				mainController.showGame(0);				
 			}
 		}
-	}
-	
-	// Adds the last die of the die supply to the roundtrack
-	private void addToRoundtrack(int currentRoundID) {
-		Die lastDie = getDiesInSupply().getDies().get(0);
-		dbController.addDieToRoundtrack(lastDie, currentRoundID - 1, idGame);
 	}
 
 	private void endGame() {
 		System.out.println(getClass() + " - Game ended.");
-		for (Player player : players) {
-			player.setStatus(PlayerStatus.FINISHED);
-		}
 		mainController.showEndScoreView();
 	}
 
@@ -405,11 +391,12 @@ public class Game {
 		}
 	}
 
+	
 	public String getCurrentPlayer() {
 		int currentPlayerID = dbController.getCurrentPlayerID(idGame);
 		return dbController.getUsername(currentPlayerID);
 	}
-
+	
 	public int getRoundID() {
 		return dbController.getRoundID(idGame);
 	}
