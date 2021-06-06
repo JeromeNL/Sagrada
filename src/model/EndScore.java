@@ -117,41 +117,43 @@ public class EndScore {
 		score = 0;
 
 		while (index < 6) {
-			if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "red", index) < 2)) {
+
+			if ((esdbController.colomnColorVarietyObjectiveScore(owner, "red", index) < 2)) {
 				if (esdbController.colomnColorVarietyObjectiveScore(owner, "red", index) == 1) {
 					amountOfDie++;
 				}
 
-				if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "blue", index) < 2)) {
+				if ((esdbController.colomnColorVarietyObjectiveScore(owner, "blue", index) < 2)) {
 					if (esdbController.colomnColorVarietyObjectiveScore(owner, "blue", index) == 1) {
 						amountOfDie++;
 					}
 
-					if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "yellow", index) < 2)) {
+					if ((esdbController.colomnColorVarietyObjectiveScore(owner, "yellow", index) < 2)) {
 						if (esdbController.colomnColorVarietyObjectiveScore(owner, "yellow", index) == 1) {
 							amountOfDie++;
 						}
 
-						if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "purple", index) < 2)) {
+						if ((esdbController.colomnColorVarietyObjectiveScore(owner, "purple", index) < 2)) {
 							if (esdbController.colomnColorVarietyObjectiveScore(owner, "purple", index) == 1) {
 								amountOfDie++;
 							}
 
-							if (!(esdbController.colomnColorVarietyObjectiveScore(owner, "green", index) < 2)) {
+							if ((esdbController.colomnColorVarietyObjectiveScore(owner, "green", index) < 2)) {
 								if (esdbController.colomnColorVarietyObjectiveScore(owner, "green", index) == 1) {
 									amountOfDie++;
 								}
 
-							
 							}
 						}
 					}
 				}
-				if (amountOfDie == 4) {
 
-					score += 5;
+			} 
+			if (amountOfDie == 4) {
 
-				}
+				score += 5;
+				
+				amountOfDie = 0;
 			}
 			index++;
 		}
@@ -169,37 +171,37 @@ public class EndScore {
 		score = 0;
 
 		while (index < 6) {
-			if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 1, index) < 2)) {
+			if ((esdbController.colomnShadeVarietyObjectiveScore(owner, 1, index) < 2)) {
 
 				if (esdbController.colomnShadeVarietyObjectiveScore(owner, 1, index) == 1) {
 					amountOfDie++;
 				}
 
-				if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 2, index) < 2)) {
+				if ((esdbController.colomnShadeVarietyObjectiveScore(owner, 2, index) < 2)) {
 
 					if (esdbController.colomnShadeVarietyObjectiveScore(owner, 2, index) == 1) {
 						amountOfDie++;
 					}
 
-					if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 3, index) < 2)) {
+					if ((esdbController.colomnShadeVarietyObjectiveScore(owner, 3, index) < 2)) {
 
 						if (esdbController.colomnShadeVarietyObjectiveScore(owner, 3, index) == 1) {
 							amountOfDie++;
 						}
 
-						if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 4, index) < 2)) {
+						if ((esdbController.colomnShadeVarietyObjectiveScore(owner, 4, index) < 2)) {
 
 							if (esdbController.colomnShadeVarietyObjectiveScore(owner, 4, index) == 1) {
 								amountOfDie++;
 							}
 
-							if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 5, index) < 2)) {
+							if ((esdbController.colomnShadeVarietyObjectiveScore(owner, 5, index) < 2)) {
 
 								if (esdbController.colomnShadeVarietyObjectiveScore(owner, 5, index) == 1) {
 									amountOfDie++;
 								}
 
-								if (!(esdbController.colomnShadeVarietyObjectiveScore(owner, 6, index) < 2)) {
+								if ((esdbController.colomnShadeVarietyObjectiveScore(owner, 6, index) < 2)) {
 
 									if (esdbController.colomnShadeVarietyObjectiveScore(owner, 6, index) == 1) {
 										amountOfDie++;
@@ -214,12 +216,12 @@ public class EndScore {
 					}
 
 				}
-				if (amountOfDie == 5) {
 
-					score += 4;
+			}
+			if (amountOfDie == 4) {
 
-				}
-
+				score += 4;
+				amountOfDie = 0;
 			}
 			index++;
 		}
@@ -257,7 +259,7 @@ public class EndScore {
 
 	}
 
-	// NIET WERKEND
+	// WERKT 6-6-2021
 	public int rowShadeVarietyObjectiveScore() {
 		int score;
 		int index;
@@ -337,23 +339,23 @@ public class EndScore {
 
 	}
 
-	// NIET WERKEND
+	// WERKT 6-6-2021
 	public int colorVarietyObjectiveScore() {
 		int colorVarietyObjectiveScore = 0;
 
-		int[] KleurArray; // declare an array of integers
-		KleurArray = new int[5];
-		KleurArray[0] = esdbController.amountOfDiesOfColor(owner, "RED");
-		KleurArray[1] = esdbController.amountOfDiesOfColor(owner, "BLUE");
-		KleurArray[2] = esdbController.amountOfDiesOfColor(owner, "GREEN");
-		KleurArray[3] = esdbController.amountOfDiesOfColor(owner, "YELLOW");
-		KleurArray[4] = esdbController.amountOfDiesOfColor(owner, "PURPLE");
+		int[] colorArray; // declare an array of integers
+		colorArray = new int[5];
+		colorArray[0] = esdbController.amountOfDiesOfColor(owner, "RED");
+		colorArray[1] = esdbController.amountOfDiesOfColor(owner, "BLUE");
+		colorArray[2] = esdbController.amountOfDiesOfColor(owner, "GREEN");
+		colorArray[3] = esdbController.amountOfDiesOfColor(owner, "YELLOW");
+		colorArray[4] = esdbController.amountOfDiesOfColor(owner, "PURPLE");
 
-		int min = KleurArray[0];
+		int min = colorArray[0];
 
-		for (int i = 0; i < KleurArray.length; i++) {
-			if (KleurArray[i] < min) {
-				min = KleurArray[i];
+		for (int i = 0; i < colorArray.length; i++) {
+			if (colorArray[i] < min) {
+				min = colorArray[i];
 			}
 		}
 
@@ -388,8 +390,6 @@ public class EndScore {
 //		System.out.println("FAVOR TOKEN: " + favorToken);
 //		return favorToken;
 //	}
-
-	// New method
 
 	// WERKT 6-6-2021
 	public int countAllDieEyes() {
