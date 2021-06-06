@@ -10,6 +10,7 @@ import imageChooser.CompactPrivateObjectiveCardImage;
 import imageChooser.CompactPublicObjectiveCardImage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
@@ -17,6 +18,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -31,12 +33,14 @@ public class GameView extends BorderPane {
 	private DieSupply dieSupply;
 	private GameButtonView gameButtonView;
 	private ChangeCurrentPlayerView changeCurrentPlayerView;
+	private StackPane card;
 	private Game game;
 	private Player player;
 	private MainController mainController;
 	private DatabaseController dbController;
 	private CompactPrivateObjectiveCardImage privateObjective;
 	private ChatPane chatpane;
+
 
 	public GameView(Game game, Player player, MainController mainController, DatabaseController dbController) {
 
@@ -120,6 +124,7 @@ public class GameView extends BorderPane {
 		setTop(topPane);
 
 		Button backToMenu = new Button("Terug naar menu");
+		backToMenu.setStyle("-fx-background-color: #ffffff");
 		backToMenu.setOnAction(e -> mainController.showFirstMainMenu());
 
 		ArrayList<Integer> objectiveIDs = game.getPublicObjectives();
@@ -137,7 +142,10 @@ public class GameView extends BorderPane {
 
 		setLeft(leftPane);
 
-		setCenter(patternCardView);
+
+		showPatternCardViewFavorToken();
+		setCenter(card);
+
 
 		setRight(chatpane);
 
@@ -148,6 +156,25 @@ public class GameView extends BorderPane {
 	public void showToolCardView() {
 		getChildren().clear();
 		setCenter(new ToolCardInUseView(mainController));
+	}
+	
+	public void showPatternCardViewFavorToken() {
+		Rectangle rectangleCard = new Rectangle(350, 350);
+		rectangleCard.setFill(Color.WHITE);
+		rectangleCard.setArcWidth(29.0);
+		rectangleCard.setArcHeight(29.0);
+
+		card = new StackPane();
+		BorderPane favortokenCard = new BorderPane();
+		FractalDropsView favortokenView = new FractalDropsView(
+		game.getAmountFavorTokens(player.getIdPlayer()));
+		favortokenCard.setCenter(patternCardView);
+		favortokenCard.setBottom(favortokenView);
+		favortokenCard.setMaxHeight(320);
+//		favortokenCard.setPadding(new Insets(30, 5, 15, 5));
+		
+		card.getChildren().addAll(rectangleCard, favortokenCard);
+		
 	}
 
 	public void refreshChat() {

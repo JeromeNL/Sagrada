@@ -50,7 +50,7 @@ public class PlayerListView extends VBox {
 		String IDLE_BUTTON_STYLE = "-fx-border-width: 2;" + "-fx-border-color: white;"
 				+ "-fx-background-color: transparent;" + "-fx-font-size: 20;" + "-fx-text-fill: white;";
 		String HOVERED_BUTTON_STYLE = "-fx-border-width: 2;" + "-fx-border-color: white;"
-				+ "-fx-background-color:white;" + "-fx-font-size: 20;" + "-fx-text-fill:blue;";
+				+ "-fx-background-color:white;" + "-fx-font-size: 20;" + "-fx-text-fill:deeppink;";
 
 		backButton.setStyle(IDLE_BUTTON_STYLE);
 		backButton.setOnMouseEntered(e -> backButton.setStyle(HOVERED_BUTTON_STYLE));
