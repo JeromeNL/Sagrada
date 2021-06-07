@@ -47,7 +47,7 @@ public class ChangeCurrentPlayerView extends StackPane {
 		for (Player player : players) {
 			UserLabel userLabel = new UserLabel(player.getUsername());
 			if (mainController.getLoggedInUsername().equals(player.getUsername())) {
-				userLabel = new UserLabel(player.getUsername() + " (You)");
+				userLabel = new UserLabel(player.getUsername() + " (Jij)");
 			}
 			playersVBox.getChildren().add(userLabel);
 		}
