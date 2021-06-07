@@ -101,7 +101,8 @@ public class AcceptDenyView extends BorderPane {
 		sc.setContent(boxAround);
 		sc.setHbarPolicy(ScrollBarPolicy.NEVER);
 		sc.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		sc.setMaxWidth(450);
+		sc.setMaxWidth(800);
+		sc.setTranslateX(220);
 		sc.setStyle(
 				"-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0; -fx-background-insets: 0;");
 		
