@@ -57,6 +57,7 @@ public class ObjectivecardCardView extends Pane {
 
 		rect.setOnMouseClicked(e -> {
 			System.out.println("button is pressed");
+			mainController.loadGame(mainController.getCurrentGame().getIdGame());
 			mainController.showGameLoggedInPlayer();
 		});
 
