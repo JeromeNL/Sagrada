@@ -32,7 +32,7 @@ public class PatternCardView extends GridPane {
 		if (patterncard != null) {
 			loadPatterncard();
 		} else {
-			add(new Label("This player has not yet chosen a patterncard."), 1, 1);
+			add(new Label("Deze speler heeft nog geen patroonkaart gekozen."), 1, 1);
 		}
 
 	}
