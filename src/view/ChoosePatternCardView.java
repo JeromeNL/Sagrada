@@ -32,7 +32,6 @@ public class ChoosePatternCardView extends BorderPane {
 				System.out.println(difficulty);
 				hasCard = true;
 				player.setPatternCard(cardId);
-//				mainController.showGameLoggedInPlayer();
 				mainController.getCurrentGame().assignFavorTokens(difficulty, player.getIdPlayer());
 			} else if (choosePatternCardCards.rectanglePatternCard2.select == true) {
 				cardId = choosePatternCardController.getPatternCard().get(1).getIdPatternCard();
@@ -41,7 +40,6 @@ public class ChoosePatternCardView extends BorderPane {
 				System.out.println(difficulty);
 				hasCard = true;
 				player.setPatternCard(cardId);
-//				mainController.showGameLoggedInPlayer();
 				mainController.getCurrentGame().assignFavorTokens(difficulty, player.getIdPlayer());
 
 			} else if (choosePatternCardCards.rectanglePatternCard3.select == true) {
@@ -51,7 +49,6 @@ public class ChoosePatternCardView extends BorderPane {
 				System.out.println(difficulty);
 				hasCard = true;
 				player.setPatternCard(cardId);
-//				mainController.showGameLoggedInPlayer();
 				mainController.getCurrentGame().assignFavorTokens(difficulty, player.getIdPlayer());
 
 			} else if (choosePatternCardCards.rectanglePatternCard4.select == true) {
