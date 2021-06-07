@@ -39,7 +39,8 @@ public class ChoosePatternCardCards extends FlowPane {
 	private int widthCard = 315;
 	private int heightCard = 315;
 
-	public ChoosePatternCardCards(ChoosePatternCardController choosePatternCardController, MainController mainController) {
+	public ChoosePatternCardCards(ChoosePatternCardController choosePatternCardController,
+			MainController mainController) {
 		super(Orientation.HORIZONTAL, 25, 25);
 		this.choosePatternCardController = choosePatternCardController;
 
@@ -51,10 +52,6 @@ public class ChoosePatternCardCards extends FlowPane {
 
 		this.setPadding(new Insets(5, 5, 0, 5));
 
-		
-
-
-
 		patterncard1 = new Patterncard(choosePatternCardController.getPatternCard().get(0).getIdPatternCard(),
 				dbcontroller, player);
 		patterncard2 = new Patterncard(choosePatternCardController.getPatternCard().get(1).getIdPatternCard(),
@@ -63,7 +60,6 @@ public class ChoosePatternCardCards extends FlowPane {
 				dbcontroller, player);
 		patterncard4 = new Patterncard(choosePatternCardController.getPatternCard().get(3).getIdPatternCard(),
 				dbcontroller, player);
-
 
 		patternCardView1 = new PatternCardView(patterncard1);
 		patternCardView2 = new PatternCardView(patterncard2);

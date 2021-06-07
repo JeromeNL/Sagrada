@@ -181,8 +181,7 @@ public class Game {
 
 	// Gives an available GameColor to be used as the private objectivecard color.
 	private GameColor getObjectiveCardColor() {
-		// to-do: remember which gameColors have been used so nobody has the same
-		// private objecticard color;
+		
 
 		Random rand = new Random(); // instance of random class
 		String s = "";
@@ -255,12 +254,11 @@ public class Game {
 
 		if (currentRoundID == 20) {
 
-			System.out.println("===============");
-			System.out.println(players.get(0).toString());
+		
 			EndScore endscore = new EndScore(players.get(0), dbController, mainController);
 			endscore.totalEndScore();
 
-			System.out.println(players.get(1).toString());
+			
 			EndScore endscore2 = new EndScore(players.get(1), dbController, mainController);
 			endscore2.totalEndScore();
 
@@ -272,7 +270,7 @@ public class Game {
 				endscore3.totalEndScore();
 				EndScore endscore4 = new EndScore(players.get(3), dbController, mainController);
 				endscore4.totalEndScore();
-				System.out.println("4 spelers");
+			
 				endGame(endscore.totalEndScore(), endscore2.totalEndScore(), endscore3.totalEndScore(),
 						endscore4.totalEndScore());
 			}
@@ -281,12 +279,11 @@ public class Game {
 
 				EndScore endscore3 = new EndScore(players.get(2), dbController, mainController);
 				endscore3.totalEndScore();
-				System.out.println("3 spelers");
+			
 				endGame(endscore.totalEndScore(), endscore2.totalEndScore(), endscore3.totalEndScore(), 786);
 
 			}
 
-			System.out.println("ENDSCORE: " + endscore.publicObjectiveScore());
 			return;
 
 		}
@@ -312,7 +309,6 @@ public class Game {
 	}
 
 	private void endGame(int player1, int player2, int player3, int player4) {
-		System.out.println(getClass() + " - Game ended.");
 		mainController.showEndScoreView(player1, player2, player3, player4, players);
 		for (Player player : players) {
 			player.setStatus(PlayerStatus.FINISHED);

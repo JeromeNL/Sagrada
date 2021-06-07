@@ -13,13 +13,11 @@ import model.Game;
 
 public class PlayerOrderView extends HBox {
 
-///////////////////////////////////////////////////////////////// Instance Variables
 
 	Label turnNames;
 	TextFlow textFlowPane;
 	Text currentTurn, nextTurns;
 
-///////////////////////////////////////////////////////////////// Constructor
 
 
 	public PlayerOrderView(Game game) {

@@ -50,7 +50,6 @@ public class GameView extends BorderPane {
 		chatpane = new ChatPane(player, dbController);
 
 		patternCardView = new PatternCardView(player.getPatterncard());
-//		if (player.getPrivateObjectiveCardColor() != null) {
 		privateObjective = new CompactPrivateObjectiveCardImage(player.getPrivateObjectiveCardColor().toString());
 //		}
 
@@ -198,7 +197,7 @@ public class GameView extends BorderPane {
 			if (mainController.getLoggedInUsername().equals(player.getUsername())) {
 				who = new Label("(You)");
 			} else {
-				who = new Label("(Other player)");
+				who = new Label("(Andere Speler)");
 			}
 
 			who.setStyle("-fx-font-weight: bold");
@@ -210,28 +209,5 @@ public class GameView extends BorderPane {
 			setOnMouseExited(e -> currentPlayerText.setUnderline(false));
 		}
 	}
-
-//	private class InfoPane extends HBox {
-//
-//		public InfoPane(Game game, DatabaseController dbController) {
-//
-//			setSpacing(30);
-//			setAlignment(Pos.CENTER);
-//
-//			Label gameStatus = new Label("Gameid: " + game.getIdGame());
-//
-//			int playerID = dbController.getCurrentPlayerID(game.getIdGame());
-//			String username = dbController.getUsername(playerID);
-//			Label currentPlayer = new Label("Current player: " + username + " (ID: " + playerID + ")");
-//
-//			int roundID = dbController.getRoundID(game.getIdGame());
-//			boolean isClockwise = dbController.isClockwise(roundID);
-//			Label round = new Label("roundID: " + roundID + " (clockwise: " + isClockwise + ")" + " RoundNR: "
-//					+ dbController.getRoundNr(roundID));
-//
-//			getChildren().addAll(gameStatus, currentPlayer, round);
-//		}
-//
-//	}
 
 }

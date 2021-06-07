@@ -36,7 +36,6 @@ public class ToolCardInUseView extends Pane {
 		return backButtonText;
 	}
 
-///////////////////////////////////////////////////////////////// Constructor
 
 	public ToolCardInUseView(MainController mainController) {
 

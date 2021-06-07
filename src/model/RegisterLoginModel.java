@@ -31,7 +31,6 @@ public class RegisterLoginModel {
 			if (containsMinThreeChars(registerUsernameGiven) == false
 					|| isOnlyCharAndNumbers(registerUsernameGiven) == false) {
 
-				System.out.println("Username is too short or contains other characters than letters/numbers!");
 				warningText = "Naam heeft de verkeerde lengte (3-12 karakters) of bevat andere tekens dan cijfers/nummers";
 				warningColor = "red";
 			} else {
@@ -83,7 +82,6 @@ public class RegisterLoginModel {
 		if (input.length() < 3) {
 			return false;
 		} else if(input.length() > 12){
-			System.out.println("Max size of input is 12 characters");
 			return false;
 		}else {
 			return true;

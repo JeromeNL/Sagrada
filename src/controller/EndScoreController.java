@@ -152,7 +152,6 @@ public class EndScoreController {
 		}
 		intResult = (int) doubleResult;
 		
-		System.out.println("ALL DIE EYES TOTAL: " + intResult);
 		return intResult;
 		
 		
@@ -210,7 +209,6 @@ public class EndScoreController {
 		try {
 			while (privateColor.next()) {
 				 colorString = privateColor.getString("private_objectivecard_color").toUpperCase();
-				 System.out.println("DBCONTROLLER --- PRIVATE: "+ privateObjectiveScore);
 			}
 
 		} catch (SQLException e) {
@@ -227,7 +225,6 @@ public class EndScoreController {
 		try {
 			while (privateScore.next()) {
 				privateObjectiveScore = privateScore.getInt(1);
-				System.out.println("DBCONTROLLER --- PRIVATE: "+ privateObjectiveScore);
 			}
 
 			
