@@ -18,7 +18,8 @@ public class ChoosePatternCardView extends BorderPane {
 	private int difficulty;
 	private boolean hasCard;
 
-	public ChoosePatternCardView(ChoosePatternCardController choosePatternCardController, MainController mainController, Player player) {
+	public ChoosePatternCardView(ChoosePatternCardController choosePatternCardController, MainController mainController,
+			Player player) {
 		choosePatternCardCards = new ChoosePatternCardCards(choosePatternCardController, mainController);
 		button = new ChooseButton();
 		hasCard = false;
@@ -31,9 +32,7 @@ public class ChoosePatternCardView extends BorderPane {
 				System.out.println(difficulty);
 				hasCard = true;
 				player.setPatternCard(cardId);
-				mainController.showGameLoggedInPlayer();
 				mainController.getCurrentGame().assignFavorTokens(difficulty, player.getIdPlayer());
-				
 			} else if (choosePatternCardCards.rectanglePatternCard2.select == true) {
 				cardId = choosePatternCardController.getPatternCard().get(1).getIdPatternCard();
 				difficulty = choosePatternCardController.getPatternCard().get(1).getDifficulty();
@@ -41,9 +40,8 @@ public class ChoosePatternCardView extends BorderPane {
 				System.out.println(difficulty);
 				hasCard = true;
 				player.setPatternCard(cardId);
-				mainController.showGameLoggedInPlayer();
 				mainController.getCurrentGame().assignFavorTokens(difficulty, player.getIdPlayer());
-				
+
 			} else if (choosePatternCardCards.rectanglePatternCard3.select == true) {
 				cardId = choosePatternCardController.getPatternCard().get(2).getIdPatternCard();
 				difficulty = choosePatternCardController.getPatternCard().get(2).getDifficulty();
@@ -51,9 +49,8 @@ public class ChoosePatternCardView extends BorderPane {
 				System.out.println(difficulty);
 				hasCard = true;
 				player.setPatternCard(cardId);
-				mainController.showGameLoggedInPlayer();				
 				mainController.getCurrentGame().assignFavorTokens(difficulty, player.getIdPlayer());
-				
+
 			} else if (choosePatternCardCards.rectanglePatternCard4.select == true) {
 				cardId = choosePatternCardController.getPatternCard().get(3).getIdPatternCard();
 				difficulty = choosePatternCardController.getPatternCard().get(3).getDifficulty();
@@ -61,12 +58,15 @@ public class ChoosePatternCardView extends BorderPane {
 				System.out.println(difficulty);
 				hasCard = true;
 				player.setPatternCard(cardId);
-				mainController.showGameLoggedInPlayer();				
 				mainController.getCurrentGame().assignFavorTokens(difficulty, player.getIdPlayer());
-				
-			} else
+
+			} else {
 				System.out.println("nothing is selected please select a card");
-			hasCard = false;
+				hasCard = false;
+			}
+			System.out.println("CHECK");
+			mainController.loadGame(mainController.getCurrentGame().getIdGame());
+			mainController.showGameLoggedInPlayer();
 		});
 
 		this.setBackground(new Background(new BackgroundFill(SAGRADAPINK, null, null)));
@@ -83,7 +83,5 @@ public class ChoosePatternCardView extends BorderPane {
 	public boolean hasCard() {
 		return hasCard;
 	}
-	
-
 
 }
