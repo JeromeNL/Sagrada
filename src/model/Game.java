@@ -313,7 +313,7 @@ public class Game {
 
 	private void endGame(int player1, int player2, int player3, int player4) {
 		System.out.println(getClass() + " - Game ended.");
-		mainController.showEndScoreView(player1, player2, player3, player4, players);
+		mainController.showEndScoreView(player1, player2, player3, player4, players, mainController);
 		for (Player player : players) {
 			player.setStatus(PlayerStatus.FINISHED);
 		}

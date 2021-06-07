@@ -24,7 +24,7 @@ public class EndScoreView extends Pane {
 	private int playerOne, playerTwo, playerThree, playerFour;
 
 	public EndScoreView(int newPlayerOne, int newPlayerTwo, int newPlayerThree, int newPlayerFour,
-			ArrayList<Player> players) {
+			ArrayList<Player> players, MainController mainController) {
 
 		playerOne = newPlayerOne;
 		playerTwo = newPlayerTwo;
@@ -150,7 +150,7 @@ public class EndScoreView extends Pane {
 
 		registerHandler(backButton, Color.BLACK, Color.BLACK);
 		backButton.setOnMouseClicked(e -> {
-			
+			mainController.showFirstMainMenu();
 		});
 	}
 
