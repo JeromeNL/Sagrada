@@ -124,8 +124,8 @@ public class MainController {
 		showLoginScreen();
 	}
 
-	public void showEndScoreView(int player1, int player2, int player3, int player4, ArrayList<Player> players) {
-		mainScene.setRoot(new EndScoreView(player1, player2, player3, player4, players));
+	public void showEndScoreView(int player1, int player2, int player3, int player4, ArrayList<Player> players, MainController mainController) {
+		mainScene.setRoot(new EndScoreView(player1, player2, player3, player4, players, mainController));
 
 	}
 
