@@ -48,7 +48,6 @@ public class ToolcardCardView extends Pane {
 		backButtonText.setTranslateX(1015);
 
 		rect.setOnMouseClicked(e -> {
-			System.out.println("button is pressed");
 			mainController.showGameLoggedInPlayer();
 		});
 

@@ -19,8 +19,6 @@ public class PatternCardView extends GridPane {
 
 	private Patterncard patterncard;
 
-///////////////////////////////////////////////////////////////// Constructor
-
 	public PatternCardView(Patterncard patterncard) {
 		this.patterncard = patterncard;
 
@@ -30,16 +28,15 @@ public class PatternCardView extends GridPane {
 
 		setHgap(gridGapSize);
 		setVgap(gridGapSize);
-		
+
 		if (patterncard != null) {
-			loadPatterncard();			
+			loadPatterncard();
 		} else {
 			add(new Label("This player has not yet chosen a patterncard."), 1, 1);
 		}
 
 	}
 
-///////////////////////////////////////////////////////////////// createEmptyCard
 
 	/*
 	 * Method that is responsible that is responsible for loading pattern card data

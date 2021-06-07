@@ -49,7 +49,6 @@ public class Player {
 	private void loadPatterncard() {
 		int idPatterncard = dbController.getPatterncardID(idPlayer);
 		if (idPatterncard == 0) {
-			// Player has not chosen patterncard yet
 			return;
 		}
 		Patterncard patterncard = new Patterncard(idPatterncard, dbController, this);
@@ -71,7 +70,6 @@ public class Player {
 		return dbController.getSeqNr(idPlayer);
 	}
 
-	// Create all the playerframefield rows in the database.
 	private void createPlayerFrameField() {
 
 		playerController = new PlayerController(dbController, mainController);
@@ -113,7 +111,6 @@ public class Player {
 	}
 
 	public PlayerStatus getStatus() {
-		// to-do: get status from database
 		return status;
 	}
 
@@ -139,21 +136,17 @@ public class Player {
 	
 
 	public int getScore() {
-		// to-do: get score from database table instead of instance variable.
 		return 0;
 	}
 
 	public void setScore(int score) {
-		// to-do: set score to database table instead of instance variable.
 	}
 
 	public int getIdPlayer() {
-		// to-do: get score from database table instead of instance variable.
 		return idPlayer;
 	}
 
 	public String getUsername() {
-		// to-do: get username from database table instead of instance variable.
 		return username;
 	}
 

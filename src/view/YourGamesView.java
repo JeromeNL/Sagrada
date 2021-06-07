@@ -46,7 +46,7 @@ public class YourGamesView extends BorderPane {
 		gamesBox = new VBox();
 		gamesBox.setAlignment(Pos.CENTER);
 		gamesBox.setSpacing(10);
-		
+
 		boxAround = new VBox();
 		boxAround.setSpacing(10);
 		fillGamesBox();
@@ -114,7 +114,7 @@ public class YourGamesView extends BorderPane {
 		sc.setMaxWidth(400);
 		sc.setStyle(
 				"-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0; -fx-background-insets: 0;");
-		
+
 		gamesBox.getChildren().addAll(sc);
 		gamesBox.getChildren().add(refreshButton);
 	}
