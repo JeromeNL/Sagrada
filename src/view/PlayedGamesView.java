@@ -58,6 +58,8 @@ public class PlayedGamesView extends VBox {
 		TableColumn<GameStats, String> username = new TableColumn<>("Spelers");
 		username.setCellValueFactory(new PropertyValueFactory<GameStats, String>("username"));
 		username.prefWidthProperty().setValue(200);
+		
+		
 
 		TableColumn<GameStats, Integer> idgame = new TableColumn<>("Spel");
 		idgame.setCellValueFactory(new PropertyValueFactory<GameStats, Integer>("idgame"));
@@ -74,6 +76,11 @@ public class PlayedGamesView extends VBox {
 		TableColumn<GameStats, String> gamestatus = new TableColumn<>("Status");
 		gamestatus.setCellValueFactory(new PropertyValueFactory<GameStats, String>("gamestatus"));
 		gamestatus.prefWidthProperty().setValue(200);
+		
+		gamestatus.setStyle("-fx-background-color: tomato;");
+		
+	
+		   
 
 		table.getColumns().addAll(Arrays.asList(idgame, round, creationdate, gamestatus, username));
 		try {
@@ -93,4 +100,9 @@ public class PlayedGamesView extends VBox {
 		this.getChildren().addAll(gameTxt, container, backButton);
 
 	}
-}
+	
+
+    }
+
+	
+
