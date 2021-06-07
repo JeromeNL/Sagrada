@@ -5,20 +5,13 @@ import java.util.ArrayList;
 import controller.DatabaseController;
 import controller.MainController;
 import imageChooser.PublicObjectiveCardImage;
-import javafx.beans.value.ObservableValue;
-
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 
 public class ObjectivecardCardView extends Pane {
