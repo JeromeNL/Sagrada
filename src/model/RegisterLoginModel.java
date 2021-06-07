@@ -63,7 +63,7 @@ public class RegisterLoginModel {
 					warningColor = "red";
 				} else {
 					if (isValidPassword(loginUsernameGiven, loginPasswordGiven) == true) {
-						warningText = "Ingelogd!";
+						warningText = "";
 						warningColor = "green";
 
 						mainController.login(loginUsernameGiven);
