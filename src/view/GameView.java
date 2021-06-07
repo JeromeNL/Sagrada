@@ -195,7 +195,7 @@ public class GameView extends BorderPane {
 
 			Label who;
 			if (mainController.getLoggedInUsername().equals(player.getUsername())) {
-				who = new Label("(You)");
+				who = new Label("(Jij)");
 			} else {
 				who = new Label("(Andere Speler)");
 			}
