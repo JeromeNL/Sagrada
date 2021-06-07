@@ -111,7 +111,8 @@ public class YourGamesView extends BorderPane {
 		sc.setContent(boxAround);
 		sc.setHbarPolicy(ScrollBarPolicy.NEVER);
 		sc.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		sc.setMaxWidth(400);
+		sc.setMaxWidth(800);
+		sc.setTranslateX(255);
 		sc.setStyle(
 				"-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0; -fx-background-insets: 0;");
 		
