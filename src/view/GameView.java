@@ -164,7 +164,6 @@ public class GameView extends BorderPane {
 		favortokenCard.setCenter(patternCardView);
 		favortokenCard.setBottom(favortokenView);
 		favortokenCard.setMaxHeight(320);
-//		favortokenCard.setPadding(new Insets(30, 5, 15, 5));
 		
 		card.getChildren().addAll(rectangleCard, favortokenCard);
 		
@@ -174,7 +173,6 @@ public class GameView extends BorderPane {
 		try {
 			chatpane.refresh();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
