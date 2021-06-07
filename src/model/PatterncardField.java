@@ -218,24 +218,6 @@ public class PatterncardField {
 			return true;
 		} else if (isFieldEmpty((yPosition - 1), xPosition - 1) == false) {
 			return true;
-		} else if (isFieldEmpty((yPosition), 1) == false) {
-			return true;
-		} else if (isFieldEmpty((yPosition), 2) == false) {
-			return true;
-		} else if (isFieldEmpty((yPosition), 3) == false) {
-			return true;
-		} else if (isFieldEmpty((yPosition), 4) == false) {
-			return true;
-		} else if (isFieldEmpty((yPosition), 5) == false) {
-			return true;
-		} else if (isFieldEmpty(1, (xPosition)) == false) {
-			return true;
-		} else if (isFieldEmpty(2, (xPosition)) == false) {
-			return true;
-		} else if (isFieldEmpty(3, (xPosition)) == false) {
-			return true;
-		} else if (isFieldEmpty(4, (xPosition)) == false) {
-			return true;
 		} else {
 			return false;
 		}
