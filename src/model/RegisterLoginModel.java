@@ -32,13 +32,13 @@ public class RegisterLoginModel {
 					|| isOnlyCharAndNumbers(registerUsernameGiven) == false) {
 
 				System.out.println("Username is too short or contains other characters than letters/numbers!");
-				warningText = "Naam heeft de verkeerde lengte (3-25 karakters) of bevat andere tekens dan cijfers/nummers";
+				warningText = "Naam heeft de verkeerde lengte (3-12 karakters) of bevat andere tekens dan cijfers/nummers";
 				warningColor = "red";
 			} else {
 				if (containsMinThreeChars(registerPasswordGiven) == false
 						|| isOnlyCharAndNumbers(registerPasswordGiven) == false) {
 					warningColor = "red";
-					warningText = "Wachtwoord heeft de verkeerde lengte (3-25 karakters) of bevat vreemde tekens";
+					warningText = "Wachtwoord heeft de verkeerde lengte (3-12 karakters) of bevat vreemde tekens";
 				} else {
 					registerLoginController.addAccountToDatabase(registerUsernameGiven, registerPasswordGiven);
 					warningText = "Registratie voltooid! Log nu in met jouw gegevens";
@@ -82,8 +82,8 @@ public class RegisterLoginModel {
 	private boolean containsMinThreeChars(String input) { // checks for at least 3 characters
 		if (input.length() < 3) {
 			return false;
-		} else if(input.length() > 25){
-			System.out.println("Max size of input is 25 characters");
+		} else if(input.length() > 12){
+			System.out.println("Max size of input is 12 characters");
 			return false;
 		}else {
 			return true;
