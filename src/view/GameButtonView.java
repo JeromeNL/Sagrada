@@ -3,6 +3,7 @@ package view;
 import controller.MainController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -14,6 +15,7 @@ public class GameButtonView extends HBox {
 
 	GameButtonView(GameView gameView, Game game, MainController mainController) {
 
+		Label et1 = new Label("Gereedschapskaart");
 		toolCardButton1 = new GameButton();
 		toolCardButton1.setFill(Color.LIGHTBLUE);
 		toolCardButton1.setOnMouseEntered(e -> toolCardButton1.setFill(Color.BLUE));
@@ -23,6 +25,7 @@ public class GameButtonView extends HBox {
 			;
 		});
 
+		Label et2 = new Label("Doelkaart");
 		ObjectivecardButton = new GameButton();
 		ObjectivecardButton.setFill(Color.RED);
 		ObjectivecardButton.setOnMouseEntered(e -> ObjectivecardButton.setFill(Color.INDIANRED));
@@ -31,7 +34,9 @@ public class GameButtonView extends HBox {
 			mainController.ObjectiveCardButton();
 			;
 		});
-
+		
+		Label et = new Label("Bevestig");
+		
 		confirmButton = new GameButton();
 		confirmButton.setFill(Color.GREENYELLOW);
 		confirmButton.setOnMouseEntered(e -> confirmButton.setFill(Color.GREEN));
@@ -44,6 +49,6 @@ public class GameButtonView extends HBox {
 		setAlignment(Pos.CENTER);
 		setSpacing(40);
 		setPadding(new Insets(10));
-		getChildren().addAll(toolCardButton1, ObjectivecardButton, confirmButton);
+		getChildren().addAll(toolCardButton1,et1 , ObjectivecardButton,et2, confirmButton, et);
 	}
 }

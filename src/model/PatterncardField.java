@@ -55,13 +55,11 @@ public class PatterncardField {
 
 		// 1st check: Is the field empty?
 		if (fieldHasDie()) {
-			System.out.println(" 1 false | Already a die on field!");
 			return false;
 		}
 
 		// 2nd check: Is the color/value requirement correct?
 		if (!isCorrectNumber(eyesCount) || !isCorrectColor(dieColor)) {
-			System.out.println(" 2 false | Not correct value of color!");
 			return false;
 		}
 
@@ -69,7 +67,6 @@ public class PatterncardField {
 		if (isFirstTurn(owner)) {
 			// 5th check: Is the die in the corner or on the edge?
 			if (!firstDieIsOnEdge()) {
-				System.out.println(" 5 false | This is the first die. Must be placed in corner or on the edge!");
 				return false;
 			}
 		}
@@ -78,14 +75,12 @@ public class PatterncardField {
 
 			// 3rd check: Is the field adjacent to a die of the same color or value?
 			if (!hasOtherValueAndColorSurrounding()) {
-				System.out.println(" 3 false | has the same value/color surrounding!");
 
 				return false;
 			}
 
 			// 4th check: Is the field adjacent to a field with a die already on it?
 			if (!isAdjacentToDie()) {
-				System.out.println(" 4 false | Is not adjacent to die!");
 				return false;
 			}
 
@@ -96,7 +91,6 @@ public class PatterncardField {
 
 	// All checks
 
-	// Is this die the first die?
 	private boolean isFirstTurn(Player owner) throws SQLException {
 
 		if (pdbController.isFirstTurn(owner) == 0) {
@@ -150,13 +144,11 @@ public class PatterncardField {
 
 				return true;
 			} else {
-				System.out.println("INVALID! Adjacent to same value");
 				return false;
 			}
 		}
 
 		else {
-			System.out.println("INVALID! Adjacent to same color");
 			return false;
 		}
 
@@ -169,10 +161,7 @@ public class PatterncardField {
 			return false;
 		} else {
 			String color = pdbController.isAdjacentFieldSameColor(owner, y, x);
-			System.out.println(color);
-			System.out.println(selectedDieColor.toString().toLowerCase());
 			if (color.equals(selectedDieColor.toString().toLowerCase())) {
-				System.out.println("die color is the same!");
 				return true;
 			} else {
 				return false;
@@ -183,13 +172,11 @@ public class PatterncardField {
 
 	private boolean isAdjacentFieldSameValue(int y, int x) throws SQLException {
 		if (x < 1 || x > 5 || y < 1 || y > 4) {
-			System.out.println(x + " " + y);
 			return false;
 		} else if (isFieldEmpty(y, x) == true) {
 			return false;
 		} else {
 			if (pdbController.isAdjacentFieldSameValue(owner, y, x) == selectedDieEyes) {
-				System.out.println("die value is the same!");
 				return true;
 			} else {
 				return false;
@@ -198,8 +185,8 @@ public class PatterncardField {
 	}
 
 	private boolean isAdjacentToDie() throws SQLException {
-		// boolean isAdjacent;
-		// horizontal/vertical checks
+			// boolean isAdjacent;
+			// horizontal/vertical checks
 		if (isFieldEmpty(yPosition, leftX) == false) {
 			return true;
 		} else if (isFieldEmpty(yPosition, rightX) == false) {
@@ -217,24 +204,6 @@ public class PatterncardField {
 		} else if (isFieldEmpty((yPosition - 1), xPosition + 1) == false) {
 			return true;
 		} else if (isFieldEmpty((yPosition - 1), xPosition - 1) == false) {
-			return true;
-		} else if (isFieldEmpty((yPosition), 1) == false) {
-			return true;
-		} else if (isFieldEmpty((yPosition), 2) == false) {
-			return true;
-		} else if (isFieldEmpty((yPosition), 3) == false) {
-			return true;
-		} else if (isFieldEmpty((yPosition), 4) == false) {
-			return true;
-		} else if (isFieldEmpty((yPosition), 5) == false) {
-			return true;
-		} else if (isFieldEmpty(1, (xPosition)) == false) {
-			return true;
-		} else if (isFieldEmpty(2, (xPosition)) == false) {
-			return true;
-		} else if (isFieldEmpty(3, (xPosition)) == false) {
-			return true;
-		} else if (isFieldEmpty(4, (xPosition)) == false) {
 			return true;
 		} else {
 			return false;

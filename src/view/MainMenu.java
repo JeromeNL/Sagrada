@@ -48,7 +48,7 @@ public class MainMenu extends Pane {
 		logout.setOnMouseClicked(e -> mainController.logout());
 
 		VBox buttons = new VBox();
-		Label loggedInUsername = new Label("Logged in user: " + mainController.getLoggedInUsername());
+		Label loggedInUsername = new Label("Ingelogde gebruiker " + mainController.getLoggedInUsername());
 		loggedInUsername.setTextFill(Color.WHITE);
 		buttons.getChildren().addAll(loggedInUsername, spelen, yourGames, challenges, spelersOverzicht, spellenOverzicht,
 				logout);

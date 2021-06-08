@@ -44,7 +44,6 @@ public class GameController {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Something went wrong while getting a available gameID.");
 			e.printStackTrace();
 		}
 		return availableGameID;

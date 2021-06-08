@@ -39,7 +39,6 @@ public class PlayedGamesView extends VBox {
 		gameTxt.setFont(new Font("Arial", 30));
 
 		Button backButton = new Button("Terug naar menu");
-		// Button styling
 		String IDLE_BUTTON_STYLE = "-fx-border-width: 2;" + "-fx-border-color: white;"
 				+ "-fx-background-color: transparent;" + "-fx-font-size: 20;" + "-fx-text-fill: white;";
 		String HOVERED_BUTTON_STYLE = "-fx-border-width: 2;" + "-fx-border-color: white;"

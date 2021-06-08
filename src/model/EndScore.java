@@ -26,13 +26,10 @@ public class EndScore {
 	public int publicObjectiveScore() {
 		int totalPublicObjectiveScore = 0;
 
-		System.out.println("TEST TEST TEST " + mainController.getCurrentGame().getIdGame());
 
 		ArrayList<Integer> ids = dbController.getPublicObjectiveIDs(mainController.getCurrentGame().getIdGame());
 
 		for (int id = 0; id < 3; id++) {
-			System.out.println("GET ID FROM GETPUBLICOBJECTIVECARDID: "
-					+ dbController.getPublicObjectiveIDs(owner.getGameID()).get(id));
 
 			if (ids.get(id) == 1) {
 				totalPublicObjectiveScore += shadeVarietyObjectiveScore();
@@ -57,7 +54,6 @@ public class EndScore {
 
 			}
 		}
-		System.out.println("totalPublic " + totalPublicObjectiveScore);
 		return totalPublicObjectiveScore;
 	}
 
@@ -78,7 +74,6 @@ public class EndScore {
 			}
 		}
 		shadeVarietyObjectiveScore = (minValue * 5);
-		System.out.println("PUBLIC shadeVariety: " + shadeVarietyObjectiveScore);
 		return shadeVarietyObjectiveScore;
 	}
 
@@ -90,7 +85,6 @@ public class EndScore {
 		} else {
 			mediumShadesObjectiveScore = (esdbController.amountOfDiesOfValue(owner, 3) * 2);
 		}
-		System.out.println("PUBLIC mediumShades: " + mediumShadesObjectiveScore);
 		return mediumShadesObjectiveScore;
 
 	}
@@ -144,7 +138,6 @@ public class EndScore {
 			}
 			index++;
 		}
-		System.out.println("PUBLIC colomnColorVariety: " + score);
 		return score;
 	}
 
@@ -211,7 +204,6 @@ public class EndScore {
 			}
 			index++;
 		}
-		System.out.println("PUBLIC colomnShadeVariety: " + score);
 		return score;
 
 	}
@@ -239,7 +231,6 @@ public class EndScore {
 			}
 			index++;
 		}
-		System.out.println("PUBLIC RowColorVariety: " + score);
 		return score;
 
 	}
@@ -304,7 +295,6 @@ public class EndScore {
 			}
 		}
 
-		System.out.println("PUBLIC rowShadesVariety: " + score);
 
 		return score;
 	}
@@ -317,7 +307,6 @@ public class EndScore {
 		} else {
 			darkShadesObjectiveScore = (esdbController.darkShadesObjectiveScore(owner, 5) * 2);
 		}
-		System.out.println("PUBLIC darkShades: " + darkShadesObjectiveScore);
 		return darkShadesObjectiveScore;
 
 	}
@@ -342,7 +331,6 @@ public class EndScore {
 		}
 
 		colorVarietyObjectiveScore = (min * 4);
-		System.out.println("PUBLIC Color variety: " + colorVarietyObjectiveScore);
 		return colorVarietyObjectiveScore;
 	}
 
@@ -355,37 +343,30 @@ public class EndScore {
 		} else {
 			lightShadesObjectiveScore = (esdbController.darkShadesObjectiveScore(owner, 1) * 2);
 		}
-		System.out.println("PUBLIC lightShades: " + lightShadesObjectiveScore);
 		return lightShadesObjectiveScore;
 	}
 
 	public int privateObjectiveScore() {
 		int privateObjectiveScore = esdbController.privateObjectiveScore(owner);
 
-		System.out.println("PRIVATE privateObjectiveScore: " + privateObjectiveScore);
 		return privateObjectiveScore;
 	}
 
 	public int countAllDieEyes() {
 		int allCountedEyes = esdbController.countAllDieEyes(owner);
 
-		System.out.println(allCountedEyes);
 		return allCountedEyes;
 	}
 
 	public int emptyTileScore() {
 
 		int emptyScore = ((20 - esdbController.emptyTileScore(owner)) * -1);
-		// query voor opvragen vakjes van speler.
-		// controleren hoeveel er null zijn (diecolor of dienumber)
-		// aantal null == aantal punten erbij
-		System.out.println("EMPTY TILES SCORE (should be negative): " + emptyScore);
+		
 		return emptyScore;
 	}
 
 	public int totalEndScore() {
 		int totalScore = publicObjectiveScore() + privateObjectiveScore() + emptyTileScore() + countAllDieEyes();
-		System.out.println("Total endscore: " + totalScore);
 		return totalScore;
 	}
 

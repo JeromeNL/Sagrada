@@ -36,7 +36,6 @@ public class ToolCardInUseView extends Pane {
 		return backButtonText;
 	}
 
-///////////////////////////////////////////////////////////////// Constructor
 
 	public ToolCardInUseView(MainController mainController) {
 
@@ -97,6 +96,7 @@ public class ToolCardInUseView extends Pane {
 
 		registerHandler2();
 		backButton.setOnMouseClicked(e -> {
+			mainController.loadGame(mainController.getCurrentGame().getIdGame());
 			mainController.showGameLoggedInPlayer();
 		});
 
