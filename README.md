@@ -1,4 +1,5 @@
-# SOPRJ4 Sagrada - Groep R
+# SOPRJ4 Sagrada - Group R (Semester 2)
+The first group project of the Bachelor's program in Computer Science. In a group of 7 students, a board game was recreated in Java, and the GUI was built using JavaFX.
 
 De repository van de Sagrada applicatie die wordt ontwikkeld door SOPRJ4 Groep R.
 
